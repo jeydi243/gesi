@@ -37,11 +37,11 @@
 		</v-navigation-drawer>
 		<v-content>
 			<v-container fluid>
-				<transition name="fade" mode="out-in">
-					<keep-alive>
-						<router-view></router-view>
-					</keep-alive>
-				</transition>
+				<transition name="bounce"> 
+					<!-- <keep-alive> -->
+						<router-view transition="scroll-x-transition"></router-view>
+					<!-- </keep-alive> -->
+				 </transition> 
 			</v-container>
 		</v-content>
 		<v-footer app></v-footer>
@@ -51,10 +51,6 @@
 <script>
 	export default {
 		name: 'App',
-
-		components: {
-			HelloWorld,
-		},
 		methods: {
 			minus() {
 
