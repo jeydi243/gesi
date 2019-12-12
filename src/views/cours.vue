@@ -26,7 +26,7 @@
 			</template>
 		</v-toolbar>
 		<v-tabs-items v-model="tab">
-			<v-tab-item v-for="(item, index) in items" :key="index">
+			<v-tab-item v-for="(item, index) in items" :key="index" link>
 				<v-card flat>
 					<v-card-text v-text="text"></v-card-text>
 				</v-card>
@@ -40,7 +40,9 @@
 		name: 'cours',
 		data (){
 			return {
-				items :["Annuaire","Presences","Gestion","inscription","Parcours"]
+				tab: null,
+				items :["Annuaire","Interrogation","Emploi du Temps"],
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 			}
 		}
 	}

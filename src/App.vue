@@ -8,7 +8,6 @@
 		</v-system-bar>
 
 		<v-navigation-drawer dark app color="#001B48" center>
-			<!-- <v-row> -->
 			<v-list-item>
 				<v-list-item-content>
 					<v-list-item-title class="title">
@@ -74,7 +73,6 @@
 			}
 		},
 		data: () => ({
-			titre: "Page title",
 			items: [{
 					title: 'Etudiants',
 					icon: 'mdi-view-dashboard'
