@@ -1,60 +1,104 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+	<v-app>
+		<v-system-bar window app>
+			<v-spacer></v-spacer>
+			<v-icon @click="minus" flat>mdi-minus</v-icon>
+			<v-icon @click="maximise">mdi-checkbox-blank-outline</v-icon>
+			<v-icon @click="closer">mdi-close</v-icon>
+		</v-system-bar>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+		<v-navigation-drawer dark app color="#001B48" center>
+			<!-- <v-row> -->
+			<v-list-item>
+				<v-list-item-content>
+					<v-list-item-title class="title">
+						GESI
+					</v-list-item-title>
+					<v-list-item-subtitle>
+						subtext
+					</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
 
-      <v-spacer></v-spacer>
+			<v-divider></v-divider>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+			<v-list dense nav>
+				<v-list-item v-for="(item,index) in items" :key="index" link @click="sebebe(item.title)">
+					<v-list-item-icon>
+						<v-icon>{{ item.icon }}</v-icon>
+					</v-list-item-icon>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+					<v-list-item-content>
+						<v-list-item-title>{{ item.title }}</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</v-list>
+			<!-- </v-row> -->
+
+		</v-navigation-drawer>
+		<v-content>
+			<v-container fluid>
+				<transition name="fade" mode="out-in">
+					<keep-alive>
+						<router-view></router-view>
+					</keep-alive>
+				</transition>
+			</v-container>
+		</v-content>
+		<v-footer app></v-footer>
+	</v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+	import HelloWorld from './components/HelloWorld';
 
-export default {
-  name: 'App',
+	export default {
+		name: 'App',
 
-  components: {
-    HelloWorld,
-  },
+		components: {
+			HelloWorld,
+		},
+		methods: {
+			minus() {
 
-  data: () => ({
-    //
-  }),
-};
+			},
+			closer() {
+
+			},
+			maximise() {
+
+			},
+			sebebe(titre) {
+				this.titre = titre
+				this.$router.push(titre.toLowerCase());
+			}
+		},
+		data: () => ({
+			titre: "Page title",
+			items: [{
+					title: 'Etudiants',
+					icon: 'mdi-view-dashboard'
+				},
+				{
+					title: 'Professeurs',
+					icon: 'mdi-image'
+				},
+				{
+					title: 'Gestion',
+					icon: 'mdi-help-box'
+				},
+				{
+					title: 'Cours',
+					icon: 'mdi-help-box'
+				},
+			],
+			right: null,
+			tab: null,
+			items2: [
+				'web', 'shopping', 'videos', 'images', 'news',
+			],
+			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+
+		}),
+	};
 </script>
