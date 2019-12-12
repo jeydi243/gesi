@@ -6,10 +6,6 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "apollo": "vue-cli-service apollo:dev --generate-schema",
-    "apollo:schema:generate": "vue-cli-service apollo:schema:generate",
-    "apollo:schema:publish": "vue-cli-service apollo:schema:publish",
-    "apollo:start": "vue-cli-service apollo:start",
     "start": "vue-cli-service serve"
   },
   "dependencies": {
