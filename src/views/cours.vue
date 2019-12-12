@@ -19,7 +19,7 @@
 				<v-tabs v-model="tab" align-with-title background-color="transparent">
 					<v-tabs-slider color="yellow"></v-tabs-slider>
 
-					<v-tab v-for="(item,index) in items2" :key="index">
+					<v-tab v-for="(item,index) in items" :key="index">
 						{{ item }}
 					</v-tab>
 				</v-tabs>
@@ -38,5 +38,10 @@
 <script>
 	export default {
 		name: 'cours',
+		data (){
+			return {
+				items :["Annuaire","Presences","Gestion","inscription","Parcours"]
+			}
+		}
 	}
 </script>

@@ -9,22 +9,22 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/c',
+    path: '/cours',
     name: 'cours',
     component: cours
   },
   {
-    path: '/g',
+    path: '/gestion',
     name: 'gestion',
     component: gestion
   },
   {
-    path: '/e',
+    path: '/etudiants',
     name: 'etudiants',
     component: etudiants
   },
   {
-    path: '/p',
+    path: '/professeurs',
     name: 'professeurs',
     component: professeurs
   },
