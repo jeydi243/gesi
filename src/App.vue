@@ -32,9 +32,9 @@
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
-			<!-- </v-row> -->
 
 		</v-navigation-drawer>
+
 		<v-content>
 			<v-container fluid>
 				<transition name="fade"  mode="out-in" type="transition" appear> 
@@ -44,7 +44,9 @@
 				 </transition> 
 			</v-container>
 		</v-content>
+
 		<v-footer app></v-footer>
+		
 	</v-app>
 </template>
 

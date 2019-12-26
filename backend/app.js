@@ -4,16 +4,8 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-//models
 const model = require('./db');
-
-mongoose.connect(
-	'mongodb://localhost:27017/gesi', {
-		useNewUrlParser: true,
-		useCreateIndex: true,
-	}
-);
+mongoose.connect('mongodb://localhost:27017/gesi', {useCreateIndex: true});
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 
@@ -25,26 +17,40 @@ app.use(cors());
 app.get('/etudiant/list', (req, res) => {
 	model.Etudiant.find({}).sort({
 		updatedAt: 'descending'
-	}).exec((err, notes) => {
-		if (err) return res.status(404).send('Error while getting notes!');
+	}).exec((err, listEtudiants) => {
+		if (err) return res.status(404).send('Error while getting list etudiant!');
 		return res.send({
-			notes
+			listEtudiants
 		});
 	});
 });
 
 // create a new note
 app.post('/etudiant/add', (req, res) => {
-	const note = new Note({
-		body: req.body.body,
-		title: req.body.title
-	});
-	note.save((err) => {
+	const etudiant = new Etudiant({
+		matricule: req.body.matricule,
+		nom: req.body.nom,
+		postnom: req.body.postnom,
+		prenom: req.body.prenom,
+		genre: req.body.genre,
+		dateNaissance: req.body.dateNaissance,
+		photoProfil: req.body.photoProfil,
+		telephone: req.body.telephone,
+		adressePhysique: req.body.adressePhysique,
+		email: req.body.email,
+		noteMedicale: req.body.noteMedicale,
+		anneeInscription: req.body.anneeInscription,
+		responsable: req.body.responsable,
+		diplomeEsis: req.body.diplomeEsis,
+		statutEtudiant: req.body.statutEtudiant,
+		niveauEtudiant: req.body.niveauEtudiant});
+
+		etudiant.save((err) => {
 		if (err) return res.status(404).send({
 			message: err.message
 		});
 		return res.send({
-			note
+			etudiant
 		});
 	});
 });
