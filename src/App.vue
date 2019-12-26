@@ -37,10 +37,10 @@
 		</v-navigation-drawer>
 		<v-content>
 			<v-container fluid>
-				<transition name="bounce"> 
-					<!-- <keep-alive> -->
-						<router-view transition="scroll-x-transition"></router-view>
-					<!-- </keep-alive> -->
+				<transition name="fade"  mode="out-in" type="transition" appear> 
+					<keep-alive> 
+						<router-view ></router-view>
+					</keep-alive>
 				 </transition> 
 			</v-container>
 		</v-content>
@@ -94,3 +94,18 @@
 		}),
 	};
 </script>
+<style scoped>
+	.fade-enter{
+        opacity: 0;
+    }
+    .fade-enter-active{
+        transition: opacity .3s;
+    }
+    /* .fade-leave{
+        /* opacity: 1; 
+    } */
+    .fade-leave-active{
+        transition: opacity .2s;
+        opacity: 0;
+    }
+</style>
