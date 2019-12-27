@@ -27,23 +27,40 @@
 		</v-toolbar>
 		<v-tabs-items v-model="tab">
 			<v-tab-item v-for="(item, index) in items" :key="index">
-				<v-card flat>
+				<!-- <v-card flat>
 					<v-card-text v-text="text"></v-card-text>
-				</v-card>
+				</v-card> -->
+				<keep-alive> 
+						<component :is="getcurrentComponent(item)"> </component>
+				</keep-alive>
 			</v-tab-item>
 		</v-tabs-items>
 	</div>
 </template>
-<script lang="ts">
+<script>
+
+ import annuaire from "@/components/Etudiants/annuaire.vue"
+ import inscription from "@/components/Etudiants/inscription.vue"
+ import presences from "@/components/Etudiants/presences.vue"
+ import parcours from "@/components/Etudiants/parcours.vue"
+ import gestionstages from "@/components/Etudiants/gestionstages.vue"
 
 	export default{
 		name: "etudiants",
+		components: {
+			annuaire,inscription,presences,parcours,gestionstages
+		},
 		data (){
 			return {
 				tab: null,
-				items :["Annuaire","Presences","inscription","Parcours","Gestion des stages"],
-				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-
+				currentComponent: "annuaire",
+				items :["annuaire","presences","inscription","parcours","gestionstages"],
+				// text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			}
+		},
+		methods:{
+			getcurrentComponent(item){
+				return item;
 			}
 		}
 	}
