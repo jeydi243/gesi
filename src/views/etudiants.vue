@@ -41,6 +41,7 @@
 
  import annuaire from "@/components/Etudiants/annuaire.vue"
  import inscription from "@/components/Etudiants/inscription.vue"
+ import steppers from "@/components/steppers.vue"
  import presences from "@/components/Etudiants/presences.vue"
  import parcours from "@/components/Etudiants/parcours.vue"
  import gestionstages from "@/components/Etudiants/gestionstages.vue"
@@ -48,14 +49,13 @@
 	export default{
 		name: "etudiants",
 		components: {
-			annuaire,inscription,presences,parcours,gestionstages
+			annuaire,inscription,presences,parcours,gestionstages,steppers
 		},
 		data (){
 			return {
 				tab: null,
 				currentComponent: "annuaire",
-				items :["annuaire","presences","inscription","parcours","gestionstages"],
-				// text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+				items :["annuaire","presences","steppers","parcours","gestionstages"],
 			}
 		},
 		methods:{

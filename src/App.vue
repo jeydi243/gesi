@@ -1,4 +1,5 @@
 <template>
+<transition name="scale-y">
 	<v-app>
 		<v-system-bar window app>
 			<v-spacer></v-spacer>
@@ -48,6 +49,7 @@
 		<v-footer app></v-footer>
 		
 	</v-app>
+</transition>
 </template>
 
 <script>
