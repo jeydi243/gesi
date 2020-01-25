@@ -21,3 +21,6 @@ yarn-error.log*
 *.sw?
 
 /live/
+
+#Electron-builder output
+/dist_electron

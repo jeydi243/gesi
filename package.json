@@ -6,8 +6,13 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
     "start": "vue-cli-service serve"
   },
+  "main": "background.js",
   "dependencies": {
     "core-js": "^3.4.3",
     "cors": "^2.8.5",
@@ -34,9 +39,11 @@
     "@vue/cli-plugin-vuex": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
     "@vue/test-utils": "1.0.0-beta.29",
+    "electron": "^6.0.0",
     "graphql-tag": "^2.9.0",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
+    "vue-cli-plugin-electron-builder": "^1.4.4",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.3.0"
