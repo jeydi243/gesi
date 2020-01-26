@@ -1,7 +1,7 @@
 <template>
 	<transition name="scale-y">
 		<v-app>
-			<v-system-bar window app>
+			<v-system-bar window app style="-webkit-app-region: drag">
 				<v-spacer></v-spacer>
 				<v-icon @click="minus" flat>mdi-minus</v-icon>
 				<v-icon @click="maximise">mdi-checkbox-blank-outline</v-icon>
