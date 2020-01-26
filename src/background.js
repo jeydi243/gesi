@@ -1,5 +1,5 @@
 'use strict'
-import {app,protocol,BrowserWindow,ipcMain as main} from 'electron'
+import {app,protocol,BrowserWindow,ipcMain as main,screen} from 'electron'
 import {createProtocol,installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 let win
@@ -13,13 +13,13 @@ protocol.registerSchemesAsPrivileged([{
 	}
 }])
 
-function createWindow() {
+function createWindow(w,h) {
 	// Create the browser window.
+	
 	win = new BrowserWindow({
-		width: 1000,
-		height: 800,
+		width: w,
+		height: h,
 		frame:false,
-		transparent: true,
 		show:true,
 		backgroundColor: '#2e2c29',
 		webPreferences: {
@@ -51,7 +51,8 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', async () => {
-	createWindow()
+	const { width, height } = screen.getPrimaryDisplay().workAreaSize
+	createWindow(width,height)
 })
 
 main.on("minus",() =>{
@@ -63,7 +64,7 @@ main.on("close",() =>{
 })
 
 main.on("maximise",() =>{
-	win.maximise
+	win.maximize();
 })
 
 // Exit cleanly on request from parent process in development mode.

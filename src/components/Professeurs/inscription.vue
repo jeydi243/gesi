@@ -161,12 +161,11 @@
         </v-stepper>
     </v-container>
 </template>
-
 <script>
     export default {
-        name: "steppers",
+        name: "inscription-prof",
         data() {
-            return {
+           return {
                 e6: 1,
                 responsables: [{}],
                 responsableNom: "",
@@ -199,14 +198,27 @@
                 ],
             }
         },
+        watch: {
+            menu(val) {
+                val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+            },
+        },
         methods: {
+            save(date) {
+                this.$refs.menu.save(date)
+            },
+            affiche() {
+                console.log("la methode afficher a été appelé ");
+            },
             addResponsable() {
                 this.responsables.add();
             }
-        }
+        },
     }
 </script>
 
 <style>
-
+    img {
+        border-radius: 50%;
+    }
 </style>

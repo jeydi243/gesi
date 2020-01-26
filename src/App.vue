@@ -1,8 +1,8 @@
 <template>
 	<transition name="scale-y">
 		<v-app>
-			<v-system-bar window app style="-webkit-app-region: drag">
-				<v-spacer></v-spacer>
+			<v-system-bar window app>
+				<v-spacer ></v-spacer>
 				<v-icon @click="minus" flat>mdi-minus</v-icon>
 				<v-icon @click="maximise">mdi-checkbox-blank-outline</v-icon>
 				<v-icon @click="closer">mdi-close</v-icon>
@@ -40,7 +40,7 @@
 				<v-container fluid>
 					<transition name="fade" mode="out-in" type="transition" appear>
 						<keep-alive>
-							<router-view to="etudiants"></router-view>
+							<router-view to="{name:'etudiants'}"></router-view>
 						</keep-alive>
 					</transition>
 				</v-container>
@@ -110,11 +110,12 @@
 		transition: opacity .3s;
 	}
 
-	/* .fade-leave{
-        /* opacity: 1; 
-    } */
 	.fade-leave-active {
 		transition: opacity .2s;
 		opacity: 0;
+	}
+
+	v-spacer {
+		-webkit-app-region: drag
 	}
 </style>
