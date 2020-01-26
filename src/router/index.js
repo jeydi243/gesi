@@ -8,6 +8,7 @@ import professeurs from '../views/professeurs.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  
   {
     path: '/cours',
     name: 'cours',

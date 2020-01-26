@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import VueAnime from 'vue-animejs';
 Vue.use(VueAnime)
 
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -27,9 +27,6 @@
 		</v-toolbar>
 		<v-tabs-items v-model="tab">
 			<v-tab-item v-for="(item, index) in items" :key="index">
-				<!-- <v-card flat>
-					<v-card-text v-text="text"></v-card-text>
-				</v-card> -->
 				<keep-alive> 
 						<component :is="getcurrentComponent(item)"> </component>
 				</keep-alive>
