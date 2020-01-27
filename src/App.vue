@@ -40,7 +40,7 @@
 				<v-container fluid>
 					<transition name="fade" mode="out-in" type="transition" appear>
 						<keep-alive>
-							<router-view to="{name:'etudiants'}"></router-view>
+							<router-view></router-view>
 						</keep-alive>
 					</transition>
 				</v-container>
