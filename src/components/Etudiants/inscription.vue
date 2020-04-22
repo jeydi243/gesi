@@ -112,19 +112,20 @@
 					</v-row>
 					<v-row>
 						<v-col md="4">
-							<v-text-field v-model="anneeInscription" label="Annee Inscription" disabled required></v-text-field>
+							<v-text-field v-model="anneeInscription" label="Annee Inscription" disabled required filled></v-text-field>
+						</v-col>
+						 <v-col md="4">
+							<v-select :items="statuts" label="Statut academique" required filled></v-select>
 						</v-col>
 						<v-col md="4">
-							<v-text-field v-model="pourcentageObtenuTest" label="% test admission" required></v-text-field>
-						</v-col>
-						<v-col md="4">
-							<v-select :items="niveau" label="Niveau academique"></v-select>
+							<v-select :items="niveau" label="Niveau academique" required filled></v-select>
 						</v-col>
 						
 					</v-row>
                     <v-row>
+                       
                         <v-col md="4">
-							<v-select :items="statuts" label="Statut academique" required></v-select>
+							<v-text-field v-model="pourcentageObtenuTest" label="% test admission" required :rules="prcRules" filled></v-text-field>
 						</v-col>
 						<v-col md="4">
 							<v-text-field
@@ -132,11 +133,12 @@
 								readonly
 								label="Date Diplome Esis"
 								hint="a definir prochainement"
-								required
+								disabled=""
+                                filled=""
 							></v-text-field>
 						</v-col>
                         <v-col md="4">
-							<v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required></v-text-field>
+							<v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required filled :rules="prcRules"></v-text-field>
 						</v-col>
                     </v-row>
 					<v-btn color="primary" @click="e6 = 3">Continue</v-btn>
@@ -147,13 +149,13 @@
 			<v-stepper-content step="3">
 				<v-row>
 					<v-col md="3">
-						<v-text-field v-model="responsableNom" label="Nom responsable"></v-text-field>
+						<v-text-field v-model="responsableNom" label="Nom responsable" filled></v-text-field>
 					</v-col>
 					<v-col md="3">
-						<v-text-field v-model="responsableNumero" label="Telephone responsable"></v-text-field>
+						<v-text-field v-model="responsableNumero" label="Telephone responsable" filled></v-text-field>
 					</v-col>
 					<v-col md="3">
-						<v-text-field v-model="responsableEmail" label="Email responsable"></v-text-field>
+						<v-text-field v-model="responsableEmail" label="Email responsable" filled></v-text-field>
 					</v-col>
 					<v-col md="3">
 						<v-btn @click="addResponsable" rounded color="teal">Ajouter</v-btn>
@@ -196,8 +198,8 @@ export default {
 			responsableEmail: "",
 			niveau: ["PREPA", "G1", "G2", "G3"],
 			again1: false,
-			pourcentageObtenuTest: 0,
 			again2: false,
+			pourcentageObtenuTest: 0,
 			statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
 			date: null,
 			valid: false,
@@ -210,11 +212,15 @@ export default {
 			nickname: "",
 			lastname: "",
 			telRules: [v => !!v || "Ce champ est obligatoire"],
+            email: "",
 			nameRules: [
 				v => !!v || "Ce champ  est obligatoire",
 				v => v.length <= 10 || "10 caracteres au plus sont permis"
 			],
-			email: "",
+            prcRules: [
+				v => !!v || "Ce champ  est obligatoire",
+				v => parseInt(v) >= 55 || "Le pourcentage doit etre superieur a 55"
+			],
 			emailRules: [
 				v => !!v || "l'email est obligatoire",
 				v => /.+@.+/.test(v) || "l'Email doit etre valide"
