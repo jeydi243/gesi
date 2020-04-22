@@ -16,14 +16,13 @@
             </v-card>
         </v-dialog>
 
-        <h1>Formulaire d'Inscription</h1>
+        <h1>Inscription</h1>
         <v-stepper v-model="e6" vertical>
             <v-stepper-step :complete="e6 > 1" step="1" editable>Informations de Base</v-stepper-step>
             <v-stepper-content step="1">
                 <v-container fluid>
                     <v-row>
                         <v-col md="8">
-                            <v-card raised shaped>
                                 <v-container>
                                     <v-row>
                                         <v-col cols="6">
@@ -81,7 +80,7 @@
                                         </v-col>
                                     </v-row>
                                 </v-container>
-                            </v-card>
+                            
                         </v-col>
                         <v-col md="4">
                             <profile />
@@ -150,7 +149,7 @@
                         <v-text-field v-model="responsableEmail" label="Email responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
-                        <v-btn @click="addResponsable" rounded color="teal">Ajouter</v-btn>
+                        <v-btn @click="addResponsable" rounded color="teal" text>Ajouter</v-btn>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -269,6 +268,9 @@
                 } else {
                     this.dialog = true;
                 }
+            },
+            submitForms(){
+
             }
         }
     };
