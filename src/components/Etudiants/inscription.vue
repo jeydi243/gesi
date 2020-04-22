@@ -1,5 +1,21 @@
 <template>
     <v-container>
+        <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+                <v-card-title class="headline">Avertissement</v-card-title>
+                <v-card-text>
+                    Vous ne pouvez ajouter que deux responsables !
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" text @click="dialog = false">
+                        Okay !
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <h1>Formulaire d'Inscription</h1>
         <v-stepper v-model="e6" vertical>
             <v-stepper-step :complete="e6 > 1" step="1" editable>Informations de Base</v-stepper-step>
@@ -90,7 +106,6 @@
                             <v-text-field v-model="sectionObtention" label="Section obtention diplome" required filled>
                             </v-text-field>
                         </v-col>
-
                     </v-row>
                     <v-row>
                         <v-col md="4">
@@ -103,17 +118,15 @@
                         <v-col md="4">
                             <v-select :items="niveau" label="Niveau academique" required filled></v-select>
                         </v-col>
-
                     </v-row>
                     <v-row>
-
                         <v-col md="4">
                             <v-text-field v-model="pourcentageObtenuTest" label="% test admission" required
                                 :rules="prcRules" filled></v-text-field>
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="dateDiplomeEsis" readonly label="Date Diplome Esis"
-                                hint="a definir prochainement" disabled="" filled=""></v-text-field>
+                                hint="a definir prochainement" disabled filled></v-text-field>
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required filled
@@ -131,7 +144,7 @@
                         <v-text-field v-model="responsableNom" label="Nom responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
-                        <v-text-field v-model="responsableNumero" label="Telephone responsable" filled></v-text-field>
+                        <v-text-field v-model="responsableTel" label="Telephone responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
                         <v-text-field v-model="responsableEmail" label="Email responsable" filled></v-text-field>
@@ -184,6 +197,7 @@
         data() {
             return {
                 e6: 1,
+                dialog: false,
                 pourcentageExetat: 0,
                 sectionObtention: "",
                 adresseEcole: "",
@@ -220,7 +234,9 @@
                 ],
                 prcRules: [
                     v => !!v || "Ce champ  est obligatoire",
-                    v => parseInt(v) >= 55 || "Le pourcentage doit etre superieur a 55"
+                    v =>
+                    parseInt(v) >= 55 ||
+                    "Le pourcentage doit etre superieur a 55"
                 ],
                 emailRules: [
                     v => !!v || "l'email est obligatoire",
@@ -241,15 +257,18 @@
                 console.log("la methode afficher a été appelé ");
             },
             addResponsable() {
-                this.responsables.push({
-                    nom: this.responsableNom,
-                    tel: this.responsableTel,
-                    email: this.responsableEmail
-                });
-
-                this.responsableNom = "" 
-                this.responsableTel = ""
-                this.responsableEmail = ""          
+                if (this.responsables.length < 2) {
+                    this.responsables.push({
+                        nom: this.responsableNom,
+                        tel: this.responsableTel,
+                        email: this.responsableEmail
+                    });
+                    this.responsableNom = "";
+                    this.responsableTel = "";
+                    this.responsableEmail = "";
+                } else {
+                    this.dialog = true;
+                }
             }
         }
     };
