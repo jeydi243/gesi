@@ -99,33 +99,34 @@
 			<v-stepper-content step="2">
 				<v-container fluid>
 					<v-row>
-						<v-col md="3">
-							<v-text-field v-model="ecoleOrigine" readonly label="Nom ecole origine" required></v-text-field>
+						<v-col md="4">
+							<v-text-field v-model="ecoleOrigine" readonly label="Nom ecole origine" required filled></v-text-field>
 						</v-col>
-						<v-col md="3">
-							<v-text-field v-model="adresseEcole" label="Adresse ecole" required></v-text-field>
+						<v-col md="4">
+							<v-text-field v-model="adresseEcole" label="Adresse ecole" required filled></v-text-field>
 						</v-col>
-						<v-col md="3">
-							<v-text-field v-model="sectionObtention" label="Section obtention diplome" required></v-text-field>
+						<v-col md="4">
+							<v-text-field v-model="sectionObtention" label="Section obtention diplome" required filled></v-text-field>
 						</v-col>
-						<v-col md="2">
-							<v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required></v-text-field>
-						</v-col>
+						
 					</v-row>
 					<v-row>
-						<v-col md="2">
+						<v-col md="4">
 							<v-text-field v-model="anneeInscription" label="Annee Inscription" disabled required></v-text-field>
 						</v-col>
-						<v-col md="2">
+						<v-col md="4">
 							<v-text-field v-model="pourcentageObtenuTest" label="% test admission" required></v-text-field>
 						</v-col>
-						<v-col md="2">
+						<v-col md="4">
 							<v-select :items="niveau" label="Niveau academique"></v-select>
 						</v-col>
-						<v-col md="2">
+						
+					</v-row>
+                    <v-row>
+                        <v-col md="4">
 							<v-select :items="statuts" label="Statut academique" required></v-select>
 						</v-col>
-						<v-col md="2">
+						<v-col md="4">
 							<v-text-field
 								v-model="dateDiplomeEsis"
 								readonly
@@ -134,7 +135,10 @@
 								required
 							></v-text-field>
 						</v-col>
-					</v-row>
+                        <v-col md="4">
+							<v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required></v-text-field>
+						</v-col>
+                    </v-row>
 					<v-btn color="primary" @click="e6 = 3">Continue</v-btn>
 				</v-container>
 			</v-stepper-content>
