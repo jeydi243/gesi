@@ -177,9 +177,10 @@
                 <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step step="4" editable>View setup instructions</v-stepper-step>
+            <v-stepper-step step="4" editable>Informations génerées</v-stepper-step>
             <v-stepper-content step="4">
-                <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
+               <v-row></v-row>
+               <v-row></v-row>
                 <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
                 <v-btn text>Cancel</v-btn>
             </v-stepper-content>

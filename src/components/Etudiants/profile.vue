@@ -1,18 +1,19 @@
 <template>
-    <v-card raised shaped>
+    <v-card raised rounded>
         <v-container>
-            <v-row align="center" justify="center">
+            <v-row align="center" justify-md="center">
                 <v-col cols="12">
                     <v-row justify="center">
                         <v-img src="@/assets/shou.jpg" alt="Avatar" max-height="150" max-width="150"
-                            style="border-radius:50%;margin-right:-35px">
+                            style="border-radius:50%;">
                         </v-img>
-                        <v-btn class="mx-2" fab dark color="indigo" style="margin-left:-55px;">
-                            <v-icon dark>mdi-plus</v-icon>
-                        </v-btn>
-
                     </v-row>
                 </v-col>
+            </v-row>
+            <v-row align="center" justify-md="center">
+                <v-btn class="mx-2"  dark color="indigo">
+                    <v-icon dark>mdi-plus</v-icon>Ajouter
+                </v-btn>
             </v-row>
         </v-container>
     </v-card>
