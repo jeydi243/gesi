@@ -1,39 +1,40 @@
 <template>
     <v-container>
+        <h1>Formulaire d'Inscription</h1>
         <v-stepper v-model="e6" vertical>
-            <v-stepper-step :complete="e6 > 1" step="1" editable>Informations de base</v-stepper-step>
+            <v-stepper-step :complete="e6 > 1" step="1" editable>Informations de Base</v-stepper-step>
             <v-stepper-content step="1">
                 <v-container fluid>
                     <v-row>
                         <v-col md="8">
-                            <v-card raised>
+                            <v-card raised shaped>
                                 <v-container>
                                     <v-row>
                                         <v-col cols="6">
                                             <v-text-field v-model="firstname" :rules="nameRules" :counter="10"
-                                                label="Nom" required>
+                                                label="Nom" required filled>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="6">
                                             <v-text-field v-model="lastname" :rules="nameRules" :counter="10"
-                                                label="Post-nom" required> </v-text-field>
+                                                label="Post-nom" required filled> </v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
                                         <v-col cols="6">
-                                            <v-text-field v-model="nickname" :rules="nameRules" label="Prenom" required>
+                                            <v-text-field v-model="nickname" :rules="nameRules" label="Prenom" required filled>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="6">
                                             <v-text-field v-model="telephone" :rules="telRules"
-                                                label="Numero de telephone" required>
+                                                label="Numero de telephone" required filled>
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
                                         <v-col md="4">
                                             <header>Genre</header>
-                                            <v-radio-group v-model="radios" :mandatory="false" row>
+                                            <v-radio-group v-model="genre" :mandatory="false" row>
                                                 <v-radio label="F" value="F"></v-radio>
                                                 <v-radio label="M" value="M"></v-radio>
                                             </v-radio-group>
@@ -74,30 +75,14 @@
                             </v-card>
                         </v-col>
                         <v-col md="4">
-                            <v-card raised shaped>
-                                <v-container align-center>
-                                    <v-row align="center" justify="center">
-                                        <v-col cols="6">
-                                            <v-badge bordered color="error" icon="mdi-lock" overlap>
-                                                <img src="@/assets/logo.png" alt="Avatar"
-                                                    style="width:150px;height:150px">
-                                            </v-badge>
-                                            <v-badge bordered color="error" icon="mdi-lock" overlap>
-                                                <v-btn class="white--text" color="error" depressed>
-                                                    Lock Account
-                                                </v-btn>
-                                            </v-badge>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-card>
+                            <profile />
                         </v-col>
                     </v-row>
                 </v-container>
                 <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step :complete="e6 > 2" step="2" editable>Informations complementaires</v-stepper-step>
+            <v-stepper-step :complete="e6 > 2" step="2" editable>Informations Complementaires</v-stepper-step>
             <v-stepper-content step="2">
                 <v-container fluid>
                     <v-row>
@@ -176,11 +161,24 @@
     </v-container>
 </template>
 <script>
+import profile from '@/components/Etudiants/profile.vue'
     export default {
         name: "inscription",
+        components:{
+            profile
+        },
         data() {
             return {
                 e6: 1,
+                pourcentageExetat:0,
+                sectionObtention:"",
+                adresseEcole:"",
+                ecoleOrigine:"",
+                genre:"F",
+                noteSante:"",
+                telephone:"",
+                emailPerso:"",
+                dateDiplomeEsis:Date,
                 responsables: [{}],
                 responsableNom: "",
                 responsableNumero: "",
@@ -234,5 +232,8 @@
 <style>
     img {
         border-radius: 50%;
+    }
+    #btnDownload {
+        margin: -25px;
     }
 </style>

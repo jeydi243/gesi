@@ -1,7 +1,7 @@
 <template>
 	<transition name="scale-y">
 		<v-app>
-			<v-system-bar window app>
+			<v-system-bar window app id="sysbar">
 				<v-spacer ></v-spacer>
 				<v-icon @click="minus" flat>mdi-minus</v-icon>
 				<v-icon @click="maximise">mdi-checkbox-blank-outline</v-icon>
@@ -36,18 +36,17 @@
 
 			</v-navigation-drawer>
 
-			<v-content>
-				<v-container fluid>
+			<v-content color="white">
+				<v-container color="white">
 					<transition name="fade" mode="out-in" type="transition" appear>
 						<keep-alive>
-							<router-view></router-view>
+							<router-view ></router-view>
 						</keep-alive>
 					</transition>
 				</v-container>
 			</v-content>
 
 			<v-footer app></v-footer>
-
 		</v-app>
 	</transition>
 </template>
@@ -102,6 +101,9 @@
 	};
 </script>
 <style scoped>
+	html{
+		overflow-y: scroll;
+	}
 	.fade-enter {
 		opacity: 0;
 	}
@@ -114,8 +116,10 @@
 		transition: opacity .2s;
 		opacity: 0;
 	}
-
+	#sysbar{
+		background-color: yellow;
+	}
 	v-spacer {
-		-webkit-app-region: drag
+		-webkit-app-region: drag;
 	}
 </style>

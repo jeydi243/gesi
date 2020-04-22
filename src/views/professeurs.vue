@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<v-toolbar color="cyan" dense flat dark>
+		<v-toolbar dense flat>
 			<v-app-bar-nav-icon></v-app-bar-nav-icon>
 
 			<v-toolbar-title>Professeurs</v-toolbar-title>
