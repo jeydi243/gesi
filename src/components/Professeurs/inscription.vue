@@ -77,7 +77,7 @@
                 <v-container fluid>
                     <v-row>
                         <v-col md="8">
-                            <v-file-input label="Diplomes" required filled multiple hint="Selection plus ou moins deux" autofocus>
+                            <v-file-input label="Diplomes" required filled multiple hint="Selection plus ou moins deux" autofocus chips counter="2">
                             </v-file-input>
                         </v-col>
                         <v-col md="4">
@@ -95,8 +95,15 @@
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="presentation" readonly label="Presentation" required filled>
+                            <v-text-field v-model="tauxHoraire" readonly label="Taux Horaires" required filled>
                             </v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-textarea label="Presentation" filled>
+
+                            </v-textarea>
                         </v-col>
                     </v-row>
                     <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
@@ -125,6 +132,7 @@ import profile from '@/components/global/profile.vue'
                 again1: false,
                 presentation:"",
                 adresseEntreprise:"",
+                tauxHoraire:0,
                 again2: false,
                 statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
                 date: null,
