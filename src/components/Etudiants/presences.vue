@@ -1,5 +1,5 @@
 <template>
-    <div class="et">
+    <div>
         presences
     </div>
 </template>

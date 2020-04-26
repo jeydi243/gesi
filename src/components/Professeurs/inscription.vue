@@ -76,12 +76,9 @@
             <v-stepper-content step="2">
                 <v-container fluid>
                     <v-row>
-                        <v-col md="4">
-                            <v-text-field v-model="diplome1" readonly label="Diplome 1" required filled>
-                            </v-text-field>
-                        </v-col>
-                        <v-col md="4">
-                            <v-text-field v-model="diplome2" label="Diplome 2" filled></v-text-field>
+                        <v-col md="8">
+                            <v-file-input label="Diplomes" required filled multiple hint="Selection plus ou moins deux" autofocus>
+                            </v-file-input>
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="sectionObtention" label="Section obtention diplome" required filled>
@@ -116,13 +113,18 @@
     </v-container>
 </template>
 <script>
+import profile from '@/components/global/profile.vue'
     export default {
         name: "inscription-prof",
+        components:{
+            profile
+        },
         data() {
             return {
                 e6: 1,
                 again1: false,
                 presentation:"",
+                adresseEntreprise:"",
                 again2: false,
                 statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
                 date: null,

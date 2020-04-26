@@ -1,5 +1,5 @@
 <template>
-    <div class="par">
+    <div>
         parcours
     </div>
 </template>

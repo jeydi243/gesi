@@ -197,8 +197,7 @@
 </template>
 <script>
     const cryptoRandomString = require('crypto-random-string');
-
-    import profile from "@/components/Etudiants/profile.vue";
+    import profile from "@/components/global/profile.vue";
     export default {
         name: "inscription",
         components: {
