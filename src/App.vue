@@ -2,10 +2,20 @@
 	<transition name="scale-y">
 		<v-app>
 			<v-system-bar window app id="sysbar">
-				<v-spacer ></v-spacer>
-				<v-icon @click="minus" flat>mdi-minus</v-icon>
-				<v-icon @click="maximise">mdi-checkbox-blank-outline</v-icon>
-				<v-icon @click="closer">mdi-close</v-icon>
+				<v-container fluid>
+					<v-row>
+						<v-spacer></v-spacer>
+						<v-btn @click="minus" text>
+							<v-icon>mdi-minus</v-icon>
+						</v-btn>
+						<v-btn @click="maximise" text>
+							<v-icon>mdi-checkbox-blank-outline</v-icon>
+						</v-btn>
+						<v-btn text color="primary" @click="closer">
+							<v-icon>mdi-close</v-icon>
+						</v-btn>
+					</v-row>
+				</v-container>
 			</v-system-bar>
 
 			<v-navigation-drawer dark app color="#001B48" center>
@@ -36,11 +46,11 @@
 
 			</v-navigation-drawer>
 
-			<v-content color="white">
-				<v-container color="white">
+			<v-content id="cf">
+				<v-container fluid>
 					<transition name="fade" mode="out-in" type="transition" appear>
 						<keep-alive>
-							<router-view ></router-view>
+							<router-view></router-view>
 						</keep-alive>
 					</transition>
 				</v-container>
@@ -101,9 +111,14 @@
 	};
 </script>
 <style scoped>
-	html{
-		overflow-y: scroll;
+	#cf {
+		background-color: #FFFFFF;
 	}
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
 	.fade-enter {
 		opacity: 0;
 	}
@@ -116,9 +131,11 @@
 		transition: opacity .2s;
 		opacity: 0;
 	}
-	#sysbar{
+
+	#sysbar {
 		background-color: yellow;
 	}
+
 	v-spacer {
 		-webkit-app-region: drag;
 	}

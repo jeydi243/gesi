@@ -23,64 +23,64 @@
                 <v-container fluid>
                     <v-row>
                         <v-col md="8">
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="6">
-                                            <v-text-field v-model="firstname" :rules="nameRules" :counter="10"
-                                                label="Nom" required filled></v-text-field>
-                                        </v-col>
-                                        <v-col cols="6">
-                                            <v-text-field v-model="lastname" :rules="nameRules" :counter="10"
-                                                label="Post-nom" required filled></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="6">
-                                            <v-text-field v-model="nickname" :rules="nameRules" label="Prenom" required
-                                                filled></v-text-field>
-                                        </v-col>
-                                        <v-col cols="6">
-                                            <v-text-field v-model="telephone" :rules="telRules"
-                                                label="Numero de telephone" required filled></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col md="6">
-                                            <v-select v-model="genre" label="Genre" :items="genres" required filled>
-                                            </v-select>
-                                        </v-col>
-                                        <v-spacer></v-spacer>
-                                        <v-col md="6">
-                                            <v-menu v-model="menu" :close-on-content-click="false"
-                                                transition="scale-transition" ref="menu" offset-y>
-                                                <template v-slot:activator="{ on }">
-                                                    <v-text-field v-model="date" label="Date de naissance" readonly
-                                                        v-on="on" filled></v-text-field>
-                                                </template>
-                                                <v-date-picker ref="picker" v-model="date"
-                                                    :max="new Date().toISOString().substr(0, 10)" min="1996-01-01"
-                                                    @change="save"></v-date-picker>
-                                            </v-menu>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col md="6">
-                                            <v-text-field v-model="adresse" label="Adresse physique" filled>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col md="6">
-                                            <v-text-field v-model="emailPerso" label="Email personnel" filled>
-                                            </v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col md="12">
-                                            <v-textarea v-model="noteSante" label="Note de sante personnel" solo
-                                                name="input-7-4"></v-textarea>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            
+                            <v-container>
+                                <v-row>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="firstname" :rules="nameRules" :counter="10" label="Nom"
+                                            required filled></v-text-field>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="lastname" :rules="nameRules" :counter="10"
+                                            label="Post-nom" required filled></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="nickname" :rules="nameRules" label="Prenom" required
+                                            filled></v-text-field>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="telephone" :rules="telRules" label="Numero de telephone"
+                                            required filled></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col md="6">
+                                        <v-select v-model="genre" label="Genre" :items="genres" required filled>
+                                        </v-select>
+                                    </v-col>
+                                    <v-spacer></v-spacer>
+                                    <v-col md="6">
+                                        <v-menu v-model="menu" :close-on-content-click="false"
+                                            transition="scale-transition" ref="menu" offset-y>
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field v-model="date" label="Date de naissance" readonly
+                                                    v-on="on" filled></v-text-field>
+                                            </template>
+                                            <v-date-picker ref="picker" v-model="date"
+                                                :max="new Date().toISOString().substr(0, 10)" min="1996-01-01"
+                                                @change="save"></v-date-picker>
+                                        </v-menu>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col md="6">
+                                        <v-text-field v-model="adresse" label="Adresse physique" filled>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col md="6">
+                                        <v-text-field v-model="emailPerso" label="Email personnel" filled>
+                                        </v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col md="12">
+                                        <v-textarea v-model="noteSante" label="Note de sante personnel" solo
+                                            name="input-7-4"></v-textarea>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+
                         </v-col>
                         <v-col md="4">
                             <profile />
@@ -174,13 +174,21 @@
                         </v-simple-table>
                     </v-col>
                 </v-row>
-                <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
+                <v-btn color="primary" @click="FinirInscription">Finir l'inscription</v-btn>
             </v-stepper-content>
 
             <v-stepper-step step="4" editable>Informations génerées</v-stepper-step>
             <v-stepper-content step="4">
-               <v-row></v-row>
-               <v-row></v-row>
+                <v-row>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="passWord" label="Mot de Passe email"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                </v-row>
+                <v-row>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="CodeAcces" label="Code d'acces"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                </v-row>
                 <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
                 <v-btn text>Cancel</v-btn>
             </v-stepper-content>
@@ -188,6 +196,8 @@
     </v-container>
 </template>
 <script>
+    const cryptoRandomString = require('crypto-random-string');
+
     import profile from "@/components/Etudiants/profile.vue";
     export default {
         name: "inscription",
@@ -196,6 +206,10 @@
         },
         data() {
             return {
+                emailEsis:"ekadiongo@yahoo.fr",
+                CodeAcces:"",
+                der:true,
+                passWord:"",
                 e6: 1,
                 dialog: false,
                 pourcentageExetat: 0,
@@ -270,8 +284,9 @@
                     this.dialog = true;
                 }
             },
-            submitForms(){
-
+            FinirInscription() {
+                this.passWord = cryptoRandomString({length: 10, type: 'numeric'});
+                this.e6 = 4;
             }
         }
     };
