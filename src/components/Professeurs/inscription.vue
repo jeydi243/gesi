@@ -29,7 +29,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="6">
-                                        <v-select v-model="genre" label="Genre" :items="genres" required filled>
+                                        <v-select v-model="titre" label="Titre" :items="titres" required filled>
                                         </v-select>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -58,8 +58,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="12">
-                                        <v-textarea v-model="noteSante" label="Note de sante personnel" solo
-                                            name="input-7-4"></v-textarea>
+                                        <v-text-field v-model="matricule" label="Matricule" filled></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -78,11 +77,11 @@
                 <v-container fluid>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="ecoleOrigine" readonly label="Nom ecole origine" required filled>
+                            <v-text-field v-model="diplome1" readonly label="Diplome 1" required filled>
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="adresseEcole" label="Adresse ecole" required filled></v-text-field>
+                            <v-text-field v-model="diplome2" label="Diplome 2" filled></v-text-field>
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="sectionObtention" label="Section obtention diplome" required filled>
@@ -91,54 +90,20 @@
                     </v-row>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="anneeInscription" label="Annee Inscription" disabled required filled>
+                            <v-text-field v-model="nomEntreprise" readonly label="Nom de L'entreprise" required filled>
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-select :items="statuts" label="Statut academique" required filled></v-select>
+                            <v-text-field v-model="adresseEntreprise" readonly label="Adresse de L'entreprise" required filled>
+                            </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-select :items="niveau" label="Niveau academique" required filled></v-select>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col md="4">
-                            <v-text-field v-model="pourcentageObtenuTest" label="% test admission" required
-                                :rules="prcRules" filled></v-text-field>
-                        </v-col>
-                        <v-col md="4">
-                            <v-text-field v-model="dateDiplomeEsis" readonly label="Date Diplome Esis"
-                                hint="a definir prochainement" disabled filled></v-text-field>
-                        </v-col>
-                        <v-col md="4">
-                            <v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required filled
-                                :rules="prcRules"></v-text-field>
+                            <v-text-field v-model="presentation" readonly label="Presentation" required filled>
+                            </v-text-field>
                         </v-col>
                     </v-row>
                     <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
                 </v-container>
-            </v-stepper-content>
-
-            <v-stepper-step :complete="e6 > 3" step="3" editable>Informations du Responsables</v-stepper-step>
-            <v-stepper-content step="3">
-                <v-row>
-                    <v-col md="3">
-                        <v-text-field v-model="responsableNom" label="Nom responsable"></v-text-field>
-                    </v-col>
-                    <v-col md="3">
-                        <v-text-field v-model="responsableNumero" label="Telephone responsable">
-                        </v-text-field>
-                    </v-col>
-                    <v-col md="3">
-                        <v-text-field v-model="responsableEmail" label="Email responsable">
-                        </v-text-field>
-                    </v-col>
-                    <v-col md="3">
-                        <v-btn @click="addResponsable" rounded color="teal">Ajouter</v-btn>
-                    </v-col>
-                </v-row>
-                <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
-
             </v-stepper-content>
 
             <v-stepper-step step="4" editable>View setup instructions</v-stepper-step>
@@ -156,19 +121,14 @@
         data() {
             return {
                 e6: 1,
-                responsables: [{}],
-                responsableNom: "",
-                responsableNumero: "",
-                responsableEmail: "",
-                niveau: ["PREPA", "G1", "G2", "G3"],
                 again1: false,
-                pourcentageObtenuTest: 0,
+                presentation:"",
                 again2: false,
                 statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
                 date: null,
                 valid: false,
                 menu: false,
-                genres: ["M", "F"],
+                titres: ["Professeur Ordinaire", "Assistant", "Chef de Travaux"],
                 adresse: "",
                 anneeInscription: new Date().getFullYear().toString(),
                 tel: '',

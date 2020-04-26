@@ -6,11 +6,12 @@
 </template>
 
 <script>
-    import inscrition from "@/components/Professeurs/inscription.vue"
+    import inscription from "@/components/Professeurs/inscription.vue"
+    
     export default {
         name: "annuaire",
         components: {
-            inscrition
+            inscription
         },
         data() {
             return {

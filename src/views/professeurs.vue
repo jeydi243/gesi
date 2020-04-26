@@ -37,15 +37,16 @@
 
 <script>
 	import annuaire from "@/components/Professeurs/annuaire.vue"
+	import evaluation from "@/components/Professeurs/evaluation.vue"
 	export default {
 		name: 'professeurs',
 		components:{
-			annuaire
+			annuaire,evaluation
 		},
 		data(){
 			return {
 				tab: null,
-				items :["annuaire","Evaluation"],
+				items :["annuaire","evaluation"],
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 			}
 		},
