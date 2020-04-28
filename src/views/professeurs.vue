@@ -26,7 +26,7 @@
 			</template>
 		</v-toolbar>
 		<v-tabs-items v-model="tab">
-			<v-tab-item v-for="(item, index1) in items" :key="index1">
+			<v-tab-item v-for="(item, index1) in items" :key="index1" transition="scroll-y-transition">
 				<keep-alive> 
 						<component :is="getcurrentComponent(item)"> </component>
 				</keep-alive>

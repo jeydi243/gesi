@@ -26,7 +26,7 @@
 			</template>
 		</v-toolbar>
 		<v-tabs-items v-model="tab">
-			<v-tab-item v-for="(item, index) in items" :key="index" link>
+			<v-tab-item v-for="(item, index) in items" :key="index" link transition="scroll-y-transition">
 				<v-card flat>
 					<v-card-text v-text="text"></v-card-text>
 				</v-card>

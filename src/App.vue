@@ -46,9 +46,9 @@
 
 			</v-navigation-drawer>
 
-			<v-content id="cf">
+			<v-content id="cf" transition="slide-x-transition">
 				<v-container fluid>
-					<transition name="fade" mode="out-in" type="transition" appear>
+					<transition name="fade" mode="out-in" type="transition">
 						<keep-alive>
 							<router-view></router-view>
 						</keep-alive>
@@ -124,7 +124,7 @@
 	}
 
 	.fade-enter-active {
-		transition: opacity .3s;
+		transition: opacity .5s;
 	}
 
 	.fade-leave-active {

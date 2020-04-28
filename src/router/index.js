@@ -3,12 +3,17 @@ import VueRouter from 'vue-router'
 import cours from '../views/cours.vue'
 import gestion from '../views/gestion.vue'
 import etudiants from '../views/etudiants.vue'
+import school from "@/components/global/school.vue"
 import professeurs from '../views/professeurs.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  
+  {
+    path: '/',
+    name: 'accueil',
+    component: school
+  },
   {
     path: '/cours',
     name: 'cours',
@@ -32,6 +37,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+
   mode: 'history',
   base: process.env.BASE_URL,
   routes

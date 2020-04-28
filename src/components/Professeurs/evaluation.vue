@@ -6,10 +6,6 @@
 <script>
     export default {
         name: "evaluation",
-        data() {
-
-        },
-
     }
 </script>
 <style lang="">

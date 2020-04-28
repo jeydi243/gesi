@@ -23,7 +23,7 @@
                                             filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="telephone" :rules="telRules" label="Numero de telephone"
+                                        <v-text-field v-model="tel" :rules="telRules" label="Numero de telephone"
                                             required filled></v-text-field>
                                     </v-col>
                                 </v-row>
@@ -64,7 +64,7 @@
                             </v-container>
 
                         </v-col>
-                        <v-col md="4">
+                        <v-col md="3">
                             <profile />
                         </v-col>
                     </v-row>
@@ -110,11 +110,15 @@
                 </v-container>
             </v-stepper-content>
 
-            <v-stepper-step step="4" editable>View setup instructions</v-stepper-step>
-            <v-stepper-content step="4">
-                <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
-                <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
-                <v-btn text>Cancel</v-btn>
+            <v-stepper-step step="3" editable>Informations générées</v-stepper-step>
+            <v-stepper-content step="3">
+                <v-row>
+                    <v-col md="4"><v-text-field readonly filled label="Email Esis" placeholder="example@esis.com"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field readonly filled label="Mot de passe" placeholder="0213654789"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field readonly filled label="Surnom"></v-text-field></v-col>
+                </v-row>
+                <v-btn color="primary" @click="e6 = 1">Finir</v-btn>
+
             </v-stepper-content>
         </v-stepper>
     </v-container>
@@ -132,12 +136,14 @@ import profile from '@/components/global/profile.vue'
                 again1: false,
                 presentation:"",
                 adresseEntreprise:"",
+                nomEntreprise:"",
                 tauxHoraire:0,
+                matricule:"",
                 again2: false,
-                statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
                 date: null,
                 valid: false,
                 menu: false,
+                titre:"",
                 titres: ["Professeur Ordinaire", "Assistant", "Chef de Travaux"],
                 adresse: "",
                 anneeInscription: new Date().getFullYear().toString(),
@@ -150,7 +156,7 @@ import profile from '@/components/global/profile.vue'
                     v => !!v || 'Ce champ  est obligatoire',
                     v => v.length <= 10 || '10 caracteres au plus sont permis',
                 ],
-                email: '',
+                emailPerso: '',
                 emailRules: [
                     v => !!v || "l'email est obligatoire",
                     v => /.+@.+/.test(v) || "l'Email doit etre valide",
