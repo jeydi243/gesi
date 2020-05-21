@@ -75,8 +75,8 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="12">
-                                        <v-textarea v-model="noteSante" label="Note de sante personnel" solo
-                                            name="input-7-4"></v-textarea>
+                                        <v-textarea v-model="noteSante" label="Note de sante" 
+                                            name="input-7-4" filled></v-textarea>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -154,7 +154,7 @@
                 </v-row>
                 <v-row>
                     <v-col md="9">
-                        <v-simple-table>
+                        <v-simple-table dark>
                             <template v-slot:default>
                                 <thead>
                                     <tr>

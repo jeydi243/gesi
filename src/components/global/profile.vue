@@ -12,7 +12,7 @@
             </v-row>
             <v-row align="center" justify-md="center">
                 <!-- <v-btn class="mx-2"  dark color="indigo"> -->
-                    <v-file-input dense color="blue" label="Ajouter"></v-file-input>
+                    <v-file-input color="blue" placeholder="Ajouter"></v-file-input>
                 <!-- </v-btn> -->
             </v-row>
         </v-container>

@@ -1,5 +1,5 @@
 <template>
-	<div class="home">
+	<div>
 		<v-toolbar dense flat>
 			<v-app-bar-nav-icon></v-app-bar-nav-icon>
 			<v-toolbar-title>Etudiants</v-toolbar-title>

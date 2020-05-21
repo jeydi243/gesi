@@ -32,7 +32,7 @@
 
 				<v-divider></v-divider>
 
-				<v-list dense nav>
+				<v-list dense nav >
 					<v-list-item v-for="(item,index) in items" :key="index" link @click="sebebe(item.title)">
 						<v-list-item-icon>
 							<v-icon>{{ item.icon }}</v-icon>
@@ -46,9 +46,9 @@
 
 			</v-navigation-drawer>
 
-			<v-content id="cf" transition="slide-x-transition">
+			<v-content id="cf">
 				<v-container fluid>
-					<transition name="fade" mode="out-in" type="transition">
+					<transition name="scroll-y-transition" mode="out-in" type="transition">
 						<keep-alive>
 							<router-view></router-view>
 						</keep-alive>
