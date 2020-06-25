@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 const Etudiant = mongoose.Schema({
     emailEsis: String,
+    emailPerso: String,
     codeAcces: String,
-    der: Boolean,
     passWord: String,
     pourcentageExetat: Number,
     sectionObtention: String,
@@ -12,7 +12,6 @@ const Etudiant = mongoose.Schema({
     genre: String,
     noteSante: String,
     telephone: String,
-    emailPerso: String,
     dateDiplomeEsis: Date,
     responsables: [String], //must be id of responsables
     niveau: String,
@@ -31,7 +30,6 @@ const Etudiant = mongoose.Schema({
         nickname: String,
         lastname: String,
     },
-    email: String,
 })
 
 export default mongoose.model('Etudiant', Etudiant);

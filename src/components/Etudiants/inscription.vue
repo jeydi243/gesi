@@ -26,17 +26,17 @@
                             <v-container>
                                 <v-row>
                                     <v-col cols="6">
-                                        <v-text-field v-model="firstname" :rules="nameRules" :counter="10" label="Nom"
+                                        <v-text-field v-model="name.first" :rules="rules.name" :counter="10" label="Nom"
                                             required filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="lastname" :rules="nameRules" :counter="10"
+                                        <v-text-field v-model="name.last" :rules="rules.name" :counter="10"
                                             label="Post-nom" required filled></v-text-field>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col cols="6">
-                                        <v-text-field v-model="nickname" :rules="nameRules" label="Prenom" required
+                                        <v-text-field v-model="name.nick" :rules="rules.name" label="Prenom" required
                                             filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
@@ -75,8 +75,8 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="12">
-                                        <v-textarea v-model="noteSante" label="Note de sante" 
-                                            name="input-7-4" filled></v-textarea>
+                                        <v-textarea v-model="noteSante" label="Note de sante" name="input-7-4" filled>
+                                        </v-textarea>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -108,7 +108,8 @@
                     </v-row>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="anneeInscription" label="Annee Inscription" disabled required filled>
+                            <v-text-field v-model="anneeInscriptionEsis" label="Annee Inscription" disabled required
+                                filled>
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
@@ -120,8 +121,8 @@
                     </v-row>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="pourcentageObtenuTest" label="% test admission" required
-                                :rules="prcRules" filled></v-text-field>
+                            <v-text-field v-model="pourcentageObtenuTestAdmission" label="% test admission" required
+                                :rules="rules.pourcentage" filled></v-text-field>
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="dateDiplomeEsis" readonly label="Date Diplome Esis"
@@ -129,7 +130,7 @@
                         </v-col>
                         <v-col md="4">
                             <v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required filled
-                                :rules="prcRules"></v-text-field>
+                                :rules="rules.pourcentage"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
@@ -180,14 +181,32 @@
             <v-stepper-step step="4" editable>Informations génerées</v-stepper-step>
             <v-stepper-content step="4">
                 <v-row>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="passWord" label="Mot de Passe email"></v-text-field></v-col>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                            label="Email Esis"></v-text-field>
+                    </v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="passWord"
+                            label="Mot de Passe email"></v-text-field>
+                    </v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                            label="Email Esis"></v-text-field>
+                    </v-col>
                 </v-row>
                 <v-row>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="codeAcces" label="Code d'acces"></v-text-field></v-col>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="codeAcces"
+                            label="Code d'acces"></v-text-field>
+                    </v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                            label="Email Esis"></v-text-field>
+                    </v-col>
+                    <v-col md="4">
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                            label="Email Esis"></v-text-field>
+                    </v-col>
                 </v-row>
                 <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
                 <v-btn text>Cancel</v-btn>
@@ -205,58 +224,64 @@
         },
         data() {
             return {
-                etudiant:{
+                etudiant: {
+                    emailEsis: "ekadiongo@yahoo.fr",
+                    emailPerso: "",
+                    codeAcces: "",
+                    passWord: "",
+                    pourcentageExetat: 0,
+                    pourcentageObtenuTestAdmission: 0,
+                    sectionObtention: "",
+                    adresseEcole: "",
+                    adressePersonel: "",
+                    ecoleOrigine: "",
+                    genre: "F",
+                    noteSante: "",
+                    dateDiplomeEsis: Date,
+                    anneeInscriptionEsis: new Date().getFullYear().toString(),
+                    telephone: "",
+                    genres: ["M", "F"],
+                    niveau: ["PREPA", "G1", "G2", "G3"],
+                    statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
+                    name: {
+                        first: "",
+                        last: "",
+                        nick: "",
+                    },
+                    responsable: {
+                        nom: "",
+                        telephone: "",
+                        email: "",
+                    },
 
                 },
-                emailEsis:"ekadiongo@yahoo.fr",
-                codeAcces:"",
-                passWord:"",
+                rules: {
+                    name: [
+                        v => !!v || "Ce champ  est obligatoire",
+                        v => v.length <= 10 || "10 caracteres au plus sont permis"
+                    ],
+                    pourcentages: [
+                        v => !!v || "Ce champ  est obligatoire",
+                        v => parseInt(v) >= 55 ||"Le pourcentage doit etre superieur a 55"
+                    ],
+                    email: [
+                        v => !!v || "l'email est obligatoire",
+                        v => /.+@.+/.test(v) || "l'Email doit etre valide"
+                    ]
+                },
                 e6: 1,
                 dialog: false,
-                pourcentageExetat: 0,
-                sectionObtention: "",
-                adresseEcole: "",
-                ecoleOrigine: "",
-                genre: "F",
-                noteSante: "",
-                telephone: "",
-                emailPerso: "",
-                dateDiplomeEsis: Date,
                 responsables: [],
-                responsableNom: "",
-                responsableTel: "",
-                responsableEmail: "",
-                niveau: ["PREPA", "G1", "G2", "G3"],
                 again1: false,
                 again2: false,
-                pourcentageObtenuTest: 0,
-                statuts: ["Candidat", "Etudiant", "Diplomé", "Abandon", "Renvoi"],
                 date: null,
                 valid: false,
                 menu: false,
-                genres: ["M", "F"],
-                adresse: "",
-                anneeInscription: new Date().getFullYear().toString(),
+
                 tel: "",
-                firstname: "",
-                nickname: "",
-                lastname: "",
                 telRules: [v => !!v || "Ce champ est obligatoire"],
                 email: "",
-                nameRules: [
-                    v => !!v || "Ce champ  est obligatoire",
-                    v => v.length <= 10 || "10 caracteres au plus sont permis"
-                ],
-                prcRules: [
-                    v => !!v || "Ce champ  est obligatoire",
-                    v =>
-                    parseInt(v) >= 55 ||
-                    "Le pourcentage doit etre superieur a 55"
-                ],
-                emailRules: [
-                    v => !!v || "l'email est obligatoire",
-                    v => /.+@.+/.test(v) || "l'Email doit etre valide"
-                ]
+
             };
         },
         watch: {
@@ -286,7 +311,10 @@
                 }
             },
             FinirInscription() {
-                this.passWord = cryptoRandomString({length: 10, type: 'numeric'});
+                this.passWord = cryptoRandomString({
+                    length: 10,
+                    type: 'numeric'
+                });
                 this.e6 = 4;
             }
         }
