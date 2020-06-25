@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+let timestampPlugin = require('./plugins/timestamp')
 
 var Professeur = mongoose.Schema({
     matricule: String,
@@ -18,5 +19,6 @@ var Professeur = mongoose.Schema({
     presentation: String,
     tauxHoraire: Number
 });
+Professeur.plugins(timestampPlugin);
 
 export default mongoose.model('Professeur', Professeur);

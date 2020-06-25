@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+let timestampPlugin = require('./plugins/timestamp')
 const Etudiant = mongoose.Schema({
     emailEsis: String,
     emailPerso: String,
@@ -30,5 +30,5 @@ const Etudiant = mongoose.Schema({
         nick: String,
     },
 })
-
+Etudiant.plugins(timestampPlugin);
 export default mongoose.model('Etudiant', Etudiant);

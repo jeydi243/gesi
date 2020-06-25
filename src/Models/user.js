@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+let timestampPlugin = require('./plugins/timestamp')
 
 var User = mongoose.Schema({
     profil: {
@@ -17,5 +18,5 @@ var User = mongoose.Schema({
         unique: true,
     }
 });
-
+User.plugins(timestampPlugin);
 export default mongoose.model('User', User);
