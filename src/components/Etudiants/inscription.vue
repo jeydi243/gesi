@@ -40,7 +40,7 @@
                                             filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="telephone" :rules="telRules" label="Numero de telephone"
+                                        <v-text-field v-model="telephone" :rules="rules.telephone" label="Numero de telephone"
                                             required filled></v-text-field>
                                     </v-col>
                                 </v-row>
@@ -175,7 +175,7 @@
                         </v-simple-table>
                     </v-col>
                 </v-row>
-                <v-btn color="primary" @click="FinirInscription">Finir l'inscription</v-btn>
+                <v-btn color="primary" @click="submitEtudiant">Finir l'inscription</v-btn>
             </v-stepper-content>
 
             <v-stepper-step step="4" editable>Informations génerées</v-stepper-step>
@@ -217,6 +217,7 @@
 <script>
     const cryptoRandomString = require('crypto-random-string');
     import profile from "@/components/global/profile.vue";
+    import validator from 'validator'
     export default {
         name: "inscription",
         components: {
@@ -266,8 +267,9 @@
                     ],
                     email: [
                         v => !!v || "l'email est obligatoire",
-                        v => /.+@.+/.test(v) || "l'Email doit etre valide"
-                    ]
+                        v => validator.isEmail(v) || "l'Email doit etre valide"
+                    ],
+                    telephone: [v => !!v || "Ce champ est obligatoire"],
                 },
                 e6: 1,
                 dialog: false,
@@ -277,9 +279,7 @@
                 date: null,
                 valid: false,
                 menu: false,
-
                 tel: "",
-                telRules: [v => !!v || "Ce champ est obligatoire"],
                 email: "",
 
             };
@@ -292,9 +292,6 @@
         methods: {
             save(date) {
                 this.$refs.menu.save(date);
-            },
-            affiche() {
-                console.log("la methode afficher a été appelé ");
             },
             addResponsable() {
                 if (this.responsables.length < 2) {
@@ -310,7 +307,7 @@
                     this.dialog = true;
                 }
             },
-            FinirInscription() {
+            submitEtudiant() {
                 this.passWord = cryptoRandomString({
                     length: 10,
                     type: 'numeric'
