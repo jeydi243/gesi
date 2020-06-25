@@ -40,13 +40,13 @@
                                             filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="telephone" :rules="rules.telephone" label="Numero de telephone"
+                                        <v-text-field v-model="etudiant.telephone" :rules="rules.telephone" label="Numero de telephone"
                                             required filled></v-text-field>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col md="6">
-                                        <v-select v-model="etudiant.genre" label="Genre" :items="genres" required filled>
+                                        <v-select v-model="etudiant.genre" label="Genre" :items="etudiant.genres" required filled>
                                         </v-select>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -54,11 +54,11 @@
                                         <v-menu v-model="menu" :close-on-content-click="false"
                                             transition="scale-transition" ref="menu" offset-y>
                                             <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="date" label="Date de naissance" readonly
-                                                    v-on="on" filled></v-text-field>
+                                                <v-text-field v-model="etudiant.dateNaissance" label="Date de naissance" readonly
+                                                    v-on="on" filled :rules="rules.date"></v-text-field>
                                             </template>
-                                            <v-date-picker ref="picker" v-model="date"
-                                                :max="new Date().toISOString().substr(0, 10)" min="1996-01-01"
+                                            <v-date-picker ref="picker" v-model="etudiant.dateNaissance"
+                                                :max="new Date().toISOString().substr(0, 10)" min="minDateNaissance"
                                                 @change="save"></v-date-picker>
                                         </v-menu>
                                     </v-col>
@@ -121,7 +121,7 @@
                     </v-row>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="pourcentageObtenuTestAdmission" label="% test admission" required
+                            <v-text-field v-model="etudiant.pourcentageObtenuTestAdmission" label="% test admission" required
                                 :rules="rules.pourcentage" filled></v-text-field>
                         </v-col>
                         <v-col md="4">
@@ -238,7 +238,8 @@
                     ecoleOrigine: "",
                     genre: "F",
                     noteSante: "",
-                    dateDiplomeEsis: Date,
+                    dateDiplomeEsis: Date("DD/MM/YYY"),
+                    dateNaissance: Date("DD/MM/YYY"),
                     anneeInscriptionEsis: new Date().getFullYear().toString(),
                     telephone: "",
                     genres: ["M", "F"],
@@ -258,7 +259,7 @@
                 },
                 rules: {
                     name: [
-                        v => !!v || "Ce champ  est obligatoire",
+                        v => !!v || "Ce champ est obligatoire",
                         v => v.length <= 10 || "10 caracteres au plus sont permis"
                     ],
                     pourcentages: [
@@ -270,24 +271,25 @@
                         v => validator.isEmail(v) || "l'Email doit etre valide"
                     ],
                     telephone: [v => !!v || "Ce champ est obligatoire"],
+                    date: [v => validator.isDate(v,'DD/MM/YYY') || "La date de naissance doit etre valide"]
                 },
                 e6: 1,
                 dialog: false,
                 responsables: [],
                 again1: false,
                 again2: false,
-                date: null,
                 valid: false,
                 menu: false,
                 tel: "",
                 email: "",
-
+                minDateNaissance:"01/01/2000"
             };
         },
         watch: {
             menu(val) {
                 val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
             }
+            
         },
         methods: {
             save(date) {
