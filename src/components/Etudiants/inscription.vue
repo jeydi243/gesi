@@ -26,17 +26,17 @@
                             <v-container>
                                 <v-row>
                                     <v-col cols="6">
-                                        <v-text-field v-model="name.first" :rules="rules.name" :counter="10" label="Nom"
+                                        <v-text-field v-model="etudiant.name.first" :rules="rules.name" :counter="10" label="Nom"
                                             required filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-text-field v-model="name.last" :rules="rules.name" :counter="10"
+                                        <v-text-field v-model="etudiant.name.last" :rules="rules.name" :counter="10"
                                             label="Post-nom" required filled></v-text-field>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col cols="6">
-                                        <v-text-field v-model="name.nick" :rules="rules.name" label="Prenom" required
+                                        <v-text-field v-model="etudiant.name.nick" :rules="rules.name" label="Prenom" required
                                             filled></v-text-field>
                                     </v-col>
                                     <v-col cols="6">
@@ -46,7 +46,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="6">
-                                        <v-select v-model="genre" label="Genre" :items="genres" required filled>
+                                        <v-select v-model="etudiant.genre" label="Genre" :items="genres" required filled>
                                         </v-select>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -65,17 +65,17 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="6">
-                                        <v-text-field v-model="adresse" label="Adresse physique" filled>
+                                        <v-text-field v-model="etudiant.adresse" label="Adresse physique" filled>
                                         </v-text-field>
                                     </v-col>
                                     <v-col md="6">
-                                        <v-text-field v-model="emailPerso" label="Email personnel" filled>
+                                        <v-text-field v-model="etudiant.emailPerso" label="Email personnel" filled>
                                         </v-text-field>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col md="12">
-                                        <v-textarea v-model="noteSante" label="Note de sante" name="input-7-4" filled>
+                                        <v-textarea v-model="etudiant.noteSante" label="Note de sante" name="input-7-4" filled>
                                         </v-textarea>
                                     </v-col>
                                 </v-row>
@@ -95,28 +95,28 @@
                 <v-container fluid>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="ecoleOrigine" readonly label="Nom ecole origine" required filled>
+                            <v-text-field v-model="etudiant.ecoleOrigine" readonly label="Nom ecole origine" required filled>
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="adresseEcole" label="Adresse ecole" required filled></v-text-field>
+                            <v-text-field v-model="etudiant.adresseEcole" label="Adresse ecole" required filled></v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="sectionObtention" label="Section obtention diplome" required filled>
+                            <v-text-field v-model="etudiant.sectionObtention" label="Section obtention diplome" required filled>
                             </v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col md="4">
-                            <v-text-field v-model="anneeInscriptionEsis" label="Annee Inscription" disabled required
+                            <v-text-field v-model="etudiant.anneeInscriptionEsis" label="Annee Inscription" disabled required
                                 filled>
                             </v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-select :items="statuts" label="Statut academique" required filled></v-select>
+                            <v-select :items="etudiant.statuts" label="Statut academique" required filled></v-select>
                         </v-col>
                         <v-col md="4">
-                            <v-select :items="niveau" label="Niveau academique" required filled></v-select>
+                            <v-select :items="etudiant.niveau" label="Niveau academique" required filled></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -125,11 +125,11 @@
                                 :rules="rules.pourcentage" filled></v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="dateDiplomeEsis" readonly label="Date Diplome Esis"
+                            <v-text-field v-model="etudiant.dateDiplomeEsis" readonly label="Date Diplome Esis"
                                 hint="a definir prochainement" disabled filled></v-text-field>
                         </v-col>
                         <v-col md="4">
-                            <v-text-field v-model="pourcentageExetat" label="Pourcentage exetat" required filled
+                            <v-text-field v-model="etudiant.pourcentageExetat" label="Pourcentage exetat" required filled
                                 :rules="rules.pourcentage"></v-text-field>
                         </v-col>
                     </v-row>
@@ -141,13 +141,13 @@
             <v-stepper-content step="3">
                 <v-row>
                     <v-col md="3">
-                        <v-text-field v-model="responsableNom" label="Nom responsable" filled></v-text-field>
+                        <v-text-field v-model="etudiant.responsable.nom" label="Nom responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
-                        <v-text-field v-model="responsableTel" label="Telephone responsable" filled></v-text-field>
+                        <v-text-field v-model="etudiant.responsable.telephone" label="Telephone responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
-                        <v-text-field v-model="responsableEmail" label="Email responsable" filled></v-text-field>
+                        <v-text-field v-model="etudiant.responsable.email" label="Email responsable" filled></v-text-field>
                     </v-col>
                     <v-col md="3">
                         <v-btn @click="addResponsable" rounded color="teal" text>Ajouter</v-btn>
@@ -167,7 +167,7 @@
                                 <tbody>
                                     <tr v-for="item in responsables" :key="item.tel">
                                         <td>{{ item.nom }}</td>
-                                        <td>{{ item.tel }}</td>
+                                        <td>{{ item.telephone }}</td>
                                         <td>{{ item.email }}</td>
                                     </tr>
                                 </tbody>
@@ -182,29 +182,29 @@
             <v-stepper-content step="4">
                 <v-row>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.emailEsis"
                             label="Email Esis"></v-text-field>
                     </v-col>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="passWord"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.passWord"
                             label="Mot de Passe email"></v-text-field>
                     </v-col>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.emailEsis"
                             label="Email Esis"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="codeAcces"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.codeAcces"
                             label="Code d'acces"></v-text-field>
                     </v-col>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.emailEsis"
                             label="Email Esis"></v-text-field>
                     </v-col>
                     <v-col md="4">
-                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis"
+                        <v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="etudiant.emailEsis"
                             label="Email Esis"></v-text-field>
                     </v-col>
                 </v-row>
