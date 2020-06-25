@@ -13,7 +13,7 @@ const Etudiant = mongoose.Schema({
     noteSante: String,
     telephone: String,
     dateDiplomeEsis: Date,
-    responsables: [String], //must be id of responsables
+    responsables: Array, //must be id of responsables
     niveau: String,
     pourcentageObtenuTest: Number,
     statuts: String,
@@ -22,13 +22,12 @@ const Etudiant = mongoose.Schema({
     adresse: String,
     anneeInscription: {
         type: Date,
-        default: new Date().getFullYear().toString()
+        default: new Date()
     },
-    tel: String,
     name: {
-        firstname: String,
-        nickname: String,
-        lastname: String,
+        first: String,
+        last: String,
+        nick: String,
     },
 })
 

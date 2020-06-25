@@ -8,10 +8,10 @@ import VueAnime from 'vue-animejs';
 import moment from 'moment'
 import getUserLocale from 'get-user-locale'
 moment.locale(getUserLocale());
+
+
 Vue.use(moment);
 Vue.use(VueAnime)
-
-
 Vue.config.productionTip = false
 
 new Vue({

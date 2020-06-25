@@ -57,8 +57,8 @@
                                                 <v-text-field v-model="etudiant.dateNaissance" label="Date de naissance" readonly
                                                     v-on="on" filled :rules="rules.date"></v-text-field>
                                             </template>
-                                            <v-date-picker ref="picker" v-model="etudiant.dateNaissance"
-                                                :max="new Date().toISOString().substr(0, 10)" min="minDateNaissance"
+                                            <v-date-picker locale="fr-FR" ref="picker" v-model="etudiant.dateNaissance"
+                                                :max="new Date().toISOString().substr(0, 10)" :min="new Date('01/01/2000').toISOString().substr(0, 10)"
                                                 @change="save"></v-date-picker>
                                         </v-menu>
                                     </v-col>
@@ -75,7 +75,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col md="12">
-                                        <v-textarea v-model="etudiant.noteSante" label="Note de sante" name="input-7-4" filled>
+                                        <v-textarea counter="500" v-model="etudiant.noteSante" label="Note de sante" name="input-7-4" filled>
                                         </v-textarea>
                                     </v-col>
                                 </v-row>
@@ -223,6 +223,12 @@
         components: {
             profile
         },
+        computed:{
+            minDateNaissance(){
+                return "01/01/2000"
+            }
+        },
+        
         data() {
             return {
                 etudiant: {
@@ -238,8 +244,8 @@
                     ecoleOrigine: "",
                     genre: "F",
                     noteSante: "",
-                    dateDiplomeEsis: Date("DD/MM/YYY"),
-                    dateNaissance: Date("DD/MM/YYY"),
+                    dateDiplomeEsis: new Date().toISOString().substr(0, 10),
+                    dateNaissance: new Date().toISOString().substr(0, 10),
                     anneeInscriptionEsis: new Date().getFullYear().toString(),
                     telephone: "",
                     genres: ["M", "F"],
@@ -271,7 +277,7 @@
                         v => validator.isEmail(v) || "l'Email doit etre valide"
                     ],
                     telephone: [v => !!v || "Ce champ est obligatoire"],
-                    date: [v => validator.isDate(v,'DD/MM/YYY') || "La date de naissance doit etre valide"]
+                    date: [v => validator.isDate(v,'DD/MM/YYYY') || "La date de naissance doit etre valide"]
                 },
                 e6: 1,
                 dialog: false,
@@ -282,7 +288,6 @@
                 menu: false,
                 tel: "",
                 email: "",
-                minDateNaissance:"01/01/2000"
             };
         },
         watch: {
