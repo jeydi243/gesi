@@ -2,16 +2,28 @@ import mongoose from 'mongoose';
 let timestampPlugin = require('./plugins/timestamp')
 
 var Cours = mongoose.Schema({
-    nom: String,
+    nom: {
+        type: String,
+        required: true
+    },
     plan: String,
     description: String,
-    volumeHoaire:Number,
+    volumeHoaire: {
+        type: Number,
+        required: true
+    },
     typeCours: String,
-    filiere: String,
+    filiere: {
+        type: String,
+        required: false
+    },
     option: String,
-    nomProfesseur: String,
+    nomProfesseur: {
+        type: String,
+        required:true
+    },
     tags: String, // ex: cours de maths
-    ressources:Array
+    ressources: Array
 });
 Cours.plugins(timestampPlugin);
 
