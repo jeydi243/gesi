@@ -8,6 +8,7 @@ const Etudiant = mongoose.Schema({
     pourcentageExetat: Number,
     sectionObtention: String,
     adresseEcole: String,
+    adressePersonel: String,
     ecoleOrigine: String,
     genre: String,
     noteSante: String,
@@ -15,11 +16,10 @@ const Etudiant = mongoose.Schema({
     dateDiplomeEsis: Date,
     responsables: Array, //must be id of responsables
     niveau: String,
-    pourcentageObtenuTest: Number,
+    pourcentageObtenuTestAdmission: Number,
     statuts: String,
     date: Date,
     genres: String,
-    adresse: String,
     anneeInscription: {
         type: Date,
         default: new Date()
