@@ -33,7 +33,7 @@
 				<v-divider></v-divider>
 
 				<v-list dense nav >
-					<v-list-item v-for="(item,index) in items" :key="index" link @click="sebebe(item.title)">
+					<v-list-item v-for="(item,index) in items" :key="index" link @click="goto(item.title)">
 						<v-list-item-icon>
 							<v-icon>{{ item.icon }}</v-icon>
 						</v-list-item-icon>
@@ -77,7 +77,7 @@
 			maximise() {
 				ipcRenderer.send('maximise');
 			},
-			sebebe(titre) {
+			goto(titre) {
 				this.titre = titre
 				this.$router.push(titre.toLowerCase());
 			}

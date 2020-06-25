@@ -185,7 +185,7 @@
                     <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
                 </v-row>
                 <v-row>
-                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="CodeAcces" label="Code d'acces"></v-text-field></v-col>
+                    <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="codeAcces" label="Code d'acces"></v-text-field></v-col>
                     <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
                     <v-col md="4"><v-text-field dense background-color="rgba(0,240,0,0.2)" disabled filled v-model="emailEsis" label="Email Esis"></v-text-field></v-col>
                 </v-row>
@@ -205,9 +205,11 @@
         },
         data() {
             return {
+                etudiant:{
+
+                },
                 emailEsis:"ekadiongo@yahoo.fr",
-                CodeAcces:"",
-                der:true,
+                codeAcces:"",
                 passWord:"",
                 e6: 1,
                 dialog: false,
