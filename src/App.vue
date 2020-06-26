@@ -48,13 +48,13 @@
 			</v-navigation-drawer>
 
 			<v-content id="content">
-				<!-- <v-container fluid> -->
+				<v-container fluid>
 				<transition name="scroll-y-transition" mode="out-in" type="transition">
 					<keep-alive>
 						<router-view></router-view>
 					</keep-alive>
 				</transition>
-				<!-- </v-container> -->
+				</v-container>
 			</v-content>
 
 			<v-footer app></v-footer>
