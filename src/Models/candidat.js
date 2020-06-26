@@ -53,6 +53,9 @@ const Candidats = mongoose.Schema({
     },
     remarques: {
         type:String
+    },
+    etat: {
+        type:String
     }
 
 })
