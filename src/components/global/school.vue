@@ -1,11 +1,10 @@
-<template lang="">
-    <v-container fill-height>
-        <v-row align-center>
-            <v-col>
-                <v-img src="@/assets/school.png" max-height="500" max-width="500"></v-img>
-            </v-col>
-        </v-row>
-    </v-container>
+<template>
+    <v-row align="center"
+        justify="center">
+        <v-col md="6" xl="6">
+            <v-img src="@/assets/school.png" ></v-img>
+        </v-col>
+    </v-row>
 </template>
 <script>
     export default {

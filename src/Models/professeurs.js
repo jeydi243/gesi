@@ -2,10 +2,17 @@ import mongoose from 'mongoose';
 let timestampPlugin = require('./plugins/timestamp')
 
 var Professeur = mongoose.Schema({
-    matricule: String,
+    matricule: {
+        type: String,
+        required: true
+    },
     nom: {
-        post: String,
-        prenom: String
+        first: {
+            type: String,
+            required: true
+        },
+        last: String,
+        nickname: String
     },
     titre: String,
     dateNaissance: String,
@@ -15,7 +22,10 @@ var Professeur = mongoose.Schema({
     diplome: Array,
     nomEntreprise: String,
     adresseEntreprise: String,
-    telephone: String,
+    telephone: {
+        type: String,
+        required: true
+    },
     presentation: String,
     tauxHoraire: Number
 });

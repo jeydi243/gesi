@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 let timestampPlugin = require('./plugins/timestamp')
+
 const Etudiant = mongoose.Schema({
     emailEsis: String,
     emailPerso: String,

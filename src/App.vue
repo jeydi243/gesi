@@ -32,28 +32,29 @@
 
 				<v-divider></v-divider>
 
-				<v-list dense nav >
-					<v-list-item v-for="(item,index) in items" :key="index" link @click="goto(item.title)">
-						<v-list-item-icon>
-							<v-icon>{{ item.icon }}</v-icon>
-						</v-list-item-icon>
+				<v-container fill-height>
+					<v-list dense nav>
+						<v-list-item v-for="(item,index) in items" :key="index" link @click="goto(item.title)">
+							<v-list-item-icon>
+								<v-icon>{{ item.icon }}</v-icon>
+							</v-list-item-icon>
 
-						<v-list-item-content>
-							<v-list-item-title>{{ item.title }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-				</v-list>
-
+							<v-list-item-content>
+								<v-list-item-title>{{ item.title }}</v-list-item-title>
+							</v-list-item-content>
+						</v-list-item>
+					</v-list>
+				</v-container>
 			</v-navigation-drawer>
 
-			<v-content id="cf">
-				<v-container fluid>
-					<transition name="scroll-y-transition" mode="out-in" type="transition">
-						<keep-alive>
-							<router-view></router-view>
-						</keep-alive>
-					</transition>
-				</v-container>
+			<v-content id="content">
+				<!-- <v-container fluid> -->
+				<transition name="scroll-y-transition" mode="out-in" type="transition">
+					<keep-alive>
+						<router-view></router-view>
+					</keep-alive>
+				</transition>
+				<!-- </v-container> -->
 			</v-content>
 
 			<v-footer app></v-footer>
@@ -69,7 +70,8 @@
 		name: 'App',
 		methods: {
 			minus() {
-				ipcRenderer.send('minus');
+				//ipcRenderer.send('minus');
+				this.$router.push('/');
 			},
 			closer() {
 				ipcRenderer.send('close');
@@ -111,7 +113,7 @@
 	};
 </script>
 <style scoped>
-	#cf {
+	#content {
 		background-color: #FFFFFF;
 	}
 
