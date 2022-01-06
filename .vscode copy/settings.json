@@ -1,0 +1,29 @@
+{
+  "files.autoSave": "afterDelay",
+  "[vue]": {
+    "editor.defaultFormatter": "johnsoncodehk.volar",
+    "editor.useTabStops": true,
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "github.copilot.enable": {
+    "*": false,
+    "yaml": false,
+    "plaintext": false,
+    "js": true,
+    "markdown": false
+  },
+  "editor.wordWrapColumn": 250,
+  "prettier.bracketSpacing": true,
+  "css.completion.completePropertyWithSemicolon": true,
+  "css.hover.documentation": true,
+  "prettier.jsxBracketSameLine": true,
+  "volar-html.trace.server": "messages",
+  "volar.codeLens.references": true,
+  "volar.completion.autoImportComponent": true,
+  "volar.icon.preview": true,
+  "volar.preview.backgroundColor": "#fff",
+  "volar.preview.port": 9999,
+  "volar.formatting.printWidth": 250,
+  "volar.codeLens.scriptSetupTools": true
+}

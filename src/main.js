@@ -1,22 +1,20 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
-import vuetify from './plugins/vuetify';
-import VueAnime from 'vue-animejs';
-import moment from 'moment'
-import getUserLocale from 'get-user-locale'
-moment.locale(getUserLocale());
+import { createApp } from "vue"
+import mdiVue from "mdi-vue"
+import * as mdijs from "@mdi/js"
+import App from "./App.vue"
+import "./assets/style.css"
+import "./assets/flaticons.css"
+import router from "./router"
+import store from "./store/index"
+import NProgress from "vue-nprogress"
+const nprogress = new NProgress()
+import "boxicons"
 
-
-Vue.use(moment);
-Vue.use(VueAnime)
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+createApp(App)
+  .use(router)
+  .use(store)
+  .use(nprogress)
+  .use(mdiVue, {
+    icons: mdijs,
+  })
+  .mount("#app")

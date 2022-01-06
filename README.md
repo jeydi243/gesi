@@ -15,11 +15,10 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
+### Lints and fixes files
 ```
-npm run test:unit
+npm run lint
 ```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-A Complete school management system made with Electron Js

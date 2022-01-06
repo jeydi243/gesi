@@ -1,46 +1,112 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import cours from '../views/cours.vue'
-import gestion from '../views/gestion.vue'
-import etudiants from '../views/etudiants.vue'
-import school from "@/components/global/school.vue"
-import professeurs from '../views/professeurs.vue'
-
-Vue.use(VueRouter)
-
-const routes = [
+import { createRouter, createWebHistory } from "vue-router"
+const studentsRoutes = [
   {
-    path: '/',
-    name: 'accueil',
-    component: school
+    path: "/students",
+    meta: { layout: "main" },
+    name: "index-students",
+    component: () => import(/* webpackChunkName: "about" */ "./views/students/index.vue"),
   },
   {
-    path: '/cours',
-    name: 'cours',
-    component: cours
+    path: "/students/add",
+    meta: { layout: "main" },
+    name: "students-add",
+    component: () => import(/* webpackChunkName: "about" */ "./views/students/add.vue"),
   },
   {
-    path: '/gestion',
-    name: 'gestion',
-    component: gestion
+    path: "/students/:id",
+    meta: { layout: "main" },
+    name: "students-details",
+    component: () => import(/* webpackChunkName: "about" */ "./views/students/details.vue"),
   },
+]
+const professorsRoutes = [
   {
-    path: '/etudiants',
-    name: 'etudiants',
-    component: etudiants
+    path: "/professors",
+    meta: { layout: "main" },
+    name: "index-professors",
+    component: () => import(/* webpackChunkName: "about" */ "./views/professors/index.vue"),
   },
+  //   {
+  //     path: "/professors/add",
+  //     meta: { layout: "main" },
+  //     name: "professors-add",
+  //     component: () => import(/* webpackChunkName: "about" */ "./views/professors/add.vue"),
+  //   },
+  //   {
+  //     path: "/professors/:id",
+  //     meta: { layout: "main" },
+  //     name: "professors-details",
+  //     component: () => import(/* webpackChunkName: "about" */ "./views/professors/details.vue"),
+  //   },
+]
+const calendarRoutes = [
   {
-    path: '/professeurs',
-    name: 'professeurs',
-    component: professeurs
+    path: "/calendar",
+    meta: { layout: "main" },
+    name: "index-calendar",
+    component: () => import(/* webpackChunkName: "about" */ "./views/calendar/index.vue"),
+  },
+]
+const libraryRoutes = [
+  {
+    path: "/library",
+    meta: { layout: "main" },
+    name: "index-library",
+    component: () => import(/* webpackChunkName: "about" */ "./views/library/index.vue"),
+  },
+]
+const settingsRoutes = [
+  {
+    path: "/settings",
+    meta: { layout: "main" },
+    name: "index-settings",
+    component: () => import(/* webpackChunkName: "about" */ "./views/settings/index.vue"),
+  },
+]
+const gestionRoutes = [
+  {
+    path: "/gestion",
+    meta: { layout: "main" },
+    name: "index-gestion",
+    component: () => import(/* webpackChunkName: "about" */ "./views/gestion/index.vue"),
   },
 ]
 
-const router = new VueRouter({
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    meta: { layout: "main" },
+    component: () => import(/* webpackChunkName: "about" */ "./views/account/home.vue"),
+  },
+  {
+    path: "/login",
+    name: "login",
+    meta: { layout: "auth" },
+    component: () => import(/* webpackChunkName: "login" */ "./views/account/login.vue"),
+  },
+  {
+    path: "/profile",
+    meta: { layout: "main" },
+    name: "profile",
+    component: () => import(/* webpackChunkName: "profile" */ "./views/account/profile.vue"),
+  },
+  {
+    path: "/search",
+    meta: { layout: "main" },
+    name: "search",
+    component: () => import(/* webpackChunkName: "search" */ "./views/account/search.vue"),
+  },
+  ...studentsRoutes,
+  ...professorsRoutes,
+  ...calendarRoutes,
+  ...libraryRoutes,
+  ...settingsRoutes,
+  ...gestionRoutes,
+]
 
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 })
-
 export default router

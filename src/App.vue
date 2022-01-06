@@ -1,144 +1,71 @@
 <template>
-	<transition name="scale-y">
-		<v-app>
-			<v-system-bar window app id="sysbar">
-				<v-container fluid>
-					<v-row>
-						<v-spacer></v-spacer>
-						<v-btn @click="minus" text>
-							<v-icon>mdi-minus</v-icon>
-						</v-btn>
-						<v-btn @click="maximise" text>
-							<v-icon>mdi-checkbox-blank-outline</v-icon>
-						</v-btn>
-						<v-btn text color="primary" @click="closer">
-							<v-icon>mdi-close</v-icon>
-						</v-btn>
-					</v-row>
-				</v-container>
-			</v-system-bar>
-
-			<v-navigation-drawer dark app color="#001B48" center>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title class="title">
-							GESI
-						</v-list-item-title>
-						<v-list-item-subtitle>
-							subtext
-						</v-list-item-subtitle>
-					</v-list-item-content>
-				</v-list-item>
-
-				<v-divider></v-divider>
-
-				<v-container fill-height>
-					<v-list dense nav>
-						<v-list-item v-for="(item,index) in items" :key="index" link @click="goto(item.title)">
-							<v-list-item-icon>
-								<v-icon>{{ item.icon }}</v-icon>
-							</v-list-item-icon>
-
-							<v-list-item-content>
-								<v-list-item-title>{{ item.title }}</v-list-item-title>
-							</v-list-item-content>
-						</v-list-item>
-					</v-list>
-				</v-container>
-			</v-navigation-drawer>
-
-			<v-content id="content">
-				<v-container fluid>
-				<transition name="scroll-y-transition" mode="out-in" type="transition">
-					<keep-alive>
-						<router-view></router-view>
-					</keep-alive>
-				</transition>
-				</v-container>
-			</v-content>
-
-			<v-footer app></v-footer>
-		</v-app>
-	</transition>
+  <div id="app" class="container">
+    <!-- <transition name="fade" mode="out-in"> -->
+      <Layout v-if="layout == 'main'" key="main" class="h-screen w-screen">
+        <!-- Current layout is {{ layout }} -->
+        <!-- <transition name="fadeSlide" mode="out-in"> -->
+          <router-view />
+        <!-- </transition> -->
+      </Layout>
+      <Auth v-else-if="layout == 'auth'" key="auth">
+        <!-- Current layout is {{ layout }} -->
+        <!-- <transition name="fadeSlide" mode="out-in"> -->
+          <router-view />
+        <!-- </transition> -->
+      </Auth>
+    <!-- </transition> -->
+  </div>
 </template>
-
 <script>
-	import {
-		ipcRenderer
-	} from "electron"
-	export default {
-		name: 'App',
-		methods: {
-			minus() {
-				//ipcRenderer.send('minus');
-				this.$router.push('/');
-			},
-			closer() {
-				ipcRenderer.send('close');
-			},
-			maximise() {
-				ipcRenderer.send('maximise');
-			},
-			goto(titre) {
-				this.titre = titre
-				this.$router.push(titre.toLowerCase());
-			}
-		},
-		data: () => ({
-			items: [{
-					title: 'Etudiants',
-					icon: 'mdi-view-dashboard'
-				},
-				{
-					title: 'Professeurs',
-					icon: 'mdi-image'
-				},
-				{
-					title: 'Gestion',
-					icon: 'mdi-help-box'
-				},
-				{
-					title: 'Cours',
-					icon: 'mdi-help-box'
-				},
-			],
-			right: null,
-			tab: null,
-			items2: [
-				'web', 'shopping', 'videos', 'images', 'news',
-			],
-			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-
-		}),
-	};
+import Layout from "@/router/layouts/main";
+import Auth from "@/router/layouts/auth";
+import { mapActions, mapGetters } from "vuex"
+export default {
+  name: "App",
+  components: { Layout, Auth },
+  computed: {
+    ...mapGetters({
+      layout: "getLayout"
+    })
+  },
+  watch: {
+    "$route": function (to) {
+      if (to.meta.layout == "main") {
+        this.changeLayout("main")
+      } else if (to.meta.layout == "auth") {
+        this.changeLayout(to.meta.layout)
+        this.changeActive(to.path)
+      }
+      console.log(`%cPath name: ${to.name}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
+    }
+  },
+  methods: {
+    ...mapActions(['changeLayout', "changeActive"]),
+  },
+}
 </script>
-<style scoped>
-	#content {
-		background-color: #FFFFFF;
-	}
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.7s ease;
+}
 
-	::-webkit-scrollbar {
-		display: none;
-	}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
-	.fade-enter {
-		opacity: 0;
-	}
+.fadeSlide-enter-active {
+  transition: all 0.7s ease;
+}
 
-	.fade-enter-active {
-		transition: opacity .5s;
-	}
+.fadeSlide-leave-active {
+  transition: all 0.3s ease;
+}
 
-	.fade-leave-active {
-		transition: opacity .2s;
-		opacity: 0;
-	}
-
-	#sysbar {
-		background-color: yellow;
-	}
-
-	v-spacer {
-		-webkit-app-region: drag;
-	}
+.fadeSlide-enter-from,
+.fadeSlide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
 </style>
