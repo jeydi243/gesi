@@ -1,5 +1,5 @@
 import { createApp } from "vue"
-import mdiVue from "mdi-vue"
+import * as mdiVue from "mdi-vue"
 import * as mdijs from "@mdi/js"
 import App from "./App.vue"
 import "./assets/style.css"
