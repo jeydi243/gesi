@@ -5,7 +5,6 @@
             <router-link
                 :to="item.to"
                 @hover="item.mouseHover = !item.mouseHover"
-                @click="changeActive(index)"
                 v-for="(item,index) in listSideMenus"
                 :key="index"
                 class="transition-border hover:border-l-2 hover:border-l-green-500 ease-out-in duration-700 animation-ping flex items-center w-full h-9 px-3 mt-2 hover:text-white"
@@ -34,12 +33,8 @@ export default {
 
     },
     methods: {
-        ...mapActions(['changeLayout', "changeActive"]),
-        changeActive(index) {
-            this.currentActive = this.listSideMenus.findIndex(item => item.active);
-            this.listSideMenus[this.currentActive].active = false;
-            this.listSideMenus[index].active = true;
-        }
+        ...mapActions(['changeLayout']),
+
     },
 }
 </script>

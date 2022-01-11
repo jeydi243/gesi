@@ -74,8 +74,9 @@ const gestionRoutes = [
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
+    default: true,
     meta: { layout: "main" },
     component: () => import(/* webpackChunkName: "about" */ "./views/account/home.vue"),
   },

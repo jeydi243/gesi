@@ -11,7 +11,7 @@ const store = createStore({
       layout: "main",
       rootName: "home",
       listSideMenus: [
-        { text: "Home", to: "/", icon: "home", active: true, mouseHover: false },
+        { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
         { text: "Students", to: "/students", icon: "user-rectangle", active: false, mouseHover: false },
         { text: "Professors", to: "/professors", icon: "adjust", active: false, mouseHover: false },
         { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
@@ -32,17 +32,25 @@ const store = createStore({
     CHANGE_LAYOUT(state, data) {
       state.layout = data
     },
-    CHANGE_ROOT_NAME(state, data) {
-      state.rootName = data.toLowerCase()
+    SET_ROOT_NAME(state, name) {
+      state.rootName = name
     },
     CHANGE_ACTIVE_SIDE_MENU(state, path) {
       var currentIndex = state.listSideMenus.findIndex((item) => item.active == true)
       var nextIndex = state.listSideMenus.findIndex((item) => item.to == path)
-      state.listSideMenus[currentIndex].active = false
-      state.listSideMenus[nextIndex].active = true
+      if (nextIndex != -1 && currentIndex != -1) {
+        state.listSideMenus[currentIndex].active = false
+        state.listSideMenus[nextIndex].active = true
+      } else {
+        if (currentIndex != -1) {
+          state.listSideMenus[currentIndex].active = true
+        }
+        // else {
+        //           state.listSideMenus[0].active = true
+        //         }
+      }
     },
     CHANGE_LEVEL_MENU(state, index) {
-      console.log("click")
       var currentIndex = state.listLevel.findIndex((tab) => tab.current == true)
       state.listLevel[currentIndex].current = false
       state.listLevel[index].current = true
@@ -53,22 +61,17 @@ const store = createStore({
       dispatch("students/init", {}, { root: true })
     },
     changeLayout({ commit }, data) {
-      //   console.log(data)
       commit("CHANGE_LAYOUT", data)
     },
-    changeActive({ commit }, path) {
-      // console.log(path)
-      commit("CHANGE_ACTIVE_SIDE_MENU", path)
+    changeActive({ commit }, name) {
+      commit("CHANGE_ACTIVE_SIDE_MENU", "/" + name)
+      commit("SET_ROOT_NAME", name)
     },
   },
   getters: {
-    getLayout(state) {
-      return state.layout
-    },
+    getLayout: (state) => state.layout,
     getRootName: (state) => state.rootName,
-    getListLevel(state) {
-      return state.listLevel
-    },
+    getListLevel: (state) => state.listLevel,
     getListSideMenus: (state) => state.listSideMenus,
     currentLevel(state) {
       return state.listLevel.find((tabLevel) => tabLevel.current == true).name

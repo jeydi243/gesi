@@ -1,25 +1,40 @@
 
 <template>
-    <div>
-        Calendar
-        <!-- <FullCalendar :options="calendarOptions" /> -->
+    <div class="h-full">
+        <vue-cal
+            style="height: 100%;"
+            selected-date="2022-11-01"
+            :time-from="10 * 60"
+            :time-to="23 * 60"
+            hide-view-selector
+            hide-weekends
+            :editable-events="{ title: true, drag: false, resize: true, delete: true, create: false }"
+            :events="events"
+            class="vuecal--full-height-delete"
+        />
     </div>
 </template>
 <script>
-// import FullCalendar from '@fullcalendar/vue'
-// import dayGridPlugin from '@fullcalendar/daygrid'
-// import interactionPlugin from '@fullcalendar/interaction'
-
+import VueCal from 'vue-cal'
 export default {
     components: {
-        // FullCalendar // make the <FullCalendar> tag available
+        "vue-cal": VueCal
     },
+
     data() {
         return {
-            calendarOptions: {
-                // plugins: [dayGridPlugin, interactionPlugin],
-                initialView: 'dayGridMonth'
-            }
+            events: [
+                {
+                    start: '2021-11-01 14:00',
+                    end: '2021-11-01 17:30',
+                    title: 'Boring event',
+                    content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
+                    class: 'blue-event',
+                    deletable: false,
+                    resizable: false,
+                    draggable: false
+                },
+            ]
         }
     }
 }

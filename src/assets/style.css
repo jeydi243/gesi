@@ -836,6 +836,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 20%;
 }
 
+.h-36 {
+  height: 9rem;
+}
+
 .min-h-\[90\%\] {
   min-height: 90%;
 }
@@ -950,6 +954,10 @@ Ensure the default browser behavior of the `hidden` attribute.
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+.resize {
+  resize: both;
 }
 
 .auto-cols-max {

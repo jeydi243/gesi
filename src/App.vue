@@ -34,15 +34,13 @@ export default {
         this.changeLayout("main")
       } else if (meta.layout == "auth") {
         this.changeLayout(meta.layout)
-        this.changeActive(path)
       }
-      this.changeRootName(fullPath.split("/")[1])
+      this.changeActive(fullPath.split("/")[1])
       console.log(`%cPath name: ${path}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
     }
   },
   methods: {
-    ...mapActions(['changeLayout', "changeActive"]),
-    ...mapMutations({ changeRootName: "CHANGE_ROOT_NAME" }),
+    ...mapActions(['changeLayout',"changeActive"]),
   },
 }
 </script>
