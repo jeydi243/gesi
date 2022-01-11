@@ -7,7 +7,7 @@
         <div class="relative inline-block">
             <!-- Dropdown toggle button -->
             <button
-                @click.prevent="dropdown = !dropdown"
+                @click="dropdown = !dropdown"
                 id="toggle-dropdown"
                 class="relative z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row"
             >

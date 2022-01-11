@@ -66,7 +66,7 @@
             </div>
 
             <p class="flex mt-8 text-xs font-light text-center text-gray-400">
-                <a href="#" class="font-medium text-gray-700 hover:underline">Demander a l"administrateur un compte !</a>
+                <a href="#" class="font-medium text-gray-700 hover:underline">Demander a l'administrateur un compte !</a>
             </p>
         </div>
     </div>

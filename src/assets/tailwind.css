@@ -94,3 +94,38 @@ tr {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+::-webkit-datetime-edit {
+  padding: 1px;
+}
+::-webkit-datetime-edit-fields-wrapper {
+  background: transparent;
+}
+::-webkit-datetime-edit-text {
+  color: red;
+  padding: 1px;
+}
+::-webkit-datetime-edit-month-field {
+  color: blue;
+}
+::-webkit-datetime-edit-day-field {
+  color: green;
+}
+::-webkit-datetime-edit-year-field {
+  color: purple;
+}
+::-webkit-inner-spin-button {
+  display: none;
+}
+::-webkit-calendar-picker-indicator {
+  background: orange;
+}
+input:invalid+span:after {
+  content: '✖';
+  padding-left: 5px;
+}
+
+input:valid+span:after {
+  content: '✓';
+  padding-left: 5px;
+}

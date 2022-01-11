@@ -19,7 +19,7 @@
 <script>
 import Layout from "@/router/layouts/main";
 import Auth from "@/router/layouts/auth";
-import { mapActions, mapGetters } from "vuex"
+import { mapActions, mapGetters, mapMutations } from "vuex"
 export default {
   name: "App",
   components: { Layout, Auth },
@@ -29,18 +29,20 @@ export default {
     })
   },
   watch: {
-    "$route": function (to) {
-      if (to.meta.layout == "main") {
+    "$route": function ({ meta, path, fullPath }) {
+      if (meta.layout == "main") {
         this.changeLayout("main")
-      } else if (to.meta.layout == "auth") {
-        this.changeLayout(to.meta.layout)
-        this.changeActive(to.path)
+      } else if (meta.layout == "auth") {
+        this.changeLayout(meta.layout)
+        this.changeActive(path)
       }
-      console.log(`%cPath name: ${to.name}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
+      this.changeRootName(fullPath.split("/")[1])
+      console.log(`%cPath name: ${path}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
     }
   },
   methods: {
     ...mapActions(['changeLayout', "changeActive"]),
+    ...mapMutations({ changeRootName: "CHANGE_ROOT_NAME" }),
   },
 }
 </script>

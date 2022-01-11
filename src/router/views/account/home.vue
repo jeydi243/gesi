@@ -11,21 +11,38 @@
           <h1 class="font-bold text-2xl text-green-200">50</h1>
           <span>Professors</span>
         </div>
-        <div class="card2">
-          <mdicon name="alert" />
-        </div>
+        <div class="card2"></div>
         <div class="card2"></div>
       </div>
-      <div class="card"></div>
+      <div class="card">
+        <apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { HomeIcon } from '@heroicons/vue/solid'
+
 export default {
   name: 'Home',
-  components: {}
+  components: {},
+  data() {
+    return {
+      chartOptions: {
+        colors: ['#6af699', '#f7b731'],
+        chart: {
+          id: 'vuechart-example'
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 35, 50, 49, 60, 70, 91]
+      }]
+    }
+  }
 }
 </script>
 <style lang="css">

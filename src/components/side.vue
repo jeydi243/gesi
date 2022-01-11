@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
+        {{ getRootName }}
         <div class="flex flex-col place-items-center w-full mt-1">
             <router-link
                 :to="item.to"
@@ -28,7 +29,7 @@ export default {
         }
     }, computed: {
         ...mapGetters(
-            { listSideMenus: 'getListSideMenus' }
+            { listSideMenus: 'getListSideMenus', getRootName: "getRootName" }
         ),
 
     },

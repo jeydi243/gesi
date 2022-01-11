@@ -7,16 +7,12 @@
                 </span>
                 <input
                     type="text"
-                    :placeholder="`Find ${level} by Username or Matricule`"
+                    placeholder="Find professor by Name or Matricule"
                     class="px-3 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-10"
                 />
             </div>
 
-            <button
-                v-if="currentTabLevel.toLowerCase() == 'candidat'"
-                @click="$router.push({ name: 'students-add' })"
-                class="flex bg-green-500 rounded items-center px-5 justify-center text-white h-9 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-80"
-            >
+            <button @click="$router.push({ name: 'professors-add' })" class="flex bg-green-500 rounded items-center px-5 justify-center text-white h-9 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-80">
                 <box-icon name="user-plus" type="regular" color="white"></box-icon>
                 <span class="self-center ml-2">Ajouter</span>
             </button>
@@ -32,15 +28,15 @@
                     <th>Statut</th>
                 </tr>
             </thead>
-            <!-- <tbody v-if="students != null"> -->
+            <!-- <tbody v-if="professors != null"> -->
             <transition-group name="fade" tag="tbody" mode="out-in">
-                <tr class="table-row" v-for="(student,index) in students(level.toLowerCase())" :key="index" @click="goto(index)">
+                <tr class="table-row" v-for="(professor,index) in professors(filtre)" :key="index" @click="goto(index)">
                     <td>{{ index }}</td>
-                    <td class="t">{{ student.matricule }}</td>
-                    <td>{{ student.name }}</td>
-                    <td>{{ student.email }}</td>
-                    <td>{{ student.niveau }}</td>
-                    <td>{{ student.statut }}</td>
+                    <td class="t">{{ professor.matricule }}</td>
+                    <td>{{ professor.name }}</td>
+                    <td>{{ professor.email }}</td>
+                    <td>{{ professor.niveau }}</td>
+                    <td>{{ professor.statut }}</td>
                 </tr>
             </transition-group>
             <!-- </tbody> -->
@@ -51,17 +47,16 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-    name: "list-student",
-    props: {
-        level: { type: String, required: true, default: "candidat" }
+    name: "list-professors",
+    data() {
+        return {
+            filtre: "",
+        }
     },
     computed: {
-        ...mapGetters("students",
-            { students: 'myStudentsByLevel' }
+        ...mapGetters("professors",
+            { professors: 'myprofessors' }
         ),
-        ...mapGetters(
-            { levels: 'getListLevel', currentTabLevel: 'currentLevel' }
-        )
     },
 }
 

@@ -24,14 +24,17 @@
     "@mdi/js": "^6.5.95",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
+    "apexcharts": "^3.32.1",
     "axios": "^0.24.0",
     "boxicons": "^2.1.1",
     "core-js": "^3.6.5",
     "mdi-vue": "^3.0.12",
+    "mdi-vue3": "^6.5.95",
     "vue": "^3.0.0",
     "vue-chartjs": "^3.5.1",
     "vue-nprogress": "^0.2.0",
     "vue-router": "^4.0.0-0",
+    "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
