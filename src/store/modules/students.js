@@ -5,14 +5,9 @@ export default {
   namespaced: true,
   mutations: {
     ALL: (state, data) => {
-      console.log("ban kudu")
       data.forEach((element) => {
-        setTimeout(() => {
-          state.students.unshift(element)
-        }, 1000)
+        state.students.unshift(element)
       })
-
-      console.log("fffff: ", state.students)
     },
   },
   actions: {

@@ -1,19 +1,19 @@
 <template>
   <div id="app" class="container">
-    <!-- <transition name="fade" mode="out-in"> -->
-    <Layout v-if="layout == 'main'" key="main" class="h-screen w-screen">
-      <!-- Current layout is {{ layout }} -->
-      <transition name="fadeSlide" mode="out-in">
-        <router-view />
-      </transition>
-    </Layout>
-    <Auth v-else-if="layout == 'auth'" key="auth">
-      <!-- Current layout is {{ layout }} -->
-      <transition name="fadeSlide" mode="out-in">
-        <router-view />
-      </transition>
-    </Auth>
-    <!-- </transition> -->
+    <transition name="fade" mode="out-in">
+      <Layout v-if="layout == 'main'" key="main" class="h-screen w-screen">
+        <!-- Current layout is {{ layout }} -->
+        <transition name="fadeSlide" mode="out-in">
+          <router-view />
+        </transition>
+      </Layout>
+      <Auth v-else-if="layout == 'auth'" key="auth" class="h-screen w-screen">
+        <!-- Current layout is {{ layout }} -->
+        <transition name="fadeSlide" mode="out-in">
+          <router-view />
+        </transition>
+      </Auth>
+    </transition>
   </div>
 </template>
 <script>
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['changeLayout',"changeActive"]),
+    ...mapActions(['changeLayout', "changeActive"]),
   },
 }
 </script>

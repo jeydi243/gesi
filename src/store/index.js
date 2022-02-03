@@ -2,9 +2,10 @@ import { createStore } from "vuex"
 import room from "./modules/room"
 import students from "./modules/students"
 import professors from "./modules/professors"
+import authentication from "./modules/authentication"
 
 const store = createStore({
-  modules: { room: room, students: students, professors: professors },
+  modules: { room: room, students: students, professors: professors, authentication: authentication },
   state() {
     return {
       count: 0,

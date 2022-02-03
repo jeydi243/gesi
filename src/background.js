@@ -60,7 +60,7 @@ app.on("ready", async () => {
       const externalDisplay = displays.find((display) => {
         return display.bounds.x !== 0 || display.bounds.y !== 0
       })
-      console.log("There is ", displays.length, " displays")
+    //   console.log("There is ", displays.length, " displays")
       if (externalDisplay) {
         height = externalDisplay.size.height
         width = externalDisplay.size.width * 0.9

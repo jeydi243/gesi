@@ -22,13 +22,14 @@
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100" @click="goto('profile')">Profile</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100" @click="goto('index-settings')">Settings</a>
                 <span class="h-1 w-full border-b border-yellow-300"></span>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50" @click="signout">Sign Out</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50" @click="goto('login')">Sign Out</a>
             </div>
         </div>
     </header>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
     name: "Header",
     data() {
@@ -37,10 +38,11 @@ export default {
         }
     },
     methods: {
-        signOut() {
-            this.$store.dispatch("signOut");
-        },
+        ...mapActions('authentication', ['logout']),
         goto(name) {
+            if (name === "login") {
+                // this.logout();
+            }
             this.dropdown = !this.dropdown;
             this.$router.push({ name });
         }

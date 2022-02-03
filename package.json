@@ -32,10 +32,12 @@
     "mdi-vue3": "^6.5.95",
     "v-calendar": "^2.3.4",
     "vue": "^3.0.0",
+    "vue-3-socket.io": "^1.0.4",
     "vue-cal": "^4.2.0",
     "vue-chartjs": "^3.5.1",
     "vue-nprogress": "^0.2.0",
     "vue-router": "^4.0.0-0",
+    "vue-sweetalert2": "^5.0.2",
     "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.2"
   },

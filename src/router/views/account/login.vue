@@ -1,35 +1,43 @@
 <template>
-    <div class="flex flew-row justify-center h-full bg-blue-800">
-        <button class="bg-gray-800 text-white h-7 w-20 mr-5 rounded-lg" @click="goMain">Go Main</button>
-        <button class="bg-green-800 text-white h-7 w-20 rounded-lg" @click="goAuth">Go Auth</button>
-        aka = {{ layoute }} !
-        <div class="w-full max-w-sm p-6 flex flex-col h-4/5 justify-center self-center bg-white rounded-md shadow-md font-k2d">
-            <h1 class="flex text-3xl font-semibold self-center text-center text-green-500">Brand</h1>
+    <div class="flex flew-row justify-center h-full bg-gray-100">
+        <div class="w-full max-w-sm p-3 flex flex-col h-4/5 justify-center self-center bg-white rounded-md shadow-md font-k2d">
+            <h1 class="flex text-3xl font-semibold self-center text-center text-green-500">GESI</h1>
 
             <form class="mt-6 flex flex-col">
                 <div>
                     <label for="username" class="block text-sm text-gray-800">Username</label>
-                    <input type="text" class="block w-full px-4 py-1 mt-2 text-gray-700 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" />
+                    <input v-model="user.username" type="text" class="block w-full px-4 py-1 mt-2 text-gray-700 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" />
                 </div>
-
+                Token: {{ token }}
                 <div class="mt-4">
                     <div class="flex items-center justify-between">
                         <label for="password" class="block text-sm text-gray-800">Mot de passe</label>
                         <a href="#" class="text-xs text-green-600 hover:underline">Mot de passe oublié ?</a>
                     </div>
 
-                    <input type="password" class="block w-full px-4 py-1 mt-2 text-gray-700 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" />
+                    <input v-model="user.password" type="password" class="block w-full px-4 py-1 mt-2 text-gray-700 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" />
                 </div>
 
+                <div class="flex items-center mb-4 mt-2">
+                    <input
+                        id="checkbox-2"
+                        aria-describedby="checkbox-2"
+                        type="checkbox"
+                        :checked="user.stay_connected"
+                        class="w-4 h-4 text-green-600 mr-2 bg-gray-100 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label for="checkbox-2" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Rester connecté ?</label>
+                </div>
                 <div class="mt-6">
                     <button
                         :disabled="isloading"
-                        @click="login"
-                        class="w-full px-4 py-2 tracking-wide shadow-lg shadow-green-200 text-white disabled:cursor-wait transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600"
+                        @click.prevent="loger"
+                        :class="{ 'cursor-wait': isloading }"
+                        class="w-full px-4 py-2 tracking-wide shadow-lg shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600"
                     >
-                        <svg viewBox="0 0 24 24" class="animate-spin h-5 w-5 mr-3 ... inline-flex spinner">
+                        <svg viewBox="0 0 24 24" class="animate-spin h-5 w-5 mr-3 inline-flex spinner">
                             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" />
-                        </svg>Se Connecter
+                        </svg> Se Connecter
                     </button>
                 </div>
             </form>
@@ -42,7 +50,7 @@
                 <span class="w-2/5 border-b lg:w-1/5"></span>
             </div>
 
-            <div class="flex items-center mt-6 -mx-2">
+            <!-- <div class="flex items-center mt-6 -mx-2">
                 <button
                     :disabled="isloading"
                     class="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-medium my-auto text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:bg-blue-400 focus:outline-none"
@@ -63,10 +71,10 @@
                         />
                     </svg>
                 </a>
-            </div>
-
-            <p class="flex mt-8 text-xs font-light text-center text-gray-400">
-                <a href="#" class="font-medium text-gray-700 hover:underline">Demander a l'administrateur un compte !</a>
+            </div>-->
+            <!-- <span class="bg-blue">Se rendre au portail</span> -->
+            <p class="flex mt-8 text-xs font-light text-center text-gray-400 items-center">
+                <a href="#" class="font-medium text-gray-700 hover:underline">Demander à l'administrateur un compte !</a>
             </p>
         </div>
     </div>
@@ -79,30 +87,26 @@ export default {
     data() {
         return {
             isloading: false,
+            user: { username: "", password: "", stay_connected: false },
         }
-    }, computed: {
+    },
+    computed: {
         ...mapGetters({
             layoute: "getLayout"
+        }),
+        ...mapGetters('authentication', {
+            token: "getToken"
         })
     },
     methods: {
+        ...mapActions("authentication", ["login"]),
         ...mapActions(["changeLayout"]),
-        goMain() {
-            console.log("goMain");
-            // this.changeLayout({ main: "main" })
-            this.$store.dispatch('changeLayout', { main: "main" })
-        },
-        async goAuth() {
-            console.log("goAuth 2");
-            return this.$store.dispatch('changeLayout', "auth")
-        },
-        login() {
+        async loger() {
             this.isloading = !this.isloading
-            setTimeout(() => {
-                this.isloading = !this.isloading
-                this.$router.push('/about')
-            }, 1000);
-
+            console.log("isloading", this.isloading);
+            await this.login(this.user)
+            this.$swal('Hello Vue world!!!');
+            this.isloading = !this.isloading;
         },
 
     },

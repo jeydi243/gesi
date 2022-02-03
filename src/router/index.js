@@ -75,6 +75,7 @@ const gestionRoutes = [
 const routes = [
   {
     path: "/home",
+    alias: "/",
     name: "home",
     default: true,
     meta: { layout: "main" },
