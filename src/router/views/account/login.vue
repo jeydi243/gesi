@@ -73,8 +73,8 @@
                 </a>
             </div>-->
             <!-- <span class="bg-blue">Se rendre au portail</span> -->
-            <p class="flex mt-8 text-xs font-light text-center text-gray-400 items-center">
-                <a href="#" class="font-medium text-gray-700 hover:underline">Demander à l'administrateur un compte !</a>
+            <p class="flex mt-8 text-red-600 items-center">
+                <a href="#" class="text-base text-red-700 text-center hover:no-underline">{{ !authresponse ? '' : authresponse }} !</a>
             </p>
         </div>
     </div>
@@ -95,8 +95,16 @@ export default {
             layoute: "getLayout"
         }),
         ...mapGetters('authentication', {
-            token: "getToken"
+            token: "getToken",
+            authresponse: "getAuthResponse",
         })
+    },
+    watch:{
+        authresponse(newValue){
+            if(newValue){
+                this.$router.push('/')
+            }
+        }
     },
     methods: {
         ...mapActions("authentication", ["login"]),
@@ -105,7 +113,7 @@ export default {
             this.isloading = !this.isloading
             console.log("isloading", this.isloading);
             await this.login(this.user)
-            this.$swal('Hello Vue world!!!');
+            // this.$swal('Hello Vue world!!!');
             this.isloading = !this.isloading;
         },
 

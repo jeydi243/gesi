@@ -2,11 +2,18 @@ import usersAPI from "@/api/user"
 import axios from "@/api/config"
 
 export default {
-  state: () => ({ user: null, token: null }),
+  state: () => ({ user: null, token: null, authResponse: null }),
   namespaced: true,
   mutations: {
     SET_JWT_TOKEN(state, token) {
       state.token = token
+    },
+    SET_AUTH_RESPONSE(state, authResponse) {
+      if ((authResponse = "Unauthorized")) {
+        state.authResponse = "Vous n'avez l'autorisation pour acceder à cette page"
+      } else {
+        state.authResponse = authResponse
+      }
     },
   },
   actions: {
@@ -16,17 +23,19 @@ export default {
     logout({ commit }) {
       return usersAPI.logout()
     },
-    async login({ commit, dispatch }, data) {
-      console.log(data)
+    async login({ commit, dispatch }, payload) {
+      console.log(payload)
       return usersAPI
-        .login(data)
-        .then(({ data }) => {
-          console.log(data)
+        .login(payload)
+        .then(({ data, status }) => {
+          console.log("the status of response is", status)
+          commit("SET_AUTH_RESPONSE", data.message)
           if (data.token) commit("SET_JWT_TOKEN", data.token)
           return dispatch("setAxiosInterceptor")
         })
         .catch((err) => {
           console.log(err)
+          commit("SET_AUTH_RESPONSE", err.response)
           return err
         })
     },
@@ -87,5 +96,9 @@ export default {
       )
     },
   },
-  getters: { getCurrentUser: (state) => state.user, getToken: (state) => state.token },
+  getters: {
+    getCurrentUser: (state) => state.user,
+    getToken: (state) => state.token,
+    getAuthResponse: (state) => state.authResponse,
+  },
 }
