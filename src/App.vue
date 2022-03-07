@@ -55,17 +55,59 @@ export default {
   opacity: 0;
 }
 
-.fadeSlide-enter-active {
-  transition: all 0.7s ease;
+.fadeSlideX-enter-active {
+  /* transition: fadein 0.7s ease; */
+  animation: fadein 0.7s ease;
 }
 
-.fadeSlide-leave-active {
-  transition: all 0.3s ease;
+.fadeSlideX-leave-active {
+  animation: fadeout 0.7s ease;
+}
+.fadeSlideY-enter-active {
+  /* transition: fadein 0.7s ease; */
+  animation: fadeinY 0.7s ease;
 }
 
-.fadeSlide-enter-from,
-.fadeSlide-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
+.fadeSlideY-leave-active {
+  animation: fadeoutY 0.7s ease;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+@keyframes fadeinY {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeoutY {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 </style>

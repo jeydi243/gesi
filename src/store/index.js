@@ -11,6 +11,7 @@ const store = createStore({
       count: 0,
       layout: "main",
       rootName: "home",
+      config: {},
       listSideMenus: [
         { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
         { text: "Students", to: "/students", icon: "user-rectangle", active: false, mouseHover: false },
@@ -71,6 +72,7 @@ const store = createStore({
   },
   getters: {
     getLayout: (state) => state.layout,
+    getConfig: (state) => state.config,
     getRootName: (state) => state.rootName,
     getListLevel: (state) => state.listLevel,
     getListSideMenus: (state) => state.listSideMenus,

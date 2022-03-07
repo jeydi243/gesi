@@ -2,13 +2,13 @@
     <div class="w-full bg-white rounded shadow-gray-50 p-3 h-auto">
         <div class="flex flex-row justify-between w-full pb-5">
             <div class="relative flex w-72 flex-wrap items-stretch">
-                <span class="z-10 flex h-full font-normal text-center self-center caret-green-500 text-gray-300 absolute bg-transparent rounded text-base items-center justify-center w-8">
-                    <box-icon name="search" type="regular" color="gray" size="sm" class="self-center text-center"></box-icon>
+                <span class="z-10 flex h-full font-normal text-center self-center caret-green-500 text-gray-300 absolute bg-transparent rounded text-base items-center justify-center ">
+                    <SearchIcon class="h-5 w-5 self-center text-center text-gray-300" />
                 </span>
                 <input
                     type="text"
-                    :placeholder="`Find ${level} by Username or Matricule`"
-                    class="px-3 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-10"
+                    :placeholder="`Find by Username or Matricule`"
+                    class="px-1 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-7"
                 />
             </div>
 
@@ -17,7 +17,7 @@
                 @click="$router.push({ name: 'students-add' })"
                 class="flex bg-green-500 rounded items-center px-5 justify-center text-white h-9 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-80"
             >
-                <box-icon name="user-plus" type="regular" color="white"></box-icon>
+                <UserAddIcon class="h-5 w-5 text-white" />
                 <span class="self-center ml-2">Ajouter</span>
             </button>
         </div>
@@ -34,7 +34,7 @@
             </thead>
             <!-- <tbody v-if="students != null"> -->
             <transition-group name="fade" tag="tbody" mode="out-in">
-                <tr class="table-row" v-for="(student,index) in students(level.toLowerCase())" :key="index" @click="goto(index)">
+                <tr class="table-row" v-for="(student, index) in students(level.toLowerCase())" :key="index" @click="goto(index)">
                     <td>{{ index }}</td>
                     <td class="t">{{ student.matricule }}</td>
                     <td>{{ student.name }}</td>
@@ -50,11 +50,17 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { UserAddIcon, SearchIcon } from '@heroicons/vue/solid'
+
+
 export default {
     name: "list-student",
-    props: {
+    components: {
+        UserAddIcon, SearchIcon
+    }, props: {
         level: { type: String, required: true, default: "candidat" }
     },
+
     computed: {
         ...mapGetters("students",
             { students: 'myStudentsByLevel' }

@@ -1,6 +1,7 @@
 import App from "./App.vue"
 import store from "./store/index"
 import { createApp } from "vue"
+import { configure } from "vee-validate"
 import * as mdiVue from "mdi-vue3"
 import * as mdijs from "@mdi/js"
 import "./assets/style.css"
@@ -10,10 +11,30 @@ import router from "./router"
 import NProgress from "vue-nprogress"
 const nprogress = new NProgress()
 import VueApexCharts from "vue3-apexcharts"
-import "boxicons"
-
 import VueSweetalert2 from "vue-sweetalert2"
 import "sweetalert2/dist/sweetalert2.min.css"
+import "boxicons"
+import { setLocale } from "yup"
+
+setLocale({
+  mixed: {
+    default: "Não é válido",
+    required: "Ce champ est requis",
+  },
+  number: {
+    min: "La valeur minimum n'est pas respecté",
+  },
+  string: { min: "Le minimum de caractères n'est pas respecté" },
+})
+
+// Default values
+configure({
+  validateOnBlur: true, // controls if `blur` events should trigger validation with `handleChange` handler
+  validateOnChange: true, // controls if `change` events should trigger validation with `handleChange` handler
+  validateOnInput: true, // controls if `input` events should trigger validation with `handleChange` handler
+  validateOnModelUpdate: true, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
+})
+
 // import VueSocketIO from "vue-3-socket.io"
 // var socketOption = {
 //   debug: true,
@@ -42,5 +63,3 @@ const app = createApp(App)
     icons: mdijs,
   })
   .mount("#app")
-
-app.component(VueApexCharts)

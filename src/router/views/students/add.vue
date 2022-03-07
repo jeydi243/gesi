@@ -1,120 +1,315 @@
 <template>
-    <div class="flex flex-row justify-center space-y-5 h-full">
-        <div class="card bg-white w-[40%] min-h-[90%] justify-between">
-            <span class="text-gray-800 font-bold text-2xl block text-center">Add student</span>
-            <form class="flex flex-col justify-center">
-                <div class="profile" id="preview" @click.stop="pickPicture">
-                    <img v-if="previewSRC != null" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-full h-[100px] w-[100px]" />
-                    <box-icon name="user" color="green" v-if="previewSRC == null"></box-icon>
-                    <input @change.prevent="onProfilePictureChange" type="file" id="profile_picture" class="profile_picture" hidden multiple="false" accept="image/*" />
-                </div>
-                <div class="input-group name">
-                    <input id="name" name="name" type="text" v-model="student.name.last" placeholder="Name" class="form-input relative w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group firstName ml-4">
-                    <input type="text" placeholder="First Name" id="first" v-model="student.name.first" class="flex form-input w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group middleName ml-4">
-                    <input type="text" placeholder="Middle Name" id="mid" v-model="student.name.middle" class="flex form-input mb-2 sm:text-base w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group countrie">
-                    <!-- <label for="countries" class="block  font-medium text-gray-900">Select your country</label> -->
-                    <select name="countrySelect" id="countries" v-model="student.country" class="border form-select rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                        <option value="RDC (Congo)" selected>RDC (Congo)</option>
-                        <option value="Congo">Congo</option>
-                        <option value="Senegal">Senegal</option>
-                        <option value="Cote d'ivoire">Cote d'ivoire</option>
-                    </select>
-                </div>
-                <div class="input-group gender">
-                    <select name="genderSelect" v-model="student.gender" class="form-select w-full border rounded focus:border-green-400 focus:outline-none py-2 pr-2">
-                        <option value="M" selected>Male</option>
-                        <option value="M">Female</option>
-                    </select>
-                    <!-- <select type="select" placeholder="M" v-model="student.gender" class=" form-select flex form-input sm:text-base w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" /> -->
-                </div>
-                <div class="input-group email">
-                    <input type="email" placeholder="Email" v-model="student.email" class="flex form-input form-input:bg-gray-900 h-full sm:text-base w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group birthDate">
-                    <input type="date" placeholder="Date of Birth" v-model="student.birthDate" class="form-input sm:text-base w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group telephone">
-                    <input type="number" placeholder="Telephone" v-model="student.telephone" class="flex form-input sm:text-base w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                </div>
-                <div class="input-group adresse">
-                    <input type="text" placeholder="XX, Q/quartier, C/commune, Av/avenue" v-model="student.adresse" class="form-input w-full border rounded placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2" />
-                    <!-- <span class="text-gray-400 text-xs p-0 m-0"></span> -->
-                </div>
-            </form>
-            <div class="flex flex-row-reverse foot text-black justify-between">
-                <button class="flex bg-green-500 px-4 py-2 rounded float-right focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg">
-                    <span class="font-bold text-white">Save</span>
-                </button>
-            </div>
-        </div>
-    </div>
+	<div class="card bg-white flex-row justify-items-center items-center justify-center h-full">
+		<transition name="fadeSlideX" mode="out-in">
+			<div class="step-1 flex w-[70%] h-[70%]" v-if="step == 1" key="step1">
+				<Form class="flex flex-col items-stretch w-full content-center justify-between" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
+					<h1 class="text-4xl mb-4">Informations préliminaires</h1>
+					<div class="grid grid-cols-2 gap-4 auto-cols-max">
+						<div class="input-group-grid name">
+							<Field type="text" placeholder="Name" id="name" name="name" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid country">
+							<Field name="country" id="country" as="select" class="rounded form-select block w-full">
+								<option value="RDC (Congo)" selected>RDC (Congo)</option>
+								<option value="Congo">Congo</option>
+								<option value="Senegal">Senegal</option>
+								<option value="Cote d'ivoire">Cote d'ivoire</option>
+							</Field>
+							<ErrorMessage name="country" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid gender">
+							<Field name="gender" id="gender" as="select" class="rounded form-select block w-full" required>
+								<option value selected>--Select gender--</option>
+								<option value="M">Male</option>
+								<option value="M">Female</option>
+							</Field>
+							<ErrorMessage name="gender" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid email">
+							<Field name="email" type="email" id="email" placeholder="Email" class="flex form-input:bg-gray-900 h-full w-full border input-field" />
+							<ErrorMessage name="email" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid birthDate">
+							<Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full input-field" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+							<ErrorMessage name="birthDate" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid telephone">
+							<Field name="telephone" type="number" placeholder="Telephone" class="sm:text-base w-full input-field" />
+							<ErrorMessage name="telephone" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid adresse col-span-2">
+							<Field name="adresse" type="text" placeholder="XX, Q/quartier, C/commune, Av/avenue" class="w-full border input-field" />
+							<ErrorMessage name="adresse" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+					</div>
+
+					<div class="grid flex-row-reverse text-black">
+						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center items-center justify-between focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+							<AtomSpinner v-if="isSubmitting" />
+							<span class="font-bold text-white">Next</span>
+							<ArrowRightIcon class="h-5 w-5 text-white" />
+						</button>
+					</div>
+				</Form>
+			</div>
+			<div class="step-2 flex flex-row w-full h-1/2 justify-center" v-else-if="step == 2" key="step2">
+				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
+					<div class="flex flex-col mb-4 h-1/2  items-center justify-center">
+						<p class="text-2xl mb-2">Photo de profil</p>
+						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{'profile2':!previewSRC}">
+							<img v-if="previewSRC" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-[100px] w-[100px]" />
+							<UserIcon class="h-10 w-10 text-gray-500" v-else />
+						</div>
+						<Field name="profile" v-slot="{ handleChange, handleBlur }">
+							<input id="bind-profile" type="file" @change="handleChange" @blur="handleBlur" class=" w-full text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 hidden" hidden />
+						</Field>
+						<ErrorMessage name="profile" v-slot="{ message }">
+							<p class="input-error">{{ message }}</p>
+						</ErrorMessage>
+					</div>
+					<div class="flex flex-row h-1/2 items-center justify-between">
+						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
+						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+							<span class="font-bold text-white">Suivant</span>
+							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
+						</button>
+					</div>
+					<!-- {{ values }} -->
+				</Form>
+				<!-- <ol class="items-center sm:flex">
+                <li class="relative mb-6 sm:mb-0">
+                    <div class="flex items-center">
+                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                    </div>
+                    <div class="mt-3 sm:pr-8">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.0.0</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 2, 2021</time>
+                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+                    </div>
+                </li>
+                <li class="relative mb-6 sm:mb-0">
+                    <div class="flex items-center">
+                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                    </div>
+                    <div class="mt-3 sm:pr-8">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.2.0</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 23, 2021</time>
+                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+                    </div>
+                </li>
+                <li class="relative mb-6 sm:mb-0">
+                    <div class="flex items-center">
+                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                    </div>
+                    <div class="mt-3 sm:pr-8">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.3.0</h3>
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on January 5, 2022</time>
+                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+                    </div>
+                </li>
+                </ol>-->
+			</div>
+			<div class="step-3 flex flex-row w-full justify-center h-1/2 " v-else-if="step == 3" key="step3">
+				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
+					<h1 class="text-4xl mb-4">Add contact person</h1>
+					<div class="flex flex-col">
+						<div class="input-group-grid name">
+							<Field type="text" placeholder="Name" id="name" name="name" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid telephone">
+							<Field type="text" placeholder="Télephone" id="name" name="telephone" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid email">
+							<Field type="text" placeholder="Email" id="name" name="email" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+					</div>
+					<div class="flex flex-row h-1/2 items-center justify-between">
+						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
+						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+							<span class="font-bold text-white">Suivant</span>
+							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<UserIcon class="h-10 w-10 text-white" v-else />
+						</button>
+					</div>
+				</Form>
+			</div>
+			<div class="step-3 flex flex-row w-full justify-center h-1/2 " v-else-if="step == 4" key="step4">
+				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
+					<h1>Add High School</h1>
+					<div class="flex flex-col">
+						<div class="input-group-grid name">
+							<Field type="text" placeholder="School Name" id="name" name="name" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid telephone">
+							<Field type="text" placeholder="Télephone" id="name" name="telephone" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid email">
+							<Field type="text" placeholder="Email" id="name" name="email" class="w-full input-field" />
+							<ErrorMessage name="name" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+					</div>
+					<div class="flex flex-row h-1/2 items-center justify-between">
+						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
+						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+							<span class="font-bold text-white">Suivant</span>
+							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<UserIcon class="h-10 w-10 text-white" v-else />
+						</button>
+					</div>
+				</Form>
+			</div>
+		</transition>
+	</div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { UserIcon, UserAddIcon, ArrowRightIcon } from "@heroicons/vue/solid";
+import { Field, Form, ErrorMessage } from "vee-validate";
+import { FingerprintSpinner } from "epic-spinners";
+import * as yup from "yup";
+import { markRaw } from "vue";
 export default {
-    name: "students-add",
-    data() {
-        return {
-            canShowMiddleName: false,
-            canShowFirstName: false,
-            epa: ref('eyo'),
-            previewSRC: null,
-            student: { name: { middle: "", last: "", first: "" }, birthDate: "", gender: "Male", email: "", telephone: "", adresse: "", country: "RDC (Congo)", profil: null }
-        }
-    },
-    methods: {
-        showMiddle() {
-            if (!this.canShowMiddleName) {
-                this.canShowMiddleName = !this.canShowMiddleName
-                console.log("Try to request focus of middle: ", document.getElementById('mid'));
-                setTimeout(() => {
-                    document.getElementById('mid').focus()
-                    this.student.name.last = this.student.name.last.slice(0, -1)
-                }, 500);
-            } else {
-                console.log("No need to request focus");
-            }
-        },
-        showFirst() {
-            if (this.canShowMiddleName) {
-                this.canShowFirstName = !this.canShowFirstName
-                console.log("Try to request focus of first:", document.getElementById('first'));
-                setTimeout(() => {
-                    document.getElementById('first').focus()
-                    this.student.name.middle = this.student.name.middle.slice(0, -1)
-                }, 500);
-            } else {
-                console.log("No need to request focus");
-            }
-        },
-        justDeleteInName() {
-            console.log("You just delete some caracteres");
-        },
-        justDeleteInMiddle() {
-            console.log("You just delete in Middle");
-        },
-        pickPicture() {
-            document.getElementById('profile_picture').click()
-        },
-        onProfilePictureChange(event) {
-            console.log("Profile picture change and is ", event.target.files[0]);
-            if (event.target.files && event.target.files[0]) {
-                this.previewSRC = window.URL.createObjectURL(event.target.files[0]);
-                window.URL.revokeObjectURL(event.target.files[0]); // free memory
-            } else {
-                this.previewSRC = null
-
-            }
-        }
-    },
-}
+	name: "students-add",
+	components: {
+		Form,
+		Field,
+		ErrorMessage,
+		FingerprintSpinner,
+		ArrowRightIcon,
+		UserIcon,
+	},
+	data() {
+		const step1Schema = markRaw(
+			yup.object({
+				name: yup.string().required(),
+				country: yup.string().required(),
+				telephone: yup.string().required(),
+				adresse: yup.string().required(),
+				email: yup.string().email().required(),
+				birthDate: yup.date().min(new Date("2000-02-02"), "L'age minimum est de 18 ans"),
+				gender: yup.string().default("off"),
+			})
+		);
+		const step2Schema = {
+			profile(value) {
+				console.log(value[0]);
+				if (value[0] instanceof File || value[0] instanceof Blob) {
+					return true;
+				}
+				return "Vous devez choisir une photo de profil";
+			},
+		};
+		const step3Schema = yup.object({
+			name: yup.string().required(),
+			telephone: yup.number().required(),
+			email: yup.string().required(),
+		});
+		return {
+			previewSRC: null,
+			step: 2,
+			step1Schema,
+			step2Schema,
+			step3Schema,
+			step1Values: { name: "test", birthDate: new Date("2000-02-02"), gender: "M", email: "email@hg.com", telephone: "+245369854", adresse: "20, lubumb", country: "RDC (Congo)" },
+			step2Values: { profile: "" },
+			step3Values: { name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" },
+			student: { name: "test", birthDate: new Date("2000-02-02"), gender: "M", email: "email@hg.com", telephone: "+245369854", adresse: "20, lubumb", country: "RDC (Congo)" },
+		};
+	},
+	created() {},
+	methods: {
+		pickPicture() {
+			document.getElementById("bind-profile").click();
+			const fi = document.getElementById("bind-profile");
+			console.log(fi);
+			fi.addEventListener("change", this.onProfilePictureChange);
+		},
+		onProfilePictureChange(event) {
+			console.log("Profile picture change and is ", event.target.files[0]);
+			if (event.target.files && event.target.files[0]) {
+				this.previewSRC = window.URL.createObjectURL(event.target.files[0]);
+				window.URL.revokeObjectURL(event.target.files[0]); // free memory
+			} else {
+				this.previewSRC = null;
+			}
+		},
+		submitStep1() {
+			console.log("just submit");
+			this.goNext();
+		},
+		submitStep2() {
+			console.log("just submit");
+			this.goNext();
+		},
+		submitStep3() {
+			console.log("just submit");
+			this.goNext();
+		},
+		goNext() {
+			this.step += 1;
+		},
+		goBack() {
+			this.step -= 1;
+		},
+		onInvalidStep1({ values, result, errors }) {
+			console.log("On invalid submit: ", { values, result, errors });
+		},
+		onInvalidStep2({ values, result, errors }) {
+			console.log("On invalid submit: ", { values, result, errors });
+		},
+		onInvalidStep3({ values, result, errors }) {
+			console.log("On invalid submit: ", { values, result, errors });
+		},
+	},
+};
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@
 	<div class="flex flex-row view" v-bind="$attrs">
 		<!-- props is {{ typeLayout }} -->
 
-		<SideBar class="flex w-1/5 h-full bg-gray-900" />
+		<SideBar class="flex w-1/5 h-screen bg-gray-900" />
 		<div class="flex w-4/5">
 			<main class="flex flex-col w-full bg-gray-100 relative">
 				<!-- <div class="absolute top-0 left-0 z-10 h-full w-full">
@@ -95,17 +95,6 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
-}
-
-.fadeSlide-enter-active,
-.fadeSlide-leave-active {
-	transition: all 1.2s ease;
-}
-
-.fadeSlide-enter-from,
-.fadeSlide-leave-to {
-	opacity: 0;
-	transform: translateY(10px);
 }
 .view {
 	-ms-overflow-style: none; /* IE and Edge */

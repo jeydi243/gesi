@@ -30,10 +30,25 @@
   @apply rounded mt-2 bg-green-300 h-9 text-gray-800;
 }
 .input-group {
-  @apply py-1 flex relative;
+  @apply py-1 flex flex-col relative mb-2;
+}
+.input-group-grid {
+  @apply py-1 grid grid-cols-1 relative mb-2;
+}
+.input-field {
+  @apply placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2 form-input rounded;
+}
+.input-error {
+  @apply text-red-800 text-xs;
 }
 .profile {
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
+}
+
+
+
+.profile2 {
+  @apply flex bg-green-100 h-[140px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800  items-center justify-center cursor-pointer;
 }
 .avatar {
   @apply flex bg-green-100 h-[35px] w-[35px] ring-1 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
@@ -62,6 +77,9 @@ tr {
 .document {
   @apply bg-green-500 rounded border-2 border-dashed flex flex-row content-between cursor-default py-2 border-green-200 text-green-600 pl-2 bg-opacity-5 align-middle justify-between;
 }
+.btn-connexion {
+  @apply w-full px-4 flex flex-row hover:cursor-pointer justify-center items-center text-center py-2 tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600;
+}
 
 @layer utilities {
   .animation-delay-2000 {
@@ -74,23 +92,18 @@ tr {
     animation-delay: 6s;
   }
 }
-
-/* width */
+/* 
 ::-webkit-scrollbar {
   width: 10px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
@@ -119,13 +132,13 @@ tr {
 }
 ::-webkit-calendar-picker-indicator {
   background: orange;
-}
-input:invalid+span:after {
-  content: '✖';
+} */
+/* input:invalid + span:after {
+  content: "✖";
   padding-left: 5px;
 }
 
-input:valid+span:after {
-  content: '✓';
+input:valid + span:after {
+  content: "✓";
   padding-left: 5px;
-}
+} */

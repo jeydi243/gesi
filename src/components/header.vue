@@ -1,5 +1,5 @@
 <template>
-    <header class="flex w-full h-[50px] bg-white text-black items-center justify-end px-10 mt-1">
+    <header class="flex w-full h-[50px] bg-white text-black items-center justify-end px-10 border-t-2 border-t-gray-300">
         <div class="avatar rounded-full">
             <img src="@/assets/img/user.png" class />
         </div>
@@ -19,10 +19,10 @@
 
             <!-- Dropdown menu -->
             <div id="dropdown" class="absolute right-0 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700" v-if="dropdown">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100" @click="goto('profile')">Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100" @click="goto('index-settings')">Settings</a>
+                <span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer" @click="goto('profile')">Profile</span>
+                <span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer" @click="goto('index-settings')">Settings</span>
                 <span class="h-1 w-full border-b border-yellow-300"></span>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50" @click="goto('login')">Sign Out</a>
+                <span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50 hover:cursor-pointer" @click="goto('login')">Sign Out</span>
             </div>
         </div>
     </header>

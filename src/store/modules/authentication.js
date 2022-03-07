@@ -8,12 +8,18 @@ export default {
     SET_JWT_TOKEN(state, token) {
       state.token = token
     },
+    SET_USER(state, user) {
+      state.user = user
+    },
     SET_AUTH_RESPONSE(state, authResponse) {
-      if ((authResponse = "Unauthorized")) {
+      if (authResponse == "Unauthorized") {
         state.authResponse = "Vous n'avez l'autorisation pour acceder à cette page"
       } else {
         state.authResponse = authResponse
       }
+      setTimeout(() => {
+        state.authResponse = null
+      }, 10000)
     },
   },
   actions: {
@@ -28,14 +34,16 @@ export default {
       return usersAPI
         .login(payload)
         .then(({ data, status }) => {
-          console.log("the status of response is", status)
           commit("SET_AUTH_RESPONSE", data.message)
-          if (data.token) commit("SET_JWT_TOKEN", data.token)
-          return dispatch("setAxiosInterceptor")
+          if (data.token) {
+            commit("SET_JWT_TOKEN", data.token)
+            commit("SET_USER", data.user)
+            return dispatch("setAxiosInterceptor")
+          } else console.log("No token")
         })
         .catch((err) => {
           console.log(err)
-          commit("SET_AUTH_RESPONSE", err.response)
+          commit("SET_AUTH_RESPONSE", err.response.data)
           return err
         })
     },
@@ -50,47 +58,11 @@ export default {
       )
       axios.interceptors.response.use(
         function (response) {
-          console.info(`[Axios] Response status ${response.status}`)
+        //   console.info(`%c[Axios ${response.status}] `, "color: #0080ff; font-weight: bold;")
           return response
         },
         function (error) {
-          console.error(`[Axios] Error ${JSON.stringify(error)}`)
-          if (error.code == "ECONNABORTED") {
-            Vue.toasted.show(
-              "La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps",
-              {
-                type: "error",
-                duration: 50000,
-                singleton: true,
-                action: {
-                  text: "Relancer la page",
-                  onClick: (e, toastObject) => {
-                    console.log("Relaod after error")
-                    router.go()
-                  },
-                },
-              }
-            )
-            console.log({ error })
-          } else if (error.code === "ERR_CONNECTION_REFUSED") {
-            console.log("[ECONNABORTED] Impossible de contacter le serveur :", {
-              error,
-            })
-            router.push({ name: "error" })
-          } else if (error.code === "ERR_FAILED") {
-            console.log("[ERR_FAILED] Impossible de contacter le serveur :", {
-              error,
-            })
-            router.push({ name: "error" })
-          } else {
-            // Vue.toasted.show("Nous éprouvons quelques difficultés à contacter le serveur.\nVérifier votre connexion et tenter à nouveau dans quelques temps."
-            // , {
-            //   type: "error",
-            //   singleton: true,
-            //   duration: 5000
-            // });
-            commit("SET_ERROR", error)
-          }
+          console.log(`%c[Axios] Error ${JSON.stringify(error)}`, "color: #ff0000; font-weight: bold;")
           return Promise.reject(error)
         }
       )
