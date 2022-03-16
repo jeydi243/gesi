@@ -34,7 +34,7 @@ export default {
 	},
 	computed: {
 		currentComponent() {
-			return comp[this.tabsGestion.find((tab) => tab.current).name.toLowerCase()];
+			return comp[this.tabsGestion.find((tab) => tab.current)?.name.toLowerCase()];
 		},
 	},
 	methods: {

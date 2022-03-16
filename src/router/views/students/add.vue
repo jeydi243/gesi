@@ -1,8 +1,19 @@
 <template>
 	<div class="card bg-white flex-row justify-items-center items-center justify-center h-full">
+		<div class="flex flex-row mb-5">
+			<div v-for="i in 4" :key="i" class="flex flex-col justify-start items-start">
+				<span>
+					<box-icon type="solid" name="circle" :color="i > step ? 'black':'green'" size="xs" class="mb-2"></box-icon>
+					<span v-for="k in 10" :key="k">-</span>
+				</span>
+
+				<span class="text-xs">{{ i }}</span>
+			</div>
+		</div>
+
 		<transition name="fadeSlideX" mode="out-in">
-			<div class="step-1 flex w-[70%] h-[70%]" v-if="step == 1" key="step1">
-				<Form class="flex flex-col items-stretch w-full content-center justify-between" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
+			<div class="step-1 step-content " v-if="step == 1" key="step1">
+				<Form class="flex flex-col w-full content-center justify-between items-center" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
 					<h1 class="text-4xl mb-4">Informations préliminaires</h1>
 					<div class="grid grid-cols-2 gap-4 auto-cols-max">
 						<div class="input-group-grid name">
@@ -45,7 +56,7 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field name="telephone" type="number" placeholder="Telephone" class="sm:text-base w-full input-field" />
+							<Field name="telephone" type="text" placeholder="Telephone" class="sm:text-base w-full input-field" />
 							<ErrorMessage name="telephone" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
@@ -57,26 +68,25 @@
 							</ErrorMessage>
 						</div>
 					</div>
-
 					<div class="grid flex-row-reverse text-black">
 						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center items-center justify-between focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
-							<AtomSpinner v-if="isSubmitting" />
 							<span class="font-bold text-white">Next</span>
-							<ArrowRightIcon class="h-5 w-5 text-white" />
+							<AtomSpinner v-if="isSubmitting" />
+							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
 						</button>
 					</div>
 				</Form>
 			</div>
-			<div class="step-2 flex flex-row w-full h-1/2 justify-center" v-else-if="step == 2" key="step2">
+			<div class="step-2 step-content " v-else-if="step == 2" key="step2">
 				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
 					<div class="flex flex-col mb-4 h-1/2  items-center justify-center">
-						<p class="text-2xl mb-2">Photo de profil</p>
+						<p class="text-4xl mb-4">Photo de profil</p>
 						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{'profile2':!previewSRC}">
 							<img v-if="previewSRC" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-[100px] w-[100px]" />
-							<UserIcon class="h-10 w-10 text-gray-500" v-else />
+							<UserIcon class="h-10 w-10 text-green-500" v-else />
 						</div>
 						<Field name="profile" v-slot="{ handleChange, handleBlur }">
-							<input id="bind-profile" type="file" @change="handleChange" @blur="handleBlur" class=" w-full text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 hidden" hidden />
+							<input id="bind-profile" type="file" @change="handleChange" @blur="handleBlur" class=" w-full text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 hidden" hidden />
 						</Field>
 						<ErrorMessage name="profile" v-slot="{ message }">
 							<p class="input-error">{{ message }}</p>
@@ -86,7 +96,7 @@
 						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
 						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
 							<span class="font-bold text-white">Suivant</span>
-							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
 							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
 						</button>
 					</div>
@@ -140,9 +150,9 @@
                 </li>
                 </ol>-->
 			</div>
-			<div class="step-3 flex flex-row w-full justify-center h-1/2 " v-else-if="step == 3" key="step3">
-				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
-					<h1 class="text-4xl mb-4">Add contact person</h1>
+			<div class="step-3 step-content " v-else-if="step == 3" key="step3">
+				<Form class="flex flex-col mb-4 justify-center items-center w-full" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
+					<h1 class="text-4xl mb-4">Add contact</h1>
 					<div class="flex flex-col">
 						<div class="input-group-grid name">
 							<Field type="text" placeholder="Name" id="name" name="name" class="w-full input-field" />
@@ -151,7 +161,7 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field type="text" placeholder="Télephone" id="name" name="telephone" class="w-full input-field" />
+							<Field type="text" placeholder="Téléphone" id="name" name="telephone" class="w-full input-field" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
@@ -167,16 +177,16 @@
 						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
 						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
 							<span class="font-bold text-white">Suivant</span>
-							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
-							<UserIcon class="h-10 w-10 text-white" v-else />
+							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<ArrowRightIcon class="h-10 w-10 text-white" v-else />
 						</button>
 					</div>
 				</Form>
 			</div>
-			<div class="step-3 flex flex-row w-full justify-center h-1/2 " v-else-if="step == 4" key="step4">
-				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
-					<h1>Add High School</h1>
-					<div class="flex flex-col">
+			<div class="step-4 step-content " v-else-if="step == 4" key="step4">
+				<Form class="flex flex-col mb-4 justify-center items-center" @submit="submitStep4" :validation-schema="step4Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
+					<h1 class="text-4xl mb-4">Add High School</h1>
+					<div class="grid grid-cols-2 gap-2">
 						<div class="input-group-grid name">
 							<Field type="text" placeholder="School Name" id="name" name="name" class="w-full input-field" />
 							<ErrorMessage name="name" v-slot="{ message }">
@@ -184,14 +194,22 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field type="text" placeholder="Télephone" id="name" name="telephone" class="w-full input-field" />
-							<ErrorMessage name="name" v-slot="{ message }">
+							<Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full input-field" />
+							<ErrorMessage name="telephone" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
-						<div class="input-group-grid email">
-							<Field type="text" placeholder="Email" id="name" name="email" class="w-full input-field" />
-							<ErrorMessage name="name" v-slot="{ message }">
+						<div class="input-group-grid diploma">
+							<Field placeholder="Diploma" v-slot="{handleChange,handleBlur}" name="diploma">
+								<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
+							</Field>
+							<ErrorMessage name="diploma" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</div>
+						<div class="input-group-grid adresse">
+							<Field type="text" placeholder="Adresse" id="adresse" name="adresse" class="w-full input-field" />
+							<ErrorMessage name="adresse" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
@@ -200,8 +218,8 @@
 						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
 						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
 							<span class="font-bold text-white">Suivant</span>
-							<FingerprintSpinner v-if="isSubmitting" class="h-10 w-10" />
-							<UserIcon class="h-10 w-10 text-white" v-else />
+							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
+							<ArrowRightIcon class="h-10 w-10 text-white" v-else />
 						</button>
 					</div>
 				</Form>
@@ -211,20 +229,24 @@
 </template>
 
 <script>
-import { UserIcon, UserAddIcon, ArrowRightIcon } from "@heroicons/vue/solid";
+import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { FingerprintSpinner } from "epic-spinners";
+import { AtomSpinner } from "epic-spinners";
 import * as yup from "yup";
 import { markRaw } from "vue";
+// const { ipcRenderer } = window.require("electron");
+import { useToast } from "vue-toastification";
+var toast = useToast();
 export default {
 	name: "students-add",
 	components: {
 		Form,
 		Field,
 		ErrorMessage,
-		FingerprintSpinner,
-		ArrowRightIcon,
+		AtomSpinner,
 		UserIcon,
+		ArrowRightIcon,
+		
 	},
 	data() {
 		const step1Schema = markRaw(
@@ -240,7 +262,6 @@ export default {
 		);
 		const step2Schema = {
 			profile(value) {
-				console.log(value[0]);
 				if (value[0] instanceof File || value[0] instanceof Blob) {
 					return true;
 				}
@@ -252,19 +273,33 @@ export default {
 			telephone: yup.number().required(),
 			email: yup.string().required(),
 		});
+		const step4Schema = yup.object({
+			name: yup.string().required(),
+			telephone: yup.string().required(),
+			adresse: yup.string().required(),
+		});
 		return {
 			previewSRC: null,
-			step: 2,
+			step: 4,
 			step1Schema,
 			step2Schema,
 			step3Schema,
-			step1Values: { name: "test", birthDate: new Date("2000-02-02"), gender: "M", email: "email@hg.com", telephone: "+245369854", adresse: "20, lubumb", country: "RDC (Congo)" },
+			step4Schema,
+			step1Values: {
+				name: "Kadiongo Ilunga",
+				birthDate: new Date("2000-02-02"),
+				gender: "M",
+				email: "email@email.com",
+				telephone: "+245369854",
+				adresse: "20, lubumbashi Q. Mampala",
+				country: "RDC (Congo)",
+			},
+			stepper: [{ schema: "", values: "", active: false }],
 			step2Values: { profile: "" },
 			step3Values: { name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" },
-			student: { name: "test", birthDate: new Date("2000-02-02"), gender: "M", email: "email@hg.com", telephone: "+245369854", adresse: "20, lubumb", country: "RDC (Congo)" },
+			step4Values: { name: "IT Salama", telephone: "+24381745021", adresse: "20, lubumbashi, Q/ Mamplaa" },
 		};
 	},
-	created() {},
 	methods: {
 		pickPicture() {
 			document.getElementById("bind-profile").click();
@@ -282,16 +317,24 @@ export default {
 			}
 		},
 		submitStep1() {
-			console.log("just submit");
 			this.goNext();
 		},
 		submitStep2() {
-			console.log("just submit");
 			this.goNext();
 		},
 		submitStep3() {
-			console.log("just submit");
 			this.goNext();
+		},
+		async submitStep4() {
+			console.log("just submit step 4");
+			toast.success("Enregistrement terminé", {
+				timeout: 5000,
+			});
+			setTimeout(() => {
+				this.$router.push("/students");
+			}, 3000);
+
+			// window.ipcRenderer.send("hello", { message: "Hello from ipc renderer" });
 		},
 		goNext() {
 			this.step += 1;
@@ -306,6 +349,9 @@ export default {
 			console.log("On invalid submit: ", { values, result, errors });
 		},
 		onInvalidStep3({ values, result, errors }) {
+			console.log("On invalid submit: ", { values, result, errors });
+		},
+		onInvalidStep4({ values, result, errors }) {
 			console.log("On invalid submit: ", { values, result, errors });
 		},
 	},

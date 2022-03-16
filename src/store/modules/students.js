@@ -14,18 +14,18 @@ export default {
     init({ dispatch }) {
       dispatch("getStudents")
     },
-    getStudents({ commit, state }) {
-      if (state.students.length == 0) {
-        studentsAPI
-          .getAll()
-          .then(({ data }) => {
-            commit("ALL", data)
-            console.log(data)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
+    getAllStudents({ commit, state }) {
+      //   if (state.students.length == 0) {
+      studentsAPI
+        .getAll()
+        .then(({ data, status }) => {
+          console.log(data)
+        //   commit("ALL", data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      //   }
     },
   },
   getters: {

@@ -1,15 +1,17 @@
 "use strict"
 
-import { app, protocol, BrowserWindow } from "electron"
+import { app, protocol, BrowserWindow, ipcMain as main } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
+const path = require("path")
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }])
 
 async function createWindow(height, width, x, y) {
   // Create the browser window.
+  console.log("process.env.ELECTRON_NODE_INTEGRATION: ", process.env.ELECTRON_NODE_INTEGRATION)
   const win = new BrowserWindow({
     autoHideMenuBar: true,
     width,
@@ -17,8 +19,9 @@ async function createWindow(height, width, x, y) {
     y,
     height,
     webPreferences: {
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration: !process.env.ELECTRON_NODE_INTEGRATION,
+      contextIsolation: process.env.ELECTRON_NODE_INTEGRATION,
+      preload: path.join(__dirname, "preload.js"),
     },
   })
 
@@ -45,38 +48,41 @@ app.on("activate", () => {
 })
 
 app.on("ready", async () => {
-  const { screen } = require("electron")
-  const primaryDisplay = screen.getPrimaryDisplay()
-  var { x, y } = primaryDisplay.bounds
-  var { width, height } = primaryDisplay.workAreaSize
-  const displays = screen.getAllDisplays()
+  installDevTools()
+  whichScreen()
+})
+async function installDevTools() {
   if (isDevelopment && !process.env.IS_TEST) {
-    // console.log("Donc la c'est comme ça")
     try {
       await installExtension({
         id: "ljjemllljcmogpfapbkkighbhhppjdbg", //Vue Devtools beta
         electron: ">=1.2.1",
       })
-      const externalDisplay = displays.find((display) => {
-        return display.bounds.x !== 0 || display.bounds.y !== 0
-      })
-    //   console.log("There is ", displays.length, " displays")
-      if (externalDisplay) {
-        height = externalDisplay.size.height
-        width = externalDisplay.size.width * 0.9
-        x = externalDisplay.bounds.x
-        y = externalDisplay.bounds.y
-        createWindow(height, width, x, y)
-        // console.log(`We are on external screen(${height}x${width})`)
-      } else {
-        createWindow(height, width, x, y)
-        // console.log(`We are on main screen(${height}x${width})`)
-      }
     } catch (e) {
       console.error("Vue Devtools failed to install:", e.toString())
     }
   }
-})
+}
+function whichScreen() {
+  const { screen } = require("electron")
+  const primaryDisplay = screen.getPrimaryDisplay()
+  var { x, y } = primaryDisplay.bounds
+  var { width, height } = primaryDisplay.workAreaSize
+  const displays = screen.getAllDisplays()
+  const externalDisplay = displays.find((display) => {
+    return display.bounds.x !== 0 || display.bounds.y !== 0
+  })
+  //   console.log("There is ", displays.length, " displays")
+  if (externalDisplay) {
+    height = externalDisplay.size.height
+    width = externalDisplay.size.width
+    x = externalDisplay.bounds.x
+    y = externalDisplay.bounds.y
+    createWindow(height, width, x, y)
+    // console.log(`We are on external screen(${height}x${width})`)
+  }
+  createWindow(height, width, x, y)
+}
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
@@ -92,3 +98,8 @@ if (isDevelopment) {
     })
   }
 }
+
+main.on("hello", (event) => {
+  console.log("Child say hello")
+  console.log(event.sender)
+})

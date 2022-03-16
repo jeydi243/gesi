@@ -451,7 +451,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow-colored: 0 0 #0000;
 }
 
-.ring-0, .g-input-text, .profile, .avatar, .focus\:ring, .focus\:ring-0, .sm\:ring-8 {
+.ring-0, .g-input-text, .profile, .focus\:ring, .focus\:ring-0, .sm\:ring-8 {
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
@@ -632,10 +632,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 2 / span 2;
 }
 
-.float-right {
-  float: right;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -712,10 +708,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .block {
   display: block;
-}
-
-.inline-block {
-  display: inline-block;
 }
 
 .flex {
@@ -1031,14 +1023,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   gap: 1rem;
 }
 
+.space-x-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .-space-x-px > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(-1px * var(--tw-space-x-reverse));
   margin-left: calc(-1px * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.self-end {
-  align-self: flex-end;
 }
 
 .self-center {
@@ -1067,12 +1061,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow-wrap: break-word;
 }
 
-.rounded-full {
-  border-radius: 9999px;
-}
-
 .rounded-md {
   border-radius: 0.375rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded {
@@ -1991,11 +1985,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 9999px;
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(167 243 208 / var(--tw-ring-opacity));
 }
 
 th {
@@ -2249,6 +2238,14 @@ input:valid + span:after {
 
 .file\:rounded-full::file-selector-button {
   border-radius: 9999px;
+}
+
+.file\:rounded-lg::-webkit-file-upload-button {
+  border-radius: 0.5rem;
+}
+
+.file\:rounded-lg::file-selector-button {
+  border-radius: 0.5rem;
 }
 
 .file\:border-0::-webkit-file-upload-button {

@@ -45,13 +45,11 @@
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
 }
 
-
-
 .profile2 {
-  @apply flex bg-green-100 h-[140px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800  items-center justify-center cursor-pointer;
+  @apply flex bg-green-100 h-[100px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
 }
 .avatar {
-  @apply flex bg-green-100 h-[35px] w-[35px] ring-1 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
+  @apply flex bg-green-100 h-[35px] w-[35px] rounded-full self-center items-center justify-center cursor-pointer;
 }
 th {
   @apply h-10 pl-1;
@@ -79,6 +77,10 @@ tr {
 }
 .btn-connexion {
   @apply w-full px-4 flex flex-row hover:cursor-pointer justify-center items-center text-center py-2 tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600;
+}
+
+.step-content {
+  @apply flex flex-row w-full justify-center h-1/2;
 }
 
 @layer utilities {

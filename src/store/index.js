@@ -14,11 +14,12 @@ const store = createStore({
       config: {},
       listSideMenus: [
         { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
-        { text: "Students", to: "/students", icon: "user-rectangle", active: false, mouseHover: false },
+        { text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
         { text: "Professors", to: "/professors", icon: "adjust", active: false, mouseHover: false },
         { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
-        { text: "Library", to: "/library", icon: "book", active: false, mouseHover: false },
+        { text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
         { text: "Gestion", to: "/gestion", icon: "book", active: false, mouseHover: false },
+        { text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
       ],
       listLevel: [
         { id: "TmhGq7H", name: "Candidat", short: "Candidat", color: "#8B70D8", current: true },
@@ -40,16 +41,14 @@ const store = createStore({
     CHANGE_ACTIVE_SIDE_MENU(state, path) {
       var currentIndex = state.listSideMenus.findIndex((item) => item.active == true)
       var nextIndex = state.listSideMenus.findIndex((item) => item.to == path)
-      if (nextIndex != -1 && currentIndex != -1) {
-        state.listSideMenus[currentIndex].active = false
+      if (nextIndex != -1) {
+        if (currentIndex != -1) {
+          state.listSideMenus[currentIndex].active = false
+        }
         state.listSideMenus[nextIndex].active = true
       } else {
-        if (currentIndex != -1) {
-          state.listSideMenus[currentIndex].active = true
-        }
-        // else {
-        //           state.listSideMenus[0].active = true
-        //         }
+        console.log("Bon tu est beau")
+        state.listSideMenus[currentIndex].active = false
       }
     },
     CHANGE_LEVEL_MENU(state, index) {
