@@ -7,7 +7,7 @@
 		<div class="flex border-b border-gray-200 mb-2">
 			<button v-for="(tabLevel,index) in levels" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tabLevel.current }" @click="changeLevel(index)">{{ tabLevel.name }}</button>
 		</div>
-		<transition name="fadeSlide" mode="out-in" duration="500">
+		<transition name="fadeSlideY" mode="out-in" duration="500">
 			<ListStudent :level="currentTabLevel" v-if="isLevelChanged" />
 		</transition>
 	</div>
@@ -43,7 +43,7 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("students", ["getStudents"]),
+		...mapActions("students", ["getAllStudents"]),
 		...mapMutations({ changeLevel: "CHANGE_LEVEL_MENU" }),
 		goto(index) {
 			return this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });

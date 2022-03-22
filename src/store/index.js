@@ -28,7 +28,7 @@ const store = createStore({
         { id: "7imqgyt", name: "Graduat 2", short: "G2", color: "#D194F7", current: false },
         { id: "7imy5y7", name: "Graduat 3", short: "G3", color: "#E199F9", current: false },
       ],
-      listState: ["Abandon", "Diplomé", "Candidat", "Renvoi"],
+      listStatus: ["Etudiant", "Abandon", "Diplomé", "Candidat", "Renvoi"],
     }
   },
   mutations: {
@@ -74,9 +74,13 @@ const store = createStore({
     getConfig: (state) => state.config,
     getRootName: (state) => state.rootName,
     getListLevel: (state) => state.listLevel,
+    getListStatus: (state) => state.listStatus,
     getListSideMenus: (state) => state.listSideMenus,
     currentLevel(state) {
       return state.listLevel.find((tabLevel) => tabLevel.current == true).name
+    },
+    currentLevelShort(state) {
+      return state.listLevel.find((tabLevel) => tabLevel.current == true).short
     },
   },
 })

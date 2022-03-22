@@ -1,6 +1,6 @@
 <template>
-	<header class="flex w-full h-[50px] bg-white text-black items-center justify-end px-10 border-t-2 border-t-gray-300">
-
+	<header class="flex w-full h-[50px] bg-white text-black items-center justify-between px-10 border-t-2 border-t-gray-300">
+		<ArrowLeftIcon class="flex h-5 w-5 text-blue-500 cursor-pointer" @click="back" />
 		<div class="relative flex flex-row space-x-5">
 			<!-- Dropdown toggle button -->
 			<button @click="dropdown = !dropdown" id="toggle-dropdown" class="relative items-center z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row">
@@ -14,25 +14,30 @@
 			</button>
 
 			<!-- Dropdown menu -->
-			<div id="dropdown" class="absolute right-0 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700" v-if="dropdown">
-				<span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer" @click="goto('profile')">Profile</span>
-				<span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer" @click="goto('index-settings')">Settings</span>
-				<span class="h-1 w-full border-b border-yellow-300"></span>
-				<span href="#" class="block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50 hover:cursor-pointer" @click="goto('login')">Sign Out</span>
+			<div id="dropdown" class="dropdown" v-if="dropdown">
+				<span href="#" class="dropdown-item" @click="goto('profile')">Profile</span>
+				<span href="#" class="dropdown-item" @click="goto('index-settings')">Settings</span>
+				<span class="dropdown-separator"></span>
+				<span href="#" class="dropdown-item-sensible" @click="goto('login')">Sign Out</span>
 			</div>
 		</div>
 	</header>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
+import { ArrowLeftIcon } from "@heroicons/vue/solid";
 export default {
 	name: "Header",
+	components: {
+		ArrowLeftIcon,
+	},
 	data() {
 		return {
 			dropdown: false,
 		};
 	},
+
 	methods: {
 		...mapActions("authentication", ["logout"]),
 		goto(name) {
@@ -42,6 +47,9 @@ export default {
 			this.dropdown = !this.dropdown;
 			console.log(this.dropdown);
 			this.$router.push({ name });
+		},
+		back() {
+			this.$router.back();
 		},
 	},
 };

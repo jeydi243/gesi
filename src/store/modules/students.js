@@ -12,26 +12,23 @@ export default {
   },
   actions: {
     init({ dispatch }) {
-      dispatch("getStudents")
+      dispatch("getAllStudents")
     },
     getAllStudents({ commit, state }) {
-      //   if (state.students.length == 0) {
       studentsAPI
         .getAll()
-        .then(({ data, status }) => {
-          console.log(data)
-        //   commit("ALL", data)
+        .then((res) => {
+          console.log("Just call the API: ", res)
+          commit("ALL", res.data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log("Erro on calling getAllStudents", err)
         })
-      //   }
     },
   },
   getters: {
-    mystudents: function (state) {
-      return state.students
+    mystudents(state, getters, rootState, rootGetters) {
+      return state.students.filter((student) => student.level.toLowerCase() == rootGetters.currentLevelShort.toLowerCase())
     },
-    myStudentsByLevel: (state) => (level) => state.students.filter((student) => student.level == level),
   },
 }

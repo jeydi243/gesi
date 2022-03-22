@@ -1,0 +1,15 @@
+
+
+
+
+.g-button-optional {
+  @apply rounded mt-2 bg-gray-200 h-9 text-gray-800;
+}
+
+.btn-connexion {
+  @apply w-full px-4 flex flex-row hover:cursor-pointer justify-center items-center text-center py-2 tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600;
+}
+
+.g-button-primary {
+  @apply rounded mt-2 bg-green-300 h-9 text-gray-800;
+}

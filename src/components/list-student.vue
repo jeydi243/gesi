@@ -30,22 +30,23 @@
 			</thead>
 			<!-- <tbody v-if="students != null"> -->
 			<transition-group name="fade" tag="tbody" mode="out-in">
-				<tr class="table-row" v-for="(student, index) in students(level.toLowerCase())" :key="index" @click="goto(index)">
+				<tr class="table-row" v-for="(student, index) in students" :key="index" @click="goto(index)">
 					<td>{{ index }}</td>
-					<td class="t">{{ student.matricule }}</td>
+					<td>{{ student.matricule }}</td>
 					<td>{{ student.name }}</td>
 					<td>{{ student.email }}</td>
-					<td>{{ student.niveau }}</td>
-					<td>{{ student.statut }}</td>
+					<td>{{ student.level }}</td>
+					<td>{{ student.status }}</td>
 				</tr>
 			</transition-group>
 			<!-- </tbody> -->
+			<!-- {{ mystudents }} -->
 		</table>
 	</div>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { UserAddIcon, SearchIcon, RefreshIcon } from "@heroicons/vue/solid";
 
 export default {
@@ -60,13 +61,16 @@ export default {
 	},
 
 	computed: {
-		...mapGetters("students", { students: "myStudentsByLevel" }),
+		...mapGetters("students", { students: "mystudents" }),
 		...mapGetters({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
 	},
 	methods: {
 		...mapActions("students", {
 			refresh: "getAllStudents",
 		}),
+		goto(index) {
+			return this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });
+		},
 	},
 };
 </script>

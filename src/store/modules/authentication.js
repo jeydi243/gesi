@@ -24,7 +24,7 @@ export default {
   },
   actions: {
     init({ dispatch }) {
-      dispatch("getStudents")
+      dispatch("getAllStudents")
     },
     logout({ commit }) {
       return usersAPI.logout()
