@@ -28,6 +28,7 @@
     "axios": "^0.24.0",
     "boxicons": "^2.1.1",
     "core-js": "^3.6.5",
+    "date-fns": "^2.28.0",
     "epic-spinners": "^1.1.0",
     "gsap": "^3.9.1",
     "mdi-vue": "^3.0.12",

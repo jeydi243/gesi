@@ -1,41 +1,46 @@
 
 <template>
-    <div class="h-full">
-        <vue-cal
-            style="height: 100%;"
-            selected-date="2022-11-01"
-            :time-from="10 * 60"
-            :time-to="23 * 60"
-            hide-view-selector
-            hide-weekends
-            :editable-events="{ title: true, drag: false, resize: true, delete: true, create: false }"
-            :events="events"
-            class="vuecal--full-height-delete"
-        />
-    </div>
+	<div class="h-full w-full">
+		<vue-cal :selected-date="selectedDate" :time-from="6 * 60" :time-to="23 * 60" hide-view-selector hide-weekends :editable-events="{ title: true, drag: false, resize: true, delete: true, create: false }" :events="events" show-week-numbers="false" class="vuecal--full-height-delete" locale="fr" :on-event-click="onEventClick" events-on-month-view="short" />
+	</div>
 </template>
 <script>
-import VueCal from 'vue-cal'
+import VueCal from "vue-cal";
+import { format } from "date-fns";
 export default {
-    components: {
-        "vue-cal": VueCal
-    },
+	components: {
+		"vue-cal": VueCal,
+	},
 
-    data() {
-        return {
-            events: [
-                {
-                    start: '2021-11-01 14:00',
-                    end: '2021-11-01 17:30',
-                    title: 'Boring event',
-                    content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
-                    class: 'blue-event',
-                    deletable: false,
-                    resizable: false,
-                    draggable: false
-                },
-            ]
-        }
-    }
-}
+	data() {
+		var nowformatted = format(new Date(), "yyyy-MM-dd");
+		return {
+			selectedDate: nowformatted,
+			selectedEvent: null,
+			events: [
+				{
+					start: "2022-03-22 14:00",
+					end: "2022-03-22 17:30",
+					title: "Boring event",
+					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
+					class: "bg-green-100 border border-l-4 border-green-500 text-green-700 p-4 rounded-lg",
+					deletable: false,
+					resizable: true,
+					draggable: true,
+				},
+			],
+			currentStudent: {},
+		};
+	},
+	watch: { "$route.params.id": "getStudent" },
+	methods: {
+		onEventClick(selectedEvent, e) {
+			this.selectedEvent = selectedEvent;
+			console.log("The clicked event is: ", selectedEvent);
+		},
+		getStudent() {
+			log("getStudent");
+		},
+	},
+};
 </script>

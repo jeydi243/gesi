@@ -439,7 +439,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border, .border-0, .border-t-2, .border-l-2, .border-b, .border-b-2, .profile2, .document, .file\:border-0::file-selector-button, .hover\:border-l-2 {
+.border, .border-0, .border-t-2, .border-l-2, .border-b, .border-b-2, .border-l, .border-l-4, .profile2, .document, .file\:border-0::file-selector-button, .hover\:border-l-2 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -602,6 +602,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bottom-0 {
   bottom: 0px;
+}
+
+.left-1 {
+  left: 0.25rem;
 }
 
 .z-20 {
@@ -959,10 +963,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-wrap: wrap;
 }
 
-.place-items-start {
-  place-items: start;
-}
-
 .place-items-center {
   place-items: center;
 }
@@ -1111,6 +1111,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-width: 2px;
 }
 
+.border-l {
+  border-left-width: 1px;
+}
+
+.border-l-4 {
+  border-left-width: 4px;
+}
+
 .border-transparent {
   border-color: transparent;
 }
@@ -1199,6 +1207,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.bg-green-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1214,6 +1227,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-3 {
   padding: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .px-10 {
@@ -1424,6 +1441,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(167 243 208 / var(--tw-text-opacity));
 }
 
+.text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgb(6 95 70 / var(--tw-text-opacity));
+}
+
 .text-green-500 {
   --tw-text-opacity: 1;
   color: rgb(16 185 129 / var(--tw-text-opacity));
@@ -1462,11 +1484,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-
-.text-green-800 {
-  --tw-text-opacity: 1;
-  color: rgb(6 95 70 / var(--tw-text-opacity));
 }
 
 .text-green-700 {
@@ -1573,11 +1590,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@import "./dropdown.css";
+@import url("./dropdown.css");
 
-@import "./input.css";
+@import url("./input.css");
 
-@import "./button.css";
+@import url("./button.css");
+
+@import url("./calendar.css");
 
 @import url("https://fonts.googleapis.com/css2?family=Newsreader:wght@600&display=swap");
 

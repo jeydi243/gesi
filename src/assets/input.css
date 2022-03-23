@@ -1,8 +1,4 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .g-input-text {
   @apply flex form-input h-9 py-1 ring-1 ring-gray-200 rounded focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-300 my-2 placeholder:text-gray-300;
 }
