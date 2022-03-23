@@ -18,7 +18,6 @@ export default {
       studentsAPI
         .getAll()
         .then((res) => {
-          console.log("Just call the API: ", res)
           commit("ALL", res.data)
         })
         .catch((err) => {

@@ -5,7 +5,9 @@ import Toast, { POSITION } from "vue-toastification"
 import { configure } from "vee-validate"
 import * as mdiVue from "mdi-vue3"
 import * as mdijs from "@mdi/js"
+
 import "./assets/style.css"
+
 import "./assets/flaticons.css"
 import "vue-cal/dist/vuecal.css"
 import "vue-toastification/dist/index.css"
