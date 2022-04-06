@@ -39,7 +39,7 @@ export default {
 			console.log("The clicked event is: ", selectedEvent);
 		},
 		getStudent() {
-			log("getStudent");
+			console.log("getStudent");
 		},
 	},
 };

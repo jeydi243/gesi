@@ -1,7 +1,6 @@
 const colors = require("tailwindcss/colors")
 
 module.exports = {
-  //   purge: ["./public/**/*.html", "./src/**/*.vue"],
   content: ["./src/**/*.{html,js,vue}"],
   theme: {
     screens: {
@@ -69,6 +68,7 @@ module.exports = {
       ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
       pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       bounce: "bounce 1s infinite",
+      shake: "shake 300ms cubic-bezier(0.6, 1, 0.15, 0.9)",
     },
     backdropBlur: (theme) => theme("blur"),
     backdropBrightness: (theme) => theme("brightness"),
@@ -482,6 +482,11 @@ module.exports = {
           transform: "none",
           animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
         },
+      },
+      shake: {
+        "25%": { transform: "translateX(-4%)" },
+        "50%": { transform: "translateX(4%)" },
+        "75%": { transform: "translateX(-4%)" },
       },
     },
     letterSpacing: {

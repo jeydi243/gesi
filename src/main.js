@@ -1,14 +1,13 @@
 import App from "./App.vue"
 import store from "./store/index"
-import Toast, { POSITION } from "vue-toastification"
 import { createApp } from "vue"
+
+import Toast, { POSITION } from "vue-toastification"
 import { configure } from "vee-validate"
 import * as mdiVue from "mdi-vue3"
 import * as mdijs from "@mdi/js"
 
 import "./assets/style.css"
-
-import "./assets/flaticons.css"
 import "vue-cal/dist/vuecal.css"
 import 'vue-cal/dist/i18n/fr.js'
 import "vue-toastification/dist/index.css"
@@ -32,13 +31,7 @@ setLocale({
   string: { min: "Le minimum de caractères n'est pas respecté" },
 })
 
-// Default values
-configure({
-  validateOnBlur: true, // controls if `blur` events should trigger validation with `handleChange` handler
-  validateOnChange: true, // controls if `change` events should trigger validation with `handleChange` handler
-  validateOnInput: true, // controls if `input` events should trigger validation with `handleChange` handler
-  validateOnModelUpdate: true, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
-})
+
 
 const options = {
   confirmButtonColor: "#41b882",

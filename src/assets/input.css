@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .g-input-text {
   @apply flex form-input h-9 py-1 ring-1 ring-gray-200 rounded focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-300 my-2 placeholder:text-gray-300;
@@ -15,5 +18,5 @@
   @apply placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2 form-input rounded;
 }
 .input-error {
-  @apply text-red-800 text-xs;
+  @apply text-red-800 text-xs invalid:animate-shake;
 }

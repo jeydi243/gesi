@@ -28,7 +28,9 @@
 				<BreadCrumbs v-if="showBraed" />
 				<!-- <transition name="fadeSlide" mode="out-in"> -->
 				<div class="h-full w-full bg-gray-100 px-6 py-6 view relative">
-					<slot />
+					<transition name="slideFadeX" mode="out-in">
+						<slot />
+					</transition>
 				</div>
 				<!-- </transition> -->
 				<Footer />
@@ -48,7 +50,9 @@ export default {
 	components: { SideBar, Footer, Header, BreadCrumbs },
 	data() {
 		return {
-			isMenuCondensed: false, dayo: false, showBraed: false
+			isMenuCondensed: false,
+			dayo: false,
+			showBraed: false,
 		};
 	},
 	// props: { typeLayout: String },
