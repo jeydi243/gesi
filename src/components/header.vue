@@ -1,6 +1,6 @@
 <template>
 	<header class="flex w-full h-[50px] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
-		<ArrowLeftIcon class="flex h-5 w-5 text-blue-500 cursor-pointer" @click="back" />
+		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
 		<div class="relative flex flex-row space-x-5">
 			<!-- Dropdown toggle button -->
 			<button @click="dropdown = !dropdown" id="toggle-dropdown" class="relative items-center z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row">

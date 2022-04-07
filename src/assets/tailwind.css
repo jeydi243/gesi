@@ -1,8 +1,3 @@
-@import "./dropdown.css";
-@import "./input.css";
-@import "./button.css";
-@import "./calendar.css";
-
 @import url("https://fonts.googleapis.com/css2?family=Newsreader:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Reggae+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
@@ -76,4 +71,108 @@ tr {
 input:valid + span:after {
   content: "✓";
   padding-left: 5px;
+}
+
+/* Dropdown */
+.dropdown {
+  @apply absolute right-0 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700;
+}
+.dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer;
+}
+.dropdown-item-sensible {
+  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50 hover:cursor-pointer;
+}
+.dropdown-separator {
+  @apply h-1 w-full border-b border-yellow-300;
+}
+
+/* Input */
+.g-input-text {
+  @apply flex form-input h-9 py-1 ring-1 ring-gray-200 rounded focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-300 my-2 placeholder:text-gray-300;
+}
+.g-input-checkbox {
+  @apply form-checkbox border-none focus:ring-green-500 bg-gray-400 h-4 w-4 py-1 rounded my-2 text-green-500;
+}
+.input-group {
+  @apply py-1 flex flex-col relative mb-2;
+}
+.input-group-grid {
+  @apply py-1 grid grid-cols-1 relative mb-2;
+}
+.input-field {
+  @apply placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2 form-input rounded;
+}
+.input-error {
+  @apply text-red-800 text-xs invalid:animate-shake;
+}
+
+/* Button */
+.g-button-optional {
+  @apply rounded mt-2 bg-gray-200 h-9 text-gray-800;
+}
+
+.btn-connexion {
+  @apply w-full px-4 flex flex-row hover:cursor-pointer justify-center items-center text-center py-2 tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-gray-600;
+}
+
+.g-button-primary {
+  @apply rounded mt-2 bg-green-300 h-9 text-gray-800;
+}
+
+/* Calendar */
+
+/* Green-theme. */
+.vuecal__menu,
+.vuecal__cell-events-count {
+  @apply bg-blue-600;
+}
+.vuecal__title-bar {
+  background-color: #00eeffc4;
+}
+.vuecal__cell--today,
+.vuecal__cell--current {
+  background-color: rgba(240, 240, 255, 0.4);
+}
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
+  @apply bg-blue-600;
+}
+.vuecal__cell--selected:before {
+  border-color: rgba(66, 185, 131, 0.5);
+}
+
+.vuecal__cell--disabled {
+  text-decoration: line-through;
+}
+.vuecal__cell--before-min {
+  color: #b6d6c7;
+}
+.vuecal__cell--after-max {
+  color: #008b8b;
+}
+
+.vuecal__cell--disabled {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.vuecal__event {
+  cursor: pointer;
+}
+
+.vuecal__event-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 4px 0 8px;
+}
+
+.vuecal__event-time {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.vuecal__event-content {
+  font-style: italic;
 }

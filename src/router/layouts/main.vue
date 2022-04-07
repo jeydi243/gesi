@@ -2,7 +2,7 @@
 	<div class="flex flex-row view" v-bind="$attrs">
 		<!-- props is {{ typeLayout }} -->
 
-		<SideBar class="flex w-1/5 h-screen bg-gray-900" />
+		<SideBar class="flex w-1/5 min-h-full bg-gray-900" />
 		<div class="flex w-4/5">
 			<main class="flex flex-col w-full bg-gray-100 relative">
 				<!-- <div class="absolute top-0 left-0 z-10 h-full w-full">

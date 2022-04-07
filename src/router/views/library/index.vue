@@ -1,13 +1,13 @@
 <template>
-    <div>Libraryf ff
-    
-    </div>
+	<div>
+		Library index
+	</div>
 </template>
 
 <script>
 export default {
-    name: "index-library"
-}
+	name: "index-library",
+};
 </script>
 
 <style scoped>

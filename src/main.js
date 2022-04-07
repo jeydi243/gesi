@@ -10,10 +10,11 @@ import Toast, { POSITION } from "vue-toastification"
 import { configure } from "vee-validate"
 import * as mdiVue from "mdi-vue3"
 import * as mdijs from "@mdi/js"
+import { vfmPlugin } from "vue-final-modal"
 
-import "./assets/style.css"
+import "./assets/css/style.css"
 import "vue-cal/dist/vuecal.css"
-import 'vue-cal/dist/i18n/fr.js'
+import "vue-cal/dist/i18n/fr.js"
 import "vue-toastification/dist/index.css"
 import "sweetalert2/dist/sweetalert2.min.css"
 import "boxicons"
@@ -29,8 +30,6 @@ setLocale({
   string: { min: "Le minimum de caractères n'est pas respecté" },
 })
 
-
-
 const options = {
   confirmButtonColor: "#41b882",
   cancelButtonColor: "#ff7674",
@@ -38,6 +37,13 @@ const options = {
 
 const app = createApp(App)
   .use(router)
+  .use(
+    vfmPlugin({
+      key: "$vfm",
+      componentName: "vue-final-modal",
+      dynamicContainerName: "ModalsContainer",
+    })
+  )
   .use(store)
   .use(Toast, { position: POSITION.TOP_RIGHT })
   .use(VueApexCharts)
