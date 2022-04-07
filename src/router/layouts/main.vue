@@ -28,7 +28,7 @@
 				<BreadCrumbs v-if="showBraed" />
 				<!-- <transition name="fadeSlide" mode="out-in"> -->
 				<div class="h-full w-full bg-gray-100 px-6 py-6 view relative">
-					<transition name="slideFadeX" mode="out-in">
+					<transition name="fadeSlideX" mode="out-in">
 						<slot />
 					</transition>
 				</div>

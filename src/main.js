@@ -1,7 +1,11 @@
 import App from "./App.vue"
 import store from "./store/index"
+import router from "./router"
+import NProgress from "vue-nprogress"
 import { createApp } from "vue"
-
+import { setLocale } from "yup"
+import VueApexCharts from "vue3-apexcharts"
+import VueSweetalert2 from "vue-sweetalert2"
 import Toast, { POSITION } from "vue-toastification"
 import { configure } from "vee-validate"
 import * as mdiVue from "mdi-vue3"
@@ -13,12 +17,6 @@ import 'vue-cal/dist/i18n/fr.js'
 import "vue-toastification/dist/index.css"
 import "sweetalert2/dist/sweetalert2.min.css"
 import "boxicons"
-import router from "./router"
-import NProgress from "vue-nprogress"
-import VueApexCharts from "vue3-apexcharts"
-import VueSweetalert2 from "vue-sweetalert2"
-import { setLocale } from "yup"
-// Import the CSS or use your own!
 
 setLocale({
   mixed: {
