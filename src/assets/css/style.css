@@ -455,7 +455,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border, .border-0, .border-l-4, .border-t-2, .border-l-2, .border-b, .border-b-2, .profile2, .document, .document-other, .dropdown-separator, .file\:border-0::file-selector-button, .hover\:border-l-2{
+.border, .border-0, .border-l-4, .border-t-2, .border-l-2, .border-b, .border-b-2, .profile2, .document, .document-other, .dropdown-separator, .divider, .file\:border-0::file-selector-button, .hover\:border-l-2{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -1920,6 +1920,7 @@ input:valid + span:after {
 .dropdown{
   position: absolute;
   right: 0px;
+  top: 1.5rem;
   z-index: 30;
   margin-top: 1rem;
   width: 12rem;
@@ -1989,6 +1990,16 @@ input:valid + span:after {
 }
 
 .dropdown-separator{
+  height: 0.25rem;
+  width: 100%;
+  border-bottom-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(252 211 77 / var(--tw-border-opacity));
+}
+
+.divider{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   height: 0.25rem;
   width: 100%;
   border-bottom-width: 1px;

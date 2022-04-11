@@ -37,7 +37,13 @@ export default {
 			dropdown: false,
 		};
 	},
-
+	created() {
+		window.onclick = (e) => {
+			if (e.target.id !== "toggle-dropdown" && this.dropdown) {
+				this.dropdown = false;
+			}
+		};
+	},
 	methods: {
 		...mapActions("authentication", ["logout"]),
 		goto(name) {

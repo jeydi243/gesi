@@ -232,10 +232,9 @@
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { AtomSpinner } from "epic-spinners";
-import * as yup from "yup";
 import { markRaw } from "vue";
-// const { ipcRenderer } = window.require("electron");
 import { useToast } from "vue-toastification";
+import * as yup from "yup";
 var toast = useToast();
 export default {
 	name: "students-add",

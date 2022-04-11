@@ -18,7 +18,7 @@ const store = createStore({
         { text: "Professors", to: "/professors", icon: "adjust", active: false, mouseHover: false },
         { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
         { text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
-        { text: "Gestion", to: "/gestion", icon: "book", active: false, mouseHover: false },
+        { text: "Gestion", to: "/management", icon: "book", active: false, mouseHover: false },
         { text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
       ],
       listLevel: [

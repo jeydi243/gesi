@@ -78,7 +78,7 @@ input:valid + span:after {
 
 /* Dropdown */
 .dropdown {
-  @apply absolute right-0 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700;
+  @apply absolute right-0 top-6 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700;
 }
 .dropdown-item {
   @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer;
@@ -88,6 +88,9 @@ input:valid + span:after {
 }
 .dropdown-separator {
   @apply h-1 w-full border-b border-yellow-300;
+}
+.divider {
+  @apply h-1 w-full border-b border-yellow-300 my-2;
 }
 
 /* Input */

@@ -55,27 +55,28 @@
 			</div>
 
 			<div class="contentTab">
-				<Transition name="fadeSlideX">
+				<Transition name="fadeSlideX" mode="out-in">
 					<KeepAlive>
 						<div class="flex h-full w-full" v-if="currentComponent == 'calendrier'">
 							<Calendrier />
 						</div>
 						<div class="flex flex-col h-1/2 w-full" v-else-if="currentComponent == 'documents'">
-							<Form class="flex flex-col mb-4 justify-center items-center" @submit="addDoc" :validation-schema="docaddSchema" :initial-values="docaddValues" @invalid-submit="onInvalidStep4">
-								<div class="flex flex-row">
-									<select name="select-doc" id="">
-										<option value="">--Please choose an option--</option>
-										<option value="dog">Dog</option>
-										<option value="cat">Cat</option>
-										<option value="hamster">Hamster</option>
-										<option value="parrot">Parrot</option>
-										<option value="spider">Spider</option>
-										<option value="goldfish">Goldfish</option>
+							<Form class="flex flex-col mb-4 justify-center items-center" @submit="addFiledoc" :validation-schema="filedocSchema" v-slot="{isSubmitting}" :initial-values="filedocValues" @invalid-submit="onInvalidfiledoc">
+								<div class="flex flex-row justify-start w-full">
+									<select name="select-doc" id="select-doc" as="select" class="rounded form-select block w-full">
+										<option value="">--Choisir une option--</option>
+										<option :value="typeDoc" v-for="(typeDoc,index) in listDoc" :key="index">{{typeDoc}}</option>
 									</select>
-									<Field placeholder="Diploma" v-slot="{handleChange,handleBlur}" name="diploma">
+									<Field placeholder="filedoc" v-slot="{handleChange,handleBlur}" name="filedoc">
 										<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
 									</Field>
-									<button type="submit" class="g-button-primary" @click="showFile">{{ doc.state? 'Voir':'Ajouter' }}</button>
+									<ErrorMessage name="filedoc" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+									<button type="submit" class="g-button-primary">
+										<span class="font-bold text-white">Ajouter</span>
+										<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
+									</button>
 								</div>
 							</Form>
 
@@ -109,42 +110,64 @@
 
 <script>
 import Calendrier from "@/components/calendar.vue";
+import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
+import { Field, Form, ErrorMessage } from "vee-validate";
+import { AtomSpinner } from "epic-spinners";
+import * as yup from "yup";
 export default {
 	name: "students-details",
 	components: {
 		Calendrier,
+		Form,
+		Field,
+		ErrorMessage,
+		AtomSpinner,
 	},
 	data() {
+		const docaddSchema = {
+			docadd(value) {
+				if (value[0] instanceof File || value[0] instanceof Blob) {
+					return true;
+				}
+				return "Vous devez choisir un fichier pdf valide";
+			},
+		};
 		return {
 			canshowModal: false,
+			docaddSchema,
 			listDocuments: [
 				{
 					name: "Certificat d'aptitude physique",
 					type: "pdf",
+					code: "UR-070",
 					state: true,
 					lien: "https://www.google.com",
 				},
 				{
-					name: "Bonne Vie Moers",
+					name: "Bonne Vie  et  Moeurs",
 					type: "pdf",
+					code: "YW-315",
 					state: true,
 					lien: "https://www.google.com",
 				},
 				{
 					name: "Bulletin 5eme",
 					type: "pdf",
+					code: "BK-818",
 					state: false,
 					lien: "https://www.google.com",
 				},
 				{
 					name: "Attestation de scolarité",
 					type: "pdf",
+					code: "GE-818",
 					state: true,
 					lien: "https://www.google.com",
 				},
 				{
 					name: "Bulletin 6eme",
 					type: "pdf",
+					code: "UD-222",
 					state: true,
 					lien: "https://www.google.com",
 				},
@@ -171,6 +194,9 @@ export default {
 		currentComponent() {
 			return this.tabsDetails.find((tab) => tab.current).name.toLowerCase();
 		},
+		listDoc() {
+			return this.listDocuments.filter((doc) => !doc["state"]).map((doc) => doc["name"]);
+		},
 	},
 	methods: {
 		back() {
@@ -194,8 +220,11 @@ export default {
 		showFile() {
 			// alert("closed");
 		},
-		addDoc() {
+		addFiledoc() {
 			// alert("closed");
+		},
+		onInvalidfiledoc() {
+			return "Le fichier n'est pas valide";
 		},
 		changeTab(index) {
 			var currentTrue = this.tabsDetails.findIndex((tab) => tab.current);

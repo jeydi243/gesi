@@ -63,12 +63,12 @@ const settingsRoutes = [
     component: () => import(/* webpackChunkName: "about" */ "./views/settings/index.vue"),
   },
 ]
-const gestionRoutes = [
+const managementRoutes = [
   {
-    path: "/gestion",
+    path: "/management",
     meta: { layout: "main" },
-    name: "index-gestion",
-    component: () => import(/* webpackChunkName: "about" */ "./views/gestion/index.vue"),
+    name: "index-management",
+    component: () => import(/* webpackChunkName: "about" */ "./views/management/index.vue"),
   },
 ]
 
@@ -104,7 +104,7 @@ const routes = [
   ...calendarRoutes,
   ...libraryRoutes,
   ...settingsRoutes,
-  ...gestionRoutes,
+  ...managementRoutes,
 ]
 
 const router = createRouter({

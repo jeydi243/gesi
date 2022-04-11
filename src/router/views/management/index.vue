@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import course from "@/router/views/gestion/course.vue";
-import academique from "@/router/views/gestion/academique.vue";
-import filiere from "@/router/views/gestion/filiere.vue";
+import course from "@/router/views/management/course.vue";
+import academique from "@/router/views/management/academique.vue";
+import filiere from "@/router/views/management/filiere.vue";
 export default {
 	name: "index-gestion",
 	components: {
