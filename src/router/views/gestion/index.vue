@@ -1,50 +1,53 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2">
-			<button v-for="(tab,index) in tabsGestion" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tab.current }" @click="changeTab(index)">{{ tab.name }}</button>
+			<button v-for="(tab,index) in tabsGestion" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
 		</div>
 
 		<div class="contentTab">
-			<transition>
-				<component :is="currentComponent"></component>
-			</transition>
+			<Transition name="fadeSlideX">
+				<KeepAlive>
+					<component :is="currentComponent"></component>
+				</KeepAlive>
+			</Transition>
 		</div>
 	</div>
 </template>
 
 <script>
+import course from "@/router/views/gestion/course.vue";
+import academique from "@/router/views/gestion/academique.vue";
+import filiere from "@/router/views/gestion/filiere.vue";
 export default {
 	name: "index-gestion",
 	components: {
-		course: () => import(/* webpackChunkName: "gestion-course" */ "./course.vue"),
-		academique: () => import(/* webpackChunkName: "gestion-course" */ "./academique.vue"),
+		course,
+		academique,
+		filiere,
 	},
 	data() {
+	
 		return {
 			isloading: "",
-			comp: {
-				course: () => import(/* webpackChunkName: "gestion-course" */ "./course.vue"),
-				academique: () => import(/* webpackChunkName: "gestion-course" */ "./academique.vue"),
-			},
 			tabsGestion: [
-				{ name: "Academique", current: true },
-				{ name: "Cours", current: false },
+				{ name: "academique", current: false },
+				{ name: "course", current: false },
+				{ name: "filiere", current: true },
 			],
 		};
 	},
 	computed: {
 		currentComponent() {
-			return comp[this.tabsGestion.find((tab) => tab.current)?.name.toLowerCase()];
+			return this.tabsGestion.find((tab) => tab.current).name.toLowerCase();
+			// return this.comp[this.tabsGestion.find((tab) => tab.current).name.toLowerCase()];
 		},
 	},
 	methods: {
 		changeTab(index) {
-			this.tabsGestion.forEach((tab, i) => {
-				tab.current = false;
-				if (i == index) {
-					tab.current = true;
-				}
-			});
+			var currentTrue = this.tabsGestion.findIndex((tab) => tab.current);
+			this.tabsGestion[currentTrue].current = false;
+
+			this.tabsGestion[index].current = true;
 		},
 	},
 };

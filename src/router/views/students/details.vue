@@ -39,7 +39,7 @@
 			<div class="flex flex-col responsables">
 				<div class v-for="(item, index) in listResponsables" :key="index">{{ item.name }}f</div>
 			</div>
-			<dir class="list-document absolute bottom-0 left-1">
+			<!-- <dir class="list-document absolute bottom-0 left-1">
 				<h1 class="text-center font-bold text-lg">Related documents</h1>
 				<div class="document" v-for="(doc,index) in listDocuments" :key="index" @click="showModal">
 					<box-icon :name="`file-${doc.type}`" type="solid" color="darkBlue"></box-icon>
@@ -47,51 +47,105 @@
 
 					<box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon>
 				</div>
-			</dir>
-			<vue-final-modal v-model="canshowModal" @click-outside="clickOutside" @before-open="beforeOpen" @opened="opened" @before-close="beforeClose" @closed="closed" classes="flex justify-center items-center" content-class="relative flex flex-col max-h-full mx-4 p-4 rounded bg-white">
-				<template #title>Events Example!</template>
-				<div class="dropdown">
-					<span href="#" class="dropdown-item" @click="goto('profile')">Modifier le fichier</span>
-					<span href="#" class="dropdown-item" @click="goto('index-settings')">Voir le fichier</span>
-				</div>
-
-				<!-- <span class="dropdown-separator"></span>
-				<span href="#" class="dropdown-item-sensible" @click="goto('login')">Sign Out</span> -->
-			</vue-final-modal>
+			</dir> -->
 		</div>
 		<div class="flex flex-col w-4/5 h-full card align-middle justify-start">
-			<h1 class="text-2xl font-bold mb-2">Calendrier de {{ $route.params.id }}</h1>
-			<div class="flex h-1/2 w-full">
-				<calendar />
+			<div class="flex border-b border-gray-200 mb-2">
+				<button v-for="(tab,index) in tabsDetails" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
+			</div>
+
+			<div class="contentTab">
+				<Transition name="fadeSlideX">
+					<KeepAlive>
+						<div class="flex h-full w-full" v-if="currentComponent == 'calendrier'">
+							<Calendrier />
+						</div>
+						<div class="flex flex-col h-1/2 w-full" v-else-if="currentComponent == 'documents'">
+							<Form class="flex flex-col mb-4 justify-center items-center" @submit="addDoc" :validation-schema="docaddSchema" :initial-values="docaddValues" @invalid-submit="onInvalidStep4">
+								<div class="flex flex-row">
+									<select name="select-doc" id="">
+										<option value="">--Please choose an option--</option>
+										<option value="dog">Dog</option>
+										<option value="cat">Cat</option>
+										<option value="hamster">Hamster</option>
+										<option value="parrot">Parrot</option>
+										<option value="spider">Spider</option>
+										<option value="goldfish">Goldfish</option>
+									</select>
+									<Field placeholder="Diploma" v-slot="{handleChange,handleBlur}" name="diploma">
+										<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
+									</Field>
+									<button type="submit" class="g-button-primary" @click="showFile">{{ doc.state? 'Voir':'Ajouter' }}</button>
+								</div>
+							</Form>
+
+							<div class="divider"></div>
+							<div v-for="(doc,index) in listDocuments" :key="index" class="flex flex-row justify-between">
+								<div class="document" :class="{'document-other': !doc.state,'document':doc.state }" @click="showModal">
+									<box-icon :name="`file-${doc.type}`" type="solid" color="darkBlue"></box-icon>
+									<span class="truncate">{{ doc.name }}</span>
+
+									<box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon>
+								</div>
+								<div class="actions">
+									<button class="g-button-primary" @click="showFile">{{ doc.state? 'Voir':'Ajouter' }}</button>
+									<button class="g-button-primary" @click="modifFile">Modifier</button>
+								</div>
+							</div>
+						</div>
+					</KeepAlive>
+				</Transition>
 			</div>
 		</div>
+		<vue-final-modal v-model="canshowModal" @click-outside="clickOutside" @before-open="beforeOpen" @opened="opened" classes="flex justify-center items-center" content-class="relative flex flex-col max-h-full rounded bg-white">
+			<template #title>Events Example!</template>
+			<div class="dropdown">
+				<span href="#" class="dropdown-item" @click="modifFile">Modifier le fichier</span>
+				<span href="#" class="dropdown-item" @click="showFile">Voir le fichier</span>
+			</div>
+		</vue-final-modal>
 	</div>
 </template>
 
 <script>
-import calendar from "@/components/calendar.vue";
+import Calendrier from "@/components/calendar.vue";
 export default {
 	name: "students-details",
 	components: {
-		calendar,
+		Calendrier,
 	},
 	data() {
 		return {
 			canshowModal: false,
 			listDocuments: [
 				{
+					name: "Certificat d'aptitude physique",
+					type: "pdf",
+					state: true,
+					lien: "https://www.google.com",
+				},
+				{
 					name: "Bonne Vie Moers",
 					type: "pdf",
+					state: true,
 					lien: "https://www.google.com",
 				},
 				{
 					name: "Bulletin 5eme",
 					type: "pdf",
+					state: false,
 					lien: "https://www.google.com",
 				},
 				{
 					name: "Attestation de scolarité",
 					type: "pdf",
+					state: true,
+					lien: "https://www.google.com",
+				},
+				{
+					name: "Bulletin 6eme",
+					type: "pdf",
+					state: true,
 					lien: "https://www.google.com",
 				},
 			],
@@ -107,7 +161,16 @@ export default {
 					email: "cemueko@job.fi",
 				},
 			],
+			tabsDetails: [
+				{ name: "Calendrier", current: false },
+				{ name: "Documents", current: true },
+			],
 		};
+	},
+	computed: {
+		currentComponent() {
+			return this.tabsDetails.find((tab) => tab.current).name.toLowerCase();
+		},
 	},
 	methods: {
 		back() {
@@ -125,11 +188,19 @@ export default {
 		opened() {
 			// alert("opened");
 		},
-		beforeClose() {
-			// alert("beforeClose");
-		},
-		closed() {
+		modifFile() {
 			// alert("closed");
+		},
+		showFile() {
+			// alert("closed");
+		},
+		addDoc() {
+			// alert("closed");
+		},
+		changeTab(index) {
+			var currentTrue = this.tabsDetails.findIndex((tab) => tab.current);
+			this.tabsDetails[currentTrue].current = false;
+			this.tabsDetails[index].current = true;
 		},
 	},
 };

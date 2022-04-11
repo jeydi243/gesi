@@ -2,8 +2,8 @@
 	<div class="flex flex-row view" v-bind="$attrs">
 		<!-- props is {{ typeLayout }} -->
 
-		<SideBar class="flex w-1/5 min-h-full bg-gray-900" />
-		<div class="flex w-4/5">
+		<SideBar class="flex w-[15%] min-h-full bg-gray-900" />
+		<div class="flex w-[85%]">
 			<main class="flex flex-col w-full bg-gray-100 relative">
 				<!-- <div class="absolute top-0 left-0 z-10 h-full w-full">
 					<svg id="patternId" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

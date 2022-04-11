@@ -53,4 +53,11 @@ const app = createApp(App)
   .use("mdicon", mdiVue, {
     icons: mdijs,
   })
-  .mount("#app")
+
+app.config.globalProperties.filters = {
+  firstUpper(value) {
+    //upper the first letter
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  },
+}
+app.mount("#app")

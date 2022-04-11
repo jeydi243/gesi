@@ -58,7 +58,6 @@ export default {
 }
 
 .fadeSlideX-enter-active {
-	/* transition: fadein 0.7s ease; */
 	animation: fadein 0.7s ease;
 }
 
@@ -66,7 +65,6 @@ export default {
 	animation: fadeout 0.7s ease;
 }
 .fadeSlideY-enter-active {
-	/* transition: fadein 0.7s ease; */
 	animation: fadeinY 0.7s ease;
 }
 
@@ -87,19 +85,23 @@ export default {
 @keyframes fadeout {
 	from {
 		opacity: 1;
+		z-index: 1;
 	}
 	to {
 		opacity: 0;
+		z-index: 0;
 		transform: translateX(-10px);
 	}
 }
 @keyframes fadeinY {
 	from {
 		opacity: 0;
+		z-index: 1;
 		transform: translateY(-10px);
 	}
 	to {
 		opacity: 1;
+		z-index: 0;
 		transform: translateY(0px);
 	}
 }

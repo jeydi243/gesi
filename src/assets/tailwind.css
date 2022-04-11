@@ -50,7 +50,10 @@ tr {
   @apply grid grid-cols-1 gap-2 items-start p-0 justify-start content-start;
 }
 .document {
-  @apply bg-green-500 rounded border-2 border-dashed flex flex-row content-between cursor-default py-2 border-green-200 text-green-600 pl-2 bg-opacity-5 align-middle justify-between;
+  @apply bg-green-500 w-1/2 my-2 rounded border-2 border-dashed flex flex-row cursor-default py-2 border-green-200 text-green-600 pl-2 bg-opacity-5 align-top justify-start;
+}
+.document-other {
+  @apply bg-red-500 w-1/2 my-2 rounded border-2 border-dashed flex flex-row cursor-default py-2 border-red-200 text-red-500 pl-2 bg-opacity-5 align-top justify-start;
 }
 .step-content {
   @apply flex flex-row w-full justify-center h-1/2;
@@ -117,7 +120,7 @@ input:valid + span:after {
 }
 
 .g-button-primary {
-  @apply rounded mt-2 bg-green-300 h-9 text-gray-800;
+  @apply rounded bg-green-300 h-9 text-green-800 ml-2 px-10;
 }
 
 /* Calendar */

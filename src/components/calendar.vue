@@ -1,7 +1,7 @@
 
 <template>
 	<div class="h-full w-full">
-		<vue-cal :selected-date="selectedDate" :time-from="6 * 60" :time-to="23 * 60" hide-view-selector hide-weekends :editable-events="{ title: true, drag: false, resize: true, delete: true, create: false }" :events="events" show-week-numbers="false" class="vuecal--full-height-delete" locale="fr" :on-event-click="onEventClick" events-on-month-view="short" />
+		<vue-cal :selected-date="selectedDate" :time-from="6 * 60" :time-to="20 * 60" hide-view-selector hide-weekends :editable-events="{ title: true, drag: false, resize: true, delete: true, create: false }" :events="events" :show-week-numbers="false" locale="fr" :on-event-click="onEventClick" events-on-month-view="short" />
 	</div>
 </template>
 <script>
