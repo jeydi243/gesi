@@ -71,8 +71,8 @@
 					<div class="grid flex-row-reverse text-black">
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Next</span>
-							<AtomSpinner v-if="isSubmitting" />
-							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
+							<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
+							<ArrowRightIcon class="h-4 w-4 text-white" v-else />
 						</button>
 					</div>
 				</Form>
@@ -93,11 +93,11 @@
 						</ErrorMessage>
 					</div>
 					<div class="flex flex-row h-1/2 items-center justify-between">
-						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
-						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+						<button class="btn-unstate" @click="step = step - 1">Back</button>
+						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
-							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
-							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
+							<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
+							<ArrowRightIcon class="h-4 w-4 text-white" v-else />
 						</button>
 					</div>
 					<!-- {{ values }} -->
@@ -174,11 +174,11 @@
 						</div>
 					</div>
 					<div class="flex flex-row h-1/2 items-center justify-between">
-						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
-						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+						<button class="btn-unstate" @click="step = step - 1">Back</button>
+						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
-							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
-							<ArrowRightIcon class="h-10 w-10 text-white" v-else />
+							<ArrowRightIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
+							<HollowDotsSpinner class="h-4 w-4 text-white" v-else />
 						</button>
 					</div>
 				</Form>
@@ -215,11 +215,11 @@
 						</div>
 					</div>
 					<div class="flex flex-row h-1/2 items-center justify-between">
-						<button class="bg-green-50 text-green-800 rounded mr-2 h-10 w-24 self-center" @click="step = step - 1">Back</button>
-						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center self-center items-center focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+						<button class="btn-unstate" @click="step = step - 1">Back</button>
+						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
-							<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
-							<ArrowRightIcon class="h-10 w-10 text-white" v-else />
+							<ArrowRightIcon class="h-5 w-5 text-white" v-if="!isSubmitting" />
+							<AtomSpinner class="h-5 w-5 text-white" v-else />
 						</button>
 					</div>
 				</Form>
@@ -231,7 +231,7 @@
 <script>
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { AtomSpinner } from "epic-spinners";
+import { HollowDotsSpinner} from "epic-spinners";
 import { markRaw } from "vue";
 import { useToast } from "vue-toastification";
 var toast = useToast();
@@ -242,7 +242,7 @@ export default {
 		Form,
 		Field,
 		ErrorMessage,
-		AtomSpinner,
+		HollowDotsSpinner,
 		UserIcon,
 		ArrowRightIcon,
 	},

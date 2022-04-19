@@ -8,11 +8,11 @@
 				<input type="text" :placeholder="`Find by Username or Matricule`" class="px-1 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-7" />
 			</div>
 
-			<button @click="refresh" class="flex bg-green-500 rounded items-center px-5 justify-center text-white h-9 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-80">
+			<button @click="refresh" class="btn-primary">
 				<RefreshIcon class="h-5 w-5 text-white" />
 				<span class="self-center ml-2">Rafraichir</span>
 			</button>
-			<button v-if="currentTabLevel.toLowerCase() == 'candidat'" @click="$router.push({ name: 'students-add' })" class="flex bg-green-500 rounded items-center px-5 justify-center text-white h-9 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-80">
+			<button v-if="currentTabLevel.toLowerCase() == 'candidat'" @click="$router.push({ name: 'students-add' })" class="btn-primary">
 				<UserAddIcon class="h-5 w-5 text-white" />
 				<span class="self-center ml-2">Ajouter</span>
 			</button>

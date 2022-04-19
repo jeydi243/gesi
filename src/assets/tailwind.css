@@ -28,7 +28,7 @@
   @apply flex bg-green-100 h-[100px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
 }
 .avatar {
-  @apply flex bg-green-100 h-[35px] w-[35px] rounded-full self-center items-center justify-center cursor-pointer;
+  @apply flex bg-green-100 h-[35px] w-[35px] rounded-full self-center items-center justify-center cursor-pointer object-cover;
 }
 
 th {
@@ -135,19 +135,19 @@ input:valid + span:after {
 }
 
 .btn-primary {
-  @apply w-min px-4 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none;
-}
-.btn-primary-disabled {
-  @apply w-min px-4 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none;
+  @apply w-min px-4 py-2 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-green-200 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-600 focus:outline-none;
 }
 .btn-danger {
-  @apply w-min px-4 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-red-200 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-red-600 focus:outline-none;
+  @apply w-min px-4 py-2 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-red-200 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-red-600 focus:outline-none;
 }
 .btn-tab {
   @apply h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none;
 }
 .btn-tab-active {
   @apply text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr;
+}
+.btn-unstate {
+  @apply bg-green-50 text-green-900 px-4 py-2 rounded-md font-bold hover:cursor-pointer focus:outline-none;
 }
 
 /* Calendar */

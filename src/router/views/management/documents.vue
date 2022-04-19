@@ -62,7 +62,7 @@
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
 				<div class="flex flex-row h-1/2 items-center justify-between">
-					<button class="bg-green-50 text-green-800 rounded w-24 self-center" @click="clickOutside">Annuler</button>
+					<button class="btn-unstate" @click="clickOutside">Annuler</button>
 					<button type="submit" class="btn-primary">
 						<PlusIcon class="h-5 w-5 text-white" v-if="!isSubmitting" />
 						<span class="font-bold text-white">Ajouter</span>

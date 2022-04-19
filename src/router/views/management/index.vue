@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2">
-			<button v-for="(tab,index) in tabsGestion" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
+			<button v-for="(tab,index) in tabsGestion" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
 		</div>
 
 		<div class="contentTab">
