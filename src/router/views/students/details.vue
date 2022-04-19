@@ -2,7 +2,8 @@
 	<div class="main flex flex-row h-full">
 		<div class="flex flex-col w-1/5 h-full card mr-2 relative">
 			<div class="rounded-full profile mb-2">
-				<img :src="require('@/assets/img/user.png')" class="flex z-10 cursor-pointer self-center object-cover rounded-full h-[100px] w-[100px]" />
+				<img src="https://images.generated.photos/pn-4ub1PeBlBuDILgChTqIwjBIMhxm-Ah_rzk9t0GD8/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODUwMDk3LmpwZw.jpg" class="flex z-10 cursor-pointer self-center object-cover rounded-full h-[100px] w-[100px]" />
+				<!-- <img :src="require('@/assets/img/user.png')" class="flex z-10 cursor-pointer self-center object-cover rounded-full h-[100px] w-[100px]" /> -->
 			</div>
 			<span class="text-gray-700 text-center text-base mb-2">Student Name</span>
 			<div class="flex flex-row justify-center mb-2 items-center">
@@ -39,19 +40,10 @@
 			<div class="flex flex-col responsables">
 				<div class v-for="(item, index) in listResponsables" :key="index">{{ item.name }}f</div>
 			</div>
-			<!-- <dir class="list-document absolute bottom-0 left-1">
-				<h1 class="text-center font-bold text-lg">Related documents</h1>
-				<div class="document" v-for="(doc,index) in listDocuments" :key="index" @click="showModal">
-					<box-icon :name="`file-${doc.type}`" type="solid" color="darkBlue"></box-icon>
-					<span class="truncate">{{ doc.name }}</span>
-
-					<box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon>
-				</div>
-			</dir> -->
 		</div>
 		<div class="flex flex-col w-4/5 h-full card align-middle justify-start">
 			<div class="flex border-b border-gray-200 mb-2">
-				<button v-for="(tab,index) in tabsDetails" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
+				<button v-for="(tab,index) in tabsDetails" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
 			</div>
 
 			<div class="contentTab">
@@ -63,19 +55,18 @@
 						<div class="flex flex-col h-1/2 w-full" v-else-if="currentComponent == 'documents'">
 							<Form class="flex flex-col mb-4 justify-center items-center" @submit="addFiledoc" :validation-schema="filedocSchema" v-slot="{isSubmitting}" :initial-values="filedocValues" @invalid-submit="onInvalidfiledoc">
 								<div class="flex flex-row justify-start w-full">
-									<select name="select-doc" id="select-doc" as="select" class="rounded form-select block w-full">
-										<option value="">--Choisir une option--</option>
-										<option :value="typeDoc" v-for="(typeDoc,index) in listDoc" :key="index">{{typeDoc}}</option>
-									</select>
-									<Field placeholder="filedoc" v-slot="{handleChange,handleBlur}" name="filedoc">
-										<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
+									<Field name="code" id="select-doc" as="select" class="rounded form-select block w-full">
+										<option :value="doc.code" v-for="(doc,index) in listDoc" :key="index" :selected="index == 0">{{ doc.name }}</option>
 									</Field>
-									<ErrorMessage name="filedoc" v-slot="{ message }">
+									<Field placeholder="Inserer le fichier au format PDF" v-slot="{handleChange,handleBlur}" name="document">
+										<input type="file" name="document" accept=".pdf" id="document" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
+									</Field>
+									<ErrorMessage name="document" v-slot="{ message }">
 										<p class="input-error">{{ message }}</p>
 									</ErrorMessage>
 									<button type="submit" class="g-button-primary">
 										<span class="font-bold text-white">Ajouter</span>
-										<AtomSpinner v-if="isSubmitting" class="h-10 w-10" />
+										<AtomSpinner v-if="isSubmitting" class="h-5 w-5" />
 									</button>
 								</div>
 							</Form>
@@ -98,19 +89,20 @@
 				</Transition>
 			</div>
 		</div>
-		<vue-final-modal v-model="canshowModal" @click-outside="clickOutside" @before-open="beforeOpen" @opened="opened" classes="flex justify-center items-center" content-class="relative flex flex-col max-h-full rounded bg-white">
+		<Modal v-model="canshowModal" @click-outside="clickOutside" classes="flex flex-col h-1/3 justify-center items-center" content-class="flex flex-col max-h-full rounded bg-white">
 			<template #title>Events Example!</template>
 			<div class="dropdown">
 				<span href="#" class="dropdown-item" @click="modifFile">Modifier le fichier</span>
 				<span href="#" class="dropdown-item" @click="showFile">Voir le fichier</span>
 			</div>
-		</vue-final-modal>
+		</Modal>
 	</div>
 </template>
 
 <script>
 import Calendrier from "@/components/calendar.vue";
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
+import studentsAPI from "@/api/students";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { AtomSpinner } from "epic-spinners";
 import * as yup from "yup";
@@ -125,16 +117,23 @@ export default {
 	},
 	data() {
 		const docaddSchema = {
-			docadd(value) {
+			document(value) {
 				if (value[0] instanceof File || value[0] instanceof Blob) {
 					return true;
 				}
 				return "Vous devez choisir un fichier pdf valide";
 			},
+			code(value) {
+				if (listCodeDocument.includes(value)) {
+					return true;
+				}
+				return "Le code doit correspondre a un code document valide";
+			},
 		};
 		return {
 			canshowModal: false,
 			docaddSchema,
+			filedocValues: { document: null, code: null },
 			listDocuments: [
 				{
 					name: "Certificat d'aptitude physique",
@@ -195,7 +194,7 @@ export default {
 			return this.tabsDetails.find((tab) => tab.current).name.toLowerCase();
 		},
 		listDoc() {
-			return this.listDocuments.filter((doc) => !doc["state"]).map((doc) => doc["name"]);
+			return this.listDocuments.filter((doc) => !doc["state"]);
 		},
 	},
 	methods: {
@@ -220,11 +219,31 @@ export default {
 		showFile() {
 			// alert("closed");
 		},
-		addFiledoc() {
-			// alert("closed");
+		addFiledoc(values) {
+			var formdata = new FormData();
+			formdata.append("document", values.document[0]);
+			formdata.append("code", values.code);
+
+			var studentId = this.$route.params.id;
+			console.log(values.document[0], studentId);
+
+			studentsAPI
+				.addDocument(studentId, formdata)
+				.then((response) => {
+					if (response.status < 300) {
+						this.$toast.success(`Enregistrement terminé :${response.data}`, {
+							timeout: 5000,
+						});
+					} else {
+						this.$toast.error(`Impossible d'ajouter le document: ${response.data}`, {
+							timeout: 5000,
+						});
+					}
+				})
+				.catch((err) => {});
 		},
 		onInvalidfiledoc() {
-			return "Le fichier n'est pas valide";
+			console.log("Le fichier n'est pas valide");
 		},
 		changeTab(index) {
 			var currentTrue = this.tabsDetails.findIndex((tab) => tab.current);

@@ -26,7 +26,7 @@ export default {
     },
   },
   getters: {
-    mystudents(state, getters, rootState, rootGetters) {
+getListDocuments: (state) => state.listDocuments,    mystudents(state, getters, rootState, rootGetters) {
       return state.students.filter((student) => student.level.toLowerCase() == rootGetters.currentLevelShort.toLowerCase())
     },
   },

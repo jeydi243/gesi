@@ -2,6 +2,7 @@ import App from "./App.vue"
 import store from "./store/index"
 import router from "./router"
 import NProgress from "vue-nprogress"
+import { useToast } from "vue-toastification"
 import { createApp } from "vue"
 import { setLocale } from "yup"
 import VueApexCharts from "vue3-apexcharts"
@@ -39,9 +40,9 @@ const app = createApp(App)
   .use(router)
   .use(
     vfmPlugin({
-      key: "$vfm",
-      componentName: "vue-final-modal",
-      dynamicContainerName: "ModalsContainer",
+      key: "$modal",
+      componentName: "Modal",
+      dynamicContainerName: "modal-content",
     })
   )
   .use(store)
@@ -60,4 +61,6 @@ app.config.globalProperties.filters = {
     return value.charAt(0).toUpperCase() + value.slice(1)
   },
 }
+
+app.config.globalProperties.toast = useToast()
 app.mount("#app")

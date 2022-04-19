@@ -5,7 +5,7 @@
 			<!-- Dropdown toggle button -->
 			<button @click="dropdown = !dropdown" id="toggle-dropdown" class="relative items-center z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row">
 				<div class="avatar rounded-full">
-					<img src="@/assets/img/user.png" class />
+					<img src="https://images.generated.photos/PP2ck5OaSvRBYQwh1ZDCsEhBQ4WxLWlZNs7nKhaJIWA/rs:fit:64:64/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NjIyMTIwLmpwZw.jpg" class="object-cover" />
 				</div>
 				<span class="ml-2">Kadiongo Ilunga</span>
 				<svg class="w-5 h-5 text-gray-800 dark:text-white text-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

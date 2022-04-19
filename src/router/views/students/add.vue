@@ -11,7 +11,7 @@
 			</div>
 		</div>
 
-		<transition name="fadeSlideX" mode="out-in">
+		<Transition name="fadeSlideY" mode="out-in">
 			<div class="step-1 step-content " v-if="step == 1" key="step1">
 				<Form class="flex flex-col w-full content-center justify-between items-center" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
 					<h1 class="text-4xl mb-4">Informations préliminaires</h1>
@@ -69,7 +69,7 @@
 						</div>
 					</div>
 					<div class="grid flex-row-reverse text-black">
-						<button type="submit" class="flex flex-row bg-green-500 h-10 w-24 px-4 py-2 text-center items-center justify-between focus:ring-green-100 focus:ring hover:bg-green-600 hover:shadow-green-100 shadow-lg rounded">
+						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Next</span>
 							<AtomSpinner v-if="isSubmitting" />
 							<ArrowRightIcon class="h-5 w-5 text-white" v-else />
@@ -224,7 +224,7 @@
 					</div>
 				</Form>
 			</div>
-		</transition>
+		</Transition>
 	</div>
 </template>
 
@@ -234,8 +234,8 @@ import { Field, Form, ErrorMessage } from "vee-validate";
 import { AtomSpinner } from "epic-spinners";
 import { markRaw } from "vue";
 import { useToast } from "vue-toastification";
-import * as yup from "yup";
 var toast = useToast();
+import * as yup from "yup";
 export default {
 	name: "students-add",
 	components: {
@@ -245,7 +245,6 @@ export default {
 		AtomSpinner,
 		UserIcon,
 		ArrowRightIcon,
-		
 	},
 	data() {
 		const step1Schema = markRaw(

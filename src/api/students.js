@@ -39,4 +39,7 @@ export default {
   deleteByEmail: async function (studentEmail) {
     return await axios.delete(`/students/${studentEmail}`)
   },
+  addDocument: async function (studentID, document) {
+    return axios.post(`/students/${studentID}/documents`, document)
+  },
 }

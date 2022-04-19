@@ -18,21 +18,23 @@
 import course from "@/router/views/management/course.vue";
 import academique from "@/router/views/management/academique.vue";
 import filiere from "@/router/views/management/filiere.vue";
+import documents from "@/router/views/management/documents.vue";
 export default {
 	name: "index-gestion",
 	components: {
 		course,
 		academique,
+		documents,
 		filiere,
 	},
 	data() {
-	
 		return {
 			isloading: "",
 			tabsGestion: [
 				{ name: "academique", current: false },
 				{ name: "course", current: false },
-				{ name: "filiere", current: true },
+				{ name: "filiere", current: false },
+				{ name: "documents", current: true },
 			],
 		};
 	},

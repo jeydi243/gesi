@@ -3,9 +3,16 @@ import room from "./modules/room"
 import students from "./modules/students"
 import professors from "./modules/professors"
 import authentication from "./modules/authentication"
+import management from "./modules/management"
 
 const store = createStore({
-  modules: { room: room, students: students, professors: professors, authentication: authentication },
+  modules: {
+    room: room,
+    students: students,
+    professors: professors,
+    authentication: authentication,
+    management: management,
+  },
   state() {
     return {
       count: 0,
@@ -60,6 +67,7 @@ const store = createStore({
   actions: {
     init({ dispatch }) {
       dispatch("students/init", {}, { root: true })
+      dispatch("management/init", {}, { root: true })
     },
     changeLayout({ commit }, data) {
       commit("CHANGE_LAYOUT", data)
@@ -76,6 +84,7 @@ const store = createStore({
     getListLevel: (state) => state.listLevel,
     getListStatus: (state) => state.listStatus,
     getListSideMenus: (state) => state.listSideMenus,
+
     currentLevel(state) {
       return state.listLevel.find((tabLevel) => tabLevel.current == true).name
     },
