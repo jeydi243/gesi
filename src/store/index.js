@@ -2,8 +2,8 @@ import { createStore } from "vuex"
 import room from "./modules/room"
 import students from "./modules/students"
 import teachers from "./modules/teachers"
-import authentication from "./modules/authentication"
 import management from "./modules/management"
+import authentication from "./modules/authentication"
 
 const store = createStore({
   modules: {
@@ -22,7 +22,7 @@ const store = createStore({
       listSideMenus: [
         { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
         { text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
-        { text: "Professors", to: "/professors", icon: "adjust", active: false, mouseHover: false },
+        { text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
         { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
         { text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
         { text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },

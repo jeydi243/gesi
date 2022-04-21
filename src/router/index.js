@@ -19,24 +19,24 @@ const studentsRoutes = [
     component: () => import(/* webpackChunkName: "about" */ "./views/students/details.vue"),
   },
 ]
-const professorsRoutes = [
+const teachersRoutes = [
   {
-    path: "/professors",
+    path: "/teachers",
     meta: { layout: "main" },
-    name: "index-professors",
-    component: () => import(/* webpackChunkName: "about" */ "./views/professors/index.vue"),
+    name: "index-teachers",
+    component: () => import(/* webpackChunkName: "about" */ "./views/teachers/index.vue"),
   },
   //   {
-  //     path: "/professors/add",
+  //     path: "/teachers/add",
   //     meta: { layout: "main" },
-  //     name: "professors-add",
-  //     component: () => import(/* webpackChunkName: "about" */ "./views/professors/add.vue"),
+  //     name: "teachers-add",
+  //     component: () => import(/* webpackChunkName: "about" */ "./views/teachers/add.vue"),
   //   },
   //   {
-  //     path: "/professors/:id",
+  //     path: "/teachers/:id",
   //     meta: { layout: "main" },
-  //     name: "professors-details",
-  //     component: () => import(/* webpackChunkName: "about" */ "./views/professors/details.vue"),
+  //     name: "teachers-details",
+  //     component: () => import(/* webpackChunkName: "about" */ "./views/teachers/details.vue"),
   //   },
 ]
 const calendarRoutes = [
@@ -100,7 +100,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "search" */ "./views/account/search.vue"),
   },
   ...studentsRoutes,
-  ...professorsRoutes,
+  ...teachersRoutes,
   ...calendarRoutes,
   ...libraryRoutes,
   ...settingsRoutes,
