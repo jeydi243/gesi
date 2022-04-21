@@ -1,7 +1,7 @@
 import { createStore } from "vuex"
 import room from "./modules/room"
 import students from "./modules/students"
-import professors from "./modules/professors"
+import teachers from "./modules/teachers"
 import authentication from "./modules/authentication"
 import management from "./modules/management"
 
@@ -9,7 +9,7 @@ const store = createStore({
   modules: {
     room: room,
     students: students,
-    professors: professors,
+    teachers: teachers,
     authentication: authentication,
     management: management,
   },

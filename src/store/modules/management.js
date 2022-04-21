@@ -1,4 +1,6 @@
 import mgntAPI from "@/api/management"
+import teachersAPI from "@/api/teachers"
+import coursesAPI from "@/api/courses"
 import axios from "@/api/config"
 import { toast } from "@/utils/utils"
 
@@ -11,6 +13,9 @@ export default {
     },
     SET_LIST_COURSES(state, courses) {
       state.courses = courses
+    },
+    SET_LIST_TEACHERS(state, teachers) {
+      state.teachers = teachers
     },
     ADD_DOCUMENT(state, document) {
       state.listDocuments.unshift(document)
@@ -29,6 +34,7 @@ export default {
       dispatch("setAxios")
       dispatch("getAllDocuments")
       dispatch("getAllCourses")
+      dispatch("getAllTeachers")
     },
     setAxios({ state, commit }) {
       axios.interceptors.request.use(
@@ -97,11 +103,24 @@ export default {
         .catch(console.log)
     },
     getAllCourses({ commit }) {
-      return mgntAPI
-        .getCourses()
+      return coursesAPI
+        .getAll()
         .then((response) => {
           if (response.status < 300) {
             commit("SET_LIST_COURSES", response.data)
+            return true
+          }
+          console.log(response.data)
+          return false
+        })
+        .catch(console.log)
+    },
+    getAllTeachers({ commit }) {
+      return teachersAPI
+        .getAll()
+        .then((response) => {
+          if (response.status < 300) {
+            commit("SET_LIST_TEACHERS", response.data)
             return true
           }
           console.log(response.data)

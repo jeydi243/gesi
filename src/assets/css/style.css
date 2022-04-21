@@ -831,6 +831,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 40%;
 }
 
+.h-\[10\%\]{
+  height: 10%;
+}
+
+.h-\[30\%\]{
+  height: 30%;
+}
+
 .h-\[20\%\]{
   height: 20%;
 }
@@ -849,10 +857,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-\[200px\]{
   height: 200px;
-}
-
-.h-\[30\%\]{
-  height: 30%;
 }
 
 .h-\[100px\]{
@@ -1503,12 +1507,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-style: italic;
 }
 
-.leading-tight{
-  line-height: 1.25;
-}
-
 .leading-none{
   line-height: 1;
+}
+
+.leading-tight{
+  line-height: 1.25;
 }
 
 .text-black{
@@ -2973,10 +2977,6 @@ input:valid + span:after {
 @media (min-width: 768px){
   .md\:flex-row{
     flex-direction: row;
-  }
-
-  .md\:p-4{
-    padding: 1rem;
   }
 }
 
