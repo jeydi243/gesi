@@ -105,7 +105,8 @@ import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import studentsAPI from "@/api/students";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { AtomSpinner } from "epic-spinners";
-import * as yup from "yup";
+import { toast } from "@/utils/utils";
+
 export default {
 	name: "students-details",
 	components: {
@@ -231,11 +232,11 @@ export default {
 				.addDocument(studentId, formdata)
 				.then((response) => {
 					if (response.status < 300) {
-						this.$toast.success(`Enregistrement terminé :${response.data}`, {
+						toast.success(`Enregistrement terminé :${response.data}`, {
 							timeout: 5000,
 						});
 					} else {
-						this.$toast.error(`Impossible d'ajouter le document: ${response.data}`, {
+						toast.error(`Impossible d'ajouter le document: ${response.data}`, {
 							timeout: 5000,
 						});
 					}

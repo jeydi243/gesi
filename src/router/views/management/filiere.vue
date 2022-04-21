@@ -6,7 +6,7 @@
 				<div v-for="(item, index) in filieres" :key="index" class="bg-pink-200 hover:scale-50 rounded-lg border w-20 h-20 select-none ">
 					<div class="flex flex-col justify-center items-center">
 						<div class="h-20 w-20 bg-indigo-300">
-							<img :src="item.img" :alt="`Image de ${item.long_name}`" class="object-none object-center bg-yellow-300 aspect-w-16 aspect-h-9">
+							<img :src="item.img" :alt="`Image de ${item.long_name}`" class="object-center bg-yellow-300 aspect-w-16 aspect-h-9">
 						</div>
 						<span class="text-2xl font-bold">{{ item.name }}</span>
 						<span class="text-xs">{{ item.gestionaire }}</span>

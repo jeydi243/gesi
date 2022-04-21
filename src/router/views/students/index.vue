@@ -7,7 +7,7 @@
 		<div class="flex border-b border-gray-200 mb-2">
 			<button v-for="(tabLevel,index) in levels" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tabLevel.current }" @click="changeLevel(index)">{{ tabLevel.name }}</button>
 		</div>
-		<transition name="fadeSlideY" mode="out-in" duration="500">
+		<transition name="fade" mode="out-in" duration="500">
 			<ListStudent :level="currentTabLevel" v-if="isLevelChanged" />
 		</transition>
 	</div>

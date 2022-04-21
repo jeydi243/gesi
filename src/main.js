@@ -40,7 +40,7 @@ const app = createApp(App)
   .use(router)
   .use(
     vfmPlugin({
-      key: "$modal",
+      key: "$vfm",
       componentName: "Modal",
       dynamicContainerName: "modal-content",
     })

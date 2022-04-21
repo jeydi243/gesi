@@ -1,12 +1,12 @@
 <template>
-	<div class="flex flex-row view" v-bind="$attrs">
-		<SideBar class="flex w-[15%] min-h-full bg-gray-900" />
-		<div class="flex w-[85%]">
+	<div class="flex flex-row" v-bind="$attrs">
+		<SideBar class="flex w-[15%] h-full bg-gray-900" />
+		<div class="flex w-[85%] h-full">
 			<main class="relative flex flex-col w-full bg-gray-100 ">
 				<Header />
 				<BreadCrumbs v-if="showBraed" />
-				<div class="h-full w-full bg-gray-100 px-6 py-6 view relative">
-					<Transition name="fadeSlideX" mode="out-in">
+				<div class="h-[87%] w-full bg-gray-100 px-6 py-6 view">
+					<Transition name="fade" mode="out-in">
 						<slot />
 					</Transition>
 				</div>
@@ -77,9 +77,27 @@ export default {
 .fade-leave-to {
 	opacity: 0;
 }
+body {
+	overflow-x: hidden;
+}
 .view {
 	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+	scrollbar-width: thin; /* Firefox */
+
+	overflow-y: scroll;
+}
+.view::-webkit-scrollbar {
+	width: 15px;
+}
+
+.view::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.body::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #555;
 }
 </style>
 

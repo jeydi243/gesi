@@ -5,7 +5,7 @@
 		</div>
 
 		<div class="contentTab">
-			<Transition name="fadeSlideX">
+			<Transition name="fadeSlideX" mode="out-in">
 				<KeepAlive>
 					<component :is="currentComponent"></component>
 				</KeepAlive>
@@ -33,7 +33,7 @@ export default {
 			tabsGestion: [
 				{ name: "academique", current: false },
 				{ name: "course", current: false },
-				{ name: "filiere", current: false },
+				{ name: "filière", current: false },
 				{ name: "documents", current: true },
 			],
 		};

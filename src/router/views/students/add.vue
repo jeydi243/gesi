@@ -4,7 +4,9 @@
 			<div v-for="i in 4" :key="i" class="flex flex-col justify-start items-start">
 				<span>
 					<box-icon type="solid" name="circle" :color="i > step ? 'black':'green'" size="xs" class="mb-2"></box-icon>
-					<span v-for="k in 10" :key="k">-</span>
+					<template v-if="i!=4">
+						<span v-for="k in 10" :key="k">-</span>
+					</template>
 				</span>
 
 				<span class="text-xs">{{ i }}</span>
@@ -12,12 +14,12 @@
 		</div>
 
 		<Transition name="fadeSlideY" mode="out-in">
-			<div class="step-1 step-content " v-if="step == 1" key="step1">
-				<Form class="flex flex-col w-full content-center justify-between items-center" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
+			<div class="step-1 step-content" v-if="step == 1" key="step1">
+				<Form class="flex flex-col w-full justify-between items-center" @submit="submitStep1" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting }" @invalid-submit="onInvalidStep1">
 					<h1 class="text-4xl mb-4">Informations préliminaires</h1>
 					<div class="grid grid-cols-2 gap-4 auto-cols-max">
 						<div class="input-group-grid name">
-							<Field type="text" placeholder="Name" id="name" name="name" class="w-full input-field" />
+							<Field type="text" placeholder="Name" id="name" name="name" class="w-full form-input" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
@@ -44,31 +46,31 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid email">
-							<Field name="email" type="email" id="email" placeholder="Email" class="flex form-input:bg-gray-900 h-full w-full border input-field" />
+							<Field name="email" type="email" id="email" placeholder="Email" class="flex form-input h-full w-full border" />
 							<ErrorMessage name="email" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid birthDate">
-							<Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full input-field" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+							<Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full form-input" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
 							<ErrorMessage name="birthDate" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field name="telephone" type="text" placeholder="Telephone" class="sm:text-base w-full input-field" />
+							<Field name="telephone" type="text" placeholder="Telephone" class="sm:text-base w-full form-input" />
 							<ErrorMessage name="telephone" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid adresse col-span-2">
-							<Field name="adresse" type="text" placeholder="XX, Q/quartier, C/commune, Av/avenue" class="w-full border input-field" />
+							<Field name="adresse" type="text" placeholder="XX, Q/quartier, C/commune, Av/avenue" class="w-full border form-input" />
 							<ErrorMessage name="adresse" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 					</div>
-					<div class="grid flex-row-reverse text-black">
+					<div class="flex flex-row-reverse w-full h-1/2 text-black">
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Next</span>
 							<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
@@ -77,8 +79,8 @@
 					</div>
 				</Form>
 			</div>
-			<div class="step-2 step-content " v-else-if="step == 2" key="step2">
-				<Form class="flex flex-col mb-4 justify-center" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
+			<div class="step-2 step-content" v-else-if="step == 2" key="step2">
+				<Form class="flex flex-col mb-4 justify-between" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
 					<div class="flex flex-col mb-4 h-1/2  items-center justify-center">
 						<p class="text-4xl mb-4">Photo de profil</p>
 						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{'profile2':!previewSRC}">
@@ -92,7 +94,7 @@
 							<p class="input-error">{{ message }}</p>
 						</ErrorMessage>
 					</div>
-					<div class="flex flex-row h-1/2 items-center justify-between">
+					<div class="flex flex-row h-1/2 w-full items-center justify-between">
 						<button class="btn-unstate" @click="step = step - 1">Back</button>
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
@@ -150,30 +152,30 @@
                 </li>
                 </ol>-->
 			</div>
-			<div class="step-3 step-content " v-else-if="step == 3" key="step3">
-				<Form class="flex flex-col mb-4 justify-center items-center w-full" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
+			<div class="step-3 step-content" v-else-if="step == 3" key="step3">
+				<Form class="flex flex-col mb-4 justify-between items-center w-full" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
 					<h1 class="text-4xl mb-4">Add contact</h1>
 					<div class="flex flex-col">
 						<div class="input-group-grid name">
-							<Field type="text" placeholder="Name" id="name" name="name" class="w-full input-field" />
+							<Field type="text" placeholder="Name" id="name" name="name" class="w-full form-field" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field type="text" placeholder="Téléphone" id="name" name="telephone" class="w-full input-field" />
+							<Field type="text" placeholder="Téléphone" id="name" name="telephone" class="w-full form-field" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid email">
-							<Field type="text" placeholder="Email" id="name" name="email" class="w-full input-field" />
+							<Field type="text" placeholder="Email" id="name" name="email" class="w-full form-input" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 					</div>
-					<div class="flex flex-row h-1/2 items-center justify-between">
+					<div class="flex flex-row h-1/2 w-full items-center justify-between">
 						<button class="btn-unstate" @click="step = step - 1">Back</button>
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
@@ -183,18 +185,18 @@
 					</div>
 				</Form>
 			</div>
-			<div class="step-4 step-content " v-else-if="step == 4" key="step4">
-				<Form class="flex flex-col mb-4 justify-center items-center" @submit="submitStep4" :validation-schema="step4Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
-					<h1 class="text-4xl mb-4">Add High School</h1>
+			<div class="step-4 step-content" v-else-if="step == 4" key="step4">
+				<Form class="flex flex-col mb-4 justify-between items-center" @submit="submitStep4" :validation-schema="step4Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
+					<h1 class="text-4xl mb-4">Add High-School</h1>
 					<div class="grid grid-cols-2 gap-2">
 						<div class="input-group-grid name">
-							<Field type="text" placeholder="School Name" id="name" name="name" class="w-full input-field" />
+							<Field type="text" placeholder="School Name" id="name" name="name" class="w-full form-input" />
 							<ErrorMessage name="name" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid telephone">
-							<Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full input-field" />
+							<Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full form-input" />
 							<ErrorMessage name="telephone" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
@@ -208,13 +210,13 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid adresse">
-							<Field type="text" placeholder="Adresse" id="adresse" name="adresse" class="w-full input-field" />
+							<Field type="text" placeholder="Adresse" id="adresse" name="adresse" class="w-full form-input" />
 							<ErrorMessage name="adresse" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
 						</div>
 					</div>
-					<div class="flex flex-row h-1/2 items-center justify-between">
+					<div class="flex flex-row  w-full items-center justify-between">
 						<button class="btn-unstate" @click="step = step - 1">Back</button>
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
@@ -231,11 +233,12 @@
 <script>
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { HollowDotsSpinner} from "epic-spinners";
+import { HollowDotsSpinner } from "epic-spinners";
 import { markRaw } from "vue";
-import { useToast } from "vue-toastification";
-var toast = useToast();
+import { toast } from "@/utils/utils";
+
 import * as yup from "yup";
+
 export default {
 	name: "students-add",
 	components: {

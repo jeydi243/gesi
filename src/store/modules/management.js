@@ -9,6 +9,9 @@ export default {
     SET_LIST_DOCUMENTS(state, documents) {
       state.listDocuments = documents
     },
+    SET_LIST_COURSES(state, courses) {
+      state.courses = courses
+    },
     ADD_DOCUMENT(state, document) {
       state.listDocuments.unshift(document)
     },
@@ -25,6 +28,7 @@ export default {
     init({ dispatch }) {
       dispatch("setAxios")
       dispatch("getAllDocuments")
+      dispatch("getAllCourses")
     },
     setAxios({ state, commit }) {
       axios.interceptors.request.use(
@@ -85,6 +89,19 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             commit("SET_LIST_DOCUMENTS", response.data)
+            return true
+          }
+          console.log(response.data)
+          return false
+        })
+        .catch(console.log)
+    },
+    getAllCourses({ commit }) {
+      return mgntAPI
+        .getCourses()
+        .then((response) => {
+          if (response.status < 300) {
+            commit("SET_LIST_COURSES", response.data)
             return true
           }
           console.log(response.data)

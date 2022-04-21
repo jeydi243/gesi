@@ -29,8 +29,8 @@
 				</tr>
 			</thead>
 			<!-- <tbody v-if="students != null"> -->
-			<transition-group name="fade" tag="tbody" mode="out-in">
-				<tr class="table-row" v-for="(student, index) in students" :key="index" @click="goto(index)">
+			<TransitionGroup name="fade" tag="tbody" mode="out-in">
+				<tr class="table-row cursor-pointer" v-for="(student, index) in students" :key="index" @click="goto(index)">
 					<td>{{ index }}</td>
 					<td>{{ student.matricule }}</td>
 					<td>{{ student.name }}</td>
@@ -38,9 +38,7 @@
 					<td>{{ student.level }}</td>
 					<td>{{ student.status }}</td>
 				</tr>
-			</transition-group>
-			<!-- </tbody> -->
-			<!-- {{ mystudents }} -->
+			</TransitionGroup>
 		</table>
 	</div>
 </template>

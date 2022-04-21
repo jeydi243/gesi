@@ -14,10 +14,9 @@
 					<PlusIcon class="h-5 w-5 text-white" />Add
 				</button>
 			</div>
-
 			<table class="table-auto">
 				<thead>
-					<tr>
+					<tr class="table-row">
 						<th>#</th>
 						<th>Code</th>
 						<th>Name</th>
@@ -27,24 +26,49 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(doc,index) in getListDocuments" :key="index">
+					<tr v-for="(doc,index) in getListDocuments" :key="index" class="table-row">
 						<td>{{ index+1 }}</td>
 						<td>{{ doc.code }}</td>
 						<td class="font-bold">{{ doc.name }}</td>
 						<td>{{ doc.description }}</td>
-						<td class="relative"><button @click="dropdown = !dropdown" id="toggle-dropdown">Modifier</button>
-							<div id="dropdown" class="dropdown" v-if="dropdown && index">
-								<span href="#" class="dropdown-item" @click="modifyDoc(doc.code)">Modify</span>
-								<span class="dropdown-separator"></span>
-								<span href="#" class="dropdown-item-sensible" @click="softdeleteDoc(doc.code)">Delete</span>
-								<span href="#" class="dropdown-item-sensible" @click="removeDoc(doc.code)">Remove</span>
-							</div>
+						<td class="relative flex flex-row items-center align-middle">
+							<ClipboardIcon href="#" class="h-5 w-5 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModalUpdate =!showModalUpdate" />
+							<!-- <PlusIcon href="#" class="" @click="softdeleteDoc(doc.code)" />Delete</PlusIcon> -->
+							<TrashIcon href="#" class="h-5 w-5 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc.code)" />
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<Modal name="example" v-model="canshowModal" transition="fadeSlideY" @click-outside="clickOutside" classes="modal" content-class="modal-content">
+		<Modal name="modal-add" v-model="canshowModal" @click-outside="clickOutside" transition="fadeSlideY" classes="modal" content-class="modal-content">
+			<template #title>Add document </template>
+			<Form class="flex flex-col" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
+				<div class="flex sm:flex-col md:flex-row">
+					<Field name="code" placeholder="code" class="form-input"></Field>
+					<ErrorMessage name="code" v-slot="{ message }">
+						<p class="input-error">{{ message }}</p>
+					</ErrorMessage>
+					<Field name="name" placeholder="name" class="form-input"></Field>
+					<ErrorMessage name="name" v-slot="{ message }">
+						<p class="input-error">{{ message }}</p>
+					</ErrorMessage>
+				</div>
+				<Field name="description" as="textarea" placeholder="Describe the utility of this doc" class="form-textarea"></Field>
+				<ErrorMessage name="description" v-slot="{ message }">
+					<p class="input-error">{{ message }}</p>
+				</ErrorMessage>
+				<div class="flex flex-row h-1/2 w-full items-center justify-between">
+					<button class="btn-unstate" @click="clickOutside">Annuler</button>
+					<button type="submit" class="btn-primary">
+						<PlusIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
+						<span class="font-bold text-white">Ajouter</span>
+						<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
+					</button>
+				</div>
+			</Form>
+			<span class="text-red-700 text-base">{{ errorCall }}</span>
+		</Modal>
+		<Modal name="modalmodif" v-model="showModalUpdate" @click-outside="clickOutsideModif" transition="fade"  classes="modal" content-class="modal-content">
 			<template #title>Add document </template>
 			<Form class="flex flex-col form-input" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
 				<div class="flex sm:flex-col md:flex-row">
@@ -60,17 +84,15 @@
 				<Field name="description" as="textarea" placeholder="Describe the utility of this doc" class="form-textarea"></Field>
 				<ErrorMessage name="description" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
-				</ErrorMessage>
-				<div class="flex flex-row h-1/2 items-center justify-between">
-					<button class="btn-unstate" @click="clickOutside">Annuler</button>
+				</ErrorMessage><span class="text-red-700 text-base">{{ errorCall }}</span>
+				<div class="flex flex-row h-1/2 w-full items-center justify-between">
+					<button class="btn-unstate" @click="clickOutside">Cancel</button>
 					<button type="submit" class="btn-primary">
-						<PlusIcon class="h-5 w-5 text-white" v-if="!isSubmitting" />
-						<span class="font-bold text-white">Ajouter</span>
-						<AtomSpinner class="h-5 w-5 text-white" v-if="isSubmitting" />
+						<span class="font-bold text-white">Update</span>
+						<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
 					</button>
 				</div>
 			</Form>
-			<span class="text-red-700 text-base">{{ errorCall }}</span>
 		</Modal>
 	</div>
 </template>
@@ -79,17 +101,19 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { AtomSpinner } from "epic-spinners";
-import { PlusIcon, SearchIcon } from "@heroicons/vue/solid";
+import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon } from "@heroicons/vue/solid";
+import {} from "@heroicons/vue/solid";
 import * as yup from "yup";
-import { useToast } from "vue-toastification";
-var toast = useToast();
+import { toast } from "@/utils/utils";
 export default {
 	name: "documents",
 	components: {
 		Form,
 		AtomSpinner,
 		ErrorMessage,
+		ClipboardIcon,
 		SearchIcon,
+		TrashIcon,
 		PlusIcon,
 		Field,
 	},
@@ -99,7 +123,7 @@ export default {
 			code: yup.string().required(),
 			description: yup.string().required(),
 		});
-		return { dropdown: false, search: "", canshowModal: false, docSchema, initialDocValue: { name: "Bulletin 5eme secondaire", code: "AX-2022", description: "" } };
+		return { showModalUpdate: false, dropdown: false, search: "", canshowModal: false, docSchema, initialDocValue: { name: "Bulletin 5eme secondaire", code: "AX-2022", description: "" } };
 	},
 	computed: { ...mapGetters("management", ["getListDocuments", "errorCall"]) },
 	created() {
@@ -114,9 +138,11 @@ export default {
 		onInvalidDocument({ values, result, errors }) {
 			console.log(errors);
 		},
-		modifyDoc(code) {
-			var res = this.updateDocument(code);
-			toast.success("Document modifié avec succes");
+		async modifyDoc(code) {
+			await this.$vfm.toggle("modalmodif", { value: "key" });
+			console.log(code);
+			// var res = this.updateDocument(code);
+			// toast.success("Document modifié avec succes");
 		},
 		softdeleteDoc(code) {
 			var res = this.deleteDocument(code);
@@ -145,6 +171,9 @@ export default {
 			toast.error("Erreur lors de l'ajout du document");
 		},
 		clickOutside() {
+			this.canshowModal = !this.canshowModal;
+		},
+		clickOutsideModif() {
 			this.canshowModal = !this.canshowModal;
 		},
 	},

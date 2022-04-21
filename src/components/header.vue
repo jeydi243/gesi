@@ -1,5 +1,5 @@
 <template>
-	<header class="flex w-full h-[50px] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
+	<header class="flex w-full h-[8%] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
 		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
 		<div class="relative flex flex-row space-x-5">
 			<!-- Dropdown toggle button -->
