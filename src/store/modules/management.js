@@ -33,8 +33,9 @@ export default {
     init({ dispatch }) {
       dispatch("setAxios")
       dispatch("getAllDocuments")
-      dispatch("getAllCourses")
-      dispatch("getAllTeachers")
+
+      dispatch("teachers/init", {}, { root: true })
+      dispatch("courses/init", {}, { root: true })
     },
     setAxios({ state, commit }) {
       axios.interceptors.request.use(
@@ -95,32 +96,6 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             commit("SET_LIST_DOCUMENTS", response.data)
-            return true
-          }
-          console.log(response.data)
-          return false
-        })
-        .catch(console.log)
-    },
-    getAllCourses({ commit }) {
-      return coursesAPI
-        .getAll()
-        .then((response) => {
-          if (response.status < 300) {
-            commit("SET_LIST_COURSES", response.data)
-            return true
-          }
-          console.log(response.data)
-          return false
-        })
-        .catch(console.log)
-    },
-    getAllTeachers({ commit }) {
-      return teachersAPI
-        .getAll()
-        .then((response) => {
-          if (response.status < 300) {
-            commit("SET_LIST_TEACHERS", response.data)
             return true
           }
           console.log(response.data)

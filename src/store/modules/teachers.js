@@ -11,23 +11,64 @@ export default {
         }, 1000)
       })
     },
+    UPDATE: (state, payload) => {
+      var foundIndex = state.teachers.findIndex((t) => t.id == payload.idTeacher)
+      if (foundIndex) {
+        state.teachers[foundIndex] = payload.data
+      }
+    },
   },
   actions: {
     init({ dispatch }) {
       dispatch("getTeachers")
     },
-    getProfs({ commit, state }) {
+    getTeachers({ commit, state }) {
       if (state.teachers.length == 0) {
-        teachersAPI
+        return teachersAPI
           .getAll()
-          .then(({ data }) => {
+          .then(({ data, status }) => {
             commit("ALL", data)
             console.log(data)
+            if (status < 300) {
+              return true
+            }
+            return false
           })
           .catch((err) => {
             console.log(err)
+            return false
           })
       }
+    },
+    updateTeacher({ commit, state }, { idTeacher, update }) {
+      return teachersAPI
+        .updateById(idTeacher, update)
+        .then(({ status, data }) => {
+          if (status < 300) {
+            commit("UPDATE", { idTeacher, data })
+            return true
+          }
+          return false
+        })
+        .catch((err) => {
+          console.log(err)
+          return false
+        })
+    },
+    addTeacher({ commit, state }, data) {
+      return teachersAPI
+        .add(data)
+        .then(({ status, data }) => {
+          if (status < 300) {
+            commit("ADD", data)
+            return true
+          }
+          return false
+        })
+        .catch((err) => {
+          console.log(err)
+          return false
+        })
     },
   },
   getters: {
