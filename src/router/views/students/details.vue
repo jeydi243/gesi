@@ -77,7 +77,7 @@
 									<box-icon :name="`file-${doc.type}`" type="solid" color="darkBlue"></box-icon>
 									<span class="truncate">{{ doc.name }}</span>
 
-									<box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon>
+									<!-- <box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon> -->
 								</div>
 								<div class="actions">
 									<button class="g-button-primary" @click="showFile">{{ doc.state? 'Voir':'Ajouter' }}</button>

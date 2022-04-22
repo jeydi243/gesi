@@ -27,15 +27,18 @@
 				</thead>
 				<tbody>
 					<tr v-for="(doc,index) in getListDocuments" :key="index" class="table-row">
-						<td>{{ index+1 }}</td>
-						<td>{{ doc.code }}</td>
-						<td class="font-bold">{{ doc.name }}</td>
-						<td>{{ doc.description }}</td>
-						<td class="relative flex flex-row items-center align-middle">
-							<ClipboardIcon href="#" class="h-5 w-5 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModalUpdate =!showModalUpdate" />
-							<!-- <PlusIcon href="#" class="" @click="softdeleteDoc(doc.code)" />Delete</PlusIcon> -->
-							<TrashIcon href="#" class="h-5 w-5 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc.code)" />
-						</td>
+						<div>
+							<td>{{ index+1 }}</td>
+							<td>{{ doc.code }}</td>
+							<td class="font-bold">{{ doc.name }}</td>
+							<td>{{ doc.description }}</td>
+							<td class="relative flex flex-row items-center align-middle">
+								<ClipboardIcon href="#" class="h-5 w-5 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModalUpdate =!showModalUpdate" />
+								<!-- <PlusIcon href="#" class="" @click="softdeleteDoc(doc.code)" />Delete</PlusIcon> -->
+								<TrashIcon href="#" class="h-5 w-5 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc.code)" />
+							</td>
+						</div>
+						
 					</tr>
 				</tbody>
 			</table>
@@ -68,7 +71,7 @@
 			</Form>
 			<span class="text-red-700 text-base">{{ errorCall }}</span>
 		</Modal>
-		<Modal name="modalmodif" v-model="showModalUpdate" @click-outside="clickOutsideModif" transition="fade"  classes="modal" content-class="modal-content">
+		<Modal name="modalmodif" v-model="showModalUpdate" @click-outside="clickOutsideModif" transition="fade" classes="modal" content-class="modal-content">
 			<template #title>Add document </template>
 			<Form class="flex flex-col form-input" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
 				<div class="flex sm:flex-col md:flex-row">
@@ -98,13 +101,13 @@
 </template>
 
 <script >
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import { Form, Field, ErrorMessage } from "vee-validate";
-import { AtomSpinner } from "epic-spinners";
-import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon } from "@heroicons/vue/solid";
-import {} from "@heroicons/vue/solid";
 import * as yup from "yup";
 import { toast } from "@/utils/utils";
+import { AtomSpinner } from "epic-spinners";
+import { mapGetters, mapActions } from "vuex";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon } from "@heroicons/vue/solid";
+
 export default {
 	name: "documents",
 	components: {
@@ -171,10 +174,10 @@ export default {
 			toast.error("Erreur lors de l'ajout du document");
 		},
 		clickOutside() {
-			this.canshowModal = !this.canshowModal;
+			this.canshowModal = false;
 		},
 		clickOutsideModif() {
-			this.canshowModal = !this.canshowModal;
+			this.showModalUpdate = false;
 		},
 	},
 };

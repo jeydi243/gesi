@@ -2,6 +2,7 @@ import { createStore } from "vuex"
 import room from "./modules/room"
 import students from "./modules/students"
 import teachers from "./modules/teachers"
+import courses from "./modules/courses"
 import management from "./modules/management"
 import authentication from "./modules/authentication"
 
@@ -10,6 +11,7 @@ const store = createStore({
     room: room,
     students: students,
     teachers: teachers,
+    courses: courses,
     authentication: authentication,
     management: management,
   },
@@ -54,7 +56,6 @@ const store = createStore({
         }
         state.listSideMenus[nextIndex].active = true
       } else {
-        console.log("Bon tu est beau")
         state.listSideMenus[currentIndex].active = false
       }
     },

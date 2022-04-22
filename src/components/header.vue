@@ -3,7 +3,7 @@
 		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
 		<div class="relative flex flex-row space-x-5">
 			<!-- Dropdown toggle button -->
-			<button @click="dropdown = !dropdown" id="toggle-dropdown" class="relative items-center z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row">
+			<button @click.prevent="dropdown = !dropdown" id="toggle-dropdown" class="btn-header">
 				<div class="avatar rounded-full">
 					<img src="https://images.generated.photos/PP2ck5OaSvRBYQwh1ZDCsEhBQ4WxLWlZNs7nKhaJIWA/rs:fit:64:64/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NjIyMTIwLmpwZw.jpg" class="object-cover" />
 				</div>
@@ -37,10 +37,19 @@ export default {
 			dropdown: false,
 		};
 	},
+	watch: {
+		dropdown(old, news) {
+			console.log(old, news);
+		},
+	},
 	created() {
 		window.onclick = (e) => {
-			if (e.target.id !== "toggle-dropdown" && this.dropdown) {
-				this.dropdown = false;
+			if (e.target.id !== "toggle-dropdown" ) {
+				console.log("clicked outside of toggle-dropdown");
+				if (this.dropdown) {
+					this.dropdown = false;
+				}
+				// this.dropdown = false;
 			}
 		};
 	},
