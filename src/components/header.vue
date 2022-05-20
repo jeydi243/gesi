@@ -43,15 +43,14 @@ export default {
 		},
 	},
 	created() {
-		window.onclick = (e) => {
-			if (e.target.id !== "toggle-dropdown" ) {
-				console.log("clicked outside of toggle-dropdown");
-				if (this.dropdown) {
-					this.dropdown = false;
-				}
-				// this.dropdown = false;
-			}
-		};
+		// window.onclick = (e) => {
+		// 	if (e.target.id !== "toggle-dropdown" && this.dropdown === true) {
+		// 		if (this.dropdown) {
+		// 			console.log("clicked outside of toggle-dropdown, we close dropdown");
+		// 			this.dropdown = false;
+		// 		}
+		// 	}
+		// };
 	},
 	methods: {
 		...mapActions("authentication", ["logout"]),

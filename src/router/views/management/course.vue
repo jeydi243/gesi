@@ -43,7 +43,7 @@
 <script >
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
-	name: "course",
+	name: "index-course",
 	data() {
 		return {};
 	},

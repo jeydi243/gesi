@@ -9,7 +9,10 @@ export default {
   namespaced: true,
   mutations: {
     SET_LIST_DOCUMENTS(state, documents) {
-      state.listDocuments = documents
+      state.listDocuments = documents.map((ele) => {
+        ele["show"] = false
+        return ele
+      })
     },
     SET_LIST_COURSES(state, courses) {
       state.courses = courses
@@ -18,11 +21,15 @@ export default {
       state.teachers = teachers
     },
     ADD_DOCUMENT(state, document) {
-      state.listDocuments.unshift(document)
+      state.listDocuments.unshift({ ...document, show: false })
     },
     REMOVE_DOCUMENT(state, code) {
       var index = state.listDocuments.findIndex((doc) => doc.code == code)
       state.listDocuments.splice(index, 1)
+    },
+    UPDATE_DOCUMENT(state, { newDoc }) {
+      var index = state.listDocuments.findIndex((doc) => doc.code == newDoc.code)
+      state.listDocuments[index] = newDoc
     },
     SET_ERROR(state, error) {
       state.error = error.message[0]
@@ -142,13 +149,13 @@ export default {
         })
         .catch(console.log)
     },
-    updateDocument({ commit }, code) {
+    updateDocument({ commit }, newValues) {
       return mgntAPI
-        .updateDocument(code)
+        .updateDocument(newValues)
         .then((response) => {
           if (response.status < 300) {
-            commit("REMOVE_DOCUMENT", code)
-            console.log(response)
+            commit("UPDATE_DOCUMENT", { newDoc: response.data })
+            console.log(response.data)
             return true
           }
           return false

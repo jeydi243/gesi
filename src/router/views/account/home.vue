@@ -18,13 +18,14 @@
 				<div class="card2"></div>
 			</div>
 			<div class="card">
-				<apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
+				<apexchart width="500" type="bars mail" :options="chartOptions" :series="series"></apexchart>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+
 export default {
 	name: "Home",
 	components: {},
@@ -41,7 +42,7 @@ export default {
 			},
 			series: [
 				{
-					name: "series-1",
+					name: "Nombre d'étudiants",
 					data: [3000, 3500, 4000, 4200, 4500, 4700, 4900, 5000],
 				},
 			],

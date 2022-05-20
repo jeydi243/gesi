@@ -7,7 +7,7 @@
 				<BreadCrumbs v-if="showBraed" />
 				<div class="h-[87%] w-full bg-gray-100 px-6 py-6 view">
 					<Transition name="fade" mode="out-in">
-						<slot />
+						<slot></slot>
 					</Transition>
 				</div>
 				<Footer />
@@ -80,9 +80,9 @@ export default {
 body {
 	overflow-x: hidden;
 }
-.view {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: thin; /* Firefox */
+/* .view {
+
+	scrollbar-width: thin;
 
 	overflow-y: scroll;
 }
@@ -98,6 +98,6 @@ body {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	background-color: #555;
-}
+} */
 </style>
 

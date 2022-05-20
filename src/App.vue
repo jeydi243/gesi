@@ -10,9 +10,9 @@
 			</Layout>
 			<Auth v-else-if="layout == 'auth'" key="auth" class="h-screen w-screen">
 				<router-view v-slot="{ Component }">
-					<transition name="fadeSlideX" mode="out-in">
+					<Transition name="fadeSlideX" mode="out-in">
 						<component :is="Component" />
-					</transition>
+					</Transition>
 				</router-view>
 			</Auth>
 		</transition>

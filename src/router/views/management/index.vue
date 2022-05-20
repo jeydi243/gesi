@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2">
-			<button v-for="(tab,index) in tabsGestion" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
+			<button v-for="(tab,indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</button>
 		</div>
 
 		<div class="contentTab">
 			<Transition name="fadeSlideX" mode="out-in">
-				<KeepAlive>
-					<component :is="currentComponent"></component>
-				</KeepAlive>
+				<!-- <KeepAlive> -->
+				<component :is="currentComponent"></component>
+				<!-- </KeepAlive> -->
 			</Transition>
 		</div>
 	</div>
@@ -22,10 +22,10 @@ import documents from "@/router/views/management/documents.vue";
 export default {
 	name: "index-gestion",
 	components: {
-		course,
 		academique,
-		documents,
+		course,
 		filiere,
+		documents,
 	},
 	data() {
 		return {
@@ -33,7 +33,7 @@ export default {
 			tabsGestion: [
 				{ name: "academique", current: false },
 				{ name: "course", current: false },
-				{ name: "filière", current: false },
+				{ name: "filiere", current: false },
 				{ name: "documents", current: true },
 			],
 		};
@@ -41,19 +41,16 @@ export default {
 	computed: {
 		currentComponent() {
 			return this.tabsGestion.find((tab) => tab.current).name.toLowerCase();
-			// return this.comp[this.tabsGestion.find((tab) => tab.current).name.toLowerCase()];
 		},
 	},
 	methods: {
-		changeTab(index) {
-			var currentTrue = this.tabsGestion.findIndex((tab) => tab.current);
+		changeTab(indexTab) {
+			console.log({indexTab});
+			var currentTrue = this.tabsGestion.findIndex((tab) => tab.current == true);
 			this.tabsGestion[currentTrue].current = false;
 
-			this.tabsGestion[index].current = true;
+			this.tabsGestion[indexTab].current = true;
 		},
 	},
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -8,8 +8,8 @@ export default {
   addDocument: async function (data) {
     return axios.post(`${this.routeDocuments}`, data)
   },
-  updateDocument: async function (code, data) {
-    return axios.patch(`${this.routeDocuments}/update/${code}`, data)
+  updateDocument: async function (updatedDocument) {
+    return axios.patch(`${this.routeDocuments}/update/${updatedDocument.code}`, updatedDocument)
   },
   removeDocument: async function (code) {
     return axios.delete(`${this.routeDocuments}/${code}`)
