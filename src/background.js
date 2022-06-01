@@ -3,9 +3,9 @@
 import { app, protocol, BrowserWindow, ipcMain as main } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension from "electron-devtools-installer"
-var watch = require("node-watch")
 const isDevelopment = process.env.NODE_ENV !== "production"
 const path = require("path")
+var watch = require("node-watch")
 let win = null
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }])
@@ -35,6 +35,7 @@ async function createWindow(height, width, x, y) {
     // Load the index.html when not in development
     win.loadURL("app://./index.html")
   }
+  win.show()
   win.webContents.on("did-finish-load", () => {
     console.log("Did finish load")
   })

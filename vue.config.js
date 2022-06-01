@@ -1,14 +1,17 @@
 module.exports = {
-  chainWebpack: config => {
+  devServer: {
+    proxy: "*",
+  },
+  chainWebpack: (config) => {
     config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap(options => {
+      .rule("vue")
+      .use("vue-loader")
+      .tap((options) => {
         options.compilerOptions = {
           ...options.compilerOptions,
-          isCustomElement: tag => tag.startsWith('box-')
+          isCustomElement: (tag) => tag.startsWith("box-"),
         }
         return options
       })
-  }
+  },
 }
