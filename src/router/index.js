@@ -4,19 +4,19 @@ const studentsRoutes = [
     path: "/students",
     meta: { layout: "main" },
     name: "index-students",
-    component: () => import(/* webpackChunkName: "about" */ "./views/students/index.vue"),
+    component: () => import(/* webpackChunkName: "index-students" */ "./views/students/index.vue"),
   },
   {
     path: "/students/add",
     meta: { layout: "main" },
     name: "students-add",
-    component: () => import(/* webpackChunkName: "about" */ "./views/students/add.vue"),
+    component: () => import(/* webpackChunkName: "add-students" */ "./views/students/add.vue"),
   },
   {
     path: "/students/:id",
     meta: { layout: "main" },
     name: "students-details",
-    component: () => import(/* webpackChunkName: "about" */ "./views/students/details.vue"),
+    component: () => import(/* webpackChunkName: "details-student" */ "./views/students/details.vue"),
   },
 ]
 const teachersRoutes = [
@@ -24,19 +24,19 @@ const teachersRoutes = [
     path: "/teachers",
     meta: { layout: "main" },
     name: "index-teachers",
-    component: () => import(/* webpackChunkName: "about" */ "./views/teachers/index.vue"),
+    component: () => import(/* webpackChunkName: "index-teacher" */ "./views/teachers/index.vue"),
   },
   //   {
   //     path: "/teachers/add",
   //     meta: { layout: "main" },
   //     name: "teachers-add",
-  //     component: () => import(/* webpackChunkName: "about" */ "./views/teachers/add.vue"),
+  //     component: () => import(/* webpackChunkName: "add-teacher" */ "./views/teachers/add.vue"),
   //   },
   //   {
   //     path: "/teachers/:id",
   //     meta: { layout: "main" },
   //     name: "teachers-details",
-  //     component: () => import(/* webpackChunkName: "about" */ "./views/teachers/details.vue"),
+  //     component: () => import(/* webpackChunkName: "details-teacher" */ "./views/teachers/details.vue"),
   //   },
 ]
 const calendarRoutes = [
@@ -44,7 +44,7 @@ const calendarRoutes = [
     path: "/calendar",
     meta: { layout: "main" },
     name: "index-calendar",
-    component: () => import(/* webpackChunkName: "about" */ "./views/calendar/index.vue"),
+    component: () => import(/* webpackChunkName: "index-calendar" */ "./views/calendar/index.vue"),
   },
 ]
 const libraryRoutes = [

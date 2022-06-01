@@ -1,12 +1,14 @@
 module.exports = {
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.module
-      .rule("vue")
-      .use("vue-loader")
-      .tap((options) => {
-        // modify the options...
-        options.isCutstomElement = (tag) => !tag.startsWith("box")
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        options.compilerOptions = {
+          ...options.compilerOptions,
+          isCustomElement: tag => tag.startsWith('box-')
+        }
         return options
       })
-  },
+  }
 }

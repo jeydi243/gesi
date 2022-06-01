@@ -1137,33 +1137,9 @@ textarea.form-control.is-invalid{
   transform: rotate(-180deg);
 }
 
-.accordion-item:first-of-type{
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-}
-
-.accordion-item:first-of-type .accordion-button{
-  border-top-left-radius: calc(0.5rem - 1px);
-  border-top-right-radius: calc(0.5rem - 1px);
-}
-
-.accordion-item:not(:first-of-type){
-  border-top: 0;
-}
-
-.accordion-item:last-of-type{
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
-}
-
 .accordion-item:last-of-type .accordion-button.collapsed{
   border-bottom-right-radius: calc(0.5rem - 1px);
   border-bottom-left-radius: calc(0.5rem - 1px);
-}
-
-.accordion-item:last-of-type .accordion-collapse{
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
 }
 
 .btn-close{
@@ -4134,14 +4110,6 @@ textarea.form-control.is-invalid{
   left: 0px;
 }
 
-.top-3{
-  top: 0.75rem;
-}
-
-.left-10{
-  left: 2.5rem;
-}
-
 .bottom-0{
   bottom: 0px;
 }
@@ -4225,10 +4193,6 @@ textarea.form-control.is-invalid{
   margin-bottom: 0px;
 }
 
-.mr-2{
-  margin-right: 0.5rem;
-}
-
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -4239,6 +4203,10 @@ textarea.form-control.is-invalid{
 
 .mt-3{
   margin-top: 0.75rem;
+}
+
+.mr-2{
+  margin-right: 0.5rem;
 }
 
 .box-content{
@@ -4397,10 +4365,6 @@ textarea.form-control.is-invalid{
   height: 200px;
 }
 
-.h-20{
-  height: 5rem;
-}
-
 .max-h-full{
   max-height: 100%;
 }
@@ -4475,10 +4439,6 @@ textarea.form-control.is-invalid{
 
 .w-4\/5{
   width: 80%;
-}
-
-.w-1{
-  width: 0.25rem;
 }
 
 .max-w-sm{

@@ -42,9 +42,11 @@ app.config.globalProperties.filters = {
   },
 }
 app.config.globalProperties.toast = useToast()
+
 app.config.errorHandler = (err, vm, info) => {
   console.log({ err })
-  console.log({ vm })
-//   console.log({ info })
+}
+app.config.warnHandler = (msg, instance, trace) => {
+  console.log({ msg }, trace)
 }
 app.mount("#app")
