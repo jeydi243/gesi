@@ -37,7 +37,7 @@ async function createWindow(height, width, x, y) {
   }
   win.show()
   win.webContents.on("did-finish-load", () => {
-    console.log("Did finish load")
+    console.log("Did finish ok")
   })
   watch(
     "./",

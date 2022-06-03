@@ -2,7 +2,9 @@
 	<div>
 		<div class="card h-1/5">
 			<span class="text-2xl font-bold pb-5">Liste des documents</span>
-			<p class="text-base pb-4">Laboris sint irure culpa elit pariatur adipisicing ullamco. Exercitation occaecat commodo duis esse id laborum ut incididunt ipsum eiusmod mollit culpa veniam nisi. Mollit Lorem labore et voluptate sit laboris occaecat sit. Ut non do cillum cillum voluptate tempor consectetur. Labore sunt incididunt nulla elit aliquip dolore enim. Enim sint anim sit ullamco dolor sunt adipisicing laboris aute in.</p>
+			<p class="text-base pb-4">
+				Laboris sint irure culpa elit pariatur adipisicing ullamco. Exercitation occaecat commodo duis esse id laborum ut incididunt ipsum eiusmod mollit culpa veniam nisi. Mollit Lorem labore et voluptate sit laboris occaecat sit. Ut non do cillum cillum voluptate tempor consectetur. Labore sunt incididunt nulla elit aliquip dolore enim. Enim sint anim sit ullamco
+				dolor sunt adipisicing laboris aute in.</p>
 			<div class="flex flex-row justify-between pb-2">
 				<div class="relative flex w-72 flex-wrap items-stretch">
 					<span class="z-10 flex h-full font-normal text-center self-center caret-green-500 text-gray-300 absolute bg-transparent rounded text-base items-center justify-center ">
@@ -10,7 +12,7 @@
 					</span>
 					<input type="text" v-model="search" placeholder="Find by Code or Name" class="px-1 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-7" />
 				</div>
-				<button @click="showModalAdd =! showModalAdd" class="btn-primary">
+				<button @click="showModalAdd = !showModalAdd" class="btn-primary">
 					<PlusIcon class="h-5 w-5 text-white" />Add
 				</button>
 			</div>
@@ -26,14 +28,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(doc,indexDoc) in getListDocuments" :key="indexDoc" :id="`heading${indexDoc}`" class="mb-0 table-row">
-						<td class="table-cell">{{ indexDoc+1 }}</td>
+					<tr v-for="(doc, indexDoc) in getListDocuments" :key="indexDoc" :id="`heading${indexDoc}`" class="mb-0 table-row">
+						<td class="table-cell">{{ indexDoc + 1 }}</td>
 						<td class="table-cell">{{ doc.code }}</td>
 						<td class="table-cell font-bold ">{{ doc.name }}</td>
 						<td class="table-cell">{{ doc.description }}</td>
 						<td class="table-cell relative flex-row items-center">
 							<div class="flex flex-row">
-								<ClipboardIcon href="#" class="h-4 w-4 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModif(indexDoc,doc)" />
+								<ClipboardIcon href="#" class="h-4 w-4 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModif(indexDoc, doc)" />
 								<TrashIcon href="#" class="h-4 w-4 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc.code)" />
 							</div>
 						</td>
@@ -48,7 +50,7 @@
 					Modifier ce document
 				</h1>
 			</template>
-			<Form class="flex flex-col justify-between" @submit="updateDoc" :validation-schema="docSchema" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
+			<Form class="flex flex-col justify-between" @submit="updateDoc" v-slot="{ isSubmitting }" :validation-schema="docSchema" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
 				<div class="flex sm:flex-col md:flex-row">
 					<Field name="name" placeholder="name" class="form-input mb-2"></Field>
 					<ErrorMessage name="name" v-slot="{ message }">
@@ -62,7 +64,7 @@
 				<span class="text-red-700 text-base">{{ errorCall }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
-					<button class="btn-unstate" @click.prevent="closeModal">Annuler</button>
+					<button class="btn-unstate" @click.prevent.stop="closeModal">Annuler</button>
 					<button type="submit" class="btn-primary">
 						<span class="font-bold text-white">Mettre à jour</span>
 						<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
@@ -89,7 +91,7 @@
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
-					<button class="btn-unstate" @click="clickOutside">Annuler</button>
+					<button class="btn-unstate" @click.stop="clickOutside">Annuler</button>
 					<button type="submit" class="btn-primary">
 						<PlusIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
 						<span class="font-bold text-white">Ajouter</span>
@@ -215,9 +217,7 @@ export default {
 				this.getListDocuments[index].show = true;
 			}
 		},
-		clickOutsideModif() {
-			this.showModalUpdate = false;
-		},
+
 	},
 };
 </script>

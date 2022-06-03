@@ -1,5 +1,5 @@
 <template>
-    <footer class="relative flex footer w-full h-[5%] bg-green-500 text-white items-center">FOOTER</footer>
+    <footer class="relative  bottom-0 right-0 flex footer w-full h-[5%] bg-green-500 text-white items-center">FOOTER</footer>
 </template>
 
 <script>

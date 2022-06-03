@@ -33,8 +33,8 @@ export default {
 			tabsGestion: [
 				{ name: "academique", current: false },
 				{ name: "course", current: false },
-				{ name: "filiere", current: false },
-				{ name: "documents", current: true },
+				{ name: "filiere", current: true },
+				{ name: "documents", current: false },
 			],
 		};
 	},
@@ -45,10 +45,8 @@ export default {
 	},
 	methods: {
 		changeTab(indexTab) {
-			console.log({indexTab});
 			var currentTrue = this.tabsGestion.findIndex((tab) => tab.current == true);
 			this.tabsGestion[currentTrue].current = false;
-
 			this.tabsGestion[indexTab].current = true;
 		},
 	},

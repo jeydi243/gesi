@@ -2,6 +2,7 @@ import axios from "./config"
 
 export default {
   routeDocuments: "/management/documents",
+  routeFilieres: "/management/filieres",
   getDocuments: async function () {
     return axios.get(`${this.routeDocuments}`)
   },
@@ -16,6 +17,22 @@ export default {
   },
   softDeleteDocument: async function (id, data) {
     return axios.patch(`${this.routeDocuments}/${code}`)
+  },
+
+  getFilieres: async function () {
+    return axios.get(`${this.routeFilieres}`)
+  },
+  addFiliere: async function (data) {
+    return axios.post(`${this.routeFilieres}`, data)
+  },
+  updateFiliere: async function (updatedFiliere) {
+    return axios.patch(`${this.routeFilieres}/update/${updatedFiliere.code}`, updatedFiliere)
+  },
+  removeFiliere: async function (code) {
+    return axios.delete(`${this.routeFilieres}/${code}`)
+  },
+  softDeleteFiliere: async function (id, data) {
+    return axios.patch(`${this.routeFilieres}/${code}`)
   },
 }
 const documents = {}

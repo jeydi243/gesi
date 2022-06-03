@@ -1,6 +1,8 @@
 module.exports = {
-  devServer: {
-    proxy: "*",
+  configureWebpack: {
+    devServer: {
+      headers: { "Access-Control-Allow-Origin": "*" },
+    },
   },
   chainWebpack: (config) => {
     config.module

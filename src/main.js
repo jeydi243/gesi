@@ -4,11 +4,12 @@ import router from "./router"
 import VueApexCharts from "vue3-apexcharts"
 import VueSweetalert2 from "vue-sweetalert2"
 import Toast from "vue-toastification"
+
 import { useToast } from "vue-toastification"
 import { vfmPlugin } from "vue-final-modal"
 import { createApp } from "vue"
-import "tw-elements"
 
+import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
 import "vue-cal/dist/vuecal.css"

@@ -15,7 +15,10 @@
 					<h1 class="font-bold text-2xl text-green-200">20</h1>
 					<span class="text-2xl font-bold text-green-800">Rooms</span>
 				</div>
-				<div class="card2"></div>
+				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
+					<h1 class="font-bold text-2xl text-green-200">2000</h1>
+					<span class="text-2xl font-bold text-green-800">Alumnis</span>
+				</div>
 			</div>
 			<div class="card">
 				<apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>

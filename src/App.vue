@@ -22,6 +22,7 @@
 import Layout from "@/router/layouts/main";
 import Auth from "@/router/layouts/auth";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { useIdle } from '@vueuse/core'
 export default {
 	name: "App",
 	components: { Layout, Auth },
@@ -40,6 +41,11 @@ export default {
 			this.changeActive(fullPath.split("/")[1]);
 			// console.log(`%cPath name: ${path}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
 		},
+	},
+	mounted() {
+		const { idle, lastActive } = useIdle(5000) // 5 min
+
+		console.log(idle.value)
 	},
 	methods: {
 		...mapActions(["changeLayout", "changeActive"]),
@@ -64,6 +70,7 @@ export default {
 .fadeSlideX-leave-active {
 	animation: fadeout 0.7s ease;
 }
+
 .fadeSlideY-enter-active {
 	animation: fadeinY 0.7s ease;
 }
@@ -77,38 +84,45 @@ export default {
 		opacity: 0;
 		transform: translateX(-10px);
 	}
+
 	to {
 		opacity: 1;
 		transform: translateX(0px);
 	}
 }
+
 @keyframes fadeout {
 	from {
 		opacity: 1;
 		z-index: 1;
 	}
+
 	to {
 		opacity: 0;
 		z-index: 0;
 		transform: translateX(-10px);
 	}
 }
+
 @keyframes fadeinY {
 	from {
 		opacity: 0;
 		z-index: 1;
 		transform: translateY(-10px);
 	}
+
 	to {
 		opacity: 1;
 		z-index: 0;
 		transform: translateY(0px);
 	}
 }
+
 @keyframes fadeoutY {
 	from {
 		opacity: 1;
 	}
+
 	to {
 		opacity: 0;
 		transform: translateY(-10px);

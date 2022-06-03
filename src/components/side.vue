@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
+	<div class="relative left-0 top-0 flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
 		<!-- {{ getRootName }} -->
 		<div class="flex flex-col place-items-center w-full mt-1">
 			<router-link :to="item.to" @hover="item.mouseHover = !item.mouseHover" v-for="(item, index) in listSideMenus" :key="index" class="transition-colors hover:border-l-2 hover:border-l-green-500 ease-out-in duration-700 flex items-center w-full h-9 px-3 mt-2 hover:text-white hover:font-bold" :class="{ 'bg-green-500 bg-opacity-50 border-l-2 border-l-green-500 font-bold text-white': item.active }" href="#">

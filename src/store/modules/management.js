@@ -123,6 +123,19 @@ export default {
         })
         .catch((err) => console.log("EEEEEEEE/", err))
     },
+    addFiliere({ commit }, data) {
+      return mgntAPI
+        .addFiliere(data)
+        .then((response) => {
+          if (response.status < 300) {
+            commit("ADD_FILIERE", response.data)
+            return true
+          }
+          console.log(response)
+          return false
+        })
+        .catch((err) => console.log("EEEEEEEE/", err))
+    },
     removeDocument({ commit }, idDocument) {
       return mgntAPI
         .removeDocument(idDocument)
