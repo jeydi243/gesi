@@ -36,11 +36,14 @@
 				</h1>
 			</template>
 
-			<Form class="flex flex-col w-full h-full" @submit="addFiliere" :validation-schema="filiereSchema" v-slot="{ isSubmitting }" :initial-values="initialFiliereValue" @invalid-submit="onInvalidFiliere">
+			<Form class="flex flex-col w-full h-full" @submit="add" :validation-schema="filiereSchema" v-slot="{ isSubmitting }" :initial-values="initialFiliereValue" @invalid-submit="onInvalidFiliere">
 				<Field name="name" placeholder="Name" class="form-input"></Field>
 				<ErrorMessage name="name" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
+				<Field name="code" id="select-doc" as="select" class="rounded form-select block w-full">
+					<option :value="personne.name" v-for="(personne, index) in listPersonnel" :key="index" :selected="index == 0">{{ doc.name }}</option>
+				</Field>
 				<Field name="manager" placeholder="Manager" class="form-input"></Field>
 				<ErrorMessage name="manager" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
@@ -85,7 +88,7 @@
 </template>
 
 <script >
-// import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import * as yup from "yup";
 import MyModal from "@/components/mymodal";
 import { AtomSpinner } from "epic-spinners";
@@ -176,7 +179,18 @@ export default {
 	},
 
 	methods: {
-		addFiliere() { },
+		...mapActions('management', ['addFiliere']),
+		add(values, { resetForm }) {
+			try {
+				var response = this.addFiliere(values);
+				if (res) {
+					toast.success("Document modifié avec succes");
+				} else {
+					this.closeModal();
+					resetForm();
+				}
+			} catch (e) { }
+		},
 		closeModal() {
 			this.showModalFiliere = false;
 		}, pickPicture() {

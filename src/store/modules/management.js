@@ -20,6 +20,8 @@ export default {
     SET_LIST_TEACHERS(state, teachers) {
       state.teachers = teachers
     },
+
+
     ADD_DOCUMENT(state, document) {
       state.listDocuments.unshift({ ...document, show: false })
     },
@@ -34,6 +36,19 @@ export default {
     SET_ERROR(state, error) {
       state.error = error.message[0]
       toast.error(error.message[0])
+    },
+
+
+    ADD_FILIERE(state, filiere) {
+      state.listFilieres.unshift({ ...filiere, show: false })
+    },
+    REMOVE_FILIERE(state, code) {
+      var index = state.listFilieres.findIndex((filiere) => filiere.code == code)
+      state.listFilieres.splice(index, 1)
+    },
+    UPDATE_FILIERE(state, { newfil }) {
+      var index = state.listFilieres.findIndex((filiere) => filiere.code == newfil.code)
+      state.listFilieres[index] = newfil
     },
   },
   actions: {
