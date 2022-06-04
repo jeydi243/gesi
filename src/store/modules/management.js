@@ -21,7 +21,6 @@ export default {
       state.teachers = teachers
     },
 
-
     ADD_DOCUMENT(state, document) {
       state.listDocuments.unshift({ ...document, show: false })
     },
@@ -38,7 +37,6 @@ export default {
       toast.error(error.message[0])
     },
 
-
     ADD_FILIERE(state, filiere) {
       state.listFilieres.unshift({ ...filiere, show: false })
     },
@@ -49,6 +47,19 @@ export default {
     UPDATE_FILIERE(state, { newfil }) {
       var index = state.listFilieres.findIndex((filiere) => filiere.code == newfil.code)
       state.listFilieres[index] = newfil
+    },
+
+    //EMPLOYEES
+    ADD_EMPLOYEE(state, filiere) {
+      state.listEmployees.unshift({ ...filiere, show: false })
+    },
+    REMOVE_EMPLOYEE(state, idEmployee) {
+      var index = state.listEmployees.findIndex((employee) => employee.id == idEmployee)
+      state.listEmployees.splice(index, 1)
+    },
+    UPDATE_EMPLOYEE(state, { newemployee }) {
+      var index = state.listEmployees.findIndex((employee) => employee.id == newemployee.id)
+      state.listEmployees[index] = newemployee
     },
   },
   actions: {
@@ -138,19 +149,7 @@ export default {
         })
         .catch((err) => console.log("EEEEEEEE/", err))
     },
-    addFiliere({ commit }, data) {
-      return mgntAPI
-        .addFiliere(data)
-        .then((response) => {
-          if (response.status < 300) {
-            commit("ADD_FILIERE", response.data)
-            return true
-          }
-          console.log(response)
-          return false
-        })
-        .catch((err) => console.log("EEEEEEEE/", err))
-    },
+
     removeDocument({ commit }, idDocument) {
       return mgntAPI
         .removeDocument(idDocument)
@@ -184,6 +183,45 @@ export default {
           if (response.status < 300) {
             commit("UPDATE_DOCUMENT", { newDoc: response.data })
             console.log(response.data)
+            return true
+          }
+          return false
+        })
+        .catch(console.log)
+    },
+    //FILIERE
+
+    addFiliere({ commit }, data) {
+      return mgntAPI
+        .addFiliere(data)
+        .then((response) => {
+          if (response.status < 300) {
+            commit("ADD_FILIERE", response.data)
+            return true
+          }
+          console.log(response)
+          return false
+        })
+        .catch((err) => console.log("EEEEEEEE/", err))
+    },
+    removeFiliere({ commit }, idFiliere) {
+      return mgntAPI
+        .removeFiliere(idFiliere)
+        .then((response) => {
+          if (response.status < 300) {
+            commit("REMOVE_FILIERE", idFiliere)
+            return true
+          }
+          return false
+        })
+        .catch(console.log)
+    },
+    updateFiliere({ commit }, newValues) {
+      return mgntAPI
+        .updateFiliere(newValues)
+        .then((response) => {
+          if (response.status < 300) {
+            commit("UPDATE_FILIERE", { newFiliere: response.data })
             return true
           }
           return false

@@ -68,7 +68,13 @@ const managementRoutes = [
     path: "/management",
     meta: { layout: "main" },
     name: "index-management",
-    component: () => import(/* webpackChunkName: "about" */ "./views/management/index.vue"),
+    component: () => import(/* webpackChunkName: "index-management" */ "./views/management/index.vue"),
+  },
+  {
+    path: "/management/employees/add",
+    meta: { layout: "main" },
+    name: "employees-add",
+    component: () => import(/* webpackChunkName: "employees-add" */ "./views/management/employees/add.vue"),
   },
 ]
 

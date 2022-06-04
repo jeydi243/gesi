@@ -5,41 +5,38 @@
         </div>
         <div class="w-full z-3 max-w-sm p-3 flex flex-col h-[70%] justify-center self-center bg-white rounded-md shadow-md font-k2d">
             <h1 class="flex text-3xl font-semibold self-center text-center text-green-500">GESI</h1>
-            <Form class="mt-6 flex flex-col transition-all duration-700" @submit="submitForm" :validation-schema="loginSchema" :initial-values="user" v-slot="{ isSubmitting }" @invalid-submit="onInvalidSubmit">
-                <div class="flex flex-col">
+            <Form class="mt-6 col transition-all duration-700" @submit="submitForm" :validation-schema="loginSchema" :initial-values="user" v-slot="{ isSubmitting }" @invalid-submit="onInvalidSubmit">
+                <div class="col">
                     <label for="username" class="text-sm text-gray-800 flex">Username</label>
                     <Field
-                        name="username"
-                        :placeholder="`e.g: ${placeholderSuggestion[forAanime.atat]}`"
-                        autocomplete="name"
-                        class="flex w-full px-2 py-1 mt-2 bg-gray-100 border-b-blue-500 autofill:bg-yellow-200 text-gray-700 rounded-md focus:ring-green-50 focus:outline-none placeholder:text-gray-50 placeholder:italic placeholder:text-slate-200"
-                    />
+                           name="username"
+                           :placeholder="`e.g: ${placeholderSuggestion[forAanime.atat]}`"
+                           autocomplete="name"
+                           class="flex w-full px-2 py-1 mt-2 bg-gray-100 border-b-blue-500 autofill:bg-yellow-200 text-gray-700 rounded-md focus:ring-green-50 focus:outline-none placeholder:text-gray-50 placeholder:italic placeholder:text-slate-200" />
                     <ErrorMessage id="usernameError" name="username" class="text-red-700 text-xs" />
                 </div>
-                <div class="flex flex-col mt-4">
+                <div class="col mt-4">
                     <div class="flex items-center justify-between">
                         <label for="password" class="block text-sm text-gray-800">Mot de passe</label>
                         <a href="#" class="text-xs text-green-600 hover:underline">Mot de passe oublié ?</a>
                     </div>
                     <Field
-                        name="password"
-                        placeholder="*******"
-                        autocomplete="current-password"
-                        type="password"
-                        class="block w-full border-b-1 border-green-500 px-2 py-1 mt-2 text-gray-700 bg-gray-100 rounded-md focus:border-green-500 focus:outline-none focus:ring-green-50 placeholder:italic placeholder:text-slate-400"
-                    />
+                           name="password"
+                           placeholder="*******"
+                           autocomplete="current-password"
+                           type="password"
+                           class="block w-full border-b-1 border-green-500 px-2 py-1 mt-2 text-gray-700 bg-gray-100 rounded-md focus:border-green-500 focus:outline-none focus:ring-green-50 placeholder:italic placeholder:text-slate-400" />
                     <ErrorMessage id="passwordError" name="password" class="text-red-700 text-xs" />
                 </div>
 
                 <div class="flex items-center mb-4 mt-2">
-                    <Field id="check" name="stay_connected" type="checkbox" class="w-4 h-4 indeterminate:bg-gray-100 accent-green-500 checked:accent-green-500 checked:focus:accent-green-500 default:bg-gray-100 rounded text-gray-100" />
-                   <input type="checkbox" name="gg" id="ggg" class="w-4 h-4 indeterminate:bg-gray-100 accent-green-500 checked:accent-green-500 checked:focus:accent-green-500 default:bg-gray-100 rounded text-gray-100">
+                    <Field id="check" name="stay_connected" type="checkbox" as="checkbox" class="w-4 h-4 indeterminate:bg-gray-100 accent-green-500 checked:accent-green-500 checked:focus:accent-green-500 default:bg-gray-100 rounded text-gray-100" />
                     <label for="check" class="ml-1 text-sm font-medium text-gray-900">Rester connecté ?</label>
                 </div>
 
-                <div class="flex mt-6">
+                <div class="row mt-6">
                     <PixelSpinner :animation-duration="1000" :size="25" :color="'#fff'" v-if="isSubmitting" class="flex" />
-                    <button type="submit" class="btn-connexion">
+                    <button type="submit" class="btn-primary">
                         <span class="text-base text-center flex">Connexion</span>
                     </button>
                 </div>

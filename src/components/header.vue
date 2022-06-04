@@ -1,11 +1,11 @@
 <template>
-	<header class="relative top-0 right-0 flex w-full h-[8%] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
+	<header class="sticky top-0 right-0 z-10 flex w-full h-[6%] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
 		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
-		<div class="relative flex flex-row space-x-5">
+		<div class="relative row space-x-5">
 			<!-- Dropdown toggle button -->
 			<button @click.prevent="dropdown = !dropdown" id="toggle-dropdown" class="btn-header">
-				<div class="avatar rounded-full">
-					<img src="https://images.generated.photos/PP2ck5OaSvRBYQwh1ZDCsEhBQ4WxLWlZNs7nKhaJIWA/rs:fit:64:64/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NjIyMTIwLmpwZw.jpg" class="object-cover" />
+				<div class="avatar rounded-lg overflow-hidden">
+					<img src="https://images.generated.photos/PP2ck5OaSvRBYQwh1ZDCsEhBQ4WxLWlZNs7nKhaJIWA/rs:fit:64:64/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NjIyMTIwLmpwZw.jpg" class="object-fill" />
 				</div>
 				<span class="ml-2">Kadiongo Ilunga</span>
 				<svg class="w-5 h-5 text-gray-800 text-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

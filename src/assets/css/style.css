@@ -455,12 +455,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border, .border-0, .border-l-4, .border-t-2, .border-l-2, .border-b, .profile2, .file-picker, .document, .document-other, .dropdown-separator, .divider, .g-input-text, .form-input, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button, .hover\:border-l-2{
+.border, .border-0, .border-\[1px\], .border-l-4, .border-t-2, .border-l-2, .border-b, .profile2, .file-picker, .document, .document-other, .dropdown-separator, .divider, .g-input-text, .form-input, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button, .hover\:border-l-2{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.shadow-md, .shadow-lg, .card, .card2, .dropdown, .hover\:shadow-lg, .focus\:shadow-lg, .active\:shadow-lg{
+.shadow-md, .shadow-lg, .card, .card-emp, .card2, .dropdown, .hover\:shadow-lg, .focus\:shadow-lg, .active\:shadow-lg{
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
@@ -4218,6 +4218,10 @@ textarea.form-control.is-invalid{
   display: inline-block;
 }
 
+.inline{
+  display: inline;
+}
+
 .flex{
   display: flex;
 }
@@ -4362,6 +4366,30 @@ textarea.form-control.is-invalid{
   height: 200px;
 }
 
+.h-7{
+  height: 1.75rem;
+}
+
+.h-16{
+  height: 4rem;
+}
+
+.h-\[4\%\]{
+  height: 4%;
+}
+
+.h-\[88\%\]{
+  height: 88%;
+}
+
+.h-\[6\%\]{
+  height: 6%;
+}
+
+.h-\[90\%\]{
+  height: 90%;
+}
+
 .max-h-full{
   max-height: 100%;
 }
@@ -4438,6 +4466,18 @@ textarea.form-control.is-invalid{
   width: 80%;
 }
 
+.w-7{
+  width: 1.75rem;
+}
+
+.w-16{
+  width: 4rem;
+}
+
+.w-\[86\%\]{
+  width: 86%;
+}
+
 .max-w-sm{
   max-width: 24rem;
 }
@@ -4512,6 +4552,10 @@ textarea.form-control.is-invalid{
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-5{
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -4552,6 +4596,10 @@ textarea.form-control.is-invalid{
   justify-content: flex-start;
 }
 
+.justify-end{
+  justify-content: flex-end;
+}
+
 .justify-center{
   justify-content: center;
 }
@@ -4586,6 +4634,10 @@ textarea.form-control.is-invalid{
   align-self: center;
 }
 
+.overflow-auto{
+  overflow: auto;
+}
+
 .overflow-hidden{
   overflow: hidden;
 }
@@ -4612,16 +4664,20 @@ textarea.form-control.is-invalid{
   border-radius: 0.5rem;
 }
 
-.rounded-full{
-  border-radius: 9999px;
-}
-
 .rounded{
   border-radius: 0.25rem;
 }
 
+.rounded-full{
+  border-radius: 9999px;
+}
+
 .rounded-md{
   border-radius: 0.375rem;
+}
+
+.rounded-sm{
+  border-radius: 0.125rem;
 }
 
 .rounded-t-lg{
@@ -4637,12 +4693,20 @@ textarea.form-control.is-invalid{
   border-bottom-right-radius: 0.5rem;
 }
 
+.rounded-bl-sm{
+  border-bottom-left-radius: 0.125rem;
+}
+
 .border{
   border-width: 1px;
 }
 
 .border-0{
   border-width: 0px;
+}
+
+.border-\[1px\]{
+  border-width: 1px;
 }
 
 .border-l-4{
@@ -4669,6 +4733,16 @@ textarea.form-control.is-invalid{
 .border-gray-200{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
+.border-green-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(52 211 153 / var(--tw-border-opacity));
+}
+
+.border-red-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
 }
 
 .border-t-gray-300{
@@ -4755,11 +4829,6 @@ textarea.form-control.is-invalid{
   background-color: rgb(167 243 208 / var(--tw-bg-opacity));
 }
 
-.bg-yellow-300{
-  --tw-bg-opacity: 1;
-  background-color: rgb(252 211 77 / var(--tw-bg-opacity));
-}
-
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -4771,6 +4840,11 @@ textarea.form-control.is-invalid{
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.object-fill{
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 
 .p-4{
@@ -4787,10 +4861,6 @@ textarea.form-control.is-invalid{
 
 .p-6{
   padding: 1.5rem;
-}
-
-.p-5{
-  padding: 1.25rem;
 }
 
 .px-1{
@@ -4811,6 +4881,11 @@ textarea.form-control.is-invalid{
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+
+.py-5{
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .px-6{
@@ -4851,11 +4926,6 @@ textarea.form-control.is-invalid{
 .py-2{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-}
-
-.py-5{
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 
 .pr-10{
@@ -5022,6 +5092,11 @@ textarea.form-control.is-invalid{
   color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
+.text-red-600{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
 .text-gray-400{
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -5090,11 +5165,6 @@ textarea.form-control.is-invalid{
 .text-green-900{
   --tw-text-opacity: 1;
   color: rgb(6 78 59 / var(--tw-text-opacity));
-}
-
-.text-red-600{
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .no-underline{
@@ -5299,7 +5369,7 @@ textarea.form-control.is-invalid{
   align-items: center;
   justify-content: center;
   align-self: center;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
   -o-object-fit: cover;
@@ -5416,6 +5486,23 @@ td::first-letter{
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.card-emp{
+  margin-left: 0px;
+  margin-right: 0px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  border-radius: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding-left: 0px;
+  padding-right: 0px;
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow-color: #f3f4f6;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .card2{
   display: flex;
   height: 100%;
@@ -5492,8 +5579,6 @@ td::first-letter{
   width: 50%;
   flex-direction: row;
   justify-content: center;
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 /* For modal */
@@ -5517,6 +5602,16 @@ td::first-letter{
 input:valid + span:after {
   content: "✓";
   padding-left: 5px;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.col{
+  display: flex;
+  flex-direction: column;
 }
 
 /* Dropdown */
