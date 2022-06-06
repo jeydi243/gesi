@@ -2,7 +2,7 @@
     <div class="card">
         <Form v-slot="{ isSubmitting, values }" @onSubmit="submitEmployee" :validation-schema="employeeSchema" :initial-values="initialValueEmployee" @invalid-submit="onInvalidEmployee">
             <div class="grid grid-cols-3 gap-4 auto-cols-min w-full h-full">
-                <div class="col mb-4 h-1/2  items-center justify-center bg-red-50">
+                <div class="col mb-4 h-1/2  items-center justify-center">
                     <div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ 'profile2': !previewSRC }">
                         <img v-if="previewSRC" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-[100px] w-[100px]" />
                         <UserIcon class="h-10 w-10 text-green-500" v-else />
@@ -14,32 +14,36 @@
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                 </div>
-                <div class="bg-red-5">
-                    <fieldset class="border-2 border-green-50 rounded-lg px-2 py-4">
-                        <legend class="italic text-green-500 pr-3">Informations</legend>
-                        <Field type="text" placeholder="First Name" id="name" name="name" class="w-full form-input" />
-                        <ErrorMessage name="name" v-slot="{ message }">
-                            <p class="input-error">{{ message }}</p>
-                        </ErrorMessage>
-                        <Field type="text" placeholder="Middle Name" id="middle" name="middle" class="w-full form-input" />
-                        <ErrorMessage name="name" v-slot="{ message }">
-                            <p class="input-error">{{ message }}</p>
-                        </ErrorMessage>
-                        <Field placeholder="Telephone" id="telephone" name="telephone" class="w-full form-input" />
-                        <ErrorMessage name="telephone" v-slot="{ message }">
-                            <p class="input-error">{{ message }}</p>
-                        </ErrorMessage>
-                        <Field type="text" placeholder="Birthday" id="birthday" name="birth_day" class="w-full form-input" />
-                        <ErrorMessage name="birth_day" v-slot="{ message }">
-                            <p class="input-error">{{ message }}</p>
-                        </ErrorMessage>
-                        <Field as="textarea" placeholder="Adress" id="adress" name="adress" class="w-full form-input" />
-                        <ErrorMessage name="adress" v-slot="{ message }">
-                            <p class="input-error">{{ message }}</p>
-                        </ErrorMessage>
-                    </fieldset>
-                </div>
-                <fieldset class=" border-2 border-blue-50 rounded-lg px-2 py-4">
+
+                <fieldset class="border-2 border-green-50 rounded-lg px-2 py-4">
+                    <legend class="italic text-green-500 pr-3">Informations</legend>
+                    <Field type="text" placeholder="First Name" id="name" name="first_name" class="w-full form-input" />
+                    <ErrorMessage name="name" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field type="text" placeholder="Middle Name" id="middle" name="middle_name" class="w-full form-input" />
+                    <ErrorMessage name="name" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field type="text" placeholder="Last Name" id="last" name="last_name" class="w-full form-input" />
+                    <ErrorMessage name="name" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field placeholder="Telephone" id="telephone" name="telephone" class="w-full form-input" />
+                    <ErrorMessage name="telephone" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field type="text" placeholder="Birthday" id="birthday" name="birthday" class="w-full form-input" />
+                    <ErrorMessage name="birth_day" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field as="textarea" placeholder="Adress" id="adress" name="adress" class="w-full form-input" />
+                    <ErrorMessage name="adress" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                </fieldset>
+
+                <fieldset class="border-2 border-blue-50 rounded-lg px-2 py-4">
                     <legend class="italic text-blue-400 pr-3">Education</legend>
                     <Field placeholder="School Name" id="school_name" name="school_name" class="w-full form-input" />
                     <ErrorMessage name="school_name" v-slot="{ message }">
@@ -56,8 +60,7 @@
                         <Field name="educationEnd" placeholder="End date" class="  w-1/2 form-input" />
                     </div>
                     <Field v-slot="{ field }" name="school_diploma_file" class="w-full form--input">
-                        <input type="file" v-bind="field" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4
-      file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-violet-700 hover:file:bg-violet-100 text-transparent " />
+                        <input type="file" v-bind="field" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-violet-700 hover:file:bg-violet-100" />
                     </Field>
                     <Field type="text" placeholder="Name" id="name" name="name" class="w-full form-input" />
                     <ErrorMessage name="name" v-slot="{ message }">
@@ -87,21 +90,38 @@
 </template>
 
 <script setup>
-import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
-import { Field, Form, ErrorMessage, useForm } from "vee-validate";
-import { PixelSpinner } from 'epic-spinners'
 import { toast } from "@/utils/utils";
 import { compareDesc } from "date-fns"
-import { isLength, isDate } from "validator"
+import { PixelSpinner } from 'epic-spinners'
 import { ref, defineEmits } from 'vue'
+import { isLength, isDate } from "validator"
+import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
+import { Field, Form, ErrorMessage, useForm } from "vee-validate";
+import * as Chance from "chance"
+
+
+const chance = new Chance()
 const { handleSubmit } = useForm()
-
-
-const cancel = defineEmits({})
+const emit = defineEmits(['cancel'])
 var previewSRC = ref(null)
-var range = ref({ start: new Date, end: new Date() })
-var initialValueEmployee = { school_name: "Test school", school_diploma: "fff", school_start_date: new Date(), school_end_date: new Date(), school_diploma_file: null }
-var employeeSchema = {
+
+
+
+const initialValueEmployee = {
+    last_name: chance.last(),
+    middle_name: chance.name({ middle: false }),
+    first_name: chance.name({ middle: false, nationality: 'en' }),
+    telephone: chance.phone({ country: "fr", mobile: true }),
+    birthday: chance.date({ string: true }),
+    adress: chance.address(),
+    school_name: 'School GTest',
+    school_diploma: "fff",
+    school_start_date: chance.date({ string: true }),
+    school_end_date: chance.date({ string: true }),
+    school_diploma_file: null
+}
+
+const employeeSchema = {
     school_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "School name is required" },
     school_diploma(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name is required" },
     school_start_date(value) { return isDate(value) ? true : "Start date must be provided" },
@@ -121,7 +141,10 @@ function pickPicture() {
 }
 function beforeCancel(values) {
     if (values == initialValueEmployee) emit('cancel')
-    else console.log("Something in the form would you like to cancel??");
+    else {
+        if (confirm('Voulez-vous vraiment quitter ?')) emit('cancel')
+        console.log("Something in the form would you like to cancel??");
+    }
 }
 function onInvalidEmployee({ values, result, errors }) { console.log(errors); }
 const submitEmployee = handleSubmit(async function (values) {

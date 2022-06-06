@@ -11,7 +11,8 @@
 
 <script setup>
 import { Form, ErrorMessage, Field } from "vee-validate"
-
+import * as Chance from "chance"
+const chance = new Chance()
 
 </script>
 
