@@ -39,21 +39,21 @@ async function createWindow(height, width, x, y) {
   win.webContents.on("did-finish-load", () => {
     console.log("Did finish ok")
   })
-  watch(
-    "./",
-    {
-      recursive: true,
-      filter(f, skip) {
-        if (/\/node_modules/.test(f)) return skip
-        if (/\.git/.test(f)) return skip
-        return /\.js$/.test(f)
-      },
-    },
-    function (evt, name) {
-      console.info(`[${evt}] File: ${name}`)
-      win.webContents.send("ping", `Who some change: ${name}, ${evt}`)
-    }
-  )
+//   watch(
+//     "./",
+//     {
+//       recursive: true,
+//       filter(f, skip) {
+//         if (/\/node_modules/.test(f)) return skip
+//         if (/\.git/.test(f)) return skip
+//         return /\.js$/.test(f)
+//       },
+//     },
+//     function (evt, name) {
+//       console.info(`[${evt}] File: ${name}`)
+//       win.webContents.send("ping", `Who some change: ${name}, ${evt}`)
+//     }
+//   )
 }
 
 // Quit when all windows are closed.

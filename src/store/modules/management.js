@@ -5,7 +5,15 @@ import axios from "@/api/config"
 import { toast } from "@/utils/utils"
 
 export default {
-  state: () => ({ courses: [], laptops: [], routeurs: [], listDocuments: [], token: null, error: null }),
+  state: () => ({
+    courses: [],
+    laptops: [],
+    routeurs: [],
+    listDocuments: [],
+    employees: [],
+    token: null,
+    error: null,
+  }),
   namespaced: true,
   mutations: {
     SET_LIST_DOCUMENTS(state, documents) {
@@ -19,6 +27,9 @@ export default {
     },
     SET_LIST_TEACHERS(state, teachers) {
       state.teachers = teachers
+    },
+    SET_LIST_EMPLOYEES(state, employees) {
+      state.employees = employees
     },
 
     ADD_DOCUMENT(state, document) {
@@ -136,6 +147,33 @@ export default {
         })
         .catch(console.log)
     },
+    getAllEmployees({ commit }) {
+      return mgntAPI
+        .getEmployees()
+        .then((response) => {
+          if (response.status == 200) {
+            commit("SET_LIST_EMPLOYEES", response.data)
+            return true
+          }
+          console.log(response.data)
+          return false
+        })
+        .catch(console.log)
+    },
+    addEmployee({ commit }, data) {
+      return mgntAPI
+        .addEmployee(data)
+        .then(({ status, data }) => {
+          if (status < 300) {
+            commit("ADD_EMPLOYEE", data)
+            return true
+          }
+          console.log(data)
+          return false
+        })
+        .catch((err) => console.log("EEEEEEEE/", err))
+    },
+
     addDocument({ commit }, data) {
       return mgntAPI
         .addDocument(data)
@@ -232,6 +270,7 @@ export default {
   getters: {
     getCars: (state) => state.cars,
     getCourses: (state) => state.courses,
+    getEmployees: (state) => state.employees,
     getLaptops: (state) => state.laptops,
     getRouteurs: (state) => state.routeurs,
     getListDocuments: (state) => state.listDocuments,

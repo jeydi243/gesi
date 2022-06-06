@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import course from "@/router/views/management/course.vue";
+import course from "@/router/views/management/courses/index.vue";
 import academique from "@/router/views/management/academique.vue";
 import filiere from "@/router/views/management/filiere.vue";
 import documents from "@/router/views/management/documents.vue";

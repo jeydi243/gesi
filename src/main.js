@@ -14,10 +14,11 @@ import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
 import "vue-cal/dist/vuecal.css"
 import "vue-cal/dist/i18n/fr.js"
+import "v-calendar/dist/style.css"
 import "vue-toastification/dist/index.css"
 import "sweetalert2/dist/sweetalert2.min.css"
 import "boxicons"
-
+import VCalendar from "v-calendar"
 const optionsSweetAlert = {
   confirmButtonColor: "#41b882",
   cancelButtonColor: "#ff7674",
@@ -34,6 +35,9 @@ const app = createApp(App)
   )
   .use(store)
   .use(Toast)
+  .use(VCalendar, {
+    componentPrefix: "vc",
+  })
   .use(VueApexCharts)
   .use(VueSweetalert2, optionsSweetAlert)
 

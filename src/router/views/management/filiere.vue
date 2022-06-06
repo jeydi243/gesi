@@ -1,13 +1,14 @@
 <template>
 	<div class="h-full w-full">
-		<div class="flex flex-row-reverse mb-2">
+		<div class="card row mb-4 justify-between">
+			<span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Filières</span>
 			<button type="button" class="btn-primary" @click="showModalFiliere = !showModalFiliere">
 				<AcademicCapIcon class="h-5 w-5 text-white" />
-				<span class="self-center ml-2">Ajouter une fielère</span>
+				<span class="self-center ml-2">Add fielère</span>
 			</button>
 		</div>
 		<div class=" h-4/5 pl-4">
-			<h1 class="text-4xl font-bold mb-3">Filières</h1>
+
 			<div class="grid grid-cols-3 gap-4 auto-cols-min w-full h-full">
 				<div v-for="(item, indexFiliere) in filieres" :key="indexFiliere" class="rounded-lg select-none ">
 					<div class="flex justify-center">
@@ -31,20 +32,21 @@
 		</div>
 		<MyModal v-show="showModalFiliere" @close="closeModal">
 			<template #header>
-				<h1 class="text-2xl">
+				<h1 class="text-3xl font-bold">
 					Ajouter une Filiere
 				</h1>
 			</template>
-
+			<div class="bg-blue-100 rounded-lg py-5 px-6 text-base text-blue-700 mb-3" role="alert">
+				You can change some information after save
+			</div>
 			<Form class="flex flex-col w-full h-full" @submit="add" :validation-schema="filiereSchema" v-slot="{ isSubmitting }" :initial-values="initialFiliereValue" @invalid-submit="onInvalidFiliere">
 				<Field name="name" placeholder="Name" class="form-input"></Field>
 				<ErrorMessage name="name" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<Field name="code" id="select-doc" as="select" class="rounded form-select block w-full">
-					<option :value="personne.name" v-for="(personne, index) in listPersonnel" :key="index" :selected="index == 0">{{ doc.name }}</option>
+				<Field name="manager" id="select-doc" as="select" class="rounded form-select block w-full" placeholder="Manager">
+					<option :value="employee.name" v-for="(personne, index) in listEmployee" :key="index" :selected="index == 0">{{ doc.name }}</option>
 				</Field>
-				<Field name="manager" placeholder="Manager" class="form-input"></Field>
 				<ErrorMessage name="manager" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>

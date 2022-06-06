@@ -63,18 +63,28 @@ const settingsRoutes = [
     component: () => import(/* webpackChunkName: "about" */ "./views/settings/index.vue"),
   },
 ]
+
+const employeesRoutes = [
+  {
+    path: "employees/add",
+    meta: { layout: "main" },
+    name: "employees-add",
+    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/add.vue"),
+  },
+  {
+    path: "employees/details",
+    meta: { layout: "main" },
+    name: "employees-details",
+    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
+  },
+]
 const managementRoutes = [
   {
     path: "/management",
     meta: { layout: "main" },
     name: "index-management",
-    component: () => import(/* webpackChunkName: "index-management" */ "./views/management/index.vue"),
-  },
-  {
-    path: "/management/employees/add",
-    meta: { layout: "main" },
-    name: "employees-add",
-    component: () => import(/* webpackChunkName: "employees-add" */ "./views/management/employees/add.vue"),
+    component: () => import(/* webpackChunkName: "management" */ "./views/management/index.vue"),
+    children: [...employeesRoutes],
   },
 ]
 

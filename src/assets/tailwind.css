@@ -25,7 +25,7 @@
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
 }
 .profile2 {
-  @apply flex bg-green-100 h-[100px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
+  @apply flex bg-green-100 min-h-[100%] w-[150px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
 }
 .file-picker {
   @apply flex bg-green-100 h-full min-h-[100px] w-full ring-green-200 rounded-lg  border-0 border-green-800 items-center justify-center cursor-pointer;
@@ -98,23 +98,13 @@ input:valid + span:after {
 .row {
   @apply flex flex-row;
 }
+.row-reverse {
+  @apply flex flex-row-reverse;
+}
 .col {
   @apply flex flex-col;
 }
 
-/* Dropdown */
-.dropdown {
-  @apply absolute right-0 top-6 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700;
-}
-.dropdown-item {
-  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer;
-}
-.dropdown-item-sensible {
-  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50 hover:cursor-pointer;
-}
-.dropdown-separator {
-  @apply h-1 w-full border-b border-yellow-300;
-}
 .divider {
   @apply h-1 w-full border-b border-yellow-300 my-2;
 }
@@ -133,7 +123,10 @@ input:valid + span:after {
   @apply py-1 grid grid-cols-1 relative mb-2;
 }
 .form-input {
-  @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100;
+  @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100 focus:ring-green-200;
+}
+.form-select {
+  @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100 focus:ring-green-200;
 }
 .form-textarea {
   @apply placeholder-gray-400 focus:border-green-400 border-0 bg-gray-100 focus:outline-none my-1 py-2 rounded-lg;

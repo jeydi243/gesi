@@ -1,7 +1,13 @@
 <template>
 	<div>
 		<div class="card h-1/5">
-			<span class="text-2xl font-bold pb-5">Liste des documents</span>
+			<div class="row justify-between mb-4">
+				<span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Documents</span>
+				<button @click="showModalAdd = !showModalAdd" class="btn-primary">
+					<DocumentAddIcon class="h-5 w-5 text-white" />Add document
+				</button>
+			</div>
+
 			<p class="text-base pb-4">
 				Laboris sint irure culpa elit pariatur adipisicing ullamco. Exercitation occaecat commodo duis esse id laborum ut incididunt ipsum eiusmod mollit culpa veniam nisi. Mollit Lorem labore et voluptate sit laboris occaecat sit. Ut non do cillum cillum voluptate tempor consectetur. Labore sunt incididunt nulla elit aliquip dolore enim. Enim sint anim sit ullamco
 				dolor sunt adipisicing laboris aute in.</p>
@@ -12,9 +18,6 @@
 					</span>
 					<input type="text" v-model="search" placeholder="Find by Code or Name" class="px-1 py-3 caret-green-500 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm border-0 outline-none focus:outline-none focus:ring-transparent w-full pl-7" />
 				</div>
-				<button @click="showModalAdd = !showModalAdd" class="btn-primary">
-					<PlusIcon class="h-5 w-5 text-white" />Add
-				</button>
 			</div>
 			<table class="table-auto md:table-fixed">
 				<thead>
@@ -36,7 +39,7 @@
 						<td class="table-cell relative flex-row items-center">
 							<div class="flex flex-row">
 								<ClipboardIcon href="#" class="h-4 w-4 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModif(indexDoc, doc)" />
-								<TrashIcon href="#" class="h-4 w-4 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc.code)" />
+								<TrashIcon href="#" class="h-4 w-4 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc._id)" />
 							</div>
 						</td>
 					</tr>
@@ -111,7 +114,7 @@ import { AtomSpinner } from "epic-spinners";
 import MyModal from "@/components/mymodal";
 import { mapGetters, mapActions } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon } from "@heroicons/vue/solid";
+import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon } from "@heroicons/vue/solid";
 
 export default {
 	name: "index-documents",
@@ -120,7 +123,7 @@ export default {
 		AtomSpinner,
 		ErrorMessage,
 		ClipboardIcon,
-		SearchIcon,
+		SearchIcon, DocumentAddIcon,
 		TrashIcon,
 		PlusIcon,
 		Field,
@@ -171,8 +174,8 @@ export default {
 				toast.error("Error on soft delete");
 			}
 		},
-		async removeDoc(code) {
-			var res = await this.removeDocument(code);
+		async removeDoc(id) {
+			var res = await this.removeDocument(id);
 			if (res) {
 				toast.success("Successfully remove document");
 			} else {

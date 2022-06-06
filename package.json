@@ -42,7 +42,7 @@
     "node-watch": "^0.7.3",
     "postcss": "^8.4.12",
     "tw-elements": "^1.0.0-alpha12",
-    "v-calendar": "^2.3.4",
+    "v-calendar": "^3.0.0-alpha.8",
     "validator": "^13.7.0",
     "vee-validate": "^4.5.8",
     "vue": "^3.2.36",
