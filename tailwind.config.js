@@ -1,7 +1,7 @@
 const colors = require("tailwindcss/colors")
 
 module.exports = {
-  content: ["./src/**/*.{html,js,vue}"],
+  content: ["./src/**/*.{html,js,vue}", "./node_modules/tw-elements/dist/js/**/*.js"],
   theme: {
     screens: {
       sm: "640px",
@@ -68,6 +68,7 @@ module.exports = {
       ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
       pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       bounce: "bounce 1s infinite",
+      fade: "fade 1s ",
       shake: "shake 300ms cubic-bezier(0.6, 1, 0.15, 0.9)",
     },
     backdropBlur: (theme) => theme("blur"),
@@ -488,6 +489,10 @@ module.exports = {
         "50%": { transform: "translateX(4%)" },
         "75%": { transform: "translateX(-4%)" },
       },
+      fade: {
+        "0%": { opacity: 0 },
+        "100%": { opacity: 1 },
+      },
     },
     letterSpacing: {
       tighter: "-0.05em",
@@ -859,6 +864,7 @@ module.exports = {
     "disabled",
   ],
   plugins: [
+    require("tw-elements/dist/plugin"),
     require("@tailwindcss/forms")({
       strategy: "class",
     }),

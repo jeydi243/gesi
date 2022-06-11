@@ -5,23 +5,24 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
 const path = require("path")
-
+var watch = require("node-watch")
+let win = null
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }])
 
 async function createWindow(height, width, x, y) {
-  // Create the browser window.
-  console.log("process.env.ELECTRON_NODE_INTEGRATION: ", process.env.ELECTRON_NODE_INTEGRATION)
-  const win = new BrowserWindow({
+  console.log("process.env.ELECTRON_NODE_INTEGRATION: ", !process.env.ELECTRON_NODE_INTEGRATION)
+  win = new BrowserWindow({
     autoHideMenuBar: true,
     width,
     x,
     y,
     height,
     webPreferences: {
-      nodeIntegration: !process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: process.env.ELECTRON_NODE_INTEGRATION,
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: !true,
+      enableRemoteModule: true,
+      //   preload: path.join(__dirname, "preload.js"),
     },
   })
 
@@ -34,6 +35,25 @@ async function createWindow(height, width, x, y) {
     // Load the index.html when not in development
     win.loadURL("app://./index.html")
   }
+  win.show()
+  win.webContents.on("did-finish-load", () => {
+    console.log("Did finish ok")
+  })
+//   watch(
+//     "./",
+//     {
+//       recursive: true,
+//       filter(f, skip) {
+//         if (/\/node_modules/.test(f)) return skip
+//         if (/\.git/.test(f)) return skip
+//         return /\.js$/.test(f)
+//       },
+//     },
+//     function (evt, name) {
+//       console.info(`[${evt}] File: ${name}`)
+//       win.webContents.send("ping", `Who some change: ${name}, ${evt}`)
+//     }
+//   )
 }
 
 // Quit when all windows are closed.
@@ -78,8 +98,6 @@ function whichScreen() {
     width = externalDisplay.size.width
     x = externalDisplay.bounds.x
     y = externalDisplay.bounds.y
-    createWindow(height, width, x, y)
-    // console.log(`We are on external screen(${height}x${width})`)
   }
   createWindow(height, width, x, y)
 }

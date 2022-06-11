@@ -9,7 +9,7 @@
 			</div>
 
 			<button @click="$router.push({ name: 'professors-add' })" class="btn-primary">
-				<box-icon name="user-plus" type="regular" color="white"></box-icon>
+				<box-icon name="user-plus"  color="white"></box-icon>
 				<span class="self-center ml-2">Ajouter</span>
 			</button>
 		</div>

@@ -16,15 +16,16 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import ListStudent from "@/components/list-student.vue";
+import { useIpcRenderer } from "@vueuse/electron";
+const ipcRenderer = useIpcRenderer();
 export default {
 	name: "index-students",
 	components: {
-		ListStudent: ListStudent,
+		ListStudent,
 	},
 	data() {
 		return {
 			isloading: "",
-			// students: [{ id: "2098630150", year: 1961, name: "Mukadi Papy", email: "mukadi@example.com" }, { id: "8447551447", year: 1961, name: "Choi Ngandu", email: "example@yg.com" }, { id: "4521491271", year: 1961, name: "Jnr Choi", email: "example@yg.com" }]
 			isLevelChanged: true,
 		};
 	},
@@ -42,6 +43,12 @@ export default {
 			}
 		},
 	},
+	created() {},
+	mounted() {
+		ipcRenderer.on("ping", (event, message) => {
+			console.log(message);
+		});
+	},
 	methods: {
 		...mapActions("students", ["getAllStudents"]),
 		...mapMutations({ changeLevel: "CHANGE_LEVEL_MENU" }),
@@ -51,7 +58,3 @@ export default {
 	},
 };
 </script>
-
-
-<style lang="scss" scoped>
-</style>

@@ -15,7 +15,10 @@
 					<h1 class="font-bold text-2xl text-green-200">20</h1>
 					<span class="text-2xl font-bold text-green-800">Rooms</span>
 				</div>
-				<div class="card2"></div>
+				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
+					<h1 class="font-bold text-2xl text-green-200">2000</h1>
+					<span class="text-2xl font-bold text-green-800">Alumnis</span>
+				</div>
 			</div>
 			<div class="card">
 				<apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
 	name: "Home",
 	components: {},
@@ -41,7 +45,7 @@ export default {
 			},
 			series: [
 				{
-					name: "series-1",
+					name: "Nombre d'étudiants",
 					data: [3000, 3500, 4000, 4200, 4500, 4700, 4900, 5000],
 				},
 			],

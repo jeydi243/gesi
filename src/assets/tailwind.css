@@ -20,15 +20,23 @@
 .section2 {
   @apply bg-gray-800 w-screen h-screen mx-auto;
 }
-
+.router-link {
+  @apply transition-colors hover:border-l-2 hover:border-l-green-500 ease-in-out duration-700 flex items-center w-full h-9 px-3 mt-2 hover:text-white hover:font-bold;
+}
+.router-link-active {
+  @apply bg-green-500 bg-opacity-50 border-l-2 border-l-green-500 font-bold text-white;
+}
 .profile {
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
 }
-.profile2 {
-  @apply flex bg-green-100 h-[100px] w-[100px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
+.profile-square {
+  @apply flex bg-green-100 min-h-[100%] w-[150px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
+}
+.file-picker {
+  @apply flex bg-green-100 h-full min-h-[100px] w-full ring-green-200 rounded-lg  border-0 border-green-800 items-center justify-center cursor-pointer;
 }
 .avatar {
-  @apply flex bg-green-100 h-[35px] w-[35px] rounded-full self-center items-center justify-center cursor-pointer object-cover;
+  @apply flex bg-green-100 h-[35px] w-[35px] rounded-lg self-center items-center justify-center cursor-pointer object-cover;
 }
 
 /* Table */
@@ -39,7 +47,7 @@ tr th {
   @apply h-10 pl-1 bg-blue-200 text-left first-letter:uppercase;
 }
 td {
-  @apply first-letter:uppercase text-left pl-1;
+  @apply first-letter:uppercase text-left pl-1 table-cell;
 }
 
 .nav {
@@ -47,6 +55,9 @@ td {
 }
 .card {
   @apply rounded flex flex-col p-3 h-full shadow-lg shadow-gray-100 bg-white;
+}
+.card-emp {
+  @apply rounded flex flex-col h-full shadow-lg shadow-gray-100 bg-white mx-0 px-0;
 }
 .card2 {
   @apply rounded-lg flex flex-col p-3 h-full shadow-xl shadow-gray-200 bg-white;
@@ -61,7 +72,7 @@ td {
   @apply bg-red-500 w-1/2 my-2 rounded border-2 border-dashed flex flex-row cursor-default py-2 border-red-200 text-red-500 pl-2 bg-opacity-5 align-top justify-start;
 }
 .step-content {
-  @apply flex flex-row w-1/2 justify-center h-1/2 bg-red-500;
+  @apply flex flex-row w-1/2 justify-center h-1/2;
 }
 
 /* For modal */
@@ -89,20 +100,16 @@ input:valid + span:after {
   content: "✓";
   padding-left: 5px;
 }
+.row {
+  @apply flex flex-row;
+}
+.row-reverse {
+  @apply flex flex-row-reverse;
+}
+.col {
+  @apply flex flex-col;
+}
 
-/* Dropdown */
-.dropdown {
-  @apply absolute right-0 top-6 z-30 w-48 py-2 mt-4 bg-white rounded-md shadow-xl shadow-gray-300 font-bold transition-all duration-700;
-}
-.dropdown-item {
-  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-green-900 hover:bg-green-100 hover:cursor-pointer;
-}
-.dropdown-item-sensible {
-  @apply block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform hover:text-red-500 hover:bg-red-50 hover:cursor-pointer;
-}
-.dropdown-separator {
-  @apply h-1 w-full border-b border-yellow-300;
-}
 .divider {
   @apply h-1 w-full border-b border-yellow-300 my-2;
 }
@@ -120,14 +127,20 @@ input:valid + span:after {
 .input-group-grid {
   @apply py-1 grid grid-cols-1 relative mb-2;
 }
+.form-file {
+  @apply block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-400 file:italic;
+}
 .form-input {
-  @apply placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2 rounded-lg;
+  @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100 focus:ring-green-200;
+}
+.form-select {
+  @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100 focus:ring-green-200;
 }
 .form-textarea {
-  @apply placeholder-gray-200 focus:border-green-400 focus:outline-none py-2 pr-2 rounded-lg;
+  @apply placeholder-gray-400 focus:border-green-400 border-0 bg-gray-100 focus:outline-none my-1 py-2 rounded-lg;
 }
 .input-error {
-  @apply text-red-800 text-xs invalid:animate-shake;
+  @apply text-red-800 text-xs invalid:animate-shake pl-2;
 }
 
 /* Button */

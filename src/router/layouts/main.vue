@@ -1,18 +1,16 @@
 <template>
-	<div class="flex flex-row" v-bind="$attrs">
+	<div class="row" v-bind="$attrs">
 		<SideBar class="flex w-[15%] h-full bg-gray-900" />
-		<div class="flex w-[85%] h-full">
-			<main class="relative flex flex-col w-full bg-gray-100 ">
-				<Header />
-				<BreadCrumbs v-if="showBraed" />
-				<div class="h-[87%] w-full bg-gray-100 px-6 py-6 view">
-					<Transition name="fade" mode="out-in">
-						<slot />
-					</Transition>
-				</div>
-				<Footer />
-			</main>
-		</div>
+		<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
+			<Header />
+			<BreadCrumbs v-if="showBraedCrumbs" />
+			<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
+				<Transition name="fade" mode="out-in">
+					<slot></slot>
+				</Transition>
+			</div>
+			<Footer />
+		</main>
 	</div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
 		return {
 			isMenuCondensed: false,
 			dayo: false,
-			showBraed: false,
+			showBraedCrumbs: false,
 		};
 	},
 	// props: { typeLayout: String },
@@ -77,12 +75,16 @@ export default {
 .fade-leave-to {
 	opacity: 0;
 }
-body {
-	overflow-x: hidden;
+
+
+
+main {
+	overflow-y: scroll;
 }
-.view {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: thin; /* Firefox */
+
+/* .view {
+
+	scrollbar-width: thin;
 
 	overflow-y: scroll;
 }
@@ -98,6 +100,6 @@ body {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	background-color: #555;
-}
+} */
 </style>
 

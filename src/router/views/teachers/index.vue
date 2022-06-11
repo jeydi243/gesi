@@ -8,7 +8,7 @@
 				<div class="h-[200px] bg-white rounded-lg shadow-lg relative" v-for="(prof, index) in teachers" :key="index">
 					<div class="card-img h-[30%] bg-green-50 w-full">
 						<!-- <img :src="require('@/assets/img/user.png')" class="object-cover" /> -->
-						<mdicon name="react" :width="30" :height="30" />
+						<box-icon name="react" :width="30" :height="30"></box-icon>
 					</div>
 					<div class="content flex flex-col px-2">
 						<span class="text-base font-bold">{{ prof.name }}</span>

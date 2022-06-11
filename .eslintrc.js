@@ -31,6 +31,7 @@ module.exports = {
         ignores: [],
       },
     ],
+    "vue/html-closing-bracket-newline": "off",
     "vue/max-attributes-per-line": [
       "off",
       {
