@@ -20,11 +20,16 @@
 .section2 {
   @apply bg-gray-800 w-screen h-screen mx-auto;
 }
-
+.router-link {
+  @apply transition-colors hover:border-l-2 hover:border-l-green-500 ease-in-out duration-700 flex items-center w-full h-9 px-3 mt-2 hover:text-white hover:font-bold;
+}
+.router-link-active {
+  @apply bg-green-500 bg-opacity-50 border-l-2 border-l-green-500 font-bold text-white;
+}
 .profile {
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
 }
-.profile2 {
+.profile-square {
   @apply flex bg-green-100 min-h-[100%] w-[150px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
 }
 .file-picker {
@@ -121,6 +126,9 @@ input:valid + span:after {
 }
 .input-group-grid {
   @apply py-1 grid grid-cols-1 relative mb-2;
+}
+.form-file {
+  @apply block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-400 file:italic;
 }
 .form-input {
   @apply placeholder-gray-400 placeholder:italic placeholder:first-letter:uppercase focus:border-green-400 focus:outline-none py-2 my-1 border-0 pr-2 rounded-lg bg-gray-100 focus:ring-green-200;

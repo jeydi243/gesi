@@ -450,12 +450,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.file\:border-0::-webkit-file-upload-button{
+.form-file::-webkit-file-upload-button, .file\:border-0::-webkit-file-upload-button{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border, .border-0, .border-2, .border-\[1px\], .border-l-4, .border-t-2, .border-t-0, .border-l-2, .border-b, .profile2, .file-picker, .document, .document-other, .divider, .g-input-text, .form-input, .form-select, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button, .hover\:border-l-2{
+.border, .border-0, .border-2, .border-\[1px\], .border-l-4, .border-t-2, .border-t-0, .border-b, .router-link, .router-link-active, .profile-square, .file-picker, .document, .document-other, .divider, .g-input-text, .form-file::file-selector-button, .form-input, .form-select, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -4126,10 +4126,6 @@ textarea.form-control.is-invalid{
   z-index: 3;
 }
 
-.z-0{
-  z-index: 0;
-}
-
 .col-span-2{
   grid-column: span 2 / span 2;
 }
@@ -4311,10 +4307,6 @@ textarea.form-control.is-invalid{
   height: 2.5rem;
 }
 
-.h-9{
-  height: 2.25rem;
-}
-
 .h-\[90\%\]{
   height: 90%;
 }
@@ -4387,16 +4379,20 @@ textarea.form-control.is-invalid{
   height: 10%;
 }
 
+.h-56{
+  height: 14rem;
+}
+
+.h-1{
+  height: 0.25rem;
+}
+
 .h-7{
   height: 1.75rem;
 }
 
 .h-16{
   height: 4rem;
-}
-
-.h-1{
-  height: 0.25rem;
 }
 
 .max-h-full{
@@ -4475,8 +4471,8 @@ textarea.form-control.is-invalid{
   width: 75%;
 }
 
-.w-1\/2{
-  width: 50%;
+.w-1{
+  width: 0.25rem;
 }
 
 .w-7{
@@ -4485,10 +4481,6 @@ textarea.form-control.is-invalid{
 
 .w-16{
   width: 4rem;
-}
-
-.w-1{
-  width: 0.25rem;
 }
 
 .min-w-max{
@@ -4573,10 +4565,6 @@ textarea.form-control.is-invalid{
 
 .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-5{
-  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .flex-row{
@@ -4748,10 +4736,6 @@ textarea.form-control.is-invalid{
   border-top-width: 0px;
 }
 
-.border-l-2{
-  border-left-width: 2px;
-}
-
 .border-b{
   border-bottom-width: 1px;
 }
@@ -4779,6 +4763,11 @@ textarea.form-control.is-invalid{
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.border-yellow-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(253 230 138 / var(--tw-border-opacity));
+}
+
 .border-green-50{
   --tw-border-opacity: 1;
   border-color: rgb(236 253 245 / var(--tw-border-opacity));
@@ -4802,11 +4791,6 @@ textarea.form-control.is-invalid{
 .border-t-gray-300{
   --tw-border-opacity: 1;
   border-top-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-
-.border-l-green-500{
-  --tw-border-opacity: 1;
-  border-left-color: rgb(16 185 129 / var(--tw-border-opacity));
 }
 
 .border-b-blue-500{
@@ -4891,10 +4875,6 @@ textarea.form-control.is-invalid{
 .bg-yellow-50{
   --tw-bg-opacity: 1;
   background-color: rgb(255 251 235 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-50{
-  --tw-bg-opacity: 0.5;
 }
 
 .bg-gradient-to-tr{
@@ -5096,12 +5076,12 @@ textarea.form-control.is-invalid{
   font-weight: 400;
 }
 
-.font-bold{
-  font-weight: 700;
-}
-
 .font-medium{
   font-weight: 500;
+}
+
+.font-bold{
+  font-weight: 700;
 }
 
 .font-semibold{
@@ -5244,13 +5224,14 @@ textarea.form-control.is-invalid{
   color: rgb(6 78 59 / var(--tw-text-opacity));
 }
 
+.text-yellow-600{
+  --tw-text-opacity: 1;
+  color: rgb(217 119 6 / var(--tw-text-opacity));
+}
+
 .text-blue-400{
   --tw-text-opacity: 1;
   color: rgb(96 165 250 / var(--tw-text-opacity));
-}
-
-.text-transparent{
-  color: transparent;
 }
 
 .no-underline{
@@ -5343,12 +5324,6 @@ textarea.form-control.is-invalid{
   transition-duration: 150ms;
 }
 
-.transition-colors{
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
 .transition-all{
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -5397,6 +5372,39 @@ textarea.form-control.is-invalid{
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
+.router-link{
+  margin-top: 0.5rem;
+  display: flex;
+  height: 2.25rem;
+  width: 100%;
+  align-items: center;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.router-link:hover{
+  border-left-width: 2px;
+  --tw-border-opacity: 1;
+  border-left-color: rgb(16 185 129 / var(--tw-border-opacity));
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.router-link-active{
+  border-left-width: 2px;
+  --tw-border-opacity: 1;
+  border-left-color: rgb(16 185 129 / var(--tw-border-opacity));
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.5;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .profile{
   display: flex;
   height: 100px;
@@ -5415,7 +5423,7 @@ textarea.form-control.is-invalid{
   --tw-ring-color: rgb(167 243 208 / var(--tw-ring-opacity));
 }
 
-.profile2{
+.profile-square{
   display: flex;
   min-height: 100%;
   width: 150px;
@@ -5962,6 +5970,49 @@ input:valid + span:after {
   padding-bottom: 0.25rem;
 }
 
+.form-file{
+  display: block;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.form-file::-webkit-file-upload-button{
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+  border-width: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  font-style: italic;
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.form-file::file-selector-button{
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+  border-width: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  font-style: italic;
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 .form-input{
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -6417,16 +6468,6 @@ input:valid + span:after {
   background-color: rgb(236 253 245 / var(--tw-bg-opacity));
 }
 
-.file\:bg-gray-100::-webkit-file-upload-button{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.file\:bg-gray-100::file-selector-button{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
 .file\:py-2::-webkit-file-upload-button{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -6547,15 +6588,6 @@ input:valid + span:after {
   transform: var(--tw-transform);
 }
 
-.hover\:border-l-2:hover{
-  border-left-width: 2px;
-}
-
-.hover\:border-l-green-500:hover{
-  --tw-border-opacity: 1;
-  border-left-color: rgb(16 185 129 / var(--tw-border-opacity));
-}
-
 .hover\:bg-gray-100:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -6574,15 +6606,6 @@ input:valid + span:after {
 .hover\:bg-green-50:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(236 253 245 / var(--tw-bg-opacity));
-}
-
-.hover\:font-bold:hover{
-  font-weight: 700;
-}
-
-.hover\:text-white:hover{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover{
@@ -6731,6 +6754,10 @@ input:valid + span:after {
     table-layout: fixed;
   }
 
+  .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .md\:flex-row{
     flex-direction: row;
   }
@@ -6739,5 +6766,9 @@ input:valid + span:after {
 @media (min-width: 1024px){
   .lg\:w-1\/5{
     width: 20%;
+  }
+
+  .lg\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
