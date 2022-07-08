@@ -20,7 +20,7 @@ import filiere from "@/router/views/management/filiere.vue";
 import documents from "@/router/views/management/documents.vue";
 import employees from "@/router/views/management/employees/index.vue";
 export default {
-	name: "index-gestion",
+	name: "index-management",
 	components: {
 		academique,
 		course,

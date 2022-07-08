@@ -94,5 +94,5 @@ const store = createStore({
     },
   },
 })
-store.dispatch("init")
+
 export default store

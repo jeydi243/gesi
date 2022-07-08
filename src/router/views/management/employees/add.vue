@@ -19,27 +19,48 @@
                 <fieldset class="border-2 border-green-50 rounded-lg px-2 py-4">
                     <legend class="italic text-green-500 pr-3">Informations</legend>
                     <Field type="text" placeholder="First Name" id="name" name="first_name" class="w-full form-input" />
-                    <ErrorMessage name="name" v-slot="{ message }">
+                    <ErrorMessage name="first_name" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                     <Field type="text" placeholder="Middle Name" id="middle" name="middle_name" class="w-full form-input" />
-                    <ErrorMessage name="name" v-slot="{ message }">
+                    <ErrorMessage name="middle_name" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                     <Field type="text" placeholder="Last Name" id="last" name="last_name" class="w-full form-input" />
-                    <ErrorMessage name="name" v-slot="{ message }">
+                    <ErrorMessage name="last_name" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
-                    <Field placeholder="Telephone" id="telephone" name="telephone" class="w-full form-input" />
-                    <ErrorMessage name="telephone" v-slot="{ message }">
+                    <Field placeholder="Phone number comma separated" id="telephones" name="telephones" class="w-full form-input" />
+                    <ErrorMessage name="telephones" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                     <Field type="date" placeholder="Birthday" id="birthday" name="birthday" class="w-full form-input" />
                     <ErrorMessage name="birthday" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
-                    <Field as="textarea" placeholder="Adress" id="adress" name="adress" class="w-full form-input" />
-                    <ErrorMessage name="adress" v-slot="{ message }">
+                    <Field type="email" placeholder="Personal Email" id="personal_email" name="personal_email" class="w-full form-input" />
+                    <ErrorMessage name="personal_email" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field as="select" placeholder="Gender" id="gender" name="gender" class="block w-full form-select">
+                        <option value="M" selected>Male</option>
+                        <option value="F">Female</option>
+                    </Field>
+                    <ErrorMessage name="gender" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+                    <Field as="textarea" placeholder="Address" id="address" name="address" class="w-full form-input" />
+                    <ErrorMessage name="address" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
+
+                    <Field name="cityzenship" id="cityzenship" as="select" class="form-select block w-full">
+                        <option value="CD" selected>RDC (Congo)</option>
+                        <option value="Congo">Congo</option>
+                        <option value="SEN">Senegal</option>
+                        <option value="COD">Cote d'ivoire</option>
+                    </Field>
+                    <ErrorMessage name="cityzenship" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                 </fieldset>
@@ -71,6 +92,10 @@
                     <ErrorMessage name="school_diploma_file" v-slot="{ message }">
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
+                    <Field name="domain" type="text" placeholder="Domain Tag" class="w-full form-input" />
+                    <ErrorMessage name="domain" v-slot="{ message }">
+                        <p class="input-error">{{ message }}</p>
+                    </ErrorMessage>
                 </fieldset>
             </div>
             <fieldset class="border-2 border-sky-500 rounded-lg px-2 py-4">
@@ -85,11 +110,15 @@
                 <ErrorMessage name="cover_letter" v-slot="{ message }">
                     <p class="input-error">{{ message }}</p>
                 </ErrorMessage>
+                <Field placeholder="Position" id="position" name="position" class="w-full form-input" />
+                <ErrorMessage name="cover_letter" v-slot="{ message }">
+                    <p class="input-error">{{ message }}</p>
+                </ErrorMessage>
             </fieldset>
 
             <div class="row-reverse mt-5">
                 <button class="btn-primary" :disabled="isSubmitting" type="submit">
-                    <UserIcon class="h-5 w-5 text-white mr-3" />Add Employee
+                    <UserIcon class="h-5 w-5 text-white mr-3" />Add employee
                     <PixelSpinner class="h-1 w-1" :size="25" v-if="isSubmitting" />
                 </button>
                 <button class="btn-unstate mr-2" @click.prevent="beforeCancel(values)">Annuler</button>
@@ -102,13 +131,12 @@
 import { parseISO } from "date-fns"
 import { UserIcon } from "@heroicons/vue/solid";
 import { PixelSpinner } from 'epic-spinners'
-import { useNProgress } from '@vueuse/integrations/useNProgress'
-import { isLength, isDate } from "validator"
+import { isLength, isDate, isEmail } from "validator"
 import { toast, src } from "@/utils/utils";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import * as Chance from "chance"
 import { mapActions } from "vuex";
-const { isLoading } = useNProgress()
+// const { isLoading } = useNProgress()
 const chance = new Chance()
 
 export default {
@@ -119,9 +147,16 @@ export default {
             first_name(value) {
                 return isLength(value, { min: 2, max: 20 }) ? true : "First name must be between 2 and 20 characters"
             },
+            gender(value) { return value == 'M' || value == "F" ? true : "Must be F or M" },
+            personal_email(value) { return isEmail(value) ? true : "Must be valid Email" },
+            address(value) { return isLength(value, { min: 2, max: 200 }) ? true : "Address must be between 2 and 200 characters" },
+            position(value) { return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters" },
+            telephones(value) { return isLength(value, { min: 10 }) ? true : "telephones must be 10 characters or more" },
+            cityzenship(value) { return isLength(value, { min: 2, max: 2 }) ? true : "cityzenship must be 2 characters" },
             last_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Last name must be between 2 and 20 characters" },
             middle_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters" },
             school_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "School name is required" },
+            domain(value) { return isLength(value, { min: 2, max: 20 }) ? true : "domain must be provided" },
             school_end_date(value) { return isDate(parseISO(value)) ? true : "End date must be provided" },
             school_start_date(value) { return isDate(parseISO(value)) ? true : "Start date must be provided" },
             school_diploma_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name must be between 2 and 20 characters" },
@@ -147,36 +182,40 @@ export default {
 
         }
         const employeeValues = {
-            adress: chance.address(),
-            birthday: chance.date({ year: 1995, american: false }),
-            last_name: chance.last(),
-            telephone: chance.phone({ country: "fr", mobile: true }),
+            address: chance.address(),
+            birthday: new Date(1999, 10, 10),
             first_name: chance.name({ middle: false, nationality: 'en' }),
-            resume_file: null,
-            profile_img: null,
-            school_name: 'School Maadini',
             middle_name: chance.name({ middle: false }),
+            last_name: chance.last(),
+            telephones: chance.phone({ country: "fr", mobile: true }),
+            resume_file: 'null',
+            profile_img: 'null',
+            personal_email: chance.email(),
+            cityzenship: 'CD',
+            domain: 'math',
+            gender: 'M',
+            position: "Developer",
+            school_name: 'School Maadini',
             cover_letter: chance.sentence({ words: 50 }),
-            school_diploma: "fff",
-            school_end_date: parseISO(chance.date({ year: 2022, string: true, month: 2 })),
-            school_start_date: new Date(2015, 10, 10),
+            school_end_date: new Date(2022, 5, 5),
+            school_start_date: new Date("01/01/2022"),
             school_diploma_name: "Computer science",
-            school_diploma_file: null,
+            school_diploma_file: 'null',
         }
         return {
-            employeeValues, employeeSchema, src: null
+            employeeValues, employeeSchema, src: null, isLoading: false
         }
     },
     methods: {
-        ...mapActions(["addEmployee"]),
+        ...mapActions("management", ["addEmployee"]),
         beforeCancel(values) {
-            if (values == initialValueEmployee.value) emit('cancel')
+            if (values == this.employeeValues) this.$emit('cancel')
             else {
-                if (confirm('Voulez-vous vraiment quitter ?')) this.$emit('cancel')
+                if (confirm("Voulez-vous vraiment annuler l'enregistrement ?")) this.$emit('cancel')
                 console.log("Something in the form would you like to cancel??");
             }
         },
-        onInvalidEmployee({ values, errors, results }) { console.log({ errors, values, results }); },
+        onInvalidEmployee({ values, errors, results }) { console.log({ errors }); },
         pickFile(idInput) {
             const file_input = document.getElementById(idInput)
             file_input.click()
@@ -191,16 +230,44 @@ export default {
             }
         },
         async submitEmployee(values) {
-            console.log(values);
-            alert("Le message est bon")
+            const employee = new FormData()
+            values['name'] = values['first_name'] + " " + values['middle_name'] + " " + values['last_name']
+            values['resume_file'] = values['resume_file'][0]
+            values['school_diploma_file'] = values['school_diploma_file'][0]
+            values['profile_img'] = values['profile_img'][0]
+            values['telephones'] = values['telephones'].split(',').map(tel => tel.replaceAll(" ", ""))
+            delete values['first_name']
+            delete values['middle_name']
+            delete values['last_name']
+
+
+            const { resume_file, school_diploma_file, profile_img, ...other } = values
+            values['employee'] = other
+            values['resume_file'] = resume_file
+            values['school_diploma_file'] = school_diploma_file
+            values['profile_img'] = profile_img
+
+
+            // employee.append("resume_file", resume_file)
+            // employee.append("school_diploma_file", school_diploma_file)
+            // employee.append("profile_img", profile_img)
+            // employee.append('employee', other)
+
+            console.log(other);
+            for (const key in other) {
+                employee.append(key, other[key])
+            }
+
+
+
             try {
-                isLoading = !isLoading
-                var result = await this.addEmployee(values);
+                this.isLoading = !this.isLoading
+                var result = await this.addEmployee(other);
                 if (result) {
-                    isLoading.value = !isLoading.value
+                    this.isLoading = !this.isLoading
                     toast.success('Le monde est beau')
                 } else {
-                    toast.error("Le monde n'est pas beau")
+                    toast.error(`Error:  ${result}`)
                 }
             } catch (error) {
                 console.log(error);

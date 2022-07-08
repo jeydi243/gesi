@@ -3,6 +3,7 @@ import axios from "./config"
 export default {
   routeDocuments: "/management/documents",
   routeFilieres: "/management/filieres",
+  routeEmployees: "/employees",
   getDocuments: async function () {
     return axios.get(`${this.routeDocuments}`)
   },
@@ -33,6 +34,14 @@ export default {
   },
   softDeleteFiliere: async function (id, data) {
     return axios.patch(`${this.routeFilieres}/${code}`)
+  },
+
+  // Employees routes getEmployees
+  addEmployee: async function (data) {
+    return axios.post(`${this.routeEmployees}`, data)
+  },
+  getEmployees: async function () {
+    return axios.get(`${this.routeEmployees}`)
   },
 }
 const documents = {}

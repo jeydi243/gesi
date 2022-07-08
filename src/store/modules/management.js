@@ -10,6 +10,7 @@ export default {
     laptops: [],
     routeurs: [],
     listDocuments: [],
+    listEmployees: [],
     employees: [],
     token: null,
     error: null,
@@ -61,8 +62,8 @@ export default {
     },
 
     //EMPLOYEES
-    ADD_EMPLOYEE(state, filiere) {
-      state.listEmployees.unshift({ ...filiere, show: false })
+    ADD_EMPLOYEE(state, employee) {
+      state.listEmployees.unshift({ ...employee, show: false })
     },
     REMOVE_EMPLOYEE(state, idEmployee) {
       var index = state.listEmployees.findIndex((employee) => employee.id == idEmployee)
@@ -153,6 +154,7 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             commit("SET_LIST_EMPLOYEES", response.data)
+            console.log(response.data)
             return true
           }
           console.log(response.data)
