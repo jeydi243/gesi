@@ -77,6 +77,12 @@ const employeesRoutes = [
     name: "employees-details",
     component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
   },
+  {
+    path: "employees/update",
+    meta: { layout: "main" },
+    name: "employees-update",
+    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/update.vue"),
+  },
 ]
 const managementRoutes = [
   {

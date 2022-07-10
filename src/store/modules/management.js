@@ -162,7 +162,7 @@ export default {
         })
         .catch(console.log)
     },
-    addEmployee({ commit }, data) {
+     addEmployee({ commit }, data) {
       return mgntAPI
         .addEmployee(data)
         .then(({ status, data }) => {

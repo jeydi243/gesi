@@ -1,6 +1,6 @@
 <template>
-	<div id="app" class="container">
-		<transition name="fade" mode="out-in">
+	<div id="app" class=" h-screen w-screen">
+		<!-- <transition name="fade" mode="out-in">
 			<Layout v-if="layout == 'main'" key="main" class="h-screen w-screen">
 				<router-view v-slot="{ Component }">
 					<transition name="fadeSlideX" mode="out-in">
@@ -15,42 +15,56 @@
 					</Transition>
 				</router-view>
 			</Auth>
-		</transition>
+		</transition> -->
+		<div class="row h-full w-full" v-bind="$attrs">
+			<SideBar class="flex w-[15%] h-full bg-gray-900" />
+			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
+				<Header />
+				<BreadCrumbs v-if="showBraedCrumbs" />
+				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
+					<router-view v-slot="{ Component }">
+						<Transition name="fadeSlideX" mode="out-in">
+							<component :is="Component" />
+						</Transition>
+					</router-view>
+				</div>
+				<Footer />
+			</main>
+		</div>
 	</div>
 </template>
-<script>
-import Layout from "@/router/layouts/main";
-import Auth from "@/router/layouts/auth";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+<script setup>
+// import Layout from "@/router/layouts/main";
+// import Auth from "@/router/layouts/auth";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
+import SideBar from "@/components/side";
+import BreadCrumbs from "@/components/breadcrumbs";
+//import useStore
+import { useStore } from "vuex";
+import { computed, watch, ref, onMounted } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import { useIdle } from '@vueuse/core'
-export default {
-	name: "App",
-	components: { Layout, Auth },
-	computed: {
-		...mapGetters({
-			layout: "getLayout",
-		}),
-	},
-	watch: {
-		$route: function ({ meta, path, fullPath }) {
-			if (meta.layout == "main") {
-				this.changeLayout("main");
-			} else if (meta.layout == "auth") {
-				this.changeLayout(meta.layout);
-			}
-			this.changeActive(fullPath.split("/")[1]);
-			// console.log(`%cPath name: ${path}`, "color: rgb(16,185,129) ; font-weight: bold ; padding: 4px ;");
-		},
-	},
-	mounted() {
-		const { idle, lastActive } = useIdle(5000) // 5 min
+import { useRoute } from 'vue-router';
+const store = useStore()
+const route = useRoute()
 
-		console.log(idle.value)
-	},
-	methods: {
-		...mapActions(["changeLayout", "changeActive"]),
-	},
-};
+// const layout = computed(() => store.state.layout)
+let showBraedCrumbs = ref(false)
+//watch route params
+watch(() => route.params, (params) => {
+	// store.commit("setBreadCrumbs", params)
+})
+watch(() => route, function ({ meta, fullPath }) {
+	changeLayout(meta.layout)
+	this.changeActive(fullPath.split("/")[1]);
+})
+onMounted(function () {
+	const { idle, lastActive } = useIdle(5000) // 5 min
+	console.log(idle.value)
+})
+
+
 </script>
 <style>
 .fade-enter-active,

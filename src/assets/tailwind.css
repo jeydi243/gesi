@@ -30,7 +30,7 @@
   @apply flex bg-green-100 h-[100px] w-[100px] ring-2 ring-green-200 rounded-full self-center items-center justify-center cursor-pointer;
 }
 .profile-square {
-  @apply flex bg-green-100 min-h-[100%] w-[150px] ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
+  @apply flex bg-green-100 h-1/2 w-1/2 ring-green-200 rounded border-dashed border-2 border-green-800 items-center justify-center cursor-pointer;
 }
 .file-picker {
   @apply flex bg-green-100 h-full min-h-[100px] w-full ring-green-200 rounded-lg  border-0 border-green-800 items-center justify-center cursor-pointer;

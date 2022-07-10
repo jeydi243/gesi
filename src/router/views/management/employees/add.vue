@@ -2,9 +2,9 @@
     <div class="card">
         <Form v-slot="{ isSubmitting, values }" @submit="submitEmployee" :validation-schema="employeeSchema" :initial-values="employeeValues" @invalid-submit="onInvalidEmployee">
             <div class="grid grid-cols-3 gap-4 auto-cols-min w-full h-full">
-                <fieldset class="border-2 border-yellow-200 rounded-lg px-2 py-4">
+                <fieldset class="border-2 block col border-yellow-200 rounded-lg px-2 py-4 items-center align-middle justify-center content-center">
                     <legend class="italic text-yellow-600 pr-3">Profile Picture</legend>
-                    <div class="mb-4" id="preview" @click.prevent="pickFile('profile_img')" :class="{ 'profile-square': !src }">
+                    <div class="mb-4 h-1/2" id="preview" @click.prevent="pickFile('profile_img')" :class="{ 'profile-square': !src }">
                         <img v-if="src" :src="src" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-1/2 w-full" />
                         <UserIcon class="h-10 w-10 text-green-500" v-else />
                     </div>

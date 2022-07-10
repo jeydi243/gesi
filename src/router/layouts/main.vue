@@ -26,7 +26,6 @@ export default {
 	data() {
 		return {
 			isMenuCondensed: false,
-			dayo: false,
 			showBraedCrumbs: false,
 		};
 	},
@@ -81,25 +80,5 @@ export default {
 main {
 	overflow-y: scroll;
 }
-
-/* .view {
-
-	scrollbar-width: thin;
-
-	overflow-y: scroll;
-}
-.view::-webkit-scrollbar {
-	width: 15px;
-}
-
-.view::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.body::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	background-color: #555;
-} */
 </style>
 
