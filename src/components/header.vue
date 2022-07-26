@@ -75,8 +75,8 @@ export default {
 	},
 	methods: {
 		...mapActions("authentication", ["logout"]),
-		goto(name) {
-			this.$router.push({ name })
+		async goto(name) {
+			await this.$router.push({ name })
 		},
 		back() {
 			this.$router.back()

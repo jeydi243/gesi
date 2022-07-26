@@ -30,7 +30,12 @@ export default {
       state.teachers = teachers
     },
     SET_LIST_EMPLOYEES(state, employees) {
-      state.employees = employees
+      // loop in employees and add
+      employees.forEach((employee) => {
+        state.employees.unshift(employee)
+        setTimeout(() => {}, 1000)
+      })
+    //   state.employees = employees
     },
 
     ADD_DOCUMENT(state, document) {
@@ -78,6 +83,7 @@ export default {
     init({ dispatch }) {
       dispatch("setAxios")
       dispatch("getAllDocuments")
+      dispatch("getAllEmployees")
 
       dispatch("teachers/init", {}, { root: true })
       dispatch("courses/init", {}, { root: true })
@@ -162,7 +168,7 @@ export default {
         })
         .catch(console.log)
     },
-     addEmployee({ commit }, data) {
+    addEmployee({ commit }, data) {
       return mgntAPI
         .addEmployee(data)
         .then(({ status, data }) => {

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from "vue-router"
 const studentsRoutes = [
   {
     path: "/students",
@@ -66,22 +66,52 @@ const settingsRoutes = [
 
 const employeesRoutes = [
   {
-    path: "employees/add",
+    path: "employees",
     meta: { layout: "main" },
-    name: "employees-add",
-    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/add.vue"),
+    name: "employees-index",
+    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
+    children: [
+      //   {
+      //     path: "list",
+      //     name: "employees-list",
+      //     component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
+      //   },
+      {
+        path: "add",
+        name: "employees-add",
+        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/add.vue"),
+      },
+      {
+        path: "details/:id",
+        name: "employees-details",
+        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
+      },
+      {
+        path: "update/:id",
+        name: "employees-update",
+        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/update.vue"),
+      },
+    ],
   },
+]
+const coursesRoutes = [
   {
-    path: "employees/details",
+    path: "courses",
     meta: { layout: "main" },
-    name: "employees-details",
-    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
-  },
-  {
-    path: "employees/update",
-    meta: { layout: "main" },
-    name: "employees-update",
-    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/update.vue"),
+    name: "courses-index",
+    component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/list.vue"),
+    children: [
+      {
+        path: "add",
+        name: "courses-add",
+        component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/add.vue"),
+      },
+      {
+        path: "details/:id",
+        name: "courses-details",
+        component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/details.vue"),
+      },
+    ],
   },
 ]
 const managementRoutes = [
@@ -90,7 +120,28 @@ const managementRoutes = [
     meta: { layout: "main" },
     name: "index-management",
     component: () => import(/* webpackChunkName: "management" */ "./views/management/index.vue"),
-    children: [...employeesRoutes],
+    children: [
+      ...employeesRoutes,
+      ...coursesRoutes,
+      {
+        path: "academique",
+        meta: { layout: "main" },
+        name: "academique-index",
+        component: () => import(/* webpackChunkName: "management" */ "./views/management/academique.vue"),
+      },
+      {
+        path: "filieres",
+        meta: { layout: "main" },
+        name: "filieres-index",
+        component: () => import(/* webpackChunkName: "management" */ "./views/management/filieres.vue"),
+      },
+      {
+        path: "documents",
+        meta: { layout: "main" },
+        name: "documents-index",
+        component: () => import(/* webpackChunkName: "management" */ "./views/management/documents.vue"),
+      },
+    ],
   },
 ]
 
@@ -132,5 +183,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+
+router.onError((error) => {
+  console.error(error)
+})
+
+router.afterEach((to, from, failure) => {
+  if (isNavigationFailure(failure, NavigationFailureType.redirected)) {
+    console.error(`Failed navigation \nVous avez été redirigé vers ${to}`, failure.message)
+  } else {
+    console.info(`From: ${from.name} to: ${to.name}`)
+  }
 })
 export default router

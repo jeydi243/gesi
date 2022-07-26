@@ -45,7 +45,7 @@
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
 				<Field name="manager" id="select-doc" as="select" class="rounded form-select block w-full" placeholder="Manager">
-					<option :value="employee.name" v-for="(personne, index) in listEmployee" :key="index" :selected="index == 0">{{ doc.name }}</option>
+					<option :value="employee.name" v-for="(personne, index) in getEmployees" :key="index" :selected="index == 0">{{ doc.name }}</option>
 				</Field>
 				<ErrorMessage name="manager" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
@@ -179,7 +179,9 @@ export default {
 			}
 		};
 	},
-
+	computed: {
+		...mapGetters('management',['getEmployees'])
+	},
 	methods: {
 		...mapActions('management', ['addFiliere']),
 		add(values, { resetForm }) {

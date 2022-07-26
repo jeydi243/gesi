@@ -53,7 +53,7 @@ export default {
 		...mapGetters("teachers", { teachers: "myteachers" }),
 	},
 	methods: {
-		goto(index) {
+		async goto(index) {
 			return this.$router.push({ name: "teachers-details", params: { id: this.teachers[index]._id } });
 		},
 	},

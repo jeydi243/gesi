@@ -1,48 +1,48 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2">
-			<button v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</button>
+			<a v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</a>
 		</div>
-		<div class="contentTab">
-			<Transition name="fadeSlideX" mode="out-in">
-				<!-- <KeepAlive> -->
-				<component :is="currentComponent"></component>
-				<!-- </KeepAlive> -->
-			</Transition>
+		<div class="contentTab h-full w-full">
+			<router-view v-slot="{ Component }">
+				<Transition name="fadeSlideX" mode="out-in">
+					<component :is="Component" />
+				</Transition>
+			</router-view>
 		</div>
 	</div>
 </template>
 
 <script>
-import course from "@/router/views/management/courses/index.vue";
-import academique from "@/router/views/management/academique.vue";
-import filiere from "@/router/views/management/filiere.vue";
-import documents from "@/router/views/management/documents.vue";
-import employees from "@/router/views/management/employees/index.vue";
 export default {
 	name: "index-management",
-	components: {
-		academique,
-		course,
-		filiere,
-		documents, employees
-	},
 	data() {
 		return {
 			isloading: "",
 			tabsGestion: [
-				{ name: "academique", current: false },
-				{ name: "course", current: false },
-				{ name: "filiere", current: false },
+				{ name: "academique", current: true },
+				{ name: "courses", current: false },
+				{ name: "filieres", current: false },
 				{ name: "documents", current: false },
-				{ name: "employees", current: true },
+				{ name: "employees", current: false },
 			],
 		};
 	},
 	computed: {
-		currentComponent() {
+		currentTab() {
 			return this.tabsGestion.find((tab) => tab.current).name.toLowerCase();
 		},
+	},
+	watch: {
+		currentTab(newval, oldval) {
+			if (newval != oldval) {
+				this.goto(`${newval}-index`)
+			}
+		}
+	},
+	mounted() {
+		console.log("On mounted go to ", this.currentTab)
+		this.goto(`${this.currentTab}-index`)
 	},
 	methods: {
 		changeTab(indexTab) {
@@ -50,6 +50,9 @@ export default {
 			this.tabsGestion[currentTrue].current = false;
 			this.tabsGestion[indexTab].current = true;
 		},
+		goto(name) {
+			this.$router.replace({ name: name })
+		}
 	},
 };
 </script>

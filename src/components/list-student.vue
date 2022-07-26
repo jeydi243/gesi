@@ -29,8 +29,8 @@
 				</tr>
 			</thead>
 			<!-- <tbody v-if="students != null"> -->
-			<TransitionGroup name="fade" tag="tbody" mode="out-in">
-				<tr class="table-row cursor-pointer" v-for="(student, index) in students" :key="index" @click="goto(index)">
+			<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave" tag="tbody" mode="out-in">
+				<tr class="table-row cursor-pointer" v-for="(student, index) in students" :key="index" @click="goto(index)" :data-index="index">
 					<td>{{ index }}</td>
 					<td>{{ student.matricule }}</td>
 					<td>{{ student.name }}</td>
@@ -46,7 +46,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { UserAddIcon, SearchIcon, RefreshIcon } from "@heroicons/vue/solid";
-
+import { gsap } from "gsap";
 export default {
 	name: "list-student",
 	components: {
@@ -66,9 +66,36 @@ export default {
 		...mapActions("students", {
 			refresh: "getAllStudents",
 		}),
-		goto(index) {
+		async goto(index) {
 			return this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });
 		},
+		onBeforeEnter(el, done) {
+			gsap.to(el, {
+				opacity: 0,
+				x: -20,
+				scaleY: 0.8,
+				delay: el.dataset.index * 0.25,
+				onComplete: done
+			})
+		},
+		onEnter(el, done) {
+			gsap.to(el, {
+				opacity: 1,
+				duration: 2,
+				delay: el.dataset.index * 0.25,
+				x: 0,
+				onComplete: done
+			})
+		}
+		, onLeave(el, done) {
+			gsap.to(el, {
+				opacity: 0,
+				delay: el.dataset.index * 0.25,
+				duration: 2,
+				y: -40,
+				onComplete: done
+			})
+		}
 	},
 };
 </script>

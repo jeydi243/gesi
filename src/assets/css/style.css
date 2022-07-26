@@ -460,7 +460,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.shadow-lg, .shadow-md, .card, .card-emp, .card2, .hover\:shadow-lg, .focus\:shadow-lg, .active\:shadow-lg{
+.shadow-lg, .shadow-md, .card, .card-emp, .card2, .course-card, .hover\:shadow-lg, .focus\:shadow-lg, .active\:shadow-lg{
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
@@ -4403,16 +4403,16 @@ textarea.form-control.is-invalid{
   width: 100vw;
 }
 
+.w-full{
+  width: 100%;
+}
+
 .w-\[15\%\]{
   width: 15%;
 }
 
 .w-\[85\%\]{
   width: 85%;
-}
-
-.w-full{
-  width: 100%;
 }
 
 .w-5{
@@ -4465,10 +4465,6 @@ textarea.form-control.is-invalid{
 
 .w-4\/5{
   width: 80%;
-}
-
-.w-3\/4{
-  width: 75%;
 }
 
 .w-1{
@@ -5328,10 +5324,6 @@ textarea.form-control.is-invalid{
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-.delay-150{
-  transition-delay: 150ms;
 }
 
 .duration-700{
@@ -6281,6 +6273,7 @@ input:valid + span:after {
 .btn-tab{
   margin-bottom: -1px;
   height: 2.5rem;
+  cursor: pointer;
   white-space: nowrap;
   border-bottom-width: 2px;
   padding-left: 1rem;
@@ -6367,6 +6360,26 @@ input:valid + span:after {
   outline-offset: 2px;
   --tw-ring-color: transparent;
   --tw-ring-opacity: 0.4;
+}
+
+.course-card{
+  display: flex;
+  width: 75%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 150ms;
+  transition-duration: 300ms;
+}
+
+.course-card:hover{
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 /* Calendar */

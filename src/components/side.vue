@@ -2,7 +2,7 @@
 	<div class="relative left-0 top-0 flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
 		<!-- {{ getRootName }} -->
 		<div class="flex flex-col place-items-center w-full mt-1">
-			<TransitionGroup name="fadeSlideX">
+			<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
 				<router-link :to="item.to" @hover="item.mouseHover = !item.mouseHover" v-for="(item, index) in listSideMenus" :data-index="index" :key="index" class="router-link"
 							 :class="{ 'router-link-active': item.active }">
 					<box-icon type="regular" :name="item.icon" color="white"></box-icon>
@@ -39,6 +39,7 @@ export default {
 			gsap.to(el, {
 				opacity: 1,
 				height: '1.6em',
+				scaleY: 0,
 				delay: el.dataset.index * 0.15,
 				onComplete: done
 			})
@@ -51,8 +52,14 @@ export default {
 				onComplete: done
 			})
 		}, onBeforeEnter(el, done) {
-
-		}
+			gsap.to(el, {
+				opacity: 0,
+				x: -20,
+				scaleY: 0.8,
+				delay: el.dataset.index * 0.25,
+				onComplete: done
+			})
+		},
 	},
 };
 </script>

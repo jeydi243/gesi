@@ -209,10 +209,9 @@ export default {
     methods: {
         ...mapActions("management", ["addEmployee"]),
         beforeCancel(values) {
-            if (values == this.employeeValues) this.$emit('cancel')
+            if (values == this.employeeValues) { this.$router.back() }
             else {
-                if (confirm("Voulez-vous vraiment annuler l'enregistrement ?")) this.$emit('cancel')
-                console.log("Something in the form would you like to cancel??");
+                this.$router.back()
             }
         },
         onInvalidEmployee({ values, errors, results }) { console.log({ errors }); },

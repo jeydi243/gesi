@@ -20,6 +20,7 @@
 			<SideBar class="flex w-[15%] h-full bg-gray-900" />
 			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
 				<Header />
+				{{ $route.path }}
 				<BreadCrumbs v-if="showBraedCrumbs" />
 				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
 					<router-view v-slot="{ Component }">
@@ -42,28 +43,20 @@ import SideBar from "@/components/side";
 import BreadCrumbs from "@/components/breadcrumbs";
 //import useStore
 import { useStore } from "vuex";
-import { computed, watch, ref, onMounted } from "vue";
+import { watch, ref, onMounted } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import { useIdle } from '@vueuse/core'
 import { useRoute } from 'vue-router';
 const store = useStore()
 const route = useRoute()
 
-// const layout = computed(() => store.state.layout)
 let showBraedCrumbs = ref(false)
-//watch route params
-watch(() => route.params, (params) => {
-	// store.commit("setBreadCrumbs", params)
-})
+
 watch(() => route, function ({ meta, fullPath }) {
+	console.log('Hum');
 	changeLayout(meta.layout)
 	this.changeActive(fullPath.split("/")[1]);
 })
-onMounted(function () {
-	const { idle, lastActive } = useIdle(5000) // 5 min
-	console.log(idle.value)
-})
-
 
 </script>
 <style>

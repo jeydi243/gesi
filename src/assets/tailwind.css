@@ -155,7 +155,7 @@ input:valid + span:after {
   @apply px-4 py-2 overflow-visible flex flex-row hover:cursor-pointer justify-center items-center text-center tracking-wide shadow-red-200 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-red-600 focus:outline-none;
 }
 .btn-tab {
-  @apply h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none;
+  @apply h-10 cursor-pointer px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none;
 }
 .btn-tab-active {
   @apply text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr;
@@ -165,6 +165,10 @@ input:valid + span:after {
 }
 .btn-header {
   @apply relative items-center z-20 text-gray-700 bg-white border border-transparent rounded-md focus:border-transparent focus:ring-opacity-40 focus:ring-transparent focus:outline-none flex flex-row;
+}
+
+.course-card {
+  @apply overflow-hidden bg-white rounded-lg transition-all delay-150 duration-300 hover:shadow-lg flex flex-col  w-3/4;
 }
 
 /* Calendar */

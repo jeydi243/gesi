@@ -74,5 +74,15 @@ module.exports = {
         alphabetical: false,
       },
     ],
+
+    "vue/script-indent": [
+      "off",
+      "tab",
+      {
+        baseIndent: 1,
+        switchCase: 0,
+        ignores: [],
+      },
+    ],
   },
 }
