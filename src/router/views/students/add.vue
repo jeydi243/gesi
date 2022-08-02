@@ -3,8 +3,8 @@
 		<div class="flex flex-row mb-5">
 			<div v-for="i in 4" :key="i" class="flex flex-col justify-start items-start">
 				<span>
-					<box-icon type="solid" name="circle" :color="i > step ? 'black':'green'" size="xs" class="mb-2"></box-icon>
-					<template v-if="i!=4">
+					<box-icon type="solid" name="circle" :color="i > step ? 'black' : 'green'" size="xs" class="mb-2"></box-icon>
+					<template v-if="i != 4">
 						<span v-for="k in 10" :key="k">-</span>
 					</template>
 				</span>
@@ -83,7 +83,7 @@
 				<Form class="flex flex-col mb-4 justify-between" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
 					<div class="flex flex-col mb-4 h-1/2  items-center justify-center">
 						<p class="text-4xl mb-4">Photo de profil</p>
-						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{'profile2':!previewSRC}">
+						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ 'profile2': !previewSRC }">
 							<img v-if="previewSRC" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-[100px] w-[100px]" />
 							<UserIcon class="h-10 w-10 text-green-500" v-else />
 						</div>
@@ -202,7 +202,7 @@
 							</ErrorMessage>
 						</div>
 						<div class="input-group-grid diploma">
-							<Field placeholder="Diploma" v-slot="{handleChange,handleBlur}" name="diploma">
+							<Field placeholder="Diploma" v-slot="{ handleChange, handleBlur }" name="diploma">
 								<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
 							</Field>
 							<ErrorMessage name="diploma" v-slot="{ message }">
@@ -332,7 +332,7 @@ export default {
 				timeout: 5000,
 			});
 			setTimeout(() => {
-				this.$router.push("/students");
+				this.$router.push("/students").catch(() => { });
 			}, 3000);
 
 			// window.ipcRenderer.send("hello", { message: "Hello from ipc renderer" });

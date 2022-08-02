@@ -64,56 +64,54 @@ const settingsRoutes = [
   },
 ]
 
-const employeesRoutes = [
-  {
-    path: "employees",
-    meta: { layout: "main" },
-    name: "employees-index",
-    component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
-    children: [
-      //   {
-      //     path: "list",
-      //     name: "employees-list",
-      //     component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
-      //   },
-      {
-        path: "add",
-        name: "employees-add",
-        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/add.vue"),
-      },
-      {
-        path: "details/:id",
-        name: "employees-details",
-        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
-      },
-      {
-        path: "update/:id",
-        name: "employees-update",
-        component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/update.vue"),
-      },
-    ],
-  },
-]
-const coursesRoutes = [
-  {
-    path: "courses",
-    meta: { layout: "main" },
-    name: "courses-index",
-    component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/list.vue"),
-    children: [
-      {
-        path: "add",
-        name: "courses-add",
-        component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/add.vue"),
-      },
-      {
-        path: "details/:id",
-        name: "courses-details",
-        component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/details.vue"),
-      },
-    ],
-  },
-]
+const employeesRoutes = {
+  path: "employees",
+  meta: { layout: "main" },
+  name: "employees-index",
+  component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/index.vue"),
+  children: [
+    {
+      path: "list",
+      name: "employees-list",
+      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
+    },
+    {
+      path: "add",
+      name: "employees-add",
+      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/add.vue"),
+    },
+    {
+      path: "details/:id",
+      name: "employees-details",
+      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
+    },
+    {
+      path: "update/:id",
+      name: "employees-update",
+      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/update.vue"),
+    },
+  ],
+}
+
+const coursesRoutes = {
+  path: "courses",
+  meta: { layout: "main" },
+  name: "courses-index",
+  component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/list.vue"),
+  children: [
+    {
+      path: "add",
+      name: "courses-add",
+      component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/add.vue"),
+    },
+    {
+      path: "details/:id",
+      name: "courses-details",
+      component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/details.vue"),
+    },
+  ],
+}
+
 const managementRoutes = [
   {
     path: "/management",
@@ -121,8 +119,8 @@ const managementRoutes = [
     name: "index-management",
     component: () => import(/* webpackChunkName: "management" */ "./views/management/index.vue"),
     children: [
-      ...employeesRoutes,
-      ...coursesRoutes,
+      employeesRoutes,
+      coursesRoutes,
       {
         path: "academique",
         meta: { layout: "main" },
@@ -192,6 +190,10 @@ router.onError((error) => {
 router.afterEach((to, from, failure) => {
   if (isNavigationFailure(failure, NavigationFailureType.redirected)) {
     console.error(`Failed navigation \nVous avez été redirigé vers ${to}`, failure.message)
+  } else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+    console.error(`La navigation a été empêchée parce que tu tente d'aller à la meme route ${failure.to.path} .`)
+  } else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+    console.error(`${failure.message}.`)
   } else {
     console.info(`From: ${from.name} to: ${to.name}`)
   }

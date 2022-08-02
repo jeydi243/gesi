@@ -1,10 +1,13 @@
 <template>
-    Okay
-    <router-view v-slot="{ Component }">
-        <Transition name="fadeSlideX" mode="out-in">
-            <component :is="Component" />
-        </Transition>
-    </router-view>
+    <div>
+        <router-view v-slot="{ Component, route }">
+            <Transition name="fadeSlideX" mode="out-in">
+                <div :key="route.name">
+                    <component :is="Component" />
+                </div>
+            </Transition>
+        </router-view>
+    </div>
 </template>
 
 <script setup>

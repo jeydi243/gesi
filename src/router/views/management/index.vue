@@ -4,9 +4,11 @@
 			<a v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</a>
 		</div>
 		<div class="contentTab h-full w-full">
-			<router-view v-slot="{ Component }">
+			<router-view v-slot="{ Component, route }">
 				<Transition name="fadeSlideX" mode="out-in">
-					<component :is="Component" />
+					<div :key="route.name">
+						<component :is="Component" />
+					</div>
 				</Transition>
 			</router-view>
 		</div>
@@ -35,8 +37,10 @@ export default {
 	},
 	watch: {
 		currentTab(newval, oldval) {
-			if (newval != oldval) {
+			if (newval != oldval && newval != "employees") {
 				this.goto(`${newval}-index`)
+			} else {
+				this.goto(`${newval}-list`)
 			}
 		}
 	},

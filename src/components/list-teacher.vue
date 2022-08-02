@@ -9,7 +9,7 @@
 			</div>
 
 			<button @click="$router.push({ name: 'professors-add' })" class="btn-primary">
-				<box-icon name="user-plus"  color="white"></box-icon>
+				<box-icon name="user-plus" color="white"></box-icon>
 				<span class="self-center ml-2">Ajouter</span>
 			</button>
 		</div>
@@ -26,7 +26,7 @@
 			</thead>
 			<!-- <tbody v-if="professors != null"> -->
 			<transition-group name="fade" tag="tbody" mode="out-in">
-				<tr class="table-row cursor-pointer" v-for="(teacher,index) in teachers(filtre)" :key="index" @click="goto(index)">
+				<tr class="table-row cursor-pointer" v-for="(teacher, index) in teachers(filtre)" :key="index" @click="goto(index)">
 					<td class="table-cell">{{ index }}</td>
 					<td class="table-cell">{{ teacher.matricule }}</td>
 					<td class="table-cell">{{ teacher.name }}</td>
@@ -54,7 +54,7 @@ export default {
 	},
 	methods: {
 		async goto(index) {
-			return this.$router.push({ name: "teachers-details", params: { id: this.teachers[index]._id } });
+			return await this.$router.push({ name: "teachers-details", params: { id: this.teachers[index]._id } });
 		},
 	},
 };

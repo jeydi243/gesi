@@ -104,7 +104,7 @@ export default {
     watch: {
         token(newavalue, oldvalue) {
             if (newavalue) {
-                this.$router.push('/')
+                this.$router.push('/').catch(()=>{});
             }
         }
     },
