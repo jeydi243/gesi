@@ -40,39 +40,9 @@
 import * as Chance from "chance"
 import { mapActions, mapGetters, useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
-
+import { onBeforeEnter, onEnter, onLeave, goto } from '@/utils/utils'
 const chance = new Chance()
 const router = useRouter()
-async function goto(name, id = "") {
-    await router.push({ name, params: { id } })
-    console.log('Igbo go')
-}
-function onBeforeEnter(el, done) {
-    gsap.to(el, {
-        opacity: 0,
-        x: -20,
-        delay: el.dataset.index * 0.25,
-        onComplete: done
-    })
-}
-function onEnter(el, done) {
-    gsap.to(el, {
-        opacity: 1,
-        duration: 2,
-        delay: el.dataset.index * 0.25,
-        x: 0,
-        onComplete: done
-    })
-}
-function onLeave(el, done) {
-    gsap.to(el, {
-        opacity: 0,
-        delay: el.dataset.index * 0.25,
-        duration: 2,
-        y: -40,
-        onComplete: done
-    })
-}
 
 </script>
 

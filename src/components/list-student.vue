@@ -74,8 +74,7 @@ export default {
 				opacity: 0,
 				x: -20,
 				scaleY: 0.8,
-				delay: el.dataset.index * 0.25,
-				onComplete: done
+
 			})
 		},
 		onEnter(el, done) {
@@ -86,8 +85,8 @@ export default {
 				x: 0,
 				onComplete: done
 			})
-		}
-		, onLeave(el, done) {
+		},
+		onLeave(el, done) {
 			gsap.to(el, {
 				opacity: 0,
 				delay: el.dataset.index * 0.25,

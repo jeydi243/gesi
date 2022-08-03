@@ -1,6 +1,6 @@
 <template>
     <div>
-        Details de l'employee
+        Details de l'employee  {{ $route.params }}
     </div>
 </template>
 

@@ -15,3 +15,38 @@ export function pickFile(idInput) {
   file_input.click()
   file_input.addEventListener("change", onFileChange)
 }
+export function onEnter(el, done) {
+  gsap.to(el, {
+    opacity: 1,
+    duration: 2,
+    x: 0,
+    delay: el.dataset.index * 0.25,
+    onComplete: done,
+  })
+}
+export function onLeave(el, done) {
+  gsap.to(el, {
+    opacity: 0,
+    duration: 2,
+    x: -50,
+    delay: el.dataset.index * 0.25,
+    onComplete: done,
+  })
+}
+export function onBeforeEnter(el, done) {
+  gsap.to(el, {
+    opacity: 0,
+    x: -20,
+    delay: el.dataset.index * 0.25,
+    onComplete: done,
+  })
+}
+export async function goto(to, data = null) {
+  if (data != null) {
+    console.log(`${data._id}`)
+    await router.push({ name: to, params: { id: data } })
+  } else {
+    console.log(`${data} is null`)
+    await router.push({ name: to })
+  }
+}

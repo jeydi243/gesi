@@ -4,7 +4,7 @@
         <div class="card row w-full mb-4 justify-between">
             <span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Employees</span>
             <button @click.prevent="refresh" class="btn-primary">
-                <ArrowCircleDownIcon class="h-5 w-5 text-white" />
+                <RefreshIcon class="h-5 w-5 text-white" />
             </button>
             <button @click="goto('employees-add')" class="btn-primary">
                 <UserAddIcon class="h-5 w-5 text-white" />
@@ -32,7 +32,7 @@
                                         aria-labelledby="dropdownMenuButton1">
                                         <li>
                                             <a class="dropdown-item text-sm py-2 px-2 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                                               href="#" @click="goto('employees-details')">
+                                               href="#" @click="goto('employees-details', emp._id)">
                                                 <UserIcon class="h-5 w-5 inline mr-2" />Voir le profile
                                             </a>
                                         </li>
@@ -89,50 +89,19 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import { mapActions, mapGetters, useStore } from 'vuex'
+import { onBeforeEnter, onEnter, onLeave } from '@/utils/utils'
+import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
-import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, ArrowCircleDownIcon, PencilIcon, UserIcon } from "@heroicons/vue/solid"
+import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
 import AddEmployee from "@/router/views/management/employees/add.vue"
 import { gsap } from "gsap"
 import * as Chance from "chance"
 const chance = new Chance()
 
 const store = useStore()
-
-var showAddEmploye = ref(false)
 const router = useRouter()
-
-
-function onBeforeEnter(el) {
-    gsap.to(el, {
-        opacity: 0,
-        x: -20,
-    })
-}
-
-function changeView() {
-    showAddEmploye.value = !showAddEmploye.value
-}
 const employees = computed(() => store.getters['management/getEmployees'])
-async function goto(to) { await router.push({ name: to }) }
-function onEnter(el, done) {
-    gsap.to(el, {
-        opacity: 1,
-        duration: 2,
-        delay: el.dataset.index * 0.25,
-        x: 0,
-        onComplete: done
-    })
-}
-function onLeave(el, done) {
-    gsap.to(el, {
-        opacity: 0,
-        delay: el.dataset.index * 0.25,
-        duration: 2,
-        y: -40,
-        onComplete: done
-    })
-}
+
 function refresh() {
     store.dispatch('management/getAllEmployees')
 }

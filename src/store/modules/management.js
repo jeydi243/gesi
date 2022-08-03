@@ -31,11 +31,16 @@ export default {
     },
     SET_LIST_EMPLOYEES(state, employees) {
       // loop in employees and add
-      employees.forEach((employee) => {
-        state.employees.unshift(employee)
-        setTimeout(() => {}, 1000)
-      })
-    //   state.employees = employees
+      if (employees.length > 0) {
+        employees.forEach((employee) => {
+          setTimeout(() => {
+            state.employees.unshift(employee)
+          }, 1000)
+        })
+      } else {
+        state.employees = employees
+      }
+      //   state.employees = employees
     },
 
     ADD_DOCUMENT(state, document) {
@@ -155,6 +160,7 @@ export default {
         .catch(console.log)
     },
     getAllEmployees({ commit }) {
+      commit("SET_LIST_EMPLOYEES", [])
       return mgntAPI
         .getEmployees()
         .then((response) => {
@@ -235,8 +241,8 @@ export default {
         })
         .catch(console.log)
     },
-    //FILIERE
 
+    //FILIERE
     addFiliere({ commit }, data) {
       return mgntAPI
         .addFiliere(data)
