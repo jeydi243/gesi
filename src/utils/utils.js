@@ -1,6 +1,10 @@
 import { useToast } from "vue-toastification"
+import router from "@/router"
 import { ref } from "vue"
+import { gsap } from "gsap"
+
 export const toast = useToast()
+
 export const src = ref(null)
 export function onFileChange(event) {
   if (event.target.files && event.target.files[0]) {
@@ -43,7 +47,7 @@ export function onBeforeEnter(el, done) {
 }
 export async function goto(to, data = null) {
   if (data != null) {
-    console.log(`${data._id}`)
+    console.log(`${data}`)
     await router.push({ name: to, params: { id: data } })
   } else {
     console.log(`${data} is null`)

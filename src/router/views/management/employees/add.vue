@@ -264,7 +264,8 @@ export default {
                 var result = await this.addEmployee(other);
                 if (result) {
                     this.isLoading = !this.isLoading
-                    toast.success('Le monde est beau')
+                    toast.success('Employee added successfully !')
+                    this.$router.back()
                 } else {
                     toast.error(`Error:  ${result}`)
                 }

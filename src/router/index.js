@@ -83,7 +83,7 @@ const employeesRoutes = {
     {
       path: ":id",
       name: "employees-details",
-      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details.vue"),
+      component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/details_emp.vue"),
     },
     {
       path: "update/:id",
@@ -195,7 +195,7 @@ router.afterEach((to, from, failure) => {
   } else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
     console.error(`${failure.message}.`)
   } else {
-    console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? to.params : ""}`)
+    console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? JSON.stringify(to.params) : ""}`)
   }
 })
 export default router

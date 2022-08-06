@@ -43,5 +43,8 @@ export default {
   getEmployees: async function () {
     return axios.get(`${this.routeEmployees}`)
   },
+  employeeBy: async function (id) {
+    return axios.get(`${this.routeEmployees}`, { params: { id } })
+  },
 }
 const documents = {}

@@ -89,7 +89,7 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import { onBeforeEnter, onEnter, onLeave } from '@/utils/utils'
+import { onBeforeEnter, onEnter, onLeave, goto } from '@/utils/utils'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
@@ -99,7 +99,7 @@ import * as Chance from "chance"
 const chance = new Chance()
 
 const store = useStore()
-const router = useRouter()
+
 const employees = computed(() => store.getters['management/getEmployees'])
 
 function refresh() {
