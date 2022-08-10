@@ -45,7 +45,6 @@ export default {
 		}
 	},
 	mounted() {
-		console.log("On mounted go to ", this.currentTab)
 		this.goto(`${this.currentTab}-index`)
 	},
 	methods: {

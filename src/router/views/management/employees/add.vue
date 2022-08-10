@@ -64,39 +64,47 @@
                         <p class="input-error">{{ message }}</p>
                     </ErrorMessage>
                 </fieldset>
+                <div>
+                    <fieldset class="border-2 border-blue-50 rounded-lg px-2 py-4">
+                        <legend class="italic text-blue-400 pr-3">Education</legend>
+                        <Field placeholder="School Name" id="school_name" name="school_name" class="w-full form-input" />
+                        <ErrorMessage name="school_name" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
+                        <Field type="text" placeholder="Diploma name" id="school_diploma_name" name="school_diploma_name" class="w-full form-input" />
+                        <ErrorMessage name="school_diploma_name" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
 
-                <fieldset class="border-2 border-blue-50 rounded-lg px-2 py-4">
-                    <legend class="italic text-blue-400 pr-3">Education</legend>
-                    <Field placeholder="School Name" id="school_name" name="school_name" class="w-full form-input" />
-                    <ErrorMessage name="school_name" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
-                    <Field type="text" placeholder="Diploma name" id="school_diploma_name" name="school_diploma_name" class="w-full form-input" />
-                    <ErrorMessage name="school_diploma_name" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
+                        <Field name="school_start_date" type="date" placeholder="Start date" class="w-full form-input" />
+                        <ErrorMessage name="school_start_date" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
+                        <!-- <ArrowRightIcon class="h-5 w-5 text-green-400" /> -->
+                        <Field name="school_end_date" type="date" placeholder="End date" class="w-full form-input" />
+                        <ErrorMessage name="school_end_date" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
 
-                    <Field name="school_start_date" type="date" placeholder="Start date" class="w-full form-input" />
-                    <ErrorMessage name="school_start_date" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
-                    <!-- <ArrowRightIcon class="h-5 w-5 text-green-400" /> -->
-                    <Field name="school_end_date" type="date" placeholder="End date" class="w-full form-input" />
-                    <ErrorMessage name="school_end_date" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
-
-                    <Field v-slot="{ handleChange, handleBlur }" name="school_diploma_file">
-                        <input type="file" @change="handleChange" accept=".pdf" @blur="handleBlur" class="block w-full form-file" />
-                    </Field>
-                    <ErrorMessage name="school_diploma_file" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
-                    <Field name="domain" type="text" placeholder="Domain Tag" class="w-full form-input" />
-                    <ErrorMessage name="domain" v-slot="{ message }">
-                        <p class="input-error">{{ message }}</p>
-                    </ErrorMessage>
-                </fieldset>
+                        <Field v-slot="{ handleChange, handleBlur }" name="school_diploma_file">
+                            <input type="file" @change="handleChange" accept=".pdf" @blur="handleBlur" class="block w-full form-file" />
+                        </Field>
+                        <ErrorMessage name="school_diploma_file" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
+                        <Field name="domain" type="text" placeholder="Domain Tag" class="w-full form-input" />
+                        <ErrorMessage name="domain" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
+                    </fieldset>
+                    <fieldset class="border-2 border-blue-50 rounded-lg px-2 py-4">
+                        <legend class="italic text-blue-400 pr-3">Hire</legend>
+                        <Field name="hire_date" type="date" placeholder="Hire date" class="w-full form-input" />
+                        <ErrorMessage name="hire_date" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
+                    </fieldset>
+                </div>
             </div>
             <fieldset class="border-2 border-sky-500 rounded-lg px-2 py-4">
                 <legend class="italic text-yellow-600 pr-3">Applications</legend>
@@ -158,6 +166,7 @@ export default {
             school_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "School name is required" },
             domain(value) { return isLength(value, { min: 2, max: 20 }) ? true : "domain must be provided" },
             school_end_date(value) { return isDate(parseISO(value)) ? true : "End date must be provided" },
+            hire_date(value) { return isDate(parseISO(value)) ? true : "Hire date must be provided" },
             school_start_date(value) { return isDate(parseISO(value)) ? true : "Start date must be provided" },
             school_diploma_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name must be between 2 and 20 characters" },
             cover_letter(value) { return isLength(value, { min: 50, max: 500 }) ? true : "Cover letter must be between 150 and 500 characters" },
@@ -183,7 +192,7 @@ export default {
         }
         const employeeValues = {
             address: chance.address(),
-            birthday: new Date(1999, 10, 10),
+            birthday: new Date("10/10/1999"),
             first_name: chance.name({ middle: false, nationality: 'en' }),
             middle_name: chance.name({ middle: false }),
             last_name: chance.last(),
@@ -198,7 +207,8 @@ export default {
             school_name: 'School Maadini',
             cover_letter: chance.sentence({ words: 50 }),
             school_end_date: new Date(2022, 5, 5),
-            school_start_date: new Date("01/01/2022"),
+            hire_date: new Date("10/10/2010"),
+            school_start_date: new Date("01/01/2019"),
             school_diploma_name: "Computer science",
             school_diploma_file: 'null',
         }

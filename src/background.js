@@ -1,6 +1,6 @@
 "use strict"
 
-import { app, protocol, BrowserWindow, ipcMain as main } from "electron"
+import { app, protocol, BrowserWindow, ipcMain as main, dialog } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
@@ -20,7 +20,7 @@ async function createWindow(height, width, x, y) {
     height,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: !true,
+      contextIsolation: false,
       enableRemoteModule: true,
       //   preload: path.join(__dirname, "preload.js"),
     },
@@ -35,8 +35,44 @@ async function createWindow(height, width, x, y) {
     win.loadURL("app://./index.html")
   }
   win.show()
-  win.webContents.on("did-finish-load", () => {
-    //doing sheet
+  const { webContents } = win
+
+  webContents.on("dom-ready", function (event) {
+    console.log("Dom is ready...")
+    win.webContents.send("ping", "whoooooooh!")
+  })
+  webContents.on("did-finish-load", function () {
+    console.log("Finish Load...")
+    win.webContents.send("ping", "whoooooooh!")
+  })
+  webContents.on("will-navigate", () => {
+    console.log("Will navigate...")
+  })
+  webContents.on("plugin-crashed", (event, name, version) => {
+    console.log("Plugin crashed  ...", { version }, { name })
+  })
+  webContents.on("console-message", (level, line, message) => {
+    console.log("On console message  ...", { message })
+  })
+  webContents.on("ipc-message", (event, channel, ...args) => {
+    console.log("IPCRenderer send message  ...", args)
+  })
+  webContents.on("context-menu", (event, { x, y, frame, mediaType }) => {
+    console.log("Want to see context menu", { x }, { y }, { frame }, { mediaType })
+  })
+  webContents.on("will-prevent-unload", (event) => {
+    const choice = dialog.showMessageBoxSync(win, {
+      type: "question",
+      buttons: ["Leave", "Stay"],
+      title: "Do you want to leave this site?",
+      message: "Changes you made may not be saved.",
+      defaultId: 0,
+      cancelId: 1,
+    })
+    const leave = choice === 0
+    if (leave) {
+      event.preventDefault()
+    }
   })
 }
 
@@ -44,6 +80,19 @@ async function createWindow(height, width, x, y) {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit()
+  } else {
+    const choice = dialog.showMessageBoxSync(win, {
+      type: "question",
+      buttons: ["Leave", "Stay"],
+      title: "Do you want to leave this site?",
+      message: "Changes you made may not be saved.",
+      defaultId: 0,
+      cancelId: 1,
+    })
+    const leave = choice === 0
+    if (leave) {
+      event.preventDefault()
+    }
   }
 })
 
