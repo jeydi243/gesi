@@ -4,6 +4,11 @@ module.exports = {
       headers: { "Access-Control-Allow-Origin": "*" },
     },
   },
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true,
+    },
+  },
   chainWebpack: (config) => {
     config.module
       .rule("vue")

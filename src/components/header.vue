@@ -3,6 +3,15 @@
 		<header
 				class="sticky top-0 right-0 z-10 flex w-full h-[6%] bg-white text-black items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
 			<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
+			<nav class="rounded-md w-full">
+				<ol class="list-reset flex">
+					<li><a href="#" class="text-blue-600 hover:text-blue-700">Home</a></li>
+					<li><span class="text-gray-500 mx-2">/</span></li>
+					<li><a href="#" class="text-blue-600 hover:text-blue-700">Library</a></li>
+					<li><span class="text-gray-500 mx-2">/</span></li>
+					<li class="text-gray-500">Data</li>
+				</ol>
+			</nav>
 			<div class="relative row space-x-5">
 				<!-- Dropdown toggle button -->
 				<button id="toggle-dropdown" class="btn-header" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,14 +32,6 @@
 							  clip-rule="evenodd" />
 					</svg>
 				</button>
-
-				<!-- Dropdown menu -->
-				<!-- <div class="dropdown-menu hidden absolute z-50 " aria-labelledby="toggle-dropdown">
-				<span href="#" class="dropdown-item" @click="goto('profile')">Profile</span>
-				<span href="#" class="dropdown-item" @click="goto('index-settings')">Settings</span>
-				<span class="dropdown-separator"></span>
-				<span href="#" class="dropdown-item-sensible" @click="goto('login')">Sign Out</span>
-			</div> -->
 				<ul class="dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 m-0 bg-clip-padding border-none"
 					aria-labelledby="dropdownMenuButton1">
 					<li>
@@ -79,7 +80,7 @@ export default {
 			await this.$router.push({ name })
 		},
 		back() {
-			this.$router.back()
+			this.$router.push(-1)
 		},
 	},
 }

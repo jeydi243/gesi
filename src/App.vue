@@ -1,26 +1,10 @@
 <template>
 	<div id="app" class=" h-screen w-screen">
-		<!-- <transition name="fade" mode="out-in">
-			<Layout v-if="layout == 'main'" key="main" class="h-screen w-screen">
-				<router-view v-slot="{ Component }">
-					<transition name="fadeSlideX" mode="out-in">
-						<component :is="Component" />
-					</transition>
-				</router-view>
-			</Layout>
-			<Auth v-else-if="layout == 'auth'" key="auth" class="h-screen w-screen">
-				<router-view v-slot="{ Component }">
-					<Transition name="fadeSlideX" mode="out-in">
-						<component :is="Component" />
-					</Transition>
-				</router-view>
-			</Auth>
-		</transition> -->
 		<div class="row h-full w-full" v-bind="$attrs">
 			<SideBar class="flex w-[15%] h-full bg-gray-900" />
 			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
 				<Header />
-				{{ $route.path }}
+				<!-- {{ $route.path }} -->
 				<BreadCrumbs v-if="showBraedCrumbs" />
 				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
 					<router-view v-slot="{ Component }">
@@ -35,28 +19,29 @@
 	</div>
 </template>
 <script setup>
-// import Layout from "@/router/layouts/main";
-// import Auth from "@/router/layouts/auth";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import SideBar from "@/components/side";
 import BreadCrumbs from "@/components/breadcrumbs";
-//import useStore
 import { useStore } from "vuex";
 import { watch, ref, onMounted } from "vue";
-import { mapActions, mapGetters } from "vuex";
-import { useIdle } from '@vueuse/core'
+import { useIpcRendererOn } from '@vueuse/electron'
 import { useRoute } from 'vue-router';
 const store = useStore()
 const route = useRoute()
-
 let showBraedCrumbs = ref(false)
+
+useIpcRendererOn('ping', (event, ...args) => {
+	console.log(args)
+})
 
 watch(() => route, function ({ meta, fullPath }) {
 	console.log('Hum');
 	changeLayout(meta.layout)
 	this.changeActive(fullPath.split("/")[1]);
 })
+
+
 
 </script>
 <style>

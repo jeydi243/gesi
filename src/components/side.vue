@@ -3,7 +3,7 @@
 		<!-- {{ getRootName }} -->
 		<div class="flex flex-col place-items-center w-full mt-1">
 			<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
-				<router-link :to="item.to" @hover="item.mouseHover = !item.mouseHover" v-for="(item, index) in listSideMenus" :data-index="index" :key="index" class="router-link"
+				<router-link data-mdb-ripple="true" data-mdb-ripple-color="success" :to="item.to" @hover="item.mouseHover = !item.mouseHover" v-for="(item, index) in listSideMenus" :data-index="index" :key="index" class="router-link"
 							 :class="{ 'router-link-active': item.active }">
 					<box-icon type="regular" :name="item.icon" color="white"></box-icon>
 
@@ -16,7 +16,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { BeakerIcon } from "@heroicons/vue/solid";
 export default {
 	name: "sideLeft",
 	data() {
