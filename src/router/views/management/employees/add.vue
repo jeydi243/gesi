@@ -147,7 +147,7 @@ import { isLength, isDate, isEmail } from "validator"
 import { toast, src } from "@/utils/utils";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import * as Chance from "chance"
-import { mapActions } from "vuex";
+import { mapActions } from "pinia";
 // const { isLoading } = useNProgress()
 const chance = new Chance()
 

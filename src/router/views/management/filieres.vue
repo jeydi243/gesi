@@ -8,7 +8,6 @@
 			</button>
 		</div>
 		<div class=" h-4/5 pl-4">
-
 			<div class="grid grid-cols-3 gap-4 auto-cols-min w-full h-full">
 				<div v-for="(item, indexFiliere) in filieres" :key="indexFiliere" class="rounded-lg select-none ">
 					<div class="flex justify-center">
@@ -90,7 +89,7 @@
 </template>
 
 <script >
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "pinia";
 import * as yup from "yup";
 import MyModal from "@/components/mymodal";
 import { AtomSpinner } from "epic-spinners";
@@ -180,7 +179,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters('management',['getEmployees'])
+		...mapState('management', ['getEmployees'])
 	},
 	methods: {
 		...mapActions('management', ['addFiliere']),

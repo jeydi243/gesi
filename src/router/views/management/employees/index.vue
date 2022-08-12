@@ -20,20 +20,20 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
+import { useManagement } from '@/store/management'
 import { UseOnline } from "@vueuse/components"
 import { onLeaveTop, onEnter, onBeforeEnter } from "@/utils/utils"
 import { ref, computed } from "vue"
 import * as Chance from "chance"
 const chance = new Chance()
 
-const store = useStore()
+const store = useManagement()
 var showAddEmploye = ref(false)
 
-const employees = computed(() => store.getters['management/getEmployees'])
+const employees = computed(() => store.getEmployees)
 
 function refresh() {
-    store.dispatch('management/getAllEmployees')
+    store.getAllEmployees()
 }
 </script>
 

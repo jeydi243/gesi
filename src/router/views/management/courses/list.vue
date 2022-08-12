@@ -38,7 +38,7 @@
 
 <script setup>
 import * as Chance from "chance"
-import { mapActions, mapGetters, useStore } from 'vuex'
+import { mapActions, mapState } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import { onBeforeEnter, onEnter, onLeave, goto } from '@/utils/utils'
 const chance = new Chance()

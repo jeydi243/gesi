@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "pinia";
 import ListStudent from "@/components/list-student.vue";
 import { useIpcRenderer } from "@vueuse/electron";
 const ipcRenderer = useIpcRenderer();
@@ -30,8 +30,8 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters("students", { students: "mystudents" }),
-		...mapGetters({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
+		...mapState("students", { students: "mystudents" }),
+		...mapState({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
 	},
 	watch: {
 		currentTabLevel: function (newVal, oldVal) {
@@ -51,7 +51,7 @@ export default {
 	},
 	methods: {
 		...mapActions("students", ["getAllStudents"]),
-		...mapMutations({ changeLevel: "CHANGE_LEVEL_MENU" }),
+		...mapActions(['changeLevel']),
 		async goto(index) {
 			return await this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });
 		},

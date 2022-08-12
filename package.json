@@ -41,6 +41,7 @@
     "epic-spinners": "^1.1.0",
     "gsap": "^3.9.1",
     "node-watch": "^0.7.3",
+    "pinia": "^2.0.18",
     "postcss": "^8.4.12",
     "tw-elements": "^1.0.0-alpha12",
     "v-calendar": "^3.0.0-alpha.8",
@@ -56,8 +57,6 @@
     "vue-sweetalert2": "^5.0.2",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-apexcharts": "^1.4.1",
-    "vuex": "^4.0.2",
-    "vuex-composition-helpers": "^1.1.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

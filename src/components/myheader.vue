@@ -1,7 +1,7 @@
 <template>
 	<header
 			class="sticky top-0 right-0 z-10 flex w-full h-[6%] bg-white text-black select-none items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
-		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="back" />
+		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="goto" />
 		<nav class="rounded-md w-full">
 			<ol class="list-reset flex">
 				<li><a href="#" class="text-blue-600 hover:text-blue-700">Home</a></li>
@@ -57,15 +57,15 @@
 </template>
 
 <script setup>
-import { mapActions } from "vuex"
+import { mapActions } from "pinia"
+import { useAuthentication } from "@/store/authentication"
 import { ArrowLeftIcon } from "@heroicons/vue/solid"
+import { ref, computed } from "vue"
 import { goto } from "@/utils/utils"
 
 const dropdown = ref(null)
-// mapactions from module authentication to component header
-mapActions("authentication", ["logout"])
 
-
+mapActions(useAuthentication,["logout"])
 </script>
 
 <style lang="scss" scoped>

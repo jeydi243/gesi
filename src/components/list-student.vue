@@ -44,9 +44,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "pinia";
 import { UserAddIcon, SearchIcon, RefreshIcon } from "@heroicons/vue/solid";
 import { gsap } from "gsap";
+import { goto, onBeforeEnter, onEnter, onLeave } from "@/utils/utils";
 export default {
 	name: "list-student",
 	components: {
@@ -59,8 +60,8 @@ export default {
 	},
 
 	computed: {
-		...mapGetters("students", { students: "mystudents" }),
-		...mapGetters({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
+		...mapState("students", { students: "mystudents" }),
+		...mapState({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
 	},
 	methods: {
 		...mapActions("students", {
@@ -69,32 +70,7 @@ export default {
 		async goto(index) {
 			return this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });
 		},
-		onBeforeEnter(el, done) {
-			gsap.to(el, {
-				opacity: 0,
-				x: -20,
-				scaleY: 0.8,
 
-			})
-		},
-		onEnter(el, done) {
-			gsap.to(el, {
-				opacity: 1,
-				duration: 2,
-				delay: el.dataset.index * 0.25,
-				x: 0,
-				onComplete: done
-			})
-		},
-		onLeave(el, done) {
-			gsap.to(el, {
-				opacity: 0,
-				delay: el.dataset.index * 0.25,
-				duration: 2,
-				y: -40,
-				onComplete: done
-			})
-		}
 	},
 };
 </script>

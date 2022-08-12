@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "pinia";
 export default {
 	name: "list-teachers",
 	data() {
@@ -50,7 +50,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters("teachers", { teachers: "myteachers" }),
+		...mapState("teachers", { teachers: "myteachers" }),
 	},
 	methods: {
 		async goto(index) {

@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapActions, mapState } from "pinia"
 import { gsap, Elastic } from 'gsap';
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { AtomSpinner, PixelSpinner } from 'epic-spinners'
@@ -89,10 +89,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
+        ...mapState({
             layoute: "getLayout"
         }),
-        ...mapGetters('authentication', {
+        ...mapState('authentication', {
             token: "getToken",
             authresponse: "getAuthResponse",
         }),

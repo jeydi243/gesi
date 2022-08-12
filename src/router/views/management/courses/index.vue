@@ -12,7 +12,7 @@
 
 <script >
 import { gsap } from "gsap";
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import * as Chance from "chance"
 const chance = new Chance()
 export default {
@@ -21,7 +21,7 @@ export default {
 		return { chance };
 	},
 	computed: {
-		...mapGetters("gestion", ["getCourses"]),
+		...mapState("gestion", ["getCourses"]),
 	},
 	methods: {
 		onEnter(el, done) {

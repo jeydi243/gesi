@@ -10,7 +10,7 @@
 </template>
 
 <script >
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "pinia";
 export default {
 	name: "index-academique",
 	data() {

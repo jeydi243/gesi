@@ -1,5 +1,4 @@
 import App from "./App.vue"
-import store from "./store/index"
 import router from "./router"
 import VueApexCharts from "vue3-apexcharts"
 import VueSweetalert2 from "vue-sweetalert2"
@@ -7,7 +6,7 @@ import Toast from "vue-toastification"
 import { useToast } from "vue-toastification"
 import { vfmPlugin } from "vue-final-modal"
 import { createApp } from "vue"
-
+import { createPinia } from 'pinia'
 import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
@@ -22,6 +21,7 @@ const optionsSweetAlert = {
   confirmButtonColor: "#41b882",
   cancelButtonColor: "#ff7674",
 }
+const pinia = createPinia()
 
 const app = createApp(App)
   .use(router)
@@ -32,7 +32,7 @@ const app = createApp(App)
       dynamicContainerName: "modal-content",
     })
   )
-  .use(store)
+  .use(pinia)
   .use(Toast)
   .use(VCalendar, {
     componentPrefix: "vc",

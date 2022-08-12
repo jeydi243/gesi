@@ -6,7 +6,7 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import { mapActions, mapGetters, useStore } from 'vuex'
+import { mapActions, mapState } from 'pinia'
 
 
 

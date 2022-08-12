@@ -10,7 +10,8 @@
 
 			<p class="text-base pb-4">
 				Laboris sint irure culpa elit pariatur adipisicing ullamco. Exercitation occaecat commodo duis esse id laborum ut incididunt ipsum eiusmod mollit culpa veniam nisi. Mollit Lorem labore et voluptate sit laboris occaecat sit. Ut non do cillum cillum voluptate tempor consectetur. Labore sunt incididunt nulla elit aliquip dolore enim. Enim sint anim sit ullamco
-				dolor sunt adipisicing laboris aute in.</p>
+				dolor sunt adipisicing laboris aute in.
+			</p>
 			<div class="flex flex-row justify-between pb-2">
 				<div class="relative flex w-72 flex-wrap items-stretch">
 					<span class="z-10 flex h-full font-normal text-center self-center caret-green-500 text-gray-300 absolute bg-transparent rounded text-base items-center justify-center ">
@@ -112,7 +113,7 @@ import * as yup from "yup";
 import { toast } from "@/utils/utils";
 import { AtomSpinner } from "epic-spinners";
 import MyModal from "@/components/mymodal";
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "pinia";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon } from "@heroicons/vue/solid";
 
@@ -144,7 +145,7 @@ export default {
 			initialDocValue: { name: "Bulletin 5eme secondaire", code: "AX-2022", description: "" },
 		};
 	},
-	computed: { ...mapGetters("management", ["getListDocuments", "errorCall"]) },
+	computed: { ...mapState("management", ["getListDocuments", "errorCall"]) },
 	created() {
 		window.onclick = (e) => {
 			if (e.target.id !== "toggle-dropdown" && this.dropdown) {

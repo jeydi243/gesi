@@ -92,20 +92,21 @@
 <script setup>
 import { ref, computed } from "vue"
 import { onBeforeEnter, onEnter, onLeave, goto } from '@/utils/utils'
-import { useStore } from 'vuex'
+import { useManagement } from '@/store/management'
 import { useRouter, useRoute } from 'vue-router'
 import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
 import AddEmployee from "@/router/views/management/employees/add.vue"
 import { gsap } from "gsap"
 import * as Chance from "chance"
+
 const chance = new Chance()
 
-const store = useStore()
+const store = useManagement()
 
-const employees = computed(() => store.getters['management/getEmployees'])
+const employees = computed(() => store.getEmployees)
 
 function refresh() {
-    store.dispatch('management/getAllEmployees')
+    store.getAllEmployees()
 }
 </script>
 

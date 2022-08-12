@@ -3,7 +3,7 @@
 		<div class="row h-full w-full" v-bind="$attrs">
 			<SideBar class="flex w-[15%] h-full bg-gray-900" />
 			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
-				<Header />
+				<MyHeader />
 				<!-- {{ $route.path }} -->
 				<BreadCrumbs v-if="showBraedCrumbs" />
 				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
@@ -20,14 +20,13 @@
 </template>
 <script setup>
 import Footer from "@/components/footer";
-import Header from "@/components/header";
+import MyHeader from "@/components/myheader";
 import SideBar from "@/components/side";
 import BreadCrumbs from "@/components/breadcrumbs";
-import { useStore } from "vuex";
 import { watch, ref, onMounted } from "vue";
 import { useIpcRendererOn } from '@vueuse/electron'
 import { useRoute } from 'vue-router';
-const store = useStore()
+
 const route = useRoute()
 let showBraedCrumbs = ref(false)
 
