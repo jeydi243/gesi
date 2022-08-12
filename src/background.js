@@ -11,7 +11,6 @@ let win = null
 protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }])
 
 async function createWindow(height, width, x, y) {
-  console.log("process.env.ELECTRON_NODE_INTEGRATION: ", !process.env.ELECTRON_NODE_INTEGRATION)
   win = new BrowserWindow({
     autoHideMenuBar: true,
     width,
@@ -19,8 +18,8 @@ async function createWindow(height, width, x, y) {
     y,
     height,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
       enableRemoteModule: true,
       //   preload: path.join(__dirname, "preload.js"),
     },
@@ -31,8 +30,7 @@ async function createWindow(height, width, x, y) {
     // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol("app")
-    // Load the index.html when not in development
-    win.loadURL("app://./index.html")
+    await win.loadURL("app://./index.html")
   }
   win.show()
   const { webContents } = win
@@ -51,9 +49,9 @@ async function createWindow(height, width, x, y) {
   webContents.on("plugin-crashed", (event, name, version) => {
     console.log("Plugin crashed  ...", { version }, { name })
   })
-  webContents.on("console-message", (level, line, message) => {
-    console.log("On console message  ...", { message })
-  })
+  //   webContents.on("console-message", (level, line, message) => {
+  //     console.log("On console message  ...", { message })
+  //   })
   webContents.on("ipc-message", (event, channel, ...args) => {
     console.log("IPCRenderer send message  ...", args)
   })
@@ -96,6 +94,7 @@ app.on("window-all-closed", () => {
   }
 })
 
+
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow(600, 800)
 })
@@ -116,7 +115,7 @@ async function installDevTools() {
     }
   }
 }
-function whichScreen() {
+async function whichScreen() {
   const { screen } = require("electron")
   const primaryDisplay = screen.getPrimaryDisplay()
   var { x, y } = primaryDisplay.bounds
@@ -132,7 +131,7 @@ function whichScreen() {
     x = externalDisplay.bounds.x
     y = externalDisplay.bounds.y
   }
-  createWindow(height, width, x, y)
+  await createWindow(height, width, x, y)
 }
 
 // Exit cleanly on request from parent process in development mode.
@@ -149,8 +148,16 @@ if (isDevelopment) {
     })
   }
 }
-
-main.on("hello", (event) => {
-  console.log("Child say hello")
-  console.log(event.sender)
+main.handle("quit-app", () => {
+  const choice = dialog.showMessageBoxSync(win, {
+    type: "question",
+    buttons: ["Leave", "Stay"],
+    title: "Do you want to leave this site?",
+    message: "Changes you made may not be saved.",
+    defaultId: 1,
+    cancelId: 0,
+  })
+  if (choice === 0) {
+    app.quit()
+  }
 })

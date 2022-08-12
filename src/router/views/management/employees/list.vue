@@ -3,13 +3,15 @@
     <div class="flex flex-col justify-between">
         <div class="card row w-full mb-4 justify-between">
             <span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Employees</span>
-            <button @click.prevent="refresh" class="btn-primary">
-                <RefreshIcon class="h-5 w-5 text-white" />
-            </button>
-            <button @click="goto('employees-add')" class="btn-primary">
-                <UserAddIcon class="h-5 w-5 text-white" />
-                <span class="self-center ml-2">Add employee</span>
-            </button>
+            <div class="row">
+                <button @click.prevent="refresh" class="btn-primary">
+                    <RefreshIcon class="h-5 w-5 text-white" />
+                </button>
+                <button @click="goto('employees-add')" class="btn-primary">
+                    <UserAddIcon class="h-5 w-5 text-white" />
+                    <span class="self-center ml-2">Add employee</span>
+                </button>
+            </div>
         </div>
         <div class="grid lg:grid-cols-5 md:grid-cols-3 xs:grid-cols-1 gap-4 auto-cols-min w-full h-full">
             <TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">

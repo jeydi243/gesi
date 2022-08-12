@@ -46,5 +46,15 @@ export default {
   employeeBy: async function (id) {
     return axios.get(`${this.routeEmployees}`, { params: { id } })
   },
+
+  addEducation: async function (id, education) {
+    return axios.post(`${this.routeEmployees}/${id}/add_education`, education)
+  },
+  deleteEducation: async function (id, educationID) {
+    return axios.delete(`${this.routeEmployees}/${id}/delete_education`, { params: { educationID } })
+  },
+  deleteEmployee: async function (employeeID) {
+    return axios.delete(`${this.routeEmployees}/${employeeID}`)
+  },
 }
 const documents = {}

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="flex border-b border-gray-200 mb-2">
+		<div class="flex border-b border-gray-200 mb-2 select-none">
 			<a v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</a>
 		</div>
 		<div class="contentTab h-full w-full">
@@ -22,11 +22,11 @@ export default {
 		return {
 			isloading: "",
 			tabsGestion: [
-				{ name: "academique", current: true },
+				{ name: "academique", current: false },
 				{ name: "courses", current: false },
 				{ name: "filieres", current: false },
 				{ name: "documents", current: false },
-				{ name: "employees", current: false },
+				{ name: "employees", current: true },
 			],
 		};
 	},
@@ -45,7 +45,11 @@ export default {
 		}
 	},
 	mounted() {
-		this.goto(`${this.currentTab}-index`)
+		if (this.currentTab == "employees") {
+			this.goto(`${this.currentTab}-list`)
+		} else {
+			this.goto(`${this.currentTab}-index`)
+		}
 	},
 	methods: {
 		changeTab(indexTab) {

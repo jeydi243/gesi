@@ -33,9 +33,8 @@ export default {
       // loop in employees and add
       if (employees.length > 0) {
         employees.forEach((employee) => {
-          setTimeout(() => {
-            state.employees.unshift(employee)
-          }, 1000)
+          state.employees.unshift(employee)
+          setTimeout(() => {}, 1000)
         })
       } else {
         state.employees = employees

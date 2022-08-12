@@ -44,6 +44,9 @@ app.config.globalProperties.filters = {
   firstUpper(value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
   },
+  toiso(value) {
+    return new Date(value).getFullYear()
+  },
 }
 app.config.globalProperties.toast = useToast()
 

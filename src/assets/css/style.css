@@ -455,7 +455,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border, .border-0, .border-2, .border-\[1px\], .border-t-2, .border-t-0, .border-l-4, .border-b, .border-l, .router-link, .router-link-active, .profile-square, .file-picker, .document, .document-other, .divider, .g-input-text, .form-file::file-selector-button, .form-input, .form-select, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button, .md\:border-l-0, .md\:border-t{
+.border, .border-0, .border-2, .border-\[1px\], .border-l-4, .border-t-2, .border-t-0, .border-b, .border-l, .router-link, .router-link-active, .profile-square, .file-picker, .document, .document-other, .divider, .g-input-text, .form-file::file-selector-button, .form-input, .form-select, .form-textarea, .btn-tab, .btn-header, .file\:border-0::file-selector-button, .md\:border-l-0, .md\:border-t{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -4126,16 +4126,16 @@ textarea.form-control.is-invalid{
   position: sticky;
 }
 
-.top-0{
-  top: 0px;
+.bottom-0{
+  bottom: 0px;
 }
 
 .right-0{
   right: 0px;
 }
 
-.bottom-0{
-  bottom: 0px;
+.top-0{
+  top: 0px;
 }
 
 .left-0{
@@ -4202,6 +4202,11 @@ textarea.form-control.is-invalid{
 .my-auto{
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.my-5{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .ml-2{
@@ -4300,6 +4305,14 @@ textarea.form-control.is-invalid{
   margin-bottom: 0.25rem;
 }
 
+.-ml-3{
+  margin-left: -0.75rem;
+}
+
+.ml-3{
+  margin-left: 0.75rem;
+}
+
 .block{
   display: block;
 }
@@ -4352,24 +4365,24 @@ textarea.form-control.is-invalid{
   height: 90%;
 }
 
-.h-\[6\%\]{
-  height: 6%;
+.h-\[80px\]{
+  height: 80px;
 }
 
 .h-5{
   height: 1.25rem;
 }
 
-.h-0{
-  height: 0px;
-}
-
-.h-\[80px\]{
-  height: 80px;
-}
-
 .h-\[4\%\]{
   height: 4%;
+}
+
+.h-\[6\%\]{
+  height: 6%;
+}
+
+.h-0{
+  height: 0px;
 }
 
 .h-auto{
@@ -4746,6 +4759,12 @@ textarea.form-control.is-invalid{
   margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-y-2 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
 .space-x-6 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1.5rem * var(--tw-space-x-reverse));
@@ -4792,12 +4811,12 @@ textarea.form-control.is-invalid{
   overflow-wrap: break-word;
 }
 
-.rounded-md{
-  border-radius: 0.375rem;
-}
-
 .rounded-lg{
   border-radius: 0.5rem;
+}
+
+.rounded-md{
+  border-radius: 0.375rem;
 }
 
 .rounded{
@@ -4837,6 +4856,14 @@ textarea.form-control.is-invalid{
   border-bottom-right-radius: 0.375rem;
 }
 
+.rounded-tl-md{
+  border-top-left-radius: 0.375rem;
+}
+
+.rounded-br-sm{
+  border-bottom-right-radius: 0.125rem;
+}
+
 .rounded-bl-sm{
   border-bottom-left-radius: 0.125rem;
 }
@@ -4857,16 +4884,16 @@ textarea.form-control.is-invalid{
   border-width: 1px;
 }
 
+.border-l-4{
+  border-left-width: 4px;
+}
+
 .border-t-2{
   border-top-width: 2px;
 }
 
 .border-t-0{
   border-top-width: 0px;
-}
-
-.border-l-4{
-  border-left-width: 4px;
 }
 
 .border-b{
@@ -4889,14 +4916,14 @@ textarea.form-control.is-invalid{
   border-style: none;
 }
 
-.border-gray-700{
-  --tw-border-opacity: 1;
-  border-color: rgb(55 65 81 / var(--tw-border-opacity));
-}
-
 .border-green-500{
   --tw-border-opacity: 1;
   border-color: rgb(16 185 129 / var(--tw-border-opacity));
+}
+
+.border-gray-700{
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity));
 }
 
 .border-gray-200{
@@ -4964,15 +4991,6 @@ textarea.form-control.is-invalid{
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.bg-white{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-transparent{
-  background-color: transparent;
-}
-
 .bg-green-100{
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
@@ -4981,6 +4999,15 @@ textarea.form-control.is-invalid{
 .bg-green-500{
   --tw-bg-opacity: 1;
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-transparent{
+  background-color: transparent;
 }
 
 .bg-green-50{
@@ -5036,6 +5063,31 @@ textarea.form-control.is-invalid{
 .bg-green-300{
   --tw-bg-opacity: 1;
   background-color: rgb(110 231 183 / var(--tw-bg-opacity));
+}
+
+.bg-red-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
+.bg-red-900{
+  --tw-bg-opacity: 1;
+  background-color: rgb(127 29 29 / var(--tw-bg-opacity));
+}
+
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
+.bg-green-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(52 211 153 / var(--tw-bg-opacity));
+}
+
+.bg-blue-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-tr{
@@ -5294,6 +5346,21 @@ textarea.form-control.is-invalid{
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-green-700{
+  --tw-text-opacity: 1;
+  color: rgb(4 120 87 / var(--tw-text-opacity));
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .text-green-600{
   --tw-text-opacity: 1;
   color: rgb(5 150 105 / var(--tw-text-opacity));
@@ -5302,11 +5369,6 @@ textarea.form-control.is-invalid{
 .text-blue-600{
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-
-.text-gray-500{
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .text-gray-800{
@@ -5322,16 +5384,6 @@ textarea.form-control.is-invalid{
 .text-red-700{
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity));
-}
-
-.text-green-700{
-  --tw-text-opacity: 1;
-  color: rgb(4 120 87 / var(--tw-text-opacity));
-}
-
-.text-white{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-gray-300{
@@ -5533,6 +5585,10 @@ textarea.form-control.is-invalid{
 
 .ease-in-out{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ease-in{
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
 *{
@@ -7244,8 +7300,16 @@ input:valid + span:after {
     flex-direction: row;
   }
 
+  .md\:justify-start{
+    justify-content: flex-start;
+  }
+
   .md\:justify-center{
     justify-content: center;
+  }
+
+  .md\:justify-between{
+    justify-content: space-between;
   }
 
   .md\:gap-6{

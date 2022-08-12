@@ -103,6 +103,10 @@
                         <ErrorMessage name="hire_date" v-slot="{ message }">
                             <p class="input-error">{{ message }}</p>
                         </ErrorMessage>
+                        <Field name="skills" placeholder="Skills" class="w-full form-input" />
+                        <ErrorMessage name="skills" v-slot="{ message }">
+                            <p class="input-error">{{ message }}</p>
+                        </ErrorMessage>
                     </fieldset>
                 </div>
             </div>
@@ -159,6 +163,7 @@ export default {
             personal_email(value) { return isEmail(value) ? true : "Must be valid Email" },
             address(value) { return isLength(value, { min: 2, max: 200 }) ? true : "Address must be between 2 and 200 characters" },
             position(value) { return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters" },
+            skills(value) { return isLength(value, { min: 2, max: 50 }) ? true : "Skils must be between 2 and 50 characters" },
             telephones(value) { return isLength(value, { min: 10 }) ? true : "telephones must be 10 characters or more" },
             cityzenship(value) { return isLength(value, { min: 2, max: 2 }) ? true : "cityzenship must be 2 characters" },
             last_name(value) { return isLength(value, { min: 2, max: 20 }) ? true : "Last name must be between 2 and 20 characters" },
@@ -192,7 +197,7 @@ export default {
         }
         const employeeValues = {
             address: chance.address(),
-            birthday: new Date("10/10/1999"),
+            birthday: "1999-10-10",
             first_name: chance.name({ middle: false, nationality: 'en' }),
             middle_name: chance.name({ middle: false }),
             last_name: chance.last(),
@@ -200,15 +205,16 @@ export default {
             resume_file: 'null',
             profile_img: 'null',
             personal_email: chance.email(),
-            cityzenship: 'CD',
-            domain: 'math',
+            cityzenship: 'FR',
+            domain: 'Math',
+            skills: 'Code, kadiong',
             gender: 'M',
             position: "Developer",
             school_name: 'School Maadini',
             cover_letter: chance.sentence({ words: 50 }),
-            school_end_date: new Date(2022, 5, 5),
-            hire_date: new Date("10/10/2010"),
-            school_start_date: new Date("01/01/2019"),
+            school_end_date: "2014-02-06",
+            hire_date: "2019-10-10",
+            school_start_date: "2010-08-02",
             school_diploma_name: "Computer science",
             school_diploma_file: 'null',
         }

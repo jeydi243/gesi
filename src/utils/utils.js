@@ -37,6 +37,15 @@ export function onLeave(el, done) {
     onComplete: done,
   })
 }
+export function onLeaveTop(el, done) {
+  gsap.to(el, {
+
+    duration: 1,
+    height: 0,
+    delay: el.dataset.index * 0.25,
+    onComplete: done,
+  })
+}
 export function onBeforeEnter(el, done) {
   gsap.to(el, {
     opacity: 0,
@@ -45,12 +54,14 @@ export function onBeforeEnter(el, done) {
     onComplete: done,
   })
 }
-export async function goto(to, data = null) {
+export async function goto(to = null, data = null) {
   if (data != null) {
     console.log(`${data}`)
     await router.push({ name: to, params: { id: data } })
+  } else if (to == null) {
+    console.log(`Data is ${data}`)
+    await router.back()
   } else {
-    console.log(`${data} is null`)
     await router.push({ name: to })
   }
 }
