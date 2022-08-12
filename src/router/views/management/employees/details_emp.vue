@@ -79,7 +79,7 @@
                 <box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
             </button>
             <span class="font-bold text-xl">Education & Certifiactions</span>
-            <ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-center md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': educ_state_modif, 'justify-start': userData.educations.length == 1 }">
+            <ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-center row md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': educ_state_modif, 'justify-start': userData.educations.length == 1 }">
                 <li v-for="({ name, start, description, end, from_school, id }, index) in userData.educations" :key="index" class="transition-all ease-in duration-700 relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': educ_state_modif }">
                     <div class="flex md:block flex-start items-center pt-2 md:pt-0">
                         <div class="bg-green-300 w-2 h-2 rounded-full -ml-1 md:ml-0 mr-3 md:mr-0 md:-mt-1"></div>
