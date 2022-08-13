@@ -1,74 +1,59 @@
 import coursesAPI from "@/api/courses"
+import { defineStore } from "pinia"
 
-export default {
+export const useCourses = defineStore("courses", {
   state: () => ({ courses: [] }),
-  namespaced: true,
-  mutations: {
-    ALL: (state, data) => {
-      data.forEach((element) => {
-        setTimeout(() => {
-          state.courses.unshift(element)
-        }, 1000)
-      })
-    },
-    UPDATE: (state, payload) => {
-      var foundIndex = state.courses.findIndex((t) => t.id == payload.idCourse)
-      if (foundIndex) {
-        state.courses[foundIndex] = payload.data
-      }
-    },
-  },
   actions: {
-    init({ dispatch }) {
-      dispatch("getcourses")
-    },
-    getcourses({ commit, state }) {
-      if (state.courses.length == 0) {
-        return coursesAPI
-          .getAll()
-          .then(({ data, status }) => {
-            commit("ALL", data)
-            console.log(data)
-            if (status < 300) {
-              return true
-            }
-            return false
-          })
-          .catch((err) => {
-            console.log(err)
-            return false
-          })
+    async init() {
+      try {
+        await this.getcourses()
+      } catch (er) {
+        console.log("Error initializing: ", er)
       }
     },
-    updateCourse({ commit, state }, { idCourse, update }) {
-      return coursesAPI
-        .updateById(idCourse, update)
-        .then(({ status, data }) => {
-          if (status < 300) {
-            commit("UPDATE", { idCourse, data })
-            return true
-          }
-          return false
-        })
-        .catch((err) => {
-          console.log(err)
-          return false
-        })
+    async getcourses() {
+      try {
+        const { data, status } = await coursesAPI.getAll()
+        if (status || 200 || status == 201) {
+          console.log(data)
+          data.forEach((element) => {
+            this.courses.unshift(element)
+            setTimeout(() => {}, 1000)
+          })
+          return true
+        }
+        return false
+      } catch (er) {
+        console.log(er)
+      }
     },
-    addCourse({ commit, state }, data) {
-      return coursesAPI
-        .add(data)
-        .then(({ status, data }) => {
-          if (status < 300) {
-            commit("ADD", data)
-            return true
+    async updateCourse({ idCourse, update }) {
+      try {
+        const { status, data } = await coursesAPI.updateById(idCourse, update)
+        if (status == 200 || status == 201) {
+          commit("UPDATE", { idCourse, data })
+          var foundIndex = this.courses.findIndex((t) => t.id == data.idCourse)
+          if (foundIndex) {
+            this.courses[foundIndex] = data
           }
-          return false
-        })
-        .catch((err) => {
-          console.log(err)
-          return false
-        })
+          return true
+        }
+        return false
+      } catch (er) {
+        console.log(er)
+      }
+    },
+    async addCourse(course) {
+      try {
+        const { status, data } = await coursesAPI.add(course)
+        if (status == 200 || status == 201) {
+          this.courses.unshift(data)
+          return true
+        }
+        return false
+      } catch (er) {
+        console.log(er)
+      }
     },
   },
   getters: {
@@ -80,4 +65,4 @@ export default {
         return state.courses
       },
   },
-}
+})

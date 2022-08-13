@@ -5,9 +5,5 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
-import { mapActions, mapState } from 'pinia'
-
-
 
 </script>

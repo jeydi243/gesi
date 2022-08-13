@@ -20,12 +20,12 @@ export const useManagement = defineStore("management", {
   actions: {
     async init() {
       const t = useTeachers()
-    //   const c = useCourses()
+      //   const c = useCourses()
       this.setAxios()
       this.getAllDocuments()
       this.getAllEmployees()
       t.init()
-    //   c.init()
+      //   c.init()
     },
     async getAllDocuments() {
       try {
@@ -46,7 +46,7 @@ export const useManagement = defineStore("management", {
       }
     },
     async getAllEmployees() {
-      this.listDocuments = []
+      this.employees = []
       try {
         const { data, status } = await mgntAPI.getEmployees()
         if (status == 200 || status == 201) {
@@ -64,6 +64,19 @@ export const useManagement = defineStore("management", {
         return false
       } catch (er) {
         console.log(er)
+      }
+    },
+    async deleteExperience() {
+      try {
+        const { data, status } = await mgntAPI.deleteExperience()
+        if (status == 200 || status == 201) {
+          const index = userData.value.educations.findIndex((educ) => (educ.id = educationID))
+          userData.value.educations.splice(index, 1)
+          return true
+        }
+        return false
+      } catch (error) {
+        return false
       }
     },
     setAxios({ state, commit }) {

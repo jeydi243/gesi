@@ -1,33 +1,34 @@
 import studentsAPI from "@/api/students"
 
-export default {
+import { defineStore } from "pinia"
+
+export const useStudents = defineStore("students", {
   state: () => ({ students: [] }),
-  namespaced: true,
-  mutations: {
-    ALL: (state, data) => {
-      data.forEach((element) => {
-        state.students.unshift(element)
-      })
-    },
-  },
   actions: {
-    init({ dispatch }) {
-      dispatch("getAllStudents")
+    async init() {
+      try {
+        await this.getAllStudents()
+      } catch (er) {
+        console.log("Error on init students: ", er)
+      }
     },
-    getAllStudents({ commit, state }) {
-      studentsAPI
-        .getAll()
-        .then((res) => {
-          commit("ALL", res.data)
-        })
-        .catch((err) => {
-          console.log("Erro on calling getAllStudents", err)
-        })
+    async getAllStudents() {
+      try {
+        const { data, status } = await studentsAPI.getAll()
+        if (status == 200 || status == 201) {
+          this.students = data
+          return true
+        }
+      } catch (er) {
+        console.log(er)
+      }
     },
   },
   getters: {
-getListDocuments: (state) => state.listDocuments,    mystudents(state, getters, rootState, rootGetters) {
-      return state.students.filter((student) => student.level.toLowerCase() == rootGetters.currentLevelShort.toLowerCase())
+    getListDocuments: (state) => state.listDocuments,
+    mystudents(state) {
+      const config = useConfig()
+      return state.students.filter((student) => student.level.toLowerCase() == config.currentLevelShort.toLowerCase())
     },
   },
-}
+})

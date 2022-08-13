@@ -6,7 +6,7 @@ import Toast from "vue-toastification"
 import { useToast } from "vue-toastification"
 import { vfmPlugin } from "vue-final-modal"
 import { createApp } from "vue"
-import { createPinia } from 'pinia'
+import { createPinia } from "pinia"
 import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
@@ -51,9 +51,9 @@ app.config.globalProperties.filters = {
 app.config.globalProperties.toast = useToast()
 
 app.config.errorHandler = (err, vm, info) => {
-  console.log(`${err.stack}`, { err, vm })
+  console.log(`${err.stack}`, { err })
 }
 app.config.warnHandler = (msg, instance, trace) => {
-  console.log({ msg }, JSON.stringify(trace))
+  console.log(msg, JSON.stringify(trace, null, 4))
 }
 app.mount("#app")

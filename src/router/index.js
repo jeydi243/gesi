@@ -195,7 +195,7 @@ router.afterEach((to, from, failure) => {
   } else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
     console.error(`${failure.message}.`)
   } else {
-    console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? JSON.stringify(to.params) : ""}`)
+    // console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? JSON.stringify(to.params) : ""}`)
   }
 })
 export default router

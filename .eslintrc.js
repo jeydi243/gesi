@@ -24,8 +24,8 @@ module.exports = {
       "off",
       "4",
       {
-        attribute: 1,
-        baseIndent: 1,
+        attribute: 2,
+        baseIndent: 2,
         closeBracket: 0,
         alignAttributesVertically: true,
         ignores: [],

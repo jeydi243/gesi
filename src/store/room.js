@@ -1,8 +1,5 @@
-export default {
+import { defineStore } from "pinia"
+
+export const useRoom = defineStore("room", {
   state: () => ({ room: "" }),
-  getters: {
-    getRoom: (state) => {
-      return state.room
-    },
-  },
-}
+})

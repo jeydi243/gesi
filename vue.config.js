@@ -1,5 +1,4 @@
-
-const path = require(`path`);
+const path = require(`path`)
 
 module.exports = {
   configureWebpack: {
@@ -29,5 +28,11 @@ module.exports = {
         }
         return options
       })
+    config.module
+      .rule("mjs")
+      .test(/\.mjs$/)
+      .type("javascript/auto")
+      .include.add(/node_modules/)
+      .end()
   },
 }
