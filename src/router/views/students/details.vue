@@ -66,7 +66,7 @@
 									</ErrorMessage>
 									<button type="submit" class="g-button-primary">
 										<span class="font-bold text-white">Ajouter</span>
-										<AtomSpinner v-if="isSubmitting" class="h-5 w-5" />
+										<CirclesToRhombusesSpinner v-if="isSubmitting" :size="25" :color="'#FFF'" />
 									</button>
 								</div>
 							</Form>
@@ -104,7 +104,7 @@ import Calendrier from "@/components/calendar.vue";
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import studentsAPI from "@/api/students";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { AtomSpinner } from "epic-spinners";
+import { CirclesToRhombusesSpinner } from "epic-spinners";
 import { toast } from "@/utils/utils";
 
 export default {
@@ -114,7 +114,7 @@ export default {
 		Form,
 		Field,
 		ErrorMessage,
-		AtomSpinner,
+		CirclesToRhombusesSpinner,
 	},
 	data() {
 		const docaddSchema = {

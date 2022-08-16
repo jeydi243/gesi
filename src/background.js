@@ -37,11 +37,11 @@ async function createWindow(height, width, x, y) {
 
   webContents.on("dom-ready", function (event) {
     console.log("Dom is ready...")
-    win.webContents.send("ping", "whoooooooh!")
+    win.webContents.send("dom_ready", "DOM is READY!")
   })
   webContents.on("did-finish-load", function () {
     console.log("Finish Load...")
-    win.webContents.send("ping", "whoooooooh!")
+    win.webContents.send("finish_load", "APP finish loading!")
   })
   webContents.on("will-navigate", () => {
     console.log("Will navigate...")
@@ -93,7 +93,6 @@ app.on("window-all-closed", () => {
     }
   }
 })
-
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow(600, 800)

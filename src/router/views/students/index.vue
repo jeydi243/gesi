@@ -47,7 +47,7 @@
     },
     created() {},
     mounted() {
-      ipcRenderer.on("ping", (event, message) => {
+      ipcRenderer.on("finish_load", (event, message) => {
         console.log(message)
       })
     },

@@ -73,7 +73,7 @@
 					<div class="flex flex-row-reverse w-full h-1/2 text-black">
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Next</span>
-							<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
+							<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
 							<ArrowRightIcon class="h-4 w-4 text-white" v-else />
 						</button>
 					</div>
@@ -81,14 +81,14 @@
 			</div>
 			<div class="step-2 step-content" v-else-if="step == 2" key="step2">
 				<Form class="flex flex-col mb-4 justify-between" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
-					<div class="flex flex-col mb-4 h-1/2  items-center justify-center">
+					<div class="flex flex-col mb-4 h-1/2 items-center justify-center">
 						<p class="text-4xl mb-4">Photo de profil</p>
-						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ 'profile2': !previewSRC }">
+						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ profile2: !previewSRC }">
 							<img v-if="previewSRC" :src="previewSRC" class="flex z-10 cursor-pointer self-center object-cover rounded-lg h-[100px] w-[100px]" />
 							<UserIcon class="h-10 w-10 text-green-500" v-else />
 						</div>
 						<Field name="profile" v-slot="{ handleChange, handleBlur }">
-							<input id="bind-profile" type="file" @change="handleChange" @blur="handleBlur" class=" w-full text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 hidden" hidden />
+							<input id="bind-profile" type="file" @change="handleChange" @blur="handleBlur" class="w-full text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 hidden" hidden />
 						</Field>
 						<ErrorMessage name="profile" v-slot="{ message }">
 							<p class="input-error">{{ message }}</p>
@@ -98,7 +98,7 @@
 						<button class="btn-unstate" @click="step = step - 1">Back</button>
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
-							<AtomSpinner class="h-4 w-4 text-white" v-if="isSubmitting" />
+							<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
 							<ArrowRightIcon class="h-4 w-4 text-white" v-else />
 						</button>
 					</div>
@@ -180,7 +180,7 @@
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
 							<ArrowRightIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
-							<HollowDotsSpinner class="h-4 w-4 text-white" v-else />
+							<HollowDotsSpinner :size="25" :color="'#FFF'" v-else />
 						</button>
 					</div>
 				</Form>
@@ -203,7 +203,7 @@
 						</div>
 						<div class="input-group-grid diploma">
 							<Field placeholder="Diploma" v-slot="{ handleChange, handleBlur }" name="diploma">
-								<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 ">
+								<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100" />
 							</Field>
 							<ErrorMessage name="diploma" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
@@ -216,12 +216,12 @@
 							</ErrorMessage>
 						</div>
 					</div>
-					<div class="flex flex-row  w-full items-center justify-between">
+					<div class="flex flex-row w-full items-center justify-between">
 						<button class="btn-unstate" @click="step = step - 1">Back</button>
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
 							<ArrowRightIcon class="h-5 w-5 text-white" v-if="!isSubmitting" />
-							<AtomSpinner class="h-5 w-5 text-white" v-else />
+							<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-else />
 						</button>
 					</div>
 				</Form>
@@ -231,133 +231,132 @@
 </template>
 
 <script>
-import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
-import { Field, Form, ErrorMessage } from "vee-validate";
-import { HollowDotsSpinner } from "epic-spinners";
-import { markRaw } from "vue";
-import { toast } from "@/utils/utils";
+	import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid"
+	import { Field, Form, ErrorMessage } from "vee-validate"
+	import { HollowDotsSpinner } from "epic-spinners"
+	import { markRaw } from "vue"
+	import { toast } from "@/utils/utils"
 
-import * as yup from "yup";
+	import * as yup from "yup"
 
-export default {
-	name: "students-add",
-	components: {
-		Form,
-		Field,
-		ErrorMessage,
-		HollowDotsSpinner,
-		UserIcon,
-		ArrowRightIcon,
-	},
-	data() {
-		const step1Schema = markRaw(
-			yup.object({
+	export default {
+		name: "students-add",
+		components: {
+			Form,
+			Field,
+			ErrorMessage,
+			HollowDotsSpinner,
+			UserIcon,
+			ArrowRightIcon,
+		},
+		data() {
+			const step1Schema = markRaw(
+				yup.object({
+					name: yup.string().required(),
+					country: yup.string().required(),
+					telephone: yup.string().required(),
+					adresse: yup.string().required(),
+					email: yup.string().email().required(),
+					birthDate: yup.date().min(new Date("2000-02-02"), "L'age minimum est de 18 ans"),
+					gender: yup.string().default("off"),
+				})
+			)
+			const step2Schema = {
+				profile(value) {
+					if (value[0] instanceof File || value[0] instanceof Blob) {
+						return true
+					}
+					return "Vous devez choisir une photo de profil"
+				},
+			}
+			const step3Schema = yup.object({
 				name: yup.string().required(),
-				country: yup.string().required(),
+				telephone: yup.number().required(),
+				email: yup.string().required(),
+			})
+			const step4Schema = yup.object({
+				name: yup.string().required(),
 				telephone: yup.string().required(),
 				adresse: yup.string().required(),
-				email: yup.string().email().required(),
-				birthDate: yup.date().min(new Date("2000-02-02"), "L'age minimum est de 18 ans"),
-				gender: yup.string().default("off"),
 			})
-		);
-		const step2Schema = {
-			profile(value) {
-				if (value[0] instanceof File || value[0] instanceof Blob) {
-					return true;
-				}
-				return "Vous devez choisir une photo de profil";
-			},
-		};
-		const step3Schema = yup.object({
-			name: yup.string().required(),
-			telephone: yup.number().required(),
-			email: yup.string().required(),
-		});
-		const step4Schema = yup.object({
-			name: yup.string().required(),
-			telephone: yup.string().required(),
-			adresse: yup.string().required(),
-		});
-		return {
-			previewSRC: null,
-			step: 4,
-			step1Schema,
-			step2Schema,
-			step3Schema,
-			step4Schema,
-			step1Values: {
-				name: "Kadiongo Ilunga",
-				birthDate: new Date("2000-02-02"),
-				gender: "M",
-				email: "email@email.com",
-				telephone: "+245369854",
-				adresse: "20, lubumbashi Q. Mampala",
-				country: "RDC (Congo)",
-			},
-			stepper: [{ schema: "", values: "", active: false }],
-			step2Values: { profile: "" },
-			step3Values: { name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" },
-			step4Values: { name: "IT Salama", telephone: "+24381745021", adresse: "20, lubumbashi, Q/ Mamplaa" },
-		};
-	},
-	methods: {
-		pickPicture() {
-			document.getElementById("bind-profile").click();
-			const fi = document.getElementById("bind-profile");
-			console.log(fi);
-			fi.addEventListener("change", this.onProfilePictureChange);
-		},
-		onProfilePictureChange(event) {
-			console.log("Profile picture change and is ", event.target.files[0]);
-			if (event.target.files && event.target.files[0]) {
-				this.previewSRC = window.URL.createObjectURL(event.target.files[0]);
-				window.URL.revokeObjectURL(event.target.files[0]); // free memory
-			} else {
-				this.previewSRC = null;
+			return {
+				previewSRC: null,
+				step: 4,
+				step1Schema,
+				step2Schema,
+				step3Schema,
+				step4Schema,
+				step1Values: {
+					name: "Kadiongo Ilunga",
+					birthDate: new Date("2000-02-02"),
+					gender: "M",
+					email: "email@email.com",
+					telephone: "+245369854",
+					adresse: "20, lubumbashi Q. Mampala",
+					country: "RDC (Congo)",
+				},
+				stepper: [{ schema: "", values: "", active: false }],
+				step2Values: { profile: "" },
+				step3Values: { name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" },
+				step4Values: { name: "IT Salama", telephone: "+24381745021", adresse: "20, lubumbashi, Q/ Mamplaa" },
 			}
 		},
-		submitStep1() {
-			this.goNext();
-		},
-		submitStep2() {
-			this.goNext();
-		},
-		submitStep3() {
-			this.goNext();
-		},
-		async submitStep4() {
-			console.log("just submit step 4");
-			toast.success("Enregistrement terminé", {
-				timeout: 5000,
-			});
-			setTimeout(() => {
-				this.$router.push("/students").catch(() => { });
-			}, 3000);
+		methods: {
+			pickPicture() {
+				document.getElementById("bind-profile").click()
+				const fi = document.getElementById("bind-profile")
+				console.log(fi)
+				fi.addEventListener("change", this.onProfilePictureChange)
+			},
+			onProfilePictureChange(event) {
+				console.log("Profile picture change and is ", event.target.files[0])
+				if (event.target.files && event.target.files[0]) {
+					this.previewSRC = window.URL.createObjectURL(event.target.files[0])
+					window.URL.revokeObjectURL(event.target.files[0]) // free memory
+				} else {
+					this.previewSRC = null
+				}
+			},
+			submitStep1() {
+				this.goNext()
+			},
+			submitStep2() {
+				this.goNext()
+			},
+			submitStep3() {
+				this.goNext()
+			},
+			async submitStep4() {
+				console.log("just submit step 4")
+				toast.success("Enregistrement terminé", {
+					timeout: 5000,
+				})
+				setTimeout(() => {
+					this.$router.push("/students").catch(() => {})
+				}, 3000)
 
-			// window.ipcRenderer.send("hello", { message: "Hello from ipc renderer" });
+				// window.ipcRenderer.send("hello", { message: "Hello from ipc renderer" });
+			},
+			goNext() {
+				this.step += 1
+			},
+			goBack() {
+				this.step -= 1
+			},
+			onInvalidStep1({ values, result, errors }) {
+				console.log("On invalid submit: ", { values, result, errors })
+			},
+			onInvalidStep2({ values, result, errors }) {
+				console.log("On invalid submit: ", { values, result, errors })
+			},
+			onInvalidStep3({ values, result, errors }) {
+				console.log("On invalid submit: ", { values, result, errors })
+			},
+			onInvalidStep4({ values, result, errors }) {
+				console.log("On invalid submit: ", { values, result, errors })
+			},
 		},
-		goNext() {
-			this.step += 1;
-		},
-		goBack() {
-			this.step -= 1;
-		},
-		onInvalidStep1({ values, result, errors }) {
-			console.log("On invalid submit: ", { values, result, errors });
-		},
-		onInvalidStep2({ values, result, errors }) {
-			console.log("On invalid submit: ", { values, result, errors });
-		},
-		onInvalidStep3({ values, result, errors }) {
-			console.log("On invalid submit: ", { values, result, errors });
-		},
-		onInvalidStep4({ values, result, errors }) {
-			console.log("On invalid submit: ", { values, result, errors });
-		},
-	},
-};
+	}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

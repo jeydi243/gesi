@@ -4,7 +4,7 @@
     <div class="card row w-full mb-4 justify-between">
       <span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Employees</span>
       <div class="row">
-        <button @click.prevent="store.getAllEmployees" class="btn-primary">
+        <button @click.prevent="store.getAllEmployees" class="btn-primary mr-1">
           <RefreshIcon class="h-5 w-5 text-white" />
         </button>
         <button @click="goto('employees-add')" class="btn-primary">

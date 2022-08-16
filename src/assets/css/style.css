@@ -4461,10 +4461,6 @@ textarea.form-control.is-invalid{
   height: 14rem;
 }
 
-.h-1{
-  height: 0.25rem;
-}
-
 .h-\[150px\]{
   height: 150px;
 }
@@ -4563,10 +4559,6 @@ textarea.form-control.is-invalid{
 
 .w-4\/5{
   width: 80%;
-}
-
-.w-1{
-  width: 0.25rem;
 }
 
 .w-\[150px\]{
@@ -7281,8 +7273,8 @@ input:valid + span:after {
     flex-direction: row;
   }
 
-  .md\:justify-center{
-    justify-content: center;
+  .md\:justify-start{
+    justify-content: flex-start;
   }
 
   .md\:justify-between{

@@ -1,3 +1,4 @@
+import devtools from "@vue/devtools"
 import App from "./App.vue"
 import router from "./router"
 import VueApexCharts from "vue3-apexcharts"
@@ -18,42 +19,42 @@ import "sweetalert2/dist/sweetalert2.min.css"
 import "boxicons"
 import VCalendar from "v-calendar"
 const optionsSweetAlert = {
-  confirmButtonColor: "#41b882",
-  cancelButtonColor: "#ff7674",
+	confirmButtonColor: "#41b882",
+	cancelButtonColor: "#ff7674",
 }
 const pinia = createPinia()
 
 const app = createApp(App)
-  .use(router)
-  .use(
-    vfmPlugin({
-      key: "$vfm",
-      componentName: "Modal",
-      dynamicContainerName: "modal-content",
-    })
-  )
-  .use(pinia)
-  .use(Toast)
-  .use(VCalendar, {
-    componentPrefix: "vc",
-  })
-  .use(VueApexCharts)
-  .use(VueSweetalert2, optionsSweetAlert)
+	.use(router)
+	.use(
+		vfmPlugin({
+			key: "$vfm",
+			componentName: "Modal",
+			dynamicContainerName: "modal-content",
+		})
+	)
+	.use(pinia)
+	.use(Toast)
+	.use(VCalendar, {
+		componentPrefix: "vc",
+	})
+	.use(VueApexCharts)
+	.use(VueSweetalert2, optionsSweetAlert)
 
 app.config.globalProperties.filters = {
-  firstUpper(value) {
-    return value.charAt(0).toUpperCase() + value.slice(1)
-  },
-  toiso(value) {
-    return new Date(value).getFullYear()
-  },
+	firstUpper(value) {
+		return value.charAt(0).toUpperCase() + value.slice(1)
+	},
+	toiso(value) {
+		return new Date(value).getFullYear()
+	},
 }
 app.config.globalProperties.toast = useToast()
 
 app.config.errorHandler = (err, vm, info) => {
-  console.log(`${err.stack}`, { err })
+	console.log({ err })
 }
 app.config.warnHandler = (msg, instance, trace) => {
-  console.log(msg, JSON.stringify(trace, null, 4))
+	console.log(msg, JSON.stringify(trace, null, 4))
 }
 app.mount("#app")

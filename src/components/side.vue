@@ -17,7 +17,6 @@
   import { useConfig } from "@/store/config"
 
   const config = useConfig()
-  const currentActive = ref(0)
   const listSideMenus = computed(() => config.listSideMenus)
 </script>
 

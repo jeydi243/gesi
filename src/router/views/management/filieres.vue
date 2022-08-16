@@ -73,7 +73,7 @@
           <button type="submit" class="btn-primary">
             <!-- <PlusIcon class="h-4 w-4 text-white" v-if="!isSubmitting" /> -->
             <span class="font-bold text-white">Ajouter</span>
-            <AtomSpinner class="h-4 w-4 block text-white" v-if="isSubmitting" />
+            <CirclesToRhombusesSpinner :size="25" :color="'#FFF'" class="block text-white" v-if="isSubmitting" />
           </button>
         </div>
       </Form>
@@ -86,13 +86,13 @@
   import * as yup from "yup"
   import MyModal from "@/components/mymodal"
   import { useManagement } from "@/store/management"
-  import { AtomSpinner } from "epic-spinners"
+  import { CirclesToRhombusesSpinner } from "epic-spinners"
   import { Form, Field, ErrorMessage } from "vee-validate"
   import { AcademicCapIcon, PlusIcon, UserIcon } from "@heroicons/vue/solid"
   import { isLength } from "validator"
   export default {
     name: "index-filiere",
-    components: { AcademicCapIcon, MyModal, AtomSpinner, Form, Field, ErrorMessage },
+    components: { AcademicCapIcon, MyModal, CirclesToRhombusesSpinner, Form, Field, ErrorMessage },
     data() {
       const filiereSchema = {
         img(value) {

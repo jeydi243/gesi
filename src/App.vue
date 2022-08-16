@@ -30,7 +30,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 let showBraedCrumbs = ref(false)
 
-useIpcRendererOn('ping', (event, ...args) => {
+useIpcRendererOn('dom_ready', (event, ...args) => {
 	console.log(args)
 })
 
