@@ -63,12 +63,12 @@ export default {
 	deleteEmployee: async function (employeeID) {
 		return axios.delete(`${this.routeEmployees}/${employeeID}`)
 	},
-	updateExperience: async function (employeeID, experienceID, updatedExperience) {
-		console.log("IN API: ",{ employeeID, experienceID, updatedExperience })
-		return axios.patch(`${this.routeEmployees}/${employeeID}/update_experience?experienceID=${experienceID}`, { ...updatedExperience })
+	updateExperience: async function (employeeID, updatedExperience) {
+		console.log("IN API: ", { employeeID, updatedExperience })
+		return axios.patch(`${this.routeEmployees}/${employeeID}/update_experience`, { ...updatedExperience })
 	},
-	updateEducation: async function (employeeID, educationID, updateEducation) {
-		return axios.patch(`${this.routeEmployees}/${employeeID}/update_education?educationID=${educationID}`, { ...updateEducation })
+	updateEducation: async function (employeeID, updateEducation) {
+		return axios.patch(`${this.routeEmployees}/${employeeID}/update_education`, { ...updateEducation })
 	},
 }
 const documents = {}

@@ -19,12 +19,14 @@ export const useManagement = defineStore("management", {
 
 	actions: {
 		async init() {
-			const t = useTeachers()
-			//   const c = useCourses()
-			this.setAxios()
-			this.getAllDocuments()
-			this.getAllEmployees()
-			t.init()
+			try {
+				const t = useTeachers()
+				this.setAxios()
+				t.init()
+				await this.getAllDocuments()
+				await this.getAllEmployees()
+			} catch (error) {}
+
 			//   c.init()
 		},
 		setAxios() {
@@ -236,8 +238,7 @@ export const useManagement = defineStore("management", {
 		},
 		async updateExperience(employeeID, experienceID, experience) {
 			try {
-				console.log({ employeeID, experienceID, experience })
-				const { data, status, headers } = await mgntAPI.updateExperience(employeeID, experienceID, experience)
+				const { data, status, headers } = await mgntAPI.updateExperience(employeeID, { id: experienceID, ...experience })
 				console.log({ data, status, headers })
 				if ((status == 200 || status == 201) && data != "") {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
@@ -260,12 +261,12 @@ export const useManagement = defineStore("management", {
 		async updateEducation(employeeID, educationID, education) {
 			try {
 				console.log({ employeeID, educationID, education })
-				const { data, status, headers } = await mgntAPI.updateEducation(employeeID, educationID, education)
-				if (status == 200 || status == 201) {
+				const { data, status, headers } = await mgntAPI.updateEducation(employeeID, { id: educationID, ...education })
+				if ((status == 200 || status == 201) && data != "") {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
 					const indexExp = this.employees[index].educations.findIndex((educ) => (educ.id = educationID))
 					if (indexExp != -1) {
-						this.employees[index].educations[indexExp] = experience
+						this.employees[index].educations[indexExp] = data
 					} else {
 						return false
 					}

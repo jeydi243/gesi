@@ -90,7 +90,7 @@
 						<h4 class="text-green-800 font-semibold text-xl mb-1.5">{{ name }}</h4>
 						{{ from_school }}
 						<p class="text-gray-500 mb-3">{{ description }}</p>
-						<button v-if="educ_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="showpdf(description)">Voir</button>
+						<button v-if="educ_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="launchUpdateEducation(id)">Update</button>
 					</div>
 					<button v-if="educ_state_modif" @click="deleteEducation(id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
 						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
@@ -413,14 +413,14 @@
 		},
 	})
 	const experienceSchema = ref({
-		end(value) {
-			return isDate(parseISO(value)) ? true : "End date must be provided"
-		},
 		position(value) {
 			return isLength(value, { min: 6, max: 20 }) ? true : "Le minimum de caracteres est 6 et le maximum 12"
 		},
 		start(value) {
 			return isDate(parseISO(value)) ? true : "Start date must be provided"
+		},
+		end(value) {
+			return isDate(parseISO(value)) ? true : "End date must be provided"
 		},
 		company(value) {
 			return isLength(value, { min: 6, max: 20 }) ? true : "Le minimum de caracteres est 6 et le maximum 12"
@@ -488,7 +488,8 @@
 	}
 	async function launchUpdateEducation(educationID = 4) {
 		const ud = userData.value["educations"].find((edu) => edu.id == educationID)
-		educationValue.value = ud
+		console.log({ ...ud })
+		educationValue.value = { ...ud }
 		showModalUpdateEducation.value = true
 	}
 	async function updateExperience(updatedExperience) {
@@ -519,6 +520,7 @@
 	}
 	async function refresh() {
 		const result = await store.employeeBy(route.params.id)
+		closeModal()
 		if (result) {
 			toast(`Refreshed...`)
 		} else {
