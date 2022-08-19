@@ -12,7 +12,7 @@ import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
 import "vue-cal/dist/vuecal.css"
-import "vue-cal/dist/i18n/fr.js"
+// import "vue-cal/dist/i18n/fr.js"
 import "v-calendar/dist/style.css"
 import "vue-toastification/dist/index.css"
 import "sweetalert2/dist/sweetalert2.min.css"
@@ -25,6 +25,7 @@ const optionsSweetAlert = {
 const pinia = createPinia()
 
 const app = createApp(App)
+	.use(pinia)
 	.use(router)
 	.use(
 		vfmPlugin({
@@ -33,7 +34,6 @@ const app = createApp(App)
 			dynamicContainerName: "modal-content",
 		})
 	)
-	.use(pinia)
 	.use(Toast)
 	.use(VCalendar, {
 		componentPrefix: "vc",

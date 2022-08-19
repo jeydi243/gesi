@@ -10,11 +10,11 @@
 						<span class="font-bold text-green-600">{{ userData.position[0] }}</span>
 						<span class="italic text-sm">{{ userData.personal_email }}</span>
 						<span class="italic text-sm">{{ userData.telephones[0] }}</span>
-						<div>
+						<span class="bg-green-100 pl-1 pt-1 pb-1 pr-3 rounded-md font-bold">7 years of experience</span>
+						<!-- <div>
 							<span class="italic text-sm font-bold">Hire Date: 28-05-2015 </span>
-							<!-- <span class="italic"> still working</span> -->
-							<span class="bg-green-100 pl-1 ml-2 pt-1 pb-1 pr-3 rounded-md font-bold"> 7 years of experience</span>
-						</div>
+							 <span class="italic"> still working</span>
+						</div> -->
 
 						<!-- <span class="italic text-sm">{{ userData }}</span> -->
 					</div>
@@ -48,16 +48,16 @@
 			</div>
 		</div>
 		<div class="row justify-center space-x-2 relative mt-4">
-			<button class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+			<button @click="contact_state_modif = !contact_state_modif" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
 			</button>
 			<div class="card min-h-[200px] w-1/2">
 				<span class="font-bold text-xl">Biography</span>
 				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum laudantium libero quisquam vero quo corporis, odio fuga cumque vitae eos impedit in nisi quam tempore reprehenderit corrupti. Perspiciatis, eius?
 			</div>
-			<div class="card min-h-[200px] w-1/2">
+			<div class="card min-h-[200px] w-1/2 col justify-cente">
 				<span class="font-bold text-xl">Emergency Contact</span>
-				<span v-for="(contact, index) in emergencyContacts" :key="index" class="mt-2">
+				<span v-for="(contact, index) in userData.emergencyContacts" :key="index" class="mt-2 relative transition-all ease-in duration-700" :class="{ 'rounded-lg border-2': contact_state_modif }">
 					<div class="row justify-between">
 						<span>Name: </span>
 						<span>{{ contact.name }}</span>
@@ -68,10 +68,14 @@
 					</div>
 					<div class="row justify-between">
 						<span>Telephone: </span>
-						<span>{{ contact.phone }}</span>
+						<span>{{ contact.telephone }}</span>
 					</div>
-					<hr class="mb-2 text-green-500" />
+					<hr class="mb-2 text-green-500" v-if="!contact_state_modif" />
+					<button v-if="contact_state_modif" @click="deleteContact(contact.id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
+						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
+					</button>
 				</span>
+				<button @click="showModalAddContact = true" class="btn-unstate" v-if="contact_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success">Add</button>
 			</div>
 		</div>
 		<div class="card mt-4 min-h-[200px] relative transition-all ease-in duration-700">
@@ -186,7 +190,45 @@
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 					<button type="submit" class="btn-primary">
 						<span class="font-bold text-white" v-if="!isSubmitting">Add</span>
-						<CirclesToRhombusesSpinner :size="5" class="text-white" v-if="isSubmitting" />
+						<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+					</button>
+				</div>
+			</Form>
+		</MyModal>
+		<MyModal v-show="showModalAddContact" @close="showModalAddContact = false">
+			<template #header>
+				<h1 class="text-4xl">Add Contact</h1>
+			</template>
+			<Form class="flex flex-col justify-between" @submit="addContact" v-slot="{ isSubmitting }" :validation-schema="contactSchema" :initial-values="contactValue" @invalid-submit="onInvalidContact">
+				<div class="flex sm:flex-col md:flex-row md:justify-between">
+					<div class="w-full">
+						<Field name="name" placeholder="Name of contact" class="form-input mb-2 w-full"></Field>
+						<ErrorMessage name="name" v-slot="{ message }">
+							<p class="input-error">{{ message }}</p>
+						</ErrorMessage>
+					</div>
+				</div>
+				<div class="">
+					<Field name="email" placeholder="School from" class="form-input mb-2 w-full"></Field>
+					<ErrorMessage name="email" v-slot="{ message }">
+						<p class="input-error">{{ message }}</p>
+					</ErrorMessage>
+				</div>
+				<Field placeholder="Phone number comma separated" id="telephone" name="telephones" class="w-full form-input" />
+				<ErrorMessage name="telephone" v-slot="{ message }">
+					<p class="input-error">{{ message }}</p>
+				</ErrorMessage>
+				<Field name="relationship" placeholder="Describe your experience in this field of education" class="form-textarea mb-4"></Field>
+				<ErrorMessage name="relationship" v-slot="{ message }">
+					<p class="input-error">{{ message }}</p>
+				</ErrorMessage>
+				<span class="text-red-700 text-base">{{ errorCall }}</span>
+
+				<div class="flex flex-row h-1/2 w-full items-center justify-between">
+					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
+					<button type="submit" class="btn-primary">
+						<span class="font-bold text-white" v-if="!isSubmitting">Add</span>
+						<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
 					</button>
 				</div>
 			</Form>
@@ -232,7 +274,7 @@
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 					<button type="submit" class="btn-primary">
 						<span class="font-bold text-white" v-if="!isSubmitting">Add</span>
-						<CirclesToRhombusesSpinner :size="5" class="text-white" v-if="isSubmitting" />
+						<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
 					</button>
 				</div>
 			</Form>
@@ -324,7 +366,7 @@
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 					<button type="submit" class="btn-primary">
 						<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
-						<CirclesToRhombusesSpinner :size="5" class="text-white" v-if="isSubmitting" />
+						<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
 					</button>
 				</div>
 			</Form>
@@ -347,19 +389,22 @@
 <script setup>
 	import { useRoute } from "vue-router"
 	import { parseISO } from "date-fns"
-	import { toast, goto } from "@/utils/utils"
-	import { useManagement } from "@/store/management"
-	import { isLength, isDate } from "validator"
-	import { onBeforeRouteUpdate } from "vue-router"
 	import { ref, computed } from "vue"
+	import { useManagement } from "@/store/management"
+	import { toast, goto, chance } from "@/utils/utils"
+	import { onBeforeRouteUpdate } from "vue-router"
+	import { isLength, isDate, isEmail } from "validator"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import { Form, Field, ErrorMessage } from "vee-validate"
 	import MyModal from "@/components/mymodal"
 	import user from "../../../../api/user"
+
 	const errorCall = ref("")
 	const educ_state_modif = ref(false)
-	const exper_state_modif = ref(false)
 	const showModalAddExper = ref(false)
+	const exper_state_modif = ref(false)
+	const showModalAddContact = ref(false)
+	const contact_state_modif = ref(false)
 	const showModalUpdateExper = ref(false)
 	const showModalAddEducation = ref(false)
 	const showModalDeleteEmployee = ref(false)
@@ -367,10 +412,7 @@
 	const store = useManagement()
 	const route = useRoute()
 	const userData = computed(() => store.employees.find((emp) => emp._id == route.params.id))
-	console.log(userData.value)
-	// onMounted(() => {
-	// })
-	// watch(userData, () => {})
+
 	onBeforeRouteUpdate(async (to, from) => {
 		if (to.params.id !== from.params.id) {
 			const result = await store.employeeBy(to.params.id)
@@ -380,6 +422,26 @@
 				toast.danger("Something went wrong on refreshing. Try later")
 			}
 		}
+	})
+	const contactSchema = ref({
+		name(value) {
+			return isLength(value, { min: 6, max: 20 }) ? true : "Le minimum de caracteres est 6 et le maximum 20"
+		},
+		telephone(value) {
+			return isLength(value, { min: 6, max: 20 }) ? true : "Le minimum de caracteres est 6 et le maximum 20"
+		},
+		email(value) {
+			return isEmail(value) ? true : "Un email valide est attendu"
+		},
+		relationship(value) {
+			return isLength(value, { min: 3, max: 20 }) ? true : "Le minimum de caracteres est 3 et le maximum 20"
+		},
+	})
+	const contactValue = ref({
+		name: chance.last(),
+		telephone: chance.phone({ country: "fr", mobile: true }),
+		email: chance.email(),
+		relationship: "Father",
 	})
 	const educationValue = ref({
 		from_school: "Catalyst",
@@ -448,26 +510,21 @@
 		{ position: "Freelance", description: "", company: "NASA", start: "28-08-2014", end: "28-05-2020" },
 		{ position: "Doctor", description: "", company: "Gecamines", start: "28-08-2014", end: "28-05-2020" },
 	])
-	const emergencyContacts = ref([
-		{
-			name: "John Doe",
-			telephone: "(709) 560-3641",
-			relationship: "Father",
-			email: "doe@father.js",
-		},
-		{
-			name: "Jane Doe",
-			telephone: "(965) 947-4992",
-			relationship: "Mother",
-			email: "jane@mother.js",
-		},
-	])
 
 	async function deleteEducation(educationID = "4") {
 		const result = await store.deleteEducation(route.params.id, educationID)
 		if (result) {
-			educ_state_modif.value = false
+			closeModal()
 			toast.success(`Remove Education with id ${educationID}`)
+		} else {
+			toast.error("Can't delete education for this employee")
+		}
+	}
+	async function deleteContact(contactID = "4") {
+		const result = await store.deleteContact(route.params.id, contactID)
+		if (result) {
+			closeModal()
+			toast.success(`Remove Contact with id ${contactID}`)
 		} else {
 			toast.error("Can't delete education for this employee")
 		}
@@ -475,7 +532,7 @@
 	async function deleteExperience(experienceID = "4") {
 		const result = await store.deleteExperience(route.params.id, experienceID)
 		if (result) {
-			exper_state_modif.value = false
+			closeModal()
 			toast.success(`Remove Experience with id ${experienceID}`)
 		} else {
 			toast.error("Can't delete experience for this employee")
@@ -520,8 +577,8 @@
 	}
 	async function refresh() {
 		const result = await store.employeeBy(route.params.id)
-		closeModal()
 		if (result) {
+			closeModal()
 			toast(`Refreshed...`)
 		} else {
 			toast.danger("Something went wrong on refreshing. Try later")
@@ -552,12 +609,26 @@
 			toast.error("Impossible d'ajouter une experience a cette employee", result)
 		}
 	}
+	async function addContact(values) {
+		const result = await store.addEmergencyContact(route.params.id, values)
+		if (result) {
+			closeModal()
+			toast(`Added ${contactValue.value.name} to contacts`)
+		} else {
+			toast.error("Impossible d'ajouter un contact a cette employee")
+		}
+	}
+
 	function showpdf(link) {
 		console.log("Show pdf at link", link)
 	}
 	function closeModal() {
+		educ_state_modif.value = false
+		exper_state_modif.value = false
+		contact_state_modif.value = false
 		showModalAddExper.value = false
 		showModalUpdateExper.value = false
+		showModalAddContact.value = false
 		showModalAddEducation.value = false
 		showModalDeleteEmployee.value = false
 		showModalUpdateEducation.value = false
@@ -566,6 +637,9 @@
 		console.log("Invalid education", errors)
 	}
 	function onInvalidExperience({ values, result, errors }) {
+		console.log("Invalid experience", errors)
+	}
+	function onInvalidContact({ values, result, errors }) {
 		console.log("Invalid experience", errors)
 	}
 </script>

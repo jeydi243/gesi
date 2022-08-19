@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from "vue-router"
+
 const studentsRoutes = [
   {
     path: "/students",
@@ -180,7 +181,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
+  routes, 
 })
 
 router.onError((error) => {

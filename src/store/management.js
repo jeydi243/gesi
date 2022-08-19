@@ -13,7 +13,7 @@ export const useManagement = defineStore("management", {
 		routeurs: [],
 		listDocuments: [],
 		employees: [],
-		token: null,
+		token: "null",
 		error: null,
 	}),
 
@@ -21,19 +21,19 @@ export const useManagement = defineStore("management", {
 		async init() {
 			try {
 				const t = useTeachers()
-				this.setAxios()
+				// this.setAxios()
 				t.init()
 				await this.getAllDocuments()
 				await this.getAllEmployees()
-			} catch (error) {}
-
-			//   c.init()
+			} catch (error) {
+				console.log(error)
+			}
 		},
 		setAxios() {
 			axios.interceptors.request.use(
 				function (config) {
-					if (state.token) {
-						config.headers.Authorization = `Bearer ${state.token}`
+					if (this.token) {
+						config.headers.Authorization = `Bearer ${this.token}`
 					}
 					return config
 				},
@@ -135,7 +135,6 @@ export const useManagement = defineStore("management", {
 				return false
 			}
 		},
-
 		async employeeBy(employeeID) {
 			try {
 				const { data, status } = await mgntAPI.employeeBy(employeeID)
@@ -192,16 +191,52 @@ export const useManagement = defineStore("management", {
 				return false
 			}
 		},
+		async addEmergencyContact(employeeID, contact) {
+			try {
+				const { data, status } = await mgntAPI.addEmergencyContact(employeeID, contact)
+				if (status == 201 || status === 200) {
+					let index = this.employees.findIndex((em) => em._id == employeeID)
+					this.employees[index].emergencyContacts.push(data)
+					return true
+				}
+				return false
+			} catch (err) {
+				console.log(err)
+				return false
+			}
+		},
 		async deleteEducation(employeeID, educationID) {
 			try {
 				const { data, status, headers } = await mgntAPI.deleteEducation(employeeID, educationID)
-				if (status == 200 || status == 201) {
+				if ((status == 200 || status == 201) && data != "") {
 					const indexEmp = this.employees.findIndex((emp) => emp._id == employeeID)
 					const indexEduc = this.employees[indexEmp].educations.findIndex((educ) => (educ.id = educationID))
 					if (indexEduc != -1) {
 						this.employees[indexEmp].educations.splice(indexEduc, 1)
 						return true
 					} else {
+						return false
+					}
+				} else if (status == 304) {
+					console.log({ headers })
+				}
+				return false
+			} catch (er) {
+				console.log(er)
+				return false
+			}
+		},
+		async deleteContact(employeeID, contactID) {
+			try {
+				const { data, status, headers } = await mgntAPI.deleteContact(employeeID, contactID)
+				if ((status == 200 || status == 201) && data != "") {
+					const indexEmp = this.employees.findIndex((emp) => emp._id == employeeID)
+					const indexContact = this.employees[indexEmp].emergencyContacts.findIndex((educ) => (educ.id = contactID))
+					if (indexContact != -1) {
+						this.employees[indexEmp].emergencyContacts.splice(indexContact, 1)
+						return true
+					} else {
+						console.log("Ce contact n'exige déja plus")
 						return false
 					}
 				} else if (status == 304) {

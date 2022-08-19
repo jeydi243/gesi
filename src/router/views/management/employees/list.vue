@@ -43,22 +43,13 @@
                 <div class="rounded-full bg-green-50 h-16 w-16 cursor-pointer overflow-clip">
                   <img :src="emp.profile_img" />
                 </div>
-                <span class="text-lg font-bold">{{ emp.gender == "M" ? "M." : "Ms." }}{{ emp.name }}</span>
-                <span class="text-lg">{{ emp.position[0] }} </span>
+                <span class="text-lg font-bold">{{ emp.gender == "M" ? "M. " : "Ms. " }}{{ filters.firstUpper(emp.name) }}</span>
+                <span class="text-lg">{{ filters.firstUpper(emp.position[0]) }} </span>
                 <div class="rounded-lg bg-blue-50 col p-2 w-full">
-                  <div class="text-gray-700 text-base mb-4">
-                    <div class="flex flex-row justify-between">
-                      <div class="flex flex-col">
+                   <div class="flex flex-col mb-4">
                         <span class="text-gray-500">Departement</span>
                         <span class="text-gray-800 font-bold">Soudure </span>
                       </div>
-                      <div class="flex flex-col">
-                        <span class="text-gray-500">School</span>
-                        <span class="text-gray-800 font-bold">{{ emp.school_name }} </span>
-                      </div>
-                    </div>
-                    Some quick example text to build on the card title and make up the bulk
-                  </div>
                   <span> <MailIcon class="h-5 w-5 inline" /> {{ emp.personal_email }} </span>
                   <span> <PhoneIcon class="h-5 w-5 inline" /> {{ emp.telephones[0] }} </span>
                 </div>
@@ -82,8 +73,6 @@
   import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
   import AddEmployee from "@/router/views/management/employees/add.vue"
   import * as Chance from "chance"
-
-  const chance = new Chance()
 
   const store = useManagement()
 

@@ -51,11 +51,17 @@ export default {
 	addEducation: async function (id, education) {
 		return axios.post(`${this.routeEmployees}/${id}/add_education`, education)
 	},
+	addEmergencyContact: async function (id, contact) {
+		return axios.post(`${this.routeEmployees}/${id}/add_contact`, contact)
+	},
 	addExperience: async function (id, experience) {
 		return axios.post(`${this.routeEmployees}/${id}/add_experience`, experience)
 	},
 	deleteEducation: async function (id, educationID) {
 		return axios.delete(`${this.routeEmployees}/${id}/delete_education`, { params: { educationID } })
+	},
+	deleteContact: async function (id, contactID) {
+		return axios.delete(`${this.routeEmployees}/${id}/delete_contact`, { params: { contactID } })
 	},
 	deleteExperience: async function (id, experienceID) {
 		return axios.delete(`${this.routeEmployees}/${id}/delete_experience`, { params: { experienceID } })

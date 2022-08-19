@@ -23,7 +23,7 @@
 	import { onLeaveTop, onEnter, onBeforeEnter } from "@/utils/utils"
 	import { ref, computed } from "vue"
 	import * as Chance from "chance"
-	const chance = new Chance()
+
 
 	const store = useManagement()
 	var showAddEmploye = ref(false)

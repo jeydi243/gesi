@@ -1,5 +1,5 @@
 <template>
-	<div id="app" class=" h-screen w-screen">
+	<div id="app" class="h-screen w-screen">
 		<div class="row h-full w-full" v-bind="$attrs">
 			<SideBar class="flex w-[15%] h-full bg-gray-900" />
 			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
@@ -19,104 +19,110 @@
 	</div>
 </template>
 <script setup>
-import Footer from "@/components/footer";
-import MyHeader from "@/components/myheader";
-import SideBar from "@/components/side";
-import BreadCrumbs from "@/components/breadcrumbs";
-import { watch, ref, onMounted } from "vue";
-import { useIpcRendererOn } from '@vueuse/electron'
-import { useRoute } from 'vue-router';
+	import Footer from "@/components/footer"
+	import MyHeader from "@/components/myheader"
+	import SideBar from "@/components/side"
+	import BreadCrumbs from "@/components/breadcrumbs"
+	import { watch, ref, onMounted } from "vue"
+	import { useIpcRendererOn } from "@vueuse/electron"
+	import { useRoute } from "vue-router"
+	import { useConfig } from "@/store/config"
 
-const route = useRoute()
-let showBraedCrumbs = ref(false)
+	const route = useRoute()
+	const store = useConfig()
+	let showBraedCrumbs = ref(false)
 
-useIpcRendererOn('dom_ready', (event, ...args) => {
-	console.log(args)
-})
+	useIpcRendererOn("finish_load", async (event, ...args) => {
+		try {
+			await store.init()
+		} catch (er) {
+			console.log("Impossible d'initier le store", er)
+		}
+	})
 
-watch(() => route, function ({ meta, fullPath }) {
-	console.log('Hum');
-	changeLayout(meta.layout)
-	this.changeActive(fullPath.split("/")[1]);
-})
-
-
-
+	watch(
+		() => route,
+		function ({ meta, fullPath }) {
+			console.log("Hum")
+			changeLayout(meta.layout)
+			this.changeActive(fullPath.split("/")[1])
+		}
+	)
 </script>
 <style>
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.7s ease;
-}
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.7s ease;
+	}
 
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-
-.fadeSlideX-enter-active {
-	animation: fadein 0.7s ease;
-}
-
-.fadeSlideX-leave-active {
-	animation: fadeout 0.7s ease;
-}
-
-.fadeSlideY-enter-active {
-	animation: fadeinY 0.7s ease;
-}
-
-.fadeSlideY-leave-active {
-	animation: fadeoutY 0.7s ease;
-}
-
-@keyframes fadein {
-	from {
+	.fade-enter-from,
+	.fade-leave-to {
 		opacity: 0;
-		transform: translateX(-10px);
 	}
 
-	to {
-		opacity: 1;
-		transform: translateX(0px);
-	}
-}
-
-@keyframes fadeout {
-	from {
-		opacity: 1;
-		z-index: 1;
+	.fadeSlideX-enter-active {
+		animation: fadein 0.7s ease;
 	}
 
-	to {
-		opacity: 0;
-		z-index: 0;
-		transform: translateX(-10px);
-	}
-}
-
-@keyframes fadeinY {
-	from {
-		opacity: 0;
-		z-index: 1;
-		transform: translateY(-10px);
+	.fadeSlideX-leave-active {
+		animation: fadeout 0.7s ease;
 	}
 
-	to {
-		opacity: 1;
-		z-index: 0;
-		transform: translateY(0px);
-	}
-}
-
-@keyframes fadeoutY {
-	from {
-		opacity: 1;
+	.fadeSlideY-enter-active {
+		animation: fadeinY 0.7s ease;
 	}
 
-	to {
-		opacity: 0;
-		transform: translateY(-10px);
+	.fadeSlideY-leave-active {
+		animation: fadeoutY 0.7s ease;
 	}
-}
+
+	@keyframes fadein {
+		from {
+			opacity: 0;
+			transform: translateX(-10px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateX(0px);
+		}
+	}
+
+	@keyframes fadeout {
+		from {
+			opacity: 1;
+			z-index: 1;
+		}
+
+		to {
+			opacity: 0;
+			z-index: 0;
+			transform: translateX(-10px);
+		}
+	}
+
+	@keyframes fadeinY {
+		from {
+			opacity: 0;
+			z-index: 1;
+			transform: translateY(-10px);
+		}
+
+		to {
+			opacity: 1;
+			z-index: 0;
+			transform: translateY(0px);
+		}
+	}
+
+	@keyframes fadeoutY {
+		from {
+			opacity: 1;
+		}
+
+		to {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+	}
 </style>
