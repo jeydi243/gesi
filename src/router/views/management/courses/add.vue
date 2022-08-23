@@ -10,7 +10,6 @@
 
 <script setup>
 	import { Form, ErrorMessage, Field } from "vee-validate"
-	import * as Chance from "chance"
 </script>
 
 <style scoped></style>

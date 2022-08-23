@@ -33,7 +33,6 @@
 </template>
 
 <script setup>
-	import * as Chance from "chance"
 	import { mapActions } from "pinia"
 	import { useRouter, useRoute } from "vue-router"
 	import { onBeforeEnter, onEnter, onLeave, goto, chance } from "@/utils/utils"

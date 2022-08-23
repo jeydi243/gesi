@@ -126,7 +126,11 @@ export const useManagement = defineStore("management", {
 				const { status } = await mgntAPI.deleteEmployee(employeeID)
 				if (status == 200 || status == 201) {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
-					this.employees.splice(index, 1)
+					if (index != -1) this.employees.splice(index, 1)
+					else {
+						console.log("Can't find this employee")
+						return false
+					}
 					return true
 				}
 				return false
@@ -196,7 +200,7 @@ export const useManagement = defineStore("management", {
 				const { data, status } = await mgntAPI.addEmergencyContact(employeeID, contact)
 				if (status == 201 || status === 200) {
 					let index = this.employees.findIndex((em) => em._id == employeeID)
-					this.employees[index].emergencyContacts.push(data)
+					this.employees[index].emergencyContacts.unshift(data)
 					return true
 				}
 				return false
@@ -210,7 +214,7 @@ export const useManagement = defineStore("management", {
 				const { data, status, headers } = await mgntAPI.deleteEducation(employeeID, educationID)
 				if ((status == 200 || status == 201) && data != "") {
 					const indexEmp = this.employees.findIndex((emp) => emp._id == employeeID)
-					const indexEduc = this.employees[indexEmp].educations.findIndex((educ) => (educ.id = educationID))
+					const indexEduc = this.employees[indexEmp].educations.findIndex((educ) => educ.id == educationID)
 					if (indexEduc != -1) {
 						this.employees[indexEmp].educations.splice(indexEduc, 1)
 						return true
@@ -231,7 +235,7 @@ export const useManagement = defineStore("management", {
 				const { data, status, headers } = await mgntAPI.deleteContact(employeeID, contactID)
 				if ((status == 200 || status == 201) && data != "") {
 					const indexEmp = this.employees.findIndex((emp) => emp._id == employeeID)
-					const indexContact = this.employees[indexEmp].emergencyContacts.findIndex((educ) => (educ.id = contactID))
+					const indexContact = this.employees[indexEmp].emergencyContacts.findIndex((educ) => educ.id == contactID)
 					if (indexContact != -1) {
 						this.employees[indexEmp].emergencyContacts.splice(indexContact, 1)
 						return true
@@ -254,7 +258,7 @@ export const useManagement = defineStore("management", {
 				if (status == 200 || status == 201) {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
 					console.log({ index })
-					const indexExp = this.employees[index].educations.findIndex((educ) => (educ.id = experienceID))
+					const indexExp = this.employees[index].educations.findIndex((educ) => educ.id == experienceID)
 					if (indexExp != -1) {
 						this.employees[index].educations.splice(indexExp, 1)
 						return true
@@ -277,7 +281,7 @@ export const useManagement = defineStore("management", {
 				console.log({ data, status, headers })
 				if ((status == 200 || status == 201) && data != "") {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
-					const indexExp = this.employees[index].experiences.findIndex((exp) => (exp.id = experienceID))
+					const indexExp = this.employees[index].experiences.findIndex((exp) => exp.id == experienceID)
 					if (indexExp != -1) {
 						this.employees[index].experiences[indexExp] = data
 					} else {
@@ -295,11 +299,10 @@ export const useManagement = defineStore("management", {
 		},
 		async updateEducation(employeeID, educationID, education) {
 			try {
-				console.log({ employeeID, educationID, education })
 				const { data, status, headers } = await mgntAPI.updateEducation(employeeID, { id: educationID, ...education })
 				if ((status == 200 || status == 201) && data != "") {
 					const index = this.employees.findIndex((emp) => emp._id == employeeID)
-					const indexExp = this.employees[index].educations.findIndex((educ) => (educ.id = educationID))
+					const indexExp = this.employees[index].educations.findIndex((educ) => educ.id == educationID)
 					if (indexExp != -1) {
 						this.employees[index].educations[indexExp] = data
 					} else {
@@ -315,7 +318,25 @@ export const useManagement = defineStore("management", {
 				return false
 			}
 		},
-
+		async updateBiography(employeeID, biography) {
+			try {
+				const { data, status } = await mgntAPI.updateBiography(employeeID, biography)
+				if ((status == 200 || status == 201) && data != "") {
+					const index = this.employees.findIndex((emp) => emp._id == employeeID)
+					if (index != -1) {
+						this.employees[index].biography = biography
+					} else {
+						return false
+					}
+					return true
+				} else if (status == 304) {
+					console.log("Biography can't be updated ", { headers })
+					return false
+				}
+			} catch (er) {
+				console.log(er)
+			}
+		},
 		async addDocument(newDocument) {
 			try {
 				const { data, status } = await mgntAPI.addDocument(newDocument)

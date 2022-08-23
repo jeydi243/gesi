@@ -76,5 +76,8 @@ export default {
 	updateEducation: async function (employeeID, updateEducation) {
 		return axios.patch(`${this.routeEmployees}/${employeeID}/update_education`, { ...updateEducation })
 	},
+	updateBiography: async function (employeeID, updatedBiography) {
+		return axios.patch(`${this.routeEmployees}/${employeeID}/update_biography`, { ...updatedBiography })
+	},
 }
 const documents = {}

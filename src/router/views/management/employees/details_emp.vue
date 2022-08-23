@@ -20,15 +20,31 @@
 					</div>
 				</div>
 				<div>
-					<button class="btn-unstate" @click="refresh">Refresh</button>
-					<button class="btn-unstate" @click="showModalDeleteEmployee = true">Edit</button>
+					<button class="btn-unstate mr-2" @click="refresh">Refresh</button>
+					<div>
+						<div class="flex justify-center">
+							<div class="dropdown relative">
+								<button class="btn-unstate dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+									<box-icon name="dots-vertical-rounded" color="green" class="bg-red cursor-pointer"></box-icon>
+								</button>
+								<ul class="dropdown-menu min-w-max absolute bg-white text-base z-50 float-left list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none" aria-labelledby="dropdownMenuButton1">
+									<li @click="edit_mode = !edit_mode">
+										<a class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100" href="#">Update</a>
+									</li>
+									<li @click="showModalDeleteEmployee = true">
+										<a class="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-red-500 hover:bg-red-100" href="#">Delete</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="card mt-4 min-h-[200px] relative">
-			<button class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+			<!-- <button v-if="edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button>
+			</button> -->
 			<span class="font-bold text-xl">Documents</span>
 			<div class="row w-full justify-evenly space-x-6 a my-auto">
 				<div class="col justify-items-end" v-for="(doc, index) in docs" :key="index">
@@ -48,16 +64,29 @@
 			</div>
 		</div>
 		<div class="row justify-center space-x-2 relative mt-4">
-			<button @click="contact_state_modif = !contact_state_modif" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button>
+			</button> -->
 			<div class="card min-h-[200px] w-1/2">
 				<span class="font-bold text-xl">Biography</span>
-				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum laudantium libero quisquam vero quo corporis, odio fuga cumque vitae eos impedit in nisi quam tempore reprehenderit corrupti. Perspiciatis, eius?
+				<span v-if="!edit_mode"> {{ userData.biography }} </span>
+				<Form v-else @submit="updateBiography" v-slot="{ isSubmitting }" :initial-values="{ biography: userData.biography }" @invalid-submit="invalidBio">
+					<Field name="biography" placeholder="Biography" class="form-input mb-2 w-full"></Field>
+					<ErrorMessage name="biography" v-slot="{ message }">
+						<p class="input-error">{{ message }}</p>
+					</ErrorMessage>
+					<div class="flex flex-row h-1/2 w-full items-center justify-between">
+						<!-- <button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button> -->
+						<button type="submit" class="btn-primary">
+							<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
+							<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+						</button>
+					</div>
+				</Form>
 			</div>
 			<div class="card min-h-[200px] w-1/2 col justify-cente">
 				<span class="font-bold text-xl">Emergency Contact</span>
-				<span v-for="(contact, index) in userData.emergencyContacts" :key="index" class="mt-2 relative transition-all ease-in duration-700" :class="{ 'rounded-lg border-2': contact_state_modif }">
+				<span v-for="(contact, index) in userData.emergencyContacts" :key="index" class="mt-2 relative transition-all ease-in duration-700" :class="{ 'rounded-lg border-2 px-5': edit_mode }">
 					<div class="row justify-between">
 						<span>Name: </span>
 						<span>{{ contact.name }}</span>
@@ -70,22 +99,23 @@
 						<span>Telephone: </span>
 						<span>{{ contact.telephone }}</span>
 					</div>
-					<hr class="mb-2 text-green-500" v-if="!contact_state_modif" />
-					<button v-if="contact_state_modif" @click="deleteContact(contact.id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
+					<hr class="mb-2 text-green-500" v-if="!edit_mode" />
+					<button v-if="edit_mode" @click="deleteContact(contact.id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
 						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
 					</button>
 				</span>
-				<button @click="showModalAddContact = true" class="btn-unstate" v-if="contact_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success">Add</button>
+				<button @click="showModalAddContact = true" class="btn-unstate" v-if="edit_mode" data-mdb-ripple="true" data-mdb-ripple-color="success">Add</button>
 			</div>
 		</div>
-		<div class="card mt-4 min-h-[200px] relative transition-all ease-in duration-700">
-			<button @click="educ_state_modif = !educ_state_modif" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+		<div class="col card mt-4 min-h-[200px] relative transition-all ease-in duration-700 justify-between">
+			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button>
-			<span class="font-bold text-xl">Education & Certifiactions</span>
-			<ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start row md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': educ_state_modif, 'md:justify-start': userData.educations.length == 1 }">
-				<!--  -->
-				<li v-for="({ name, start, description, end, from_school, id }, index) in userData.educations" :key="index" class="transition-all ease-in duration-700 relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': educ_state_modif }">
+			</button> -->
+			<div>
+				<span class="font-bold text-xl">Education & Certifiactions</span>
+			</div>
+			<!-- <ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start row md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': edit_mode, 'md:justify-start': userData.educations.length == 1 }">
+				<li v-for="({ name, start, description, end, from_school, id }, index) in userData.educations" :key="index" class="transition-all ease-in duration-700 relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': edit_mode }">
 					<div class="flex md:block flex-start items-center pt-2 md:pt-0">
 						<div class="bg-green-300 w-2 h-2 rounded-full -ml-1 md:ml-0 mr-3 md:mr-0 md:-mt-1"></div>
 						<p class="text-green-500 text-sm mt-2">{{ filters.toiso(start) }} - {{ filters.toiso(end) }}</p>
@@ -94,23 +124,24 @@
 						<h4 class="text-green-800 font-semibold text-xl mb-1.5">{{ name }}</h4>
 						{{ from_school }}
 						<p class="text-gray-500 mb-3">{{ description }}</p>
-						<button v-if="educ_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="launchUpdateEducation(id)">Update</button>
+						<button v-if="edit_mode" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="launchUpdateEducation(id)">Update</button>
 					</div>
-					<button v-if="educ_state_modif" @click="deleteEducation(id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
+					<button v-if="edit_mode" @click="deleteEducation(id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
 						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
 					</button>
 				</li>
-			</ol>
-			<button v-if="educ_state_modif" class="btn-unstate w-1/3 self-center mt-4" data-mdb-ripple="true" data-mdb-ripple-color="success" @click="showModalAddEducation = true">Add Education</button>
+			</ol> -->
+			<button v-if="edit_mode" class="btn-unstate w-1/3 self-center mt-4" data-mdb-ripple="true" data-mdb-ripple-color="success" @click="showModalAddEducation = true">Add Education</button>
 		</div>
-		<div class="card mt-4 min-h-[200px] relative">
-			<button @click="exper_state_modif = !exper_state_modif" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+		<div class="col card mt-4 min-h-[200px] relative justify-between">
+			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="h text-green-900"></box-icon>
-			</button>
-			<span class="font-bold text-xl">Work Experiences</span>
-			<ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start md:gap-6 mt-2" :class="{ 'border-none': exper_state_modif, 'md:justify-start': userData.experiences.length == 1 }">
-				<!--  -->
-				<li v-for="({ position, start, end, company, id }, index) in userData.experiences" :key="index" class="relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': exper_state_modif }">
+			</button> -->
+			<div>
+				<span class="font-bold text-xl">Work Experiences</span>
+			</div>
+			<!-- <ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start md:gap-6 mt-2" :class="{ 'border-none': edit_mode, 'md:justify-start': userData.experiences.length == 1 }">
+				<li v-for="({ position, start, end, company, id }, index) in userData.experiences" :key="index" class="relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': edit_mode, 'justify-center': userData.experiences.length == 0 }">
 					<div class="flex md:block flex-start items-center pt-2 md:pt-0">
 						<div class="bg-green-300 w-2 h-2 rounded-full -ml-1 md:ml-0 mr-3 md:mr-0 md:-mt-1"></div>
 						<p class="text-green-500 text-sm mt-2">{{ filters.toiso(start) }} - {{ filters.toiso(end) }}</p>
@@ -119,34 +150,46 @@
 						<h4 class="text-green-800 font-semibold text-xl mb-1.5">{{ position }}</h4>
 						At {{ company }}
 						<p class="text-gray-500 mb-3">Et elementum lorem ornare. Maecenas placerat facilisis mollis.</p>
-						<button v-if="exper_state_modif" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="launchUpdateExperience(id)">Update</button>
+						<button v-if="edit_mode" data-mdb-ripple="true" data-mdb-ripple-color="success" type="button" class="btn-unstate-min w-[80px]" @click="launchUpdateExperience(id)">Update</button>
 					</div>
-					<button v-if="exper_state_modif" @click="deleteExperience(id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
+					<button v-if="edit_mode" @click="deleteExperience(id)" class="absolute inline-block bottom-0 right-0 text-center items-center row bg-red-100 rounded-tl-md rounded-br-sm" data-mdb-ripple="true" data-mdb-ripple-color="danger">
 						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
 					</button>
 				</li>
-				<button v-if="exper_state_modif" class="btn-unstate w-1/3 self-center mt-4" data-mdb-ripple="true" data-mdb-ripple-color="success" @click="showModalAddExper = true">Add Experience</button>
-			</ol>
+			</ol> -->
+			<button v-if="edit_mode" class="btn-unstate w-1/3 self-center mt-4" data-mdb-ripple="true" data-mdb-ripple-color="success" @click="showModalAddExper = true">Add Experience</button>
 		</div>
-		<div class="card mt-4 min-h-[200px] relative">
-			<button class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
+		<div class="card mt-4 min-h-[200px] relative col justify-between">
+			<!-- <button class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button>
-			<span class="font-bold text-xl">Onboarding Status</span>
-			<div class="col space-y-2">
-				<div class="form-check form-switch">
-					<input class="toggle" type="checkbox" role="switch" id="work_tools" disabled />
-					<label class="form-check-label inline-block text-gray-800" for="work_tools">Work Tools</label>
+			</button> -->
+			<span class="font-bold text-xl mb-4">Onboarding Status</span>
+			<article class="row justify-between">
+				<div class="col space-y-2" v-if="!edit_mode">
+					<div class="form-check form-switch" v-for="(value, key) in userData.onboarding" :key="key">
+						{{ value }}
+						<input class="toggle" type="checkbox" role="switch" id="work_tools" :disabled="edit_mode" :checked="value" />
+						<label class="form-check-label inline-block text-gray-800" for="work_tools">{{ key }}</label>
+					</div>
 				</div>
-				<div class="form-check form-switch">
-					<input class="toggle" type="checkbox" role="switch" id="office_tours" disabled />
-					<label class="form-check-label inline-block text-gray-800" for="office_tours">Office Tools</label>
+				<div v-else>
+					<Form @submit="updateOnboarding" v-slot="{ isSubmitting }" :initial-values="{ onboarding: userData.onboarding }">
+						<template v-for="(value, key) in userData.onboarding" :key="key">
+							<Field :name="key" class="form-check-input mb-2 w-full"></Field>
+							<ErrorMessage :name="key" v-slot="{ message }">
+								<p class="input-error">{{ message }}</p>
+							</ErrorMessage>
+						</template>
+						<div class="flex flex-row h-1/2 w-full items-center justify-between">
+							<!-- <button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button> -->
+							<button type="submit" class="btn-primary">
+								<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
+								<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+							</button>
+						</div>
+					</Form>
 				</div>
-				<div class="form-check form-switch">
-					<input class="toggle" type="checkbox" role="switch" id="flexSwitchCheckDefault" disabled />
-					<label class="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Office Tools</label>
-				</div>
-			</div>
+			</article>
 		</div>
 
 		<MyModal v-show="showModalAddEducation" @close="showModalAddEducation = false">
@@ -214,7 +257,7 @@
 						<p class="input-error">{{ message }}</p>
 					</ErrorMessage>
 				</div>
-				<Field placeholder="Phone number comma separated" id="telephone" name="telephones" class="w-full form-input" />
+				<Field placeholder="Phone number comma separated" id="telephone" name="telephone" class="w-full form-input" />
 				<ErrorMessage name="telephone" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
@@ -222,9 +265,9 @@
 				<ErrorMessage name="relationship" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<span class="text-red-700 text-base">{{ errorCall }}</span>
+				<!-- <span class="text-red-700 text-base">{{ errorCall }}</span> -->
 
-				<div class="flex flex-row h-1/2 w-full items-center justify-between">
+				<div class="flex flex-row h-1/2 w-full items-center justify-between mt-5">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 					<button type="submit" class="btn-primary">
 						<span class="font-bold text-white" v-if="!isSubmitting">Add</span>
@@ -397,14 +440,13 @@
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import { Form, Field, ErrorMessage } from "vee-validate"
 	import MyModal from "@/components/mymodal"
-	import user from "../../../../api/user"
 
 	const errorCall = ref("")
-	const educ_state_modif = ref(false)
 	const showModalAddExper = ref(false)
-	const exper_state_modif = ref(false)
+
+	const edit_mode = ref(false)
+
 	const showModalAddContact = ref(false)
-	const contact_state_modif = ref(false)
 	const showModalUpdateExper = ref(false)
 	const showModalAddEducation = ref(false)
 	const showModalDeleteEmployee = ref(false)
@@ -510,17 +552,7 @@
 		{ position: "Freelance", description: "", company: "NASA", start: "28-08-2014", end: "28-05-2020" },
 		{ position: "Doctor", description: "", company: "Gecamines", start: "28-08-2014", end: "28-05-2020" },
 	])
-
-	async function deleteEducation(educationID = "4") {
-		const result = await store.deleteEducation(route.params.id, educationID)
-		if (result) {
-			closeModal()
-			toast.success(`Remove Education with id ${educationID}`)
-		} else {
-			toast.error("Can't delete education for this employee")
-		}
-	}
-	async function deleteContact(contactID = "4") {
+	async function deleteContact(contactID) {
 		const result = await store.deleteContact(route.params.id, contactID)
 		if (result) {
 			closeModal()
@@ -529,7 +561,16 @@
 			toast.error("Can't delete education for this employee")
 		}
 	}
-	async function deleteExperience(experienceID = "4") {
+	async function deleteEducation(educationID) {
+		const result = await store.deleteEducation(route.params.id, educationID)
+		if (result) {
+			closeModal()
+			toast.success(`Remove Education with id ${educationID}`)
+		} else {
+			toast.error("Can't delete education for this employee")
+		}
+	}
+	async function deleteExperience(experienceID) {
 		const result = await store.deleteExperience(route.params.id, experienceID)
 		if (result) {
 			closeModal()
@@ -538,7 +579,7 @@
 			toast.error("Can't delete experience for this employee")
 		}
 	}
-	async function launchUpdateExperience(experienceID = "4") {
+	async function launchUpdateExperience(experienceID) {
 		const ud = userData.value["experiences"].find((exp) => exp.id == experienceID)
 		experienceValue.value = ud
 		showModalUpdateExper.value = true
@@ -575,20 +616,25 @@
 			console.log(error)
 		}
 	}
-	async function refresh() {
-		const result = await store.employeeBy(route.params.id)
-		if (result) {
-			closeModal()
-			toast(`Refreshed...`)
-		} else {
-			toast.danger("Something went wrong on refreshing. Try later")
+	async function updateBiography(biography) {
+		try {
+			const result = await store.updateBiography(route.params.id, biography)
+			if (result) {
+				closeModal()
+				toast.success(`Update biography with id ${educationValue.value.id}`)
+			} else {
+				toast.error("Can't update biography for this employee")
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 	async function deleteEmployee() {
-		const { status } = await store.deleteEmployee(route.params.id)
-		if (status === 200 || status === 201) {
-			goto()
-			goto()
+		const result = await store.deleteEmployee(route.params.id)
+		if (result) {
+			goto("employees-list")
+		} else {
+			toast.error("Can't delete this employee")
 		}
 	}
 	async function addEducation(values) {
@@ -618,14 +664,17 @@
 			toast.error("Impossible d'ajouter un contact a cette employee")
 		}
 	}
-
-	function showpdf(link) {
-		console.log("Show pdf at link", link)
+	async function refresh() {
+		const result = await store.employeeBy(route.params.id)
+		if (result) {
+			closeModal()
+			toast(`Refreshed...`)
+		} else {
+			toast.danger("Something went wrong on refreshing. Try later")
+		}
 	}
 	function closeModal() {
-		educ_state_modif.value = false
-		exper_state_modif.value = false
-		contact_state_modif.value = false
+		edit_mode.value = false
 		showModalAddExper.value = false
 		showModalUpdateExper.value = false
 		showModalAddContact.value = false
@@ -640,7 +689,13 @@
 		console.log("Invalid experience", errors)
 	}
 	function onInvalidContact({ values, result, errors }) {
-		console.log("Invalid experience", errors)
+		console.log("Invalid experience ", errors)
+	}
+	function invalidBio({ values, result, errors }) {
+		console.log("Invalid biography ", errors)
+	}
+	async function updateOnboarding(values) {
+		console.log(values)
 	}
 </script>
 

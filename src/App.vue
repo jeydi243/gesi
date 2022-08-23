@@ -39,7 +39,13 @@
 			console.log("Impossible d'initier le store", er)
 		}
 	})
-
+	onMounted(async () => {
+		try {
+			await store.init()
+		} catch (er) {
+			console.log("Impossible d'initier le store", er)
+		}
+	})
 	watch(
 		() => route,
 		function ({ meta, fullPath }) {

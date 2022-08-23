@@ -18,20 +18,16 @@
 </template>
 
 <script setup>
+	import { computed } from "vue"
 	import { useManagement } from "@/store/management"
 	import { UseOnline } from "@vueuse/components"
-	import { onLeaveTop, onEnter, onBeforeEnter } from "@/utils/utils"
-	import { ref, computed } from "vue"
-	import * as Chance from "chance"
-
-
-	const store = useManagement()
-	var showAddEmploye = ref(false)
+	import { onLeaveTop, onEnter, onBeforeEnter, chance } from "@/utils/utils"
 
 	const employees = computed(() => store.getEmployees)
+	const store = useManagement()
 
-	function refresh() {
-		store.getAllEmployees()
+	async function refresh() {
+		await store.getAllEmployees()
 	}
 </script>
 

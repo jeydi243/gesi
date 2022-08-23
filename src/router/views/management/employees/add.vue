@@ -121,6 +121,10 @@
 						<ErrorMessage name="cover_letter" v-slot="{ message }">
 							<p class="input-error">{{ message }}</p>
 						</ErrorMessage>
+						<Field as="textarea" placeholder="Biography" id="biography" name="biography" class="w-full form-input h-56" />
+						<ErrorMessage name="biography" v-slot="{ message }">
+							<p class="input-error">{{ message }}</p>
+						</ErrorMessage>
 						<Field placeholder="Position" id="position" name="position" class="w-full form-input" />
 						<ErrorMessage name="cover_letter" v-slot="{ message }">
 							<p class="input-error">{{ message }}</p>
@@ -130,9 +134,12 @@
 			</div>
 
 			<div class="row-reverse mt-5">
-				<button class="btn-primary" :disabled="isSubmitting" type="submit">
-					<UserIcon class="h-5 w-5 text-white mr-3" v-if="!isSubmitting" />Add employee
-					<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
+				<button class="btn-primary disabled:bg-green-800" :disabled="isSubmitting" type="submit">
+					<template v-if="!isSubmitting">
+						<UserIcon class="h-5 w-5 text-white mr-3" />
+						Add employee
+					</template>
+					<CirclesToRhombusesSpinner :size="20" :color="'#FFF'" v-if="isSubmitting" />
 				</button>
 				<button class="btn-unstate mr-2" @click.prevent="beforeCancel(values)">Annuler</button>
 			</div>
@@ -147,7 +154,6 @@
 	import { isLength, isDate, isEmail } from "validator"
 	import { toast, src } from "@/utils/utils"
 	import { Field, Form, ErrorMessage } from "vee-validate"
-	import * as Chance from "chance"
 	import { mapActions } from "pinia"
 	import { useManagement } from "@/store/management"
 	import { goto, chance } from "@/utils/utils"
@@ -209,6 +215,9 @@
 				cover_letter(value) {
 					return isLength(value, { min: 50, max: 500 }) ? true : "Cover letter must be between 150 and 500 characters"
 				},
+				biography(value) {
+					return isLength(value, { min: 30, max: 500 }) ? true : "Biography must be between 30 and 500 characters"
+				},
 				// school_diploma_file(value) {
 				// 	if (value[0] instanceof File || value[0] instanceof Blob) {
 				// 		return true
@@ -240,6 +249,7 @@
 				domain: "Math",
 				skills: "Code, Design",
 				gender: "M",
+				biography: chance.sentence({ words: 30 }),
 				position: "Developer",
 				school_name: "School Maadini",
 				cover_letter: chance.sentence({ words: 50 }),
@@ -293,6 +303,18 @@
 				for (const key in other) {
 					employee.append(key, other[key])
 				}
+				employee.append("onboarding", {
+					office_tour: true,
+					work_space: true,
+					computer: false,
+					email: true,
+					phone: true,
+					software: true,
+					hardware: false,
+					security: true,
+					training: true,
+					other: true,
+				})
 
 				try {
 					this.isLoading = !this.isLoading
@@ -300,9 +322,9 @@
 					this.isLoading = !this.isLoading
 					if (result) {
 						toast.success("Employee added successfully !")
-						goto()
+						goto("employees-list")
 					} else {
-						toast.error(`Error:  ${result}`)
+						toast.error(`Can't add new employee`)
 					}
 				} catch (error) {
 					this.isLoading = !this.isLoading
