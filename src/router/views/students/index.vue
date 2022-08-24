@@ -29,8 +29,8 @@
 	const isloading = ref("")
 	const isLevelChanged = ref(true)
 	const students = computed(() => store.students)
-	const getListLevel = computed(() => storeConfig.getListLevel)
-	const currentLevel = computed(() => storeConfig.currentLevel)
+	const getListLevel = computed(() => storeConfig.listLevel)
+	const currentTabLevel = computed(() => storeConfig.currentLevel)
 	watch(currentTabLevel, (newVal, oldVal) => {
 		if (newVal != oldVal) {
 			this.isLevelChanged = false

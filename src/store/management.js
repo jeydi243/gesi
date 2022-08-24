@@ -5,7 +5,11 @@ import axios from "@/api/config"
 import { toast } from "@/utils/utils"
 import { defineStore } from "pinia"
 import { useTeachers } from "./teachers"
+import { useRouter } from "vue-router"
 // import { useCourses } from "./courses"
+import { useConfig } from "@/store/config"
+
+const router = useRouter()
 export const useManagement = defineStore("management", {
 	state: () => ({
 		courses: [],
@@ -39,45 +43,46 @@ export const useManagement = defineStore("management", {
 				},
 				function onRejected(error) {
 					// Do something with request error
+					this.error = error
 					return Promise.reject(error)
 				},
 				{ synchronous: true }
 			)
 			axios.interceptors.response.use(
 				function (response) {
-					//   console.info(`[AXIOS] Response status ${response.status}`)
+					console.info(`[AXIOS] Response status ${response.status}`)
 					return response
 				},
 				function (error) {
-					//   console.error(`[AXIOS] Error ${JSON.stringify(error.response)}`)
-					//   if (error.code == "ECONNABORTED") {
-					//     toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
-					//       type: "error",
-					//       duration: 50000,
-					//       singleton: true,
-					//       action: {
-					//         text: "Relancer la page",
-					//         onClick: (e, toastObject) => {
-					//           console.log("Relaod after error")
-					//           router.go()
-					//         },
-					//       },
-					//     })
-					//     console.log({ error })
-					//   } else if (error.code === "ERR_CONNECTION_REFUSED") {
-					//     console.log("[ECONNABORTED] Impossible de contacter le serveur :", {
-					//       error,
-					//     })
-					//     router.push({ name: "error" })
-					//   } else if (error.code === "ERR_FAILED") {
-					//     console.log("[ERR_FAILED] Impossible de contacter le serveur :", {
-					//       error,
-					//     })
-					//     router.push({ name: "error" })
-					//   } else {
-					console.log("Error code:", JSON.stringify(error))
-					this.errorCall = error.response.data
-					//   }
+					console.error(`[AXIOS] Error ${JSON.stringify(error.response)}`)
+					if (error.code == "ECONNABORTED") {
+						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
+							type: "error",
+							duration: 50000,
+							singleton: true,
+							action: {
+								text: "Relancer la page",
+								onClick: (e, toastObject) => {
+									console.log("Relaod after error")
+									// router.go()
+								},
+							},
+						})
+						console.log({ error })
+					} else if (error.code === "ERR_CONNECTION_REFUSED") {
+						console.log("[ECONNABORTED] Impossible de contacter le serveur :", {
+							error,
+						})
+						router.push({ name: "error" })
+					} else if (error.code === "ERR_FAILED") {
+						console.log("[ERR_FAILED] Impossible de contacter le serveur :", {
+							error,
+						})
+						router.push({ name: "error" })
+					} else {
+						console.log("Error code:", JSON.stringify(error))
+						this.errorCall = error.response.data
+					}
 					return Promise.reject(error)
 				}
 			)
@@ -337,7 +342,7 @@ export const useManagement = defineStore("management", {
 				console.log(er)
 			}
 		},
-		async changedoc(employeeID,newDoc) {
+		async changedoc(employeeID, newDoc) {
 			try {
 				const { data, status } = await mgntAPI.updateDocument(employeeID, newDoc)
 				if ((status == 200 || status == 201) && data != "") {

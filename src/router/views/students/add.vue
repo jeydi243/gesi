@@ -180,7 +180,7 @@
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white">Suivant</span>
 							<ArrowRightIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
-							<HollowDotsSpinner :size="25" :color="'#FFF'" v-else />
+							<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-else />
 						</button>
 					</div>
 				</Form>
@@ -231,12 +231,11 @@
 </template>
 
 <script>
+	import { toast } from "@/utils/utils"
+	import { markRaw } from "vue"
 	import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid"
 	import { Field, Form, ErrorMessage } from "vee-validate"
-	import { HollowDotsSpinner } from "epic-spinners"
-	import { markRaw } from "vue"
-	import { toast } from "@/utils/utils"
-
+	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import * as yup from "yup"
 
 	export default {
@@ -245,7 +244,7 @@
 			Form,
 			Field,
 			ErrorMessage,
-			HollowDotsSpinner,
+			CirclesToRhombusesSpinner,
 			UserIcon,
 			ArrowRightIcon,
 		},
@@ -263,7 +262,7 @@
 			)
 			const step2Schema = {
 				profile(value) {
-					if (value[0] instanceof File || value[0] instanceof Blob) {
+					if (value instanceof File || value instanceof Blob || value[0] instanceof File || value[0] instanceof Blob) {
 						return true
 					}
 					return "Vous devez choisir une photo de profil"

@@ -42,9 +42,6 @@
 			</div>
 		</div>
 		<div class="card mt-4 min-h-[200px] relative">
-			<!-- <button v-if="edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
-				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button> -->
 			<span class="font-bold text-xl">Documents</span>
 			<div class="row w-full justify-evenly space-x-6 a my-auto">
 				<div class="col justify-items-end" v-for="(doc, index) in docs" :key="index">
@@ -66,9 +63,6 @@
 			</div>
 		</div>
 		<div class="row justify-center space-x-2 relative mt-4">
-			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
-				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button> -->
 			<div class="card min-h-[200px] w-1/2">
 				<span class="font-bold text-xl">Biography</span>
 				<span v-if="!edit_mode"> {{ userData.biography }} </span>
@@ -110,13 +104,10 @@
 			</div>
 		</div>
 		<div class="col card mt-4 min-h-[200px] relative transition-all ease-in duration-700 justify-between">
-			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
-				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
-			</button> -->
 			<div>
 				<span class="font-bold text-xl">Education & Certifiactions</span>
 			</div>
-			<!-- <ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start row md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': edit_mode, 'md:justify-start': userData.educations.length == 1 }">
+			<ol class="border-l md:border-l-0 md:border-t border-gray-300 md:flex md:justify-start row md:gap-6 mt-2 transition-all ease-in duration-700" :class="{ 'border-none': edit_mode, 'md:justify-start': userData.educations.length == 1 }">
 				<li v-for="({ name, start, description, end, from_school, id }, index) in userData.educations" :key="index" class="transition-all ease-in duration-700 relative" :class="{ 'border-2 border-dashed rounded-lg pl-5': edit_mode }">
 					<div class="flex md:block flex-start items-center pt-2 md:pt-0">
 						<div class="bg-green-300 w-2 h-2 rounded-full -ml-1 md:ml-0 mr-3 md:mr-0 md:-mt-1"></div>
@@ -132,13 +123,10 @@
 						<box-icon type="regular" name="trash" color="red" size="sm" class="text-green-900"></box-icon>
 					</button>
 				</li>
-			</ol> -->
+			</ol>
 			<button v-if="edit_mode" class="btn-unstate w-1/3 self-center mt-4" data-mdb-ripple="true" data-mdb-ripple-color="success" @click="showModalAddEducation = true">Add Education</button>
 		</div>
 		<div class="col card mt-4 min-h-[200px] relative justify-between">
-			<!-- <button @click="edit_mode = !edit_mode" class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
-				<box-icon type="regular" name="pencil" color="green" size="sm" class="h text-green-900"></box-icon>
-			</button> -->
 			<div>
 				<span class="font-bold text-xl">Work Experiences</span>
 			</div>
@@ -256,7 +244,7 @@
 				<ErrorMessage name="description" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<span class="text-red-700 text-base">{{ errorCall }}</span>
+				<span class="text-red-700 text-base">{{ error }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
@@ -294,7 +282,7 @@
 				<ErrorMessage name="relationship" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<!-- <span class="text-red-700 text-base">{{ errorCall }}</span> -->
+				<!-- <span class="text-red-700 text-base">{{ error }}</span> -->
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between mt-5">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
@@ -340,7 +328,7 @@
 				<ErrorMessage name="description" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<span class="text-red-700 text-base">{{ errorCall }}</span>
+				<span class="text-red-700 text-base">{{ error }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
@@ -386,7 +374,7 @@
 				<ErrorMessage name="description" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<span class="text-red-700 text-base">{{ errorCall }}</span>
+				<span class="text-red-700 text-base">{{ error }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
@@ -432,7 +420,7 @@
 				<ErrorMessage name="description" v-slot="{ message }">
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
-				<span class="text-red-700 text-base">{{ errorCall }}</span>
+				<span class="text-red-700 text-base">{{ error }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
 					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
@@ -470,10 +458,12 @@
 	import { Form, Field, ErrorMessage } from "vee-validate"
 	import MyModal from "@/components/mymodal"
 
-	const errorCall = ref("")
-
+	const store = useManagement()
+	const route = useRoute()
+	const userData = computed(() => store.employees.find((emp) => emp._id == route.params.id))
 	const edit_mode = ref(false)
-
+	const error = computed(() => store.error)
+	const onboardings = computed(() => Object.fromEntries(new Map(userData.value.onboarding.map((obj) => [obj["field"], obj["state"]]))))
 	const showModalAddExper = ref(false)
 	const showModalUpdateDoc = ref(false)
 	const showModalAddContact = ref(false)
@@ -481,10 +471,6 @@
 	const showModalAddEducation = ref(false)
 	const showModalDeleteEmployee = ref(false)
 	const showModalUpdateEducation = ref(false)
-	const store = useManagement()
-	const route = useRoute()
-	const userData = computed(() => store.employees.find((emp) => emp._id == route.params.id))
-	const onboardings = computed(() => Object.fromEntries(new Map(userData.value.onboarding.map((obj) => [obj["field"], obj["state"]]))))
 
 	onBeforeRouteUpdate(async (to, from) => {
 		if (to.params.id !== from.params.id) {
@@ -580,17 +566,6 @@
 		},
 		{ name: "cover_letter", link: "https://resume.com" },
 		{ name: "school_diploma", link: "https://resume.com" },
-	])
-	const experiences = ref([
-		{
-			position: "Game Dev",
-			description: "",
-			company: "Unilivers",
-			start: "28-08-2014",
-			end: "28-05-2020",
-		},
-		{ position: "Freelance", description: "", company: "NASA", start: "28-08-2014", end: "28-05-2020" },
-		{ position: "Doctor", description: "", company: "Gecamines", start: "28-08-2014", end: "28-05-2020" },
 	])
 	async function deleteContact(contactID) {
 		const result = await store.deleteContact(route.params.id, contactID)
