@@ -79,5 +79,15 @@ export default {
 	updateBiography: async function (employeeID, updatedBiography) {
 		return axios.patch(`${this.routeEmployees}/${employeeID}/update_biography`, { ...updatedBiography })
 	},
+	updateOnboarding: async function (employeeID, updatedOnboarding) {
+		return axios.patch(`${this.routeEmployees}/${employeeID}/update_onboarding`, { ...updatedOnboarding })
+	},
+	updateDocument: async function (employeeID, updateDocument) {
+		return axios.post(`${this.routeEmployees}/${employeeID}/update_document`, updateDocument, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		})
+	},
 }
 const documents = {}

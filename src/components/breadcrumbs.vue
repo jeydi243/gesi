@@ -2,12 +2,12 @@
 	<!-- create breadcrumbs from route object -->
 	<nav class="rounded-md w-full">
 		<!-- {{ b }} -->
-		<ol class="list-reset flex">
+		<ol class="list-rese flex">
 			<li v-for="(item, index) in b" :key="index">
 				<router-link :to="item">
 					{{ item }}
 				</router-link>
-				<span v-if="index != b.length - 1">/</span>
+				<span v-if="index != b.length - 1" class="mx-2">/</span>
 			</li>
 		</ol>
 	</nav>

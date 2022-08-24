@@ -337,6 +337,44 @@ export const useManagement = defineStore("management", {
 				console.log(er)
 			}
 		},
+		async changedoc(employeeID,newDoc) {
+			try {
+				const { data, status } = await mgntAPI.updateDocument(employeeID, newDoc)
+				if ((status == 200 || status == 201) && data != "") {
+					const index = this.employees.findIndex((emp) => emp._id == employeeID)
+					if (index != -1) {
+						this.employees[index].resume_file = data //link to file on server
+					} else {
+						return false
+					}
+					return true
+				} else if (status == 304) {
+					console.log("Biography can't be updated ", { headers })
+					return false
+				}
+			} catch (er) {
+				console.log(er)
+			}
+		},
+		async updateOnboarding(employeeID, onboarding) {
+			try {
+				const { data, status } = await mgntAPI.updateOnboarding(employeeID, onboarding)
+				if ((status == 200 || status == 201) && data != "") {
+					const index = this.employees.findIndex((emp) => emp._id == employeeID)
+					if (index != -1) {
+						this.employees[index].onboarding = onboarding
+					} else {
+						return false
+					}
+					return true
+				} else if (status == 304) {
+					console.log("Onboarding can't be updated ", { headers })
+					return false
+				}
+			} catch (er) {
+				console.log(er)
+			}
+		},
 		async addDocument(newDocument) {
 			try {
 				const { data, status } = await mgntAPI.addDocument(newDocument)

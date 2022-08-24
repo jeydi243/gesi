@@ -19,12 +19,12 @@
 						<!-- <span class="italic text-sm">{{ userData }}</span> -->
 					</div>
 				</div>
-				<div>
+				<div class="row h-9">
 					<button class="btn-unstate mr-2" @click="refresh">Refresh</button>
 					<div>
 						<div class="flex justify-center">
 							<div class="dropdown relative">
-								<button class="btn-unstate dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+								<button class="btn-unstate-min dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 									<box-icon name="dots-vertical-rounded" color="green" class="bg-red cursor-pointer"></box-icon>
 								</button>
 								<ul class="dropdown-menu min-w-max absolute bg-white text-base z-50 float-left list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none" aria-labelledby="dropdownMenuButton1">
@@ -51,14 +51,16 @@
 					<div class="row bg-clip-border justify-between min-w-[300px] items-center bg-green-50 h-9 rounded-md pl-2 border-dashed border-2 border-green-300 text-green-900 self-center">
 						<span class="capitalize font-bold">{{ doc.name }}</span>
 						<div class="row">
-							<span class="mr-1 underline cursor-pointer">Voir</span>
+							<a :download="doc.link" class="bg-green-900 text-white h-8 border-2 rounded-md rounded-br-md cursor-pointer text-center" data-mdb-ripple="true" data-mdb-ripple-color="light">
+								<span class="px-3 cursor-pointer">Voir</span>
+							</a>
 							<a :download="doc.link" class="bg-green-900 h-8 w-8 border-2 rounded-md rounded-br-md cursor-pointer text-center" data-mdb-ripple="true" data-mdb-ripple-color="light">
 								<box-icon type="regular" name="down-arrow-alt" color="white"></box-icon>
 							</a>
 						</div>
 					</div>
 					<div class="row">
-						<!-- <a @click="changedoc()" class="text-xs italic text-blue-700 cursor-pointer">Modifier</a> -->
+						<a v-if="edit_mode" @click="showModalUpdateDoc = !showModalUpdateDoc" class="text-xs italic text-blue-700 cursor-pointer font-bold">Modifier</a>
 					</div>
 				</div>
 			</div>
@@ -163,25 +165,28 @@
 			<!-- <button class="absolute inline-block top-0 right-0 text-center items-center row bg-green-100 rounded-bl-md rounded-tr-sm" data-mdb-ripple="true" data-mdb-ripple-color="success">
 				<box-icon type="regular" name="pencil" color="green" size="sm" class="text-green-900"></box-icon>
 			</button> -->
-			<span class="font-bold text-xl mb-4">Onboarding Status</span>
+			<span class="font-bold text-xl mb-4">Onboarding</span>
 			<article class="row justify-between">
 				<div class="col space-y-2" v-if="!edit_mode">
 					<div class="form-check form-switch" v-for="(value, key) in userData.onboarding" :key="key">
-						{{ value }}
-						<input class="toggle" type="checkbox" role="switch" id="work_tools" :disabled="edit_mode" :checked="value" />
-						<label class="form-check-label inline-block text-gray-800" for="work_tools">{{ key }}</label>
+						<!-- {{ value }} -->
+						<input class="toggle" type="checkbox" role="switch" id="work_tools" :disabled="!edit_mode" :checked="value['state']" />
+						<label class="form-check-label inline-block text-gray-800" for="work_tools">{{ value["description"] }}</label>
 					</div>
 				</div>
 				<div v-else>
-					<Form @submit="updateOnboarding" v-slot="{ isSubmitting }" :initial-values="{ onboarding: userData.onboarding }">
-						<template v-for="(value, key) in userData.onboarding" :key="key">
-							<Field :name="key" class="form-check-input mb-2 w-full"></Field>
+					<Form @submit="updateOnboarding" v-slot="{ isSubmitting, values }" :initial-values="{ ...onboardings }">
+						<div class="form-check form-switch" v-for="(val, key) in onboardings" :key="key">
+							<input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckChecked" v-model="values[key]" />
+							<label :for="key" class="form-check-label">{{ userData.onboarding.find((e) => e["field"] == key)["description"] }}</label>
+
 							<ErrorMessage :name="key" v-slot="{ message }">
 								<p class="input-error">{{ message }}</p>
 							</ErrorMessage>
-						</template>
+						</div>
+						{{ values }}
 						<div class="flex flex-row h-1/2 w-full items-center justify-between">
-							<!-- <button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button> -->
+							<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 							<button type="submit" class="btn-primary">
 								<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
 								<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
@@ -192,6 +197,30 @@
 			</article>
 		</div>
 
+		<MyModal v-show="showModalUpdateDoc" @close="showModalUpdateDoc = false">
+			<template #header>
+				<h1 class="text-4xl">Change Document</h1>
+			</template>
+
+			<Form class="flex flex-col justify-between w-full mt-2" @submit="changeDocument" v-slot="{ isSubmitting }" :validation-schema="docSchema" @invalid-submit="invalidFile">
+				<!-- <div class="mb-3 w-96">
+						<input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile" />
+					</div> -->
+				<Field v-slot="{ handleChange, handleBlur }" name="myfile" class="w-full">
+					<input type="file" @change="handleChange" accept=".pdf" @blur="handleBlur" class="w-full form-file" />
+				</Field>
+				<ErrorMessage name="myfile" v-slot="{ message }">
+					<p class="input-error">{{ message }}</p>
+				</ErrorMessage>
+				<div class="flex flex-row h-1/2 w-full items-center justify-between mt-5">
+					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
+					<button type="submit" class="btn-primary">
+						<span class="font-bold text-white" v-if="!isSubmitting">Add</span>
+						<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+					</button>
+				</div>
+			</Form>
+		</MyModal>
 		<MyModal v-show="showModalAddEducation" @close="showModalAddEducation = false">
 			<template #header>
 				<h1 class="text-4xl">Add Education</h1>
@@ -375,15 +404,15 @@
 			<Form class="flex flex-col justify-between" @submit="updateEducation" v-slot="{ isSubmitting }" :validation-schema="educationSchema" :initial-values="educationValue" @invalid-submit="onInvalidEducation">
 				<div class="flex sm:flex-col md:flex-row md:justify-between">
 					<div class="w-full">
-						<Field name="position" placeholder="Position at company" class="form-input mb-2 w-full"></Field>
+						<Field name="name" placeholder="Position at company" class="form-input mb-2 w-full"></Field>
 						<ErrorMessage name="position" v-slot="{ message }">
 							<p class="input-error">{{ message }}</p>
 						</ErrorMessage>
 					</div>
 				</div>
 				<div class="">
-					<Field name="company" placeholder="Name of company" class="form-input mb-2 w-full"></Field>
-					<ErrorMessage name="company" v-slot="{ message }">
+					<Field name="from_school" placeholder="Name of school" class="form-input mb-2 w-full"></Field>
+					<ErrorMessage name="from_school" v-slot="{ message }">
 						<p class="input-error">{{ message }}</p>
 					</ErrorMessage>
 				</div>
@@ -442,10 +471,11 @@
 	import MyModal from "@/components/mymodal"
 
 	const errorCall = ref("")
-	const showModalAddExper = ref(false)
 
 	const edit_mode = ref(false)
 
+	const showModalAddExper = ref(false)
+	const showModalUpdateDoc = ref(false)
 	const showModalAddContact = ref(false)
 	const showModalUpdateExper = ref(false)
 	const showModalAddEducation = ref(false)
@@ -454,6 +484,7 @@
 	const store = useManagement()
 	const route = useRoute()
 	const userData = computed(() => store.employees.find((emp) => emp._id == route.params.id))
+	const onboardings = computed(() => Object.fromEntries(new Map(userData.value.onboarding.map((obj) => [obj["field"], obj["state"]]))))
 
 	onBeforeRouteUpdate(async (to, from) => {
 		if (to.params.id !== from.params.id) {
@@ -464,6 +495,15 @@
 				toast.danger("Something went wrong on refreshing. Try later")
 			}
 		}
+	})
+	const docSchema = ref({
+		myfile(value) {
+			console.log(value)
+			if (value[0] instanceof File || value[0] instanceof Blob || value instanceof File || value instanceof Blob) {
+				return true
+			}
+			return "Vous devez choisir un fichier texte"
+		},
 	})
 	const contactSchema = ref({
 		name(value) {
@@ -630,9 +670,9 @@
 		}
 	}
 	async function deleteEmployee() {
+		goto("employees-list")
 		const result = await store.deleteEmployee(route.params.id)
 		if (result) {
-			goto("employees-list")
 		} else {
 			toast.error("Can't delete this employee")
 		}
@@ -676,8 +716,9 @@
 	function closeModal() {
 		edit_mode.value = false
 		showModalAddExper.value = false
-		showModalUpdateExper.value = false
+		showModalUpdateDoc.value = false
 		showModalAddContact.value = false
+		showModalUpdateExper.value = false
 		showModalAddEducation.value = false
 		showModalDeleteEmployee.value = false
 		showModalUpdateEducation.value = false
@@ -694,8 +735,33 @@
 	function invalidBio({ values, result, errors }) {
 		console.log("Invalid biography ", errors)
 	}
+	function invalidFile({ values, result, errors }) {
+		console.log("Invalid File ", errors)
+	}
 	async function updateOnboarding(values) {
 		console.log(values)
+		const result = await store.updateOnboarding(route.params.id, values)
+		if (result) {
+			closeModal()
+			toast(`Onboarding states was updated successfully`)
+		} else {
+			toast.error("Can't update onboarding")
+		}
+	}
+	async function changeDocument(values) {
+		const formdata = new FormData()
+		formdata.append("file", values["myfile"])
+		try {
+			const result = store.changedoc(route.params.id, formdata)
+			if (result) {
+				closeModal()
+				toast("Changed dox successfully...")
+			} else {
+				toast.error("Impossible de changer le document")
+			}
+		} catch (err) {
+			console.log(err)
+		}
 	}
 </script>
 
