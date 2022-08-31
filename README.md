@@ -30,6 +30,8 @@ npm install
     - [x] Update
     - [x] Soft delete
     - [ ] Affecter un evenement
+    - [ ] Changer de responsabilité
+    - [ ] 
   * ##### Teachers
     - [x] Créer
     - [x] Mettre à jour
@@ -39,17 +41,17 @@ npm install
     - [ ] Affecter la gestion d'une filière
   * ##### Cours
     - [x] Créer un cours
-    - [x] Modifier un cours (ex: Author, pondération)
+    - [x] Modifier un cours (ex: Author, pondération, contenus)
     - [ ] Supprimer un cours (ex: Author)
     - [ ] Session:
       - [ ] Créer une session d'un cours avec (Id de l'auteur du cours)
-      - [ ] Decaler une session
+      - [ ] Décaler une session
       - [ ] Supprimer une session
       - [ ] Modifier l'intitulé
   * ##### Evènements
     - [ ] Créer un évènement (Colloct, Live Event, TEDxTalk..)
-    - [ ] Affecter des participants (Soit une filière entiere soit un niveau, soit un ou plusieur etudiants)
-    - [ ] Retirer une groupe ou en ajouter
+    - [ ] Ajouter des participants (Soit une filière entiere soit un niveau, soit un ou plusieur etudiants)
+    - [ ] Rétirer une groupe ou en ajouter
     - [ ] Supprimer un évènement
   * ##### Ressources
     - [ ] Ajouter une ressource(Materiel, PC, Imprimantes, )

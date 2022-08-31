@@ -6,7 +6,6 @@ import { toast } from "@/utils/utils"
 import { defineStore } from "pinia"
 import { useTeachers } from "./teachers"
 import { useRouter } from "vue-router"
-// import { useCourses } from "./courses"
 import { useConfig } from "@/store/config"
 
 const router = useRouter()
@@ -102,7 +101,7 @@ export const useManagement = defineStore("management", {
 
 				return false
 			} catch (er) {
-				console.log(err)
+				console.log(er)
 			}
 		},
 		async getAllEmployees() {

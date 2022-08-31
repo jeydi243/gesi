@@ -8,9 +8,9 @@
 			<!-- Dropdown toggle button -->
 			<button id="toggle-dropdown" class="btn-header" data-bs-toggle="dropdown" aria-expanded="false">
 				<div class="avatar rounded-lg overflow-hidden">
-					<img src="https://images.generated.photos/PP2ck5OaSvRBYQwh1ZDCsEhBQ4WxLWlZNs7nKhaJIWA/rs:fit:64:64/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NjIyMTIwLmpwZw.jpg" class="object-fill" />
+					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/20.webp" class="object-fill" />
 				</div>
-				<span class="ml-2">Kadiongo Ilunga</span>
+				<span class="ml-2">McClawn</span>
 				<svg class="w-5 h-5 text-gray-800 text-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 					<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
 				</svg>

@@ -147,190 +147,146 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+	import { ref } from "vue"
 	import { parseISO } from "date-fns"
 	import { UserIcon } from "@heroicons/vue/solid"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import { isLength, isDate, isEmail } from "validator"
-	import { toast, src } from "@/utils/utils"
+	import { toast } from "@/utils/utils"
 	import { Field, Form, ErrorMessage } from "vee-validate"
 	import { mapActions } from "pinia"
 	import { useManagement } from "@/store/management"
 	import { goto, chance } from "@/utils/utils"
 	const store = useManagement()
+	const src = ref(null)
+	const isLoading = ref(false)
 
-	export default {
-		components: { CirclesToRhombusesSpinner, UserIcon, Field, Form, ErrorMessage },
-		emits: ["cancel"],
-		data() {
-			const employeeSchema = {
-				first_name(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "First name must be between 2 and 20 characters"
-				},
-				gender(value) {
-					return value == "M" || value == "F" ? true : "Must be F or M"
-				},
-				personal_email(value) {
-					return isEmail(value) ? true : "Must be valid Email"
-				},
-				address(value) {
-					return isLength(value, { min: 2, max: 200 }) ? true : "Address must be between 2 and 200 characters"
-				},
-				position(value) {
-					return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters"
-				},
-				skills(value) {
-					return isLength(value, { min: 2, max: 50 }) ? true : "Skils must be between 2 and 50 characters"
-				},
-				telephones(value) {
-					return isLength(value, { min: 10 }) ? true : "telephones must be 10 characters or more"
-				},
-				cityzenship(value) {
-					return isLength(value, { min: 2, max: 3 }) ? true : "cityzenship must be 2 characters or 3"
-				},
-				last_name(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "Last name must be between 2 and 20 characters"
-				},
-				middle_name(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters"
-				},
-				school_name(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "School name is required"
-				},
-				domain(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "domain must be provided"
-				},
-				school_end_date(value) {
-					return isDate(parseISO(value)) ? true : "End date must be provided"
-				},
-				hire_date(value) {
-					return isDate(parseISO(value)) ? true : "Hire date must be provided"
-				},
-				school_start_date(value) {
-					return isDate(parseISO(value)) ? true : "Start date must be provided"
-				},
-				school_diploma_name(value) {
-					return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name must be between 2 and 20 characters"
-				},
-				cover_letter(value) {
-					return isLength(value, { min: 50, max: 500 }) ? true : "Cover letter must be between 150 and 500 characters"
-				},
-				biography(value) {
-					return isLength(value, { min: 30, max: 500 }) ? true : "Biography must be between 30 and 500 characters"
-				},
-				// school_diploma_file(value) {
-				// 	if (value[0] instanceof File || value[0] instanceof Blob) {
-				// 		return true
-				// 	}
-				// 	return "Vous devez choisir un fichier PDF de votre diplome"
-				// },
-				// resume_file(value) {
-				// 	if (value[0] instanceof File || value[0] instanceof Blob) {
-				// 		return true
-				// 	}
-				// 	return "Vous devez choisir un fichier PDF de votre CV"
-				// },
-				// profile_img(value) {
-				// 	if (value[0] instanceof File || value[0] instanceof Blob) {
-				// 		return true
-				// 	}
-				// 	return "Vous devez choisir un fichier images pour votre profil"
-				// },
-			}
-			const employeeValues = {
-				address: chance.address(),
-				birthday: "1999-10-10",
-				first_name: chance.last(),
-				middle_name: chance.last(),
-				last_name: chance.last(),
-				telephones: chance.phone({ country: "fr", mobile: true }),
-				personal_email: chance.email(),
-				cityzenship: "FR",
-				domain: "Math",
-				skills: "Code, Design",
-				gender: "M",
-				biography: chance.sentence({ words: 30 }),
-				position: "Developer",
-				school_name: "School Maadini",
-				cover_letter: chance.sentence({ words: 50 }),
-				school_end_date: "2014-02-06",
-				hire_date: "2019-10-10",
-				school_start_date: "2010-08-02",
-				school_diploma_name: "Computer science",
-			}
-			return {
-				employeeValues,
-				employeeSchema,
-				src: null,
-				isLoading: false,
-			}
+	const employeeSchema = {
+		first_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "First name must be between 2 and 20 characters"
 		},
-		methods: {
-			beforeCancel(values) {
-				if (values == this.employeeValues) {
-					this.$router.back()
-				} else {
-					this.$router.back()
-				}
-			},
-			onInvalidEmployee({ values, errors, results }) {
-				console.log({ errors })
-			},
-			pickFile(idInput) {
-				const file_input = document.getElementById(idInput)
-				file_input.click()
-				file_input.addEventListener("change", this.onFileChange)
-			},
-			onFileChange(event) {
-				if (event.target.files && event.target.files[0]) {
-					this.src = window.URL.createObjectURL(event.target.files[0])
-					window.URL.revokeObjectURL(event.target.files[0]) // free memory
-				} else {
-					this.src = null
-				}
-			},
-			async submitEmployee(values) {
-				const employee = new FormData()
-				values["name"] = values["first_name"] + " " + values["middle_name"] + " " + values["last_name"]
-				values["telephones"] = values["telephones"].split(",").map((tel) => tel.replaceAll(" ", ""))
-				// values["skills"] = values["skills"].split(",").map((tel) => tel.replaceAll(" ", ""))
-				delete values["first_name"]
-				delete values["middle_name"]
-				delete values["last_name"]
-
-				const { resume_file, school_diploma_file, profile_img, ...other } = values
-				console.log(other)
-				for (const key in other) {
-					employee.append(key, other[key])
-				}
-				employee.append("onboarding", {
-					office_tour: true,
-					work_space: true,
-					computer: false,
-					email: true,
-					phone: true,
-					software: true,
-					hardware: false,
-					security: true,
-					training: true,
-					other: true,
-				})
-
-				try {
-					this.isLoading = !this.isLoading
-					var result = await store.addEmployee(other)
-					this.isLoading = !this.isLoading
-					if (result) {
-						toast.success("Employee added successfully !")
-						goto("employees-list")
-					} else {
-						toast.error(`Can't add new employee`)
-					}
-				} catch (error) {
-					this.isLoading = !this.isLoading
-					console.log(error)
-				}
-			},
+		gender(value) {
+			return value == "M" || value == "F" ? true : "Must be F or M"
 		},
+		personal_email(value) {
+			return isEmail(value) ? true : "Must be valid Email"
+		},
+		address(value) {
+			return isLength(value, { min: 2, max: 200 }) ? true : "Address must be between 2 and 200 characters"
+		},
+		position(value) {
+			return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters"
+		},
+		skills(value) {
+			return isLength(value, { min: 2, max: 50 }) ? true : "Skils must be between 2 and 50 characters"
+		},
+		telephones(value) {
+			return isLength(value, { min: 10 }) ? true : "telephones must be 10 characters or more"
+		},
+		cityzenship(value) {
+			return isLength(value, { min: 2, max: 3 }) ? true : "cityzenship must be 2 characters or 3"
+		},
+		last_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "Last name must be between 2 and 20 characters"
+		},
+		middle_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters"
+		},
+		school_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "School name is required"
+		},
+		domain(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "domain must be provided"
+		},
+		school_end_date(value) {
+			return isDate(parseISO(value)) ? true : "End date must be provided"
+		},
+		hire_date(value) {
+			return isDate(parseISO(value)) ? true : "Hire date must be provided"
+		},
+		school_start_date(value) {
+			return isDate(parseISO(value)) ? true : "Start date must be provided"
+		},
+		school_diploma_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name must be between 2 and 20 characters"
+		},
+		cover_letter(value) {
+			return isLength(value, { min: 50, max: 500 }) ? true : "Cover letter must be between 150 and 500 characters"
+		},
+		biography(value) {
+			return isLength(value, { min: 30, max: 500 }) ? true : "Biography must be between 30 and 500 characters"
+		},
+	}
+	const employeeValues = {
+		address: chance.address(),
+		birthday: "1999-10-10",
+		first_name: chance.last().split(" ")[0],
+		middle_name: chance.last().split(" ")[0],
+		last_name: chance.name(),
+		telephones: chance.phone({ country: "fr", mobile: true }),
+		personal_email: chance.email(),
+		cityzenship: "FR",
+		domain: "Math",
+		skills: "Code, Design",
+		gender: "M",
+		biography: chance.sentence({ words: 30 }),
+		position: "Developer",
+		school_name: "School Maadini",
+		cover_letter: chance.sentence({ words: 50 }),
+		school_end_date: "2014-02-06",
+		hire_date: "2019-10-10",
+		school_start_date: "2010-08-02",
+		school_diploma_name: "Computer science",
+	}
+	
+
+	function beforeCancel(values) {
+		if (values == this.employeeValues) {
+			this.$router.back()
+		} else {
+			this.$router.back()
+		}
+	}
+	function onInvalidEmployee({ values, errors, results }) {
+		console.log({ errors })
+	}
+	function pickFile(idInput) {
+		const file_input = document.getElementById(idInput)
+		file_input.click()
+		file_input.addEventListener("change", this.onFileChange)
+	}
+	function onFileChange(event) {
+		if (event.target.files && event.target.files[0]) {
+			this.src = window.URL.createObjectURL(event.target.files[0])
+			window.URL.revokeObjectURL(event.target.files[0]) // free memory
+		} else {
+			this.src = null
+		}
+	}
+	async function submitEmployee(values) {
+		const employee = new FormData()
+		values["telephones"] = values["telephones"].split(",").map((tel) => tel.replaceAll(" ", ""))
+
+		const { resume_file, school_diploma_file, profile_img, ...other } = values
+		console.log(other)
+		for (const key in other) {
+			employee.append(key, other[key])
+		}
+
+		try {
+			this.isLoading = !this.isLoading
+			var result = await store.addEmployee(other)
+			this.isLoading = !this.isLoading
+			if (result) {
+				goto("employees-list")
+				toast.success("Employee added successfully !")
+			} else {
+				toast.error(`Can't add new employee`)
+			}
+		} catch (error) {
+			this.isLoading = !this.isLoading
+			console.log(error)
+		}
 	}
 </script>

@@ -3,20 +3,66 @@
 		<!-- Détails de l'employée {{ $route.params }} -->
 		<div class="card mt-4 min-h-[200px] relative">
 			<div class="row justify-between">
-				<div class="row">
-					<img src="@/assets/img/bg-1.jpg" class="rounded-lg h-[150px] w-[150px] select-none" />
-					<div class="col ml-5 space-y-2">
+				<div class="row relative transition-all duration-700">
+					<div class="row relative top-0 left-0 h-[150px] w-[150px] mr-3 items-center align-middle">
+						<div class="backdrop-blur-sm bg-red-white/30 absolute left-[25%] top-[35%] z-10 w-20 h-7 rounded-md text-white text-center cursor-pointer" v-if="edit_mode"><button type="button" @click="changepicture">Edit</button></div>
+						<img src="@/assets/img/bg-1.jpg" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
+					</div>
+					<div class="col ml-5 space-y-2" v-if="!edit_mode">
 						<span class="capitalize font-bold text-xl">{{ userData.name }}</span>
 						<span class="font-bold text-green-600">{{ userData.position[0] }}</span>
 						<span class="italic text-sm">{{ userData.personal_email }}</span>
 						<span class="italic text-sm">{{ userData.telephones[0] }}</span>
-						<span class="bg-green-100 pl-1 pt-1 pb-1 pr-3 rounded-md font-bold">7 years of experience</span>
-						<!-- <div>
-							<span class="italic text-sm font-bold">Hire Date: 28-05-2015 </span>
-							 <span class="italic"> still working</span>
-						</div> -->
-
-						<!-- <span class="italic text-sm">{{ userData }}</span> -->
+						<span class="bg-green-100 pl-1 pt-1 pb-1 pr-3 rounded-md font-bold" data-bs-toggle="tooltip" data-bs-placement="right" :title="userData.hire_date">7 years of experience</span>
+					</div>
+					<div class="" v-else>
+						<Form @submit="updateBasic" v-slot="{ isSubmitting }" :validation-schema="basicInfoSchema" :initial-values="basicInfo" @invalid-submit="onInvalidBasicInfo">
+							<div class="row space-x-2">
+								<div>
+									<Field name="first_name" class="w-full g-input-text"></Field>
+									<ErrorMessage name="first_name" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+								<div>
+									<Field name="last_name" class="w-full g-input-text"></Field>
+									<ErrorMessage name="last_name" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+								<div>
+									<Field name="middle_name" class="w-full g-input-text"></Field>
+									<ErrorMessage name="middle_name" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+							</div>
+							<div>
+								<Field name="personal_email" class="w-full g-input-text"></Field>
+								<ErrorMessage name="personal_email" v-slot="{ message }">
+									<p class="input-error">{{ message }}</p>
+								</ErrorMessage>
+							</div>
+							<div>
+								<Field name="position" class="w-full g-input-text"></Field>
+								<ErrorMessage name="position" v-slot="{ message }">
+									<p class="input-error">{{ message }}</p>
+								</ErrorMessage>
+							</div>
+							<div>
+								<Field name="telephones" class="w-full g-input-text"></Field>
+								<ErrorMessage name="telephones" v-slot="{ message }">
+									<p class="input-error">{{ message }}</p>
+								</ErrorMessage>
+							</div>
+							<div class="flex flex-row h-1/2 w-full items-center justify-between">
+								<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
+								<button type="submit" class="btn-primary">
+									<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
+									<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+								</button>
+							</div>
+						</Form>
 					</div>
 				</div>
 				<div class="row h-9">
@@ -66,12 +112,14 @@
 			<div class="card min-h-[200px] w-1/2">
 				<span class="font-bold text-xl">Biography</span>
 				<span v-if="!edit_mode"> {{ userData.biography }} </span>
-				<Form v-else @submit="updateBiography" v-slot="{ isSubmitting }" :initial-values="{ biography: userData.biography }" @invalid-submit="invalidBio">
-					<Field name="biography" placeholder="Biography" class="form-input mb-2 w-full"></Field>
-					<ErrorMessage name="biography" v-slot="{ message }">
-						<p class="input-error">{{ message }}</p>
-					</ErrorMessage>
-					<div class="flex flex-row h-1/2 w-full items-center justify-between">
+				<Form class="col justify-between h-full" v-else @submit="updateBiography" v-slot="{ isSubmitting }" :initial-values="{ biography: userData.biography }" @invalid-submit="invalidBio">
+					<div>
+						<Field name="biography" placeholder="Biography" class="form-input mb-2 w-full"></Field>
+						<ErrorMessage name="biography" v-slot="{ message }">
+							<p class="input-error">{{ message }}</p>
+						</ErrorMessage>
+					</div>
+					<div class="row h-1/2 w-full items-center justify-between">
 						<!-- <button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button> -->
 						<button type="submit" class="btn-primary">
 							<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
@@ -80,7 +128,7 @@
 					</div>
 				</Form>
 			</div>
-			<div class="card min-h-[200px] w-1/2 col justify-cente">
+			<div class="card min-h-[200px] w-1/2 col justify-between">
 				<span class="font-bold text-xl">Emergency Contact</span>
 				<span v-for="(contact, index) in userData.emergencyContacts" :key="index" class="mt-2 relative transition-all ease-in duration-700" :class="{ 'rounded-lg border-2 px-5': edit_mode }">
 					<div class="row justify-between">
@@ -458,11 +506,11 @@
 	import { Form, Field, ErrorMessage } from "vee-validate"
 	import MyModal from "@/components/mymodal"
 
+	const error = computed(() => store.error)
 	const store = useManagement()
 	const route = useRoute()
 	const userData = computed(() => store.employees.find((emp) => emp._id == route.params.id))
 	const edit_mode = ref(false)
-	const error = computed(() => store.error)
 	const onboardings = computed(() => Object.fromEntries(new Map(userData.value.onboarding.map((obj) => [obj["field"], obj["state"]]))))
 	const showModalAddExper = ref(false)
 	const showModalUpdateDoc = ref(false)
@@ -471,7 +519,34 @@
 	const showModalAddEducation = ref(false)
 	const showModalDeleteEmployee = ref(false)
 	const showModalUpdateEducation = ref(false)
-
+	const basicInfo = ref({
+		position: userData.value.position.join(", "),
+		last_name: userData.value.last_name,
+		first_name: userData.value.first_name,
+		telephones: userData.value.telephones,
+		middle_name: userData.value.middle_name,
+		personal_email: userData.value.personal_email,
+	})
+	const basicInfoSchema = {
+		position(value) {
+			return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters"
+		},
+		personal_email(value) {
+			return isEmail(value) ? true : "Must be valid Email"
+		},
+		first_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "First name must be between 2 and 20 characters"
+		},
+		last_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "Last name must be between 2 and 20 characters"
+		},
+		telephones(value) {
+			return isLength(value, { min: 10 }) ? true : "telephones must be 10 characters or more"
+		},
+		middle_name(value) {
+			return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters"
+		},
+	}
 	onBeforeRouteUpdate(async (to, from) => {
 		if (to.params.id !== from.params.id) {
 			const result = await store.employeeBy(to.params.id)
@@ -689,7 +764,7 @@
 		}
 	}
 	function closeModal() {
-		edit_mode.value = false
+		// edit_mode.value = false
 		showModalAddExper.value = false
 		showModalUpdateDoc.value = false
 		showModalAddContact.value = false
@@ -712,6 +787,9 @@
 	}
 	function invalidFile({ values, result, errors }) {
 		console.log("Invalid File ", errors)
+	}
+	function onInvalidBasicInfo({ values, result, errors }) {
+		console.log("Invalid basic info ", errors)
 	}
 	async function updateOnboarding(values) {
 		console.log(values)
@@ -738,6 +816,8 @@
 			console.log(err)
 		}
 	}
+	async function changepicture() {}
+	async function updateBasic() {}
 </script>
 
 <style lang="scss" scoped></style>

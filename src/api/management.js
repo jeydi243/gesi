@@ -58,13 +58,13 @@ export default {
 		return axios.post(`${this.routeEmployees}/${id}/add_experience`, experience)
 	},
 	deleteEducation: async function (id, educationID) {
-		return axios.delete(`${this.routeEmployees}/${id}/delete_education`, { params: { educationID } })
+		return axios.delete(`${this.routeEmployees}/${id}/delete_education`, { data: { educationID } })
 	},
 	deleteContact: async function (id, contactID) {
-		return axios.delete(`${this.routeEmployees}/${id}/delete_contact`, { params: { contactID } })
+		return axios.delete(`${this.routeEmployees}/${id}/delete_contact`, { data: { contactID } })
 	},
 	deleteExperience: async function (id, experienceID) {
-		return axios.delete(`${this.routeEmployees}/${id}/delete_experience`, { params: { experienceID } })
+		return axios.delete(`${this.routeEmployees}/${id}/delete_experience`, { data: { experienceID } })
 	},
 	deleteEmployee: async function (employeeID) {
 		return axios.delete(`${this.routeEmployees}/${employeeID}`)

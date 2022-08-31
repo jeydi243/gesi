@@ -1,7 +1,7 @@
 <template>
 	<div id="app" class="h-screen w-screen">
-		<div class="row h-full w-full" v-bind="$attrs">
-			<SideBar class="flex w-[15%] h-full bg-gray-900" />
+		<div class="row h-full w-full relative" v-bind="$attrs">
+			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" />
 			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
 				<MyHeader />
 				<!-- {{ $route.path }} -->

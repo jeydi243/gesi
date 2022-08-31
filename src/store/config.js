@@ -69,6 +69,9 @@ export const useConfig = defineStore("config", {
 		currentLevel(state) {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).name
 		},
+		sideActive(state) {
+			return state.listSideMenus.find((side) => side.active == true)
+		},
 		currentLevelShort(state) {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).short
 		},
