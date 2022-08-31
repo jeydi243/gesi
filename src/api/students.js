@@ -25,14 +25,6 @@ export default {
   updateById: async function (studentID, data) {
     return await axios.put(`/students/${studentID}`, data)
   },
-  updateInfoConnexion: async function (studentID, data) {
-    return await axios.put(`/students/infoconnexion/${studentID}`, data)
-  },
-  disableOrEnable: function (studentID, valueOfDisabled = false) {
-    return axios.put(`/students/disableOrEnable/${studentID}`, {
-      valueOfDisabled,
-    })
-  },
   deleteById: async function (studentID) {
     return await axios.delete(`/students/${studentID}`)
   },

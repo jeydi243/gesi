@@ -24,13 +24,14 @@ module.exports = {
       "off",
       "4",
       {
-        attribute: 1,
-        baseIndent: 1,
+        attribute: 2,
+        baseIndent: 2,
         closeBracket: 0,
         alignAttributesVertically: true,
         ignores: [],
       },
     ],
+    "vue/html-closing-bracket-newline": "off",
     "vue/max-attributes-per-line": [
       "off",
       {
@@ -71,6 +72,16 @@ module.exports = {
           "CONTENT",
         ],
         alphabetical: false,
+      },
+    ],
+
+    "vue/script-indent": [
+      "off",
+      "tab",
+      {
+        baseIndent: 1,
+        switchCase: 0,
+        ignores: [],
       },
     ],
   },

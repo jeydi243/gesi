@@ -1,40 +1,46 @@
 <template>
-	<div class="flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
-		<!-- {{ getRootName }} -->
-		<div class="flex flex-col place-items-center w-full mt-1">
-			<router-link :to="item.to" @hover="item.mouseHover = !item.mouseHover" v-for="(item, index) in listSideMenus" :key="index" class="transition-colors hover:border-l-2 hover:border-l-green-500 ease-out-in duration-700 flex items-center w-full h-9 px-3 mt-2 hover:text-white hover:font-bold" :class="{ 'bg-green-500 bg-opacity-50 border-l-2 border-l-green-500 font-bold text-white': item.active }" href="#">
-				<box-icon type="regular" :name="item.icon" color="white"></box-icon>
-
-				<span class="ml-2 text-sm font-medium">{{ item.text }}</span>
-			</router-link>
+	<div class="relative left-0 top-0 flex flex-col justify-center items-center overflow-hidden text-gray-400 select-none">
+		<!-- top-[${fg}px] left-[${jh}px] -->
+		<div class="flex flex-col place-items-center w-full mt-1 relative">
+			<!-- <div id="jog" :class="`bg-red-500 rounded-md h-8 w-10 relative z-0 transition-all duration-500 ease-in-out`"></div> -->
+			<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
+				<router-link :to="item.to" @click="config.changeActive(item.to)" @hover="item.mouseHover = !item.mouseHover" :id="item.text" :ref="item.text" v-for="(item, index) in listSideMenus" :data-index="index" :key="index" class="router-link relative z-1" :class="{ 'router-link-active': item.active }">
+					<box-icon type="regular" :name="item.icon" color="white"></box-icon>
+					<span class="ml-2 text-sm font-medium">{{ item.text }}</span>
+				</router-link>
+			</TransitionGroup>
 		</div>
 	</div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from "vuex";
-import { BeakerIcon } from "@heroicons/vue/solid";
-export default {
-	name: "sideLeft",
-	data() {
-		return {
-			currentActive: 0,
-			canAnimate: false,
-		};
-	},
-	computed: {
-		...mapGetters({ listSideMenus: "getListSideMenus", getRootName: "getRootName" }),
-	},
-	watch: {
-		canAnimate(ol, nw) {
-			console.log(ol, nw);
-		},
-	},
-	methods: {
-		...mapActions(["changeLayout"]),
-	},
-};
+<script setup>
+	import { onBeforeEnter, onEnter, onLeave } from "@/utils/utils"
+	import { useElementBounding } from "@vueuse/core"
+	import { computed, ref, onMounted, watch } from "vue"
+	import { useConfig } from "@/store/config"
+	import { log } from "console"
+
+	const config = useConfig()
+	const listSideMenus = computed(() => config.listSideMenus)
+	const sideActive = computed(() => config.sideActive)
+	const fg = ref(null)
+	const jh = ref(null)
+
+	onMounted(() => {})
+	watch(sideActive, function (newval, oldval) {
+		const jog = document.getElementById("jog")
+		if (newval != oldval) {
+			const el = document.getElementById(newval.text)
+			const { left, top } = useElementBounding(el)
+			console.log(left.value, top.value)
+			jog.style.top = `${top.value}px`
+			jog.style.left = `${left.value}px`
+			// fg.value = top.value
+			// jh.value = left.value
+			// jog.classList.add(`top-[${top.value}px]`)
+			// jog.classList.add(`left-[${left.value}px]`)
+		}
+	})
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

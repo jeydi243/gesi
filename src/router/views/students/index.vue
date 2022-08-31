@@ -5,53 +5,40 @@
 			<input type="text" class="outline-none ring-0 placeholder-gray-300 focus:outline-none text-base focus:ring-transparent h-[35px] w-full placeholder:text-gray-200" placeholder="Search student globally by email or matricule or name" />
 		</div>
 		<div class="flex border-b border-gray-200 mb-2">
-			<button v-for="(tabLevel,index) in levels" :key="index" class="h-10 px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-green-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none" :class="{ 'text-green-600 border-green-500 bg-green-50 rounded-tl rounded-tr': tabLevel.current }" @click="changeLevel(index)">{{ tabLevel.name }}</button>
+			<button v-for="(tabLevel, index) in levels" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tabLevel.current }" @click="changeLevel(index)">{{ tabLevel.name }}</button>
 		</div>
-		<transition name="fadeSlideY" mode="out-in" duration="500">
+		<transition name="fade" mode="out-in" duration="500">
 			<ListStudent :level="currentTabLevel" v-if="isLevelChanged" />
 		</transition>
 	</div>
 </template>
 
-<script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import ListStudent from "@/components/list-student.vue";
-export default {
-	name: "index-students",
-	components: {
-		ListStudent: ListStudent,
-	},
-	data() {
-		return {
-			isloading: "",
-			// students: [{ id: "2098630150", year: 1961, name: "Mukadi Papy", email: "mukadi@example.com" }, { id: "8447551447", year: 1961, name: "Choi Ngandu", email: "example@yg.com" }, { id: "4521491271", year: 1961, name: "Jnr Choi", email: "example@yg.com" }]
-			isLevelChanged: true,
-		};
-	},
-	computed: {
-		...mapGetters("students", { students: "mystudents" }),
-		...mapGetters({ levels: "getListLevel", currentTabLevel: "currentLevel" }),
-	},
-	watch: {
-		currentTabLevel: function (newVal, oldVal) {
-			if (newVal != oldVal) {
-				this.isLevelChanged = false;
-				setTimeout(() => {
-					this.isLevelChanged = true;
-				}, 200);
-			}
-		},
-	},
-	methods: {
-		...mapActions("students", ["getAllStudents"]),
-		...mapMutations({ changeLevel: "CHANGE_LEVEL_MENU" }),
-		goto(index) {
-			return this.$router.push({ name: "students-details", params: { id: this.students[index]._id } });
-		},
-	},
-};
+<script setup>
+	import { useConfig } from "@/store/config"
+	import { useStudents } from "@/store/students"
+	import { useIpcRenderer } from "@vueuse/electron"
+	import { mapState, mapActions } from "pinia"
+	import { ref, computed, watch } from "vue"
+	import ListStudent from "@/components/list-student.vue"
+	const ipcRenderer = useIpcRenderer()
+	const store = useStudents()
+	const storeConfig = useConfig()
+	ipcRenderer.on("finish_load", (event, message) => {
+		console.log(message)
+	})
+	const isloading = ref("")
+	const isLevelChanged = ref(true)
+	const students = computed(() => store.students)
+	const getListLevel = computed(() => storeConfig.listLevel)
+	const currentTabLevel = computed(() => storeConfig.currentLevel)
+	watch(currentTabLevel, (newVal, oldVal) => {
+		if (newVal != oldVal) {
+			this.isLevelChanged = false
+			setTimeout(() => {
+				this.isLevelChanged = true
+			}, 200)
+		}
+	})
+
+	// ...mapActions(useStudents, ["getAllStudents","changeLevel"])
 </script>
-
-
-<style lang="scss" scoped>
-</style>

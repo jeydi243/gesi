@@ -1,18 +1,16 @@
 <template>
-	<div class="flex flex-row view" v-bind="$attrs">
-		<SideBar class="flex w-[15%] min-h-full bg-gray-900" />
-		<div class="flex w-[85%]">
-			<main class="relative flex flex-col w-full bg-gray-100 ">
-				<Header />
-				<BreadCrumbs v-if="showBraed" />
-				<div class="h-full w-full bg-gray-100 px-6 py-6 view relative">
-					<Transition name="fadeSlideX" mode="out-in">
-						<slot />
-					</Transition>
-				</div>
-				<Footer />
-			</main>
-		</div>
+	<div class="row" v-bind="$attrs">
+		<SideBar class="flex w-[15%] h-full bg-gray-900" />
+		<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
+			<Header />
+			<BreadCrumbs v-if="showBraedCrumbs" />
+			<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
+				<Transition name="fade" mode="out-in">
+					<slot></slot>
+				</Transition>
+			</div>
+			<Footer />
+		</main>
 	</div>
 </template>
 
@@ -28,8 +26,7 @@ export default {
 	data() {
 		return {
 			isMenuCondensed: false,
-			dayo: false,
-			showBraed: false,
+			showBraedCrumbs: false,
 		};
 	},
 	// props: { typeLayout: String },
@@ -77,9 +74,11 @@ export default {
 .fade-leave-to {
 	opacity: 0;
 }
-.view {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+
+
+
+main {
+	overflow-y: scroll;
 }
 </style>
 

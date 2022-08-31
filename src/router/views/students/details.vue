@@ -66,7 +66,7 @@
 									</ErrorMessage>
 									<button type="submit" class="g-button-primary">
 										<span class="font-bold text-white">Ajouter</span>
-										<AtomSpinner v-if="isSubmitting" class="h-5 w-5" />
+										<CirclesToRhombusesSpinner v-if="isSubmitting" :size="25" :color="'#FFF'" />
 									</button>
 								</div>
 							</Form>
@@ -77,7 +77,7 @@
 									<box-icon :name="`file-${doc.type}`" type="solid" color="darkBlue"></box-icon>
 									<span class="truncate">{{ doc.name }}</span>
 
-									<box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon>
+									<!-- <box-icon name="dots-vertical-rounded" color="darkBlue" class="bg-red cursor-pointer"></box-icon> -->
 								</div>
 								<div class="actions">
 									<button class="g-button-primary" @click="showFile">{{ doc.state? 'Voir':'Ajouter' }}</button>
@@ -104,8 +104,9 @@ import Calendrier from "@/components/calendar.vue";
 import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid";
 import studentsAPI from "@/api/students";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { AtomSpinner } from "epic-spinners";
-import * as yup from "yup";
+import { CirclesToRhombusesSpinner } from "epic-spinners";
+import { toast } from "@/utils/utils";
+
 export default {
 	name: "students-details",
 	components: {
@@ -113,7 +114,7 @@ export default {
 		Form,
 		Field,
 		ErrorMessage,
-		AtomSpinner,
+		CirclesToRhombusesSpinner,
 	},
 	data() {
 		const docaddSchema = {
@@ -231,11 +232,11 @@ export default {
 				.addDocument(studentId, formdata)
 				.then((response) => {
 					if (response.status < 300) {
-						this.$toast.success(`Enregistrement terminé :${response.data}`, {
+						toast.success(`Enregistrement terminé :${response.data}`, {
 							timeout: 5000,
 						});
 					} else {
-						this.$toast.error(`Impossible d'ajouter le document: ${response.data}`, {
+						toast.error(`Impossible d'ajouter le document: ${response.data}`, {
 							timeout: 5000,
 						});
 					}

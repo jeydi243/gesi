@@ -1,13 +1,13 @@
 <script>
 export default {
-  name: "layout-auth",
+	name: "layout-auth",
 };
 </script>
 
 <template>
-  <div v-bind="$attrs">
-    <div class="h-full">
-      <slot />
-    </div>
-  </div>
+	<div v-bind="$attrs">
+		<div class="h-full">
+			<slot></slot>
+		</div>
+	</div>
 </template>
