@@ -160,7 +160,6 @@
 	import { goto, chance } from "@/utils/utils"
 	const store = useManagement()
 	const src = ref(null)
-	const isLoading = ref(false)
 
 	const employeeSchema = {
 		first_name(value) {
@@ -193,23 +192,11 @@
 		middle_name(value) {
 			return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters"
 		},
-		school_name(value) {
-			return isLength(value, { min: 2, max: 20 }) ? true : "School name is required"
-		},
 		domain(value) {
 			return isLength(value, { min: 2, max: 20 }) ? true : "domain must be provided"
 		},
-		school_end_date(value) {
-			return isDate(parseISO(value)) ? true : "End date must be provided"
-		},
 		hire_date(value) {
 			return isDate(parseISO(value)) ? true : "Hire date must be provided"
-		},
-		school_start_date(value) {
-			return isDate(parseISO(value)) ? true : "Start date must be provided"
-		},
-		school_diploma_name(value) {
-			return isLength(value, { min: 2, max: 20 }) ? true : "Diploma name must be between 2 and 20 characters"
 		},
 		cover_letter(value) {
 			return isLength(value, { min: 50, max: 500 }) ? true : "Cover letter must be between 150 and 500 characters"
@@ -220,24 +207,20 @@
 	}
 	const employeeValues = {
 		address: chance.address(),
-		birthday: "1999-10-10",
-		first_name: chance.last().split(" ")[0],
-		middle_name: chance.last().split(" ")[0],
+		biography: chance.sentence({ words: 30 }),
 		last_name: chance.name(),
+		first_name: chance.last().split(" ")[0],
 		telephones: chance.phone({ country: "fr", mobile: true }),
+		middle_name: chance.last().split(" ")[0],
+		cover_letter: chance.sentence({ words: 50 }),
 		personal_email: chance.email(),
-		cityzenship: "FR",
+		gender: "M",
 		domain: "Math",
 		skills: "Code, Design",
-		gender: "M",
-		biography: chance.sentence({ words: 30 }),
 		position: "Developer",
-		school_name: "School Maadini",
-		cover_letter: chance.sentence({ words: 50 }),
-		school_end_date: "2014-02-06",
+		birthday: "1999-10-10",
 		hire_date: "2019-10-10",
-		school_start_date: "2010-08-02",
-		school_diploma_name: "Computer science",
+		cityzenship: "FR",
 	}
 	
 
@@ -258,10 +241,10 @@
 	}
 	function onFileChange(event) {
 		if (event.target.files && event.target.files[0]) {
-			this.src = window.URL.createObjectURL(event.target.files[0])
+			src.value = window.URL.createObjectURL(event.target.files[0])
 			window.URL.revokeObjectURL(event.target.files[0]) // free memory
 		} else {
-			this.src = null
+			src.value = null
 		}
 	}
 	async function submitEmployee(values) {
@@ -275,9 +258,7 @@
 		}
 
 		try {
-			this.isLoading = !this.isLoading
 			var result = await store.addEmployee(other)
-			this.isLoading = !this.isLoading
 			if (result) {
 				goto("employees-list")
 				toast.success("Employee added successfully !")
@@ -285,7 +266,6 @@
 				toast.error(`Can't add new employee`)
 			}
 		} catch (error) {
-			this.isLoading = !this.isLoading
 			console.log(error)
 		}
 	}

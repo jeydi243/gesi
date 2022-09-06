@@ -43,7 +43,7 @@
 		</div>
 		<div class="flex flex-col w-4/5 h-full card align-middle justify-start">
 			<div class="flex border-b border-gray-200 mb-2">
-				<button v-for="(tab,index) in tabsDetails" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.name) }}</button>
+				<button v-for="(tab,index) in tabsDetails" :key="index" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(index)">{{ filters.firstUpper(tab.last_name) }}</button>
 			</div>
 
 			<div class="contentTab">

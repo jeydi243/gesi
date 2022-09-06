@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2 select-none">
-			<a v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.name) }}</a>
+			<!-- <a v-for="(tab, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': tab.current }" @click="changeTab(indexTab)">{{ filters.firstUpper(tab.first_name) }}</a> -->
 		</div>
 		<div class="contentTab h-full w-full">
 			<router-view v-slot="{ Component, route }">

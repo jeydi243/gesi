@@ -33,8 +33,8 @@
 			const el = document.getElementById(newval.text)
 			const { left, top } = useElementBounding(el)
 			console.log(left.value, top.value)
-			jog.style.top = `${top.value}px`
-			jog.style.left = `${left.value}px`
+			// jog.style.top = `${top.value}px`
+			// jog.style.left = `${left.value}px`
 			// fg.value = top.value
 			// jh.value = left.value
 			// jog.classList.add(`top-[${top.value}px]`)

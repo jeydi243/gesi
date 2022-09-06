@@ -1,5 +1,4 @@
 import mgntAPI from "@/api/management"
-import teachersAPI from "@/api/teachers"
 import coursesAPI from "@/api/courses"
 import axios from "@/api/config"
 import { toast } from "@/utils/utils"
@@ -111,10 +110,8 @@ export const useManagement = defineStore("management", {
 				if (status == 200 || status == 201) {
 					console.log({ employees: data })
 					if (data.length > 0) {
-						data.forEach((employee) => {
-							this.employees.unshift(employee)
-							setTimeout(() => {}, 1000)
-						})
+						// employees.forEach(this.employees.unshift)
+						data.forEach((em) => this.employees.unshift(em))
 					} else {
 						this.employees = data
 					}
@@ -216,6 +213,7 @@ export const useManagement = defineStore("management", {
 		async deleteEducation(employeeID, educationID) {
 			try {
 				const { data, status, headers } = await mgntAPI.deleteEducation(employeeID, educationID)
+				console.log(status)
 				if ((status == 200 || status == 201) && data != "") {
 					const indexEmp = this.employees.findIndex((emp) => emp._id == employeeID)
 					const indexEduc = this.employees[indexEmp].educations.findIndex((educ) => educ.id == educationID)
@@ -471,6 +469,17 @@ export const useManagement = defineStore("management", {
 				return false
 			} catch (er) {
 				console.log(err)
+			}
+		},
+		async updateEmployeeConnexion(employeeID, values) {
+			try {
+				const { data, status } = await mgntAPI.updateEmployeeConnexion(employeeID, values)
+				if (status == 200 || status == 201) {
+					return true
+				}
+				return false
+			} catch (er) {
+				console.log(er)
 			}
 		},
 	},

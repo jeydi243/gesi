@@ -3,7 +3,7 @@ import axios from "./config"
 export default {
 	routeDocuments: "/management/documents",
 	routeFilieres: "/management/filieres",
-	routeEmployees: "/employees",
+	routeEmployees: "/employees", // /employees
 	getDocuments: async function () {
 		return axios.get(`${this.routeDocuments}`)
 	},
@@ -81,6 +81,9 @@ export default {
 	},
 	updateOnboarding: async function (employeeID, updatedOnboarding) {
 		return axios.patch(`${this.routeEmployees}/${employeeID}/update_onboarding`, { ...updatedOnboarding })
+	},
+	updateEmployeeConnexion: async function (employeeID, passwords) {
+		return axios.patch(`${this.routeEmployees}/${employeeID}/update_password`, { ...passwords })
 	},
 	updateDocument: async function (employeeID, updateDocument) {
 		return axios.post(`${this.routeEmployees}/${employeeID}/update_document`, updateDocument, {

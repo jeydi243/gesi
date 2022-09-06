@@ -2,7 +2,7 @@
 	<Transition name="fadeSlideY" mode="out-in">
 		<div class="modal-backdrop w-full relative ">
 			<div class="bg-white rounded-lg p-3 w-1/3" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
-				<header class="modal-header flex flex-row justify-between w-full">
+				<header class="modal-header row justify-between w-full">
 					<slot name="header">
 					</slot>
 					<XIcon @click="close" aria-label="Close modal" class="h-5 w-5 py-5 px-5 rounded-full hover:shadow-lg text-red-600" data-mdb-ripple="true" data-mdb-ripple-color="light" />
@@ -47,7 +47,7 @@ export default {
 	left: 0;
 	right: 0;
 	z-index: 300;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(15, 2, 2, 0.3);
 	backdrop-filter: blur(5px);
 	display: flex;
 	justify-content: center;

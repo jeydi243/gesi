@@ -52,7 +52,7 @@ app.config.globalProperties.filters = {
 app.config.globalProperties.toast = useToast()
 
 app.config.errorHandler = (err, vm, info) => {
-	console.log({ err }, { vm })
+	console.log({ err })
 }
 app.config.warnHandler = (msg, instance, trace) => {
 	console.log(msg, JSON.stringify(trace, null, 4))

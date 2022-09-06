@@ -103,7 +103,7 @@
 		to {
 			opacity: 0;
 			z-index: 0;
-			transform: translateX(-10px);
+			transform: translateX(10px);
 		}
 	}
 
@@ -128,7 +128,7 @@
 
 		to {
 			opacity: 0;
-			transform: translateY(-10px);
+			transform: translateY(10px);
 		}
 	}
 </style>
