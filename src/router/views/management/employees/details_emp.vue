@@ -3,10 +3,9 @@
 		<div class="card relative mb-5">
 			<div class="row justify-between sticky top-0">
 				<div class="flex border-b border-gray-200 mb-2 select-none">
-					<template v-for="(tab, indexTab) in tabsGestion" :key="indexTab">
-						<a class="btn-tab2 align-middle items-center row" :class="{ 'btn-tab-active2': tab.current }" @click="changeTab(indexTab)"
-							>
-							{{ filters.firstUpper(tab.first_name) }}
+					<template v-for="(tab, indexTab) in tabsEmp" :key="indexTab">
+						<a class="btn-tab2 align-middle items-center row" :class="{ 'btn-tab-active2': tab.current }" @click="changeTab(indexTab)">
+							{{ filters.firstUpper(tab.name) }}
 							<box-icon v-if="indexTab != 0" name="lock-alt" type="regular" :color="!tab.current ? 'gray' : 'blue'" size="sm" class="self-center text-center"></box-icon>
 						</a>
 					</template>
@@ -35,69 +34,71 @@
 		</div>
 		<transition name="fadeSlideX" mode="out-in">
 			<div class="" v-if="currentTab == 'basic information'">
-				<div class="card mt-4 min-h-[200px] relative">
-					<div class="row justify-between">
-						<div class="row relative transition-all duration-700">
-							<div class="row relative top-0 left-0 h-[150px] w-[150px] mr-3 items-center align-middle">
+				<div class="card row mt-4 min-h-[200px] relative w-full">
+					<div class="row relative transition-all duration-700 w-full">
+						<div class="flex-none relative h-[150px] w-[150px] mr-3 items-center align-middle">
+							<div class="row items-center my-auto h-full">
 								<div class="backdrop-blur-sm bg-red-white/30 absolute left-[25%] top-[35%] z-10 w-20 h-7 rounded-md text-white text-center cursor-pointer" v-if="edit_mode"><button type="button" @click="changepicture">Edit</button></div>
 								<img src="@/assets/img/bg-1.jpg" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
 							</div>
-							<div class="col ml-5 space-y-2" v-if="!edit_mode">
+						</div>
+						<div v-if="!edit_mode" class="flex-none ">
+							<div class="col ml-5 space-y-2">
 								<span class="capitalize font-bold text-xl">{{ userData.last_name }}</span>
 								<span class="font-bold text-green-600">{{ userData.position[0] }}</span>
 								<span class="italic text-sm">{{ userData.personal_email }}</span>
 								<span class="italic text-sm">{{ userData.telephones[0] }}</span>
 								<span class="bg-green-100 pl-1 pt-1 pb-1 pr-3 rounded-md font-bold" data-bs-toggle="tooltip" data-bs-placement="right" :title="userData.hire_date">7 years of experience</span>
 							</div>
-							<div class="" v-else>
-								<Form @submit="updateBasic" v-slot="{ isSubmitting }" :validation-schema="basicInfoSchema" :initial-values="basicInfo" @invalid-submit="onInvalidBasicInfo">
-									<div class="row space-x-2">
-										<div>
-											<Field name="first_name" class="w-full g-input-text"></Field>
-											<ErrorMessage name="first_name" v-slot="{ message }">
-												<p class="input-error">{{ message }}</p>
-											</ErrorMessage>
-										</div>
-										<div>
-											<Field name="last_name" class="w-full g-input-text"></Field>
-											<ErrorMessage name="last_name" v-slot="{ message }">
-												<p class="input-error">{{ message }}</p>
-											</ErrorMessage>
-										</div>
-										<div>
-											<Field name="middle_name" class="w-full g-input-text"></Field>
-											<ErrorMessage name="middle_name" v-slot="{ message }">
-												<p class="input-error">{{ message }}</p>
-											</ErrorMessage>
-										</div>
-									</div>
+						</div>
+						<div v-else class="w-auto grow">
+							<Form class="w-full" @submit="updateBasic" v-slot="{ isSubmitting }" :validation-schema="basicInfoSchema" :initial-values="basicInfo" @invalid-submit="onInvalidBasicInfo">
+								<div class="row space-x-2">
 									<div>
-										<Field name="personal_email" class="w-full g-input-text"></Field>
-										<ErrorMessage name="personal_email" v-slot="{ message }">
+										<Field name="first_name" class="w-full g-input-text"></Field>
+										<ErrorMessage name="first_name" v-slot="{ message }">
 											<p class="input-error">{{ message }}</p>
 										</ErrorMessage>
 									</div>
 									<div>
-										<Field name="position" class="w-full g-input-text"></Field>
-										<ErrorMessage name="position" v-slot="{ message }">
+										<Field name="last_name" class="w-full g-input-text"></Field>
+										<ErrorMessage name="last_name" v-slot="{ message }">
 											<p class="input-error">{{ message }}</p>
 										</ErrorMessage>
 									</div>
 									<div>
-										<Field name="telephones" class="w-full g-input-text"></Field>
-										<ErrorMessage name="telephones" v-slot="{ message }">
+										<Field name="middle_name" class="w-full g-input-text"></Field>
+										<ErrorMessage name="middle_name" v-slot="{ message }">
 											<p class="input-error">{{ message }}</p>
 										</ErrorMessage>
 									</div>
-									<div class="flex flex-row h-1/2 w-full items-center justify-between">
-										<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
-										<button type="submit" class="btn-primary">
-											<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
-											<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
-										</button>
-									</div>
-								</Form>
-							</div>
+								</div>
+								<div>
+									<Field name="personal_email" class="w-full g-input-text"></Field>
+									<ErrorMessage name="personal_email" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+								<div>
+									<Field name="position" class="w-full g-input-text"></Field>
+									<ErrorMessage name="position" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+								<div>
+									<Field name="telephones" class="w-full g-input-text"></Field>
+									<ErrorMessage name="telephones" v-slot="{ message }">
+										<p class="input-error">{{ message }}</p>
+									</ErrorMessage>
+								</div>
+								<div class="flex flex-row h-1/2 w-full items-center justify-between">
+									<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
+									<button type="submit" class="btn-primary">
+										<span class="font-bold text-white" v-if="!isSubmitting">Update</span>
+										<CirclesToRhombusesSpinner :size="25" class="text-white" v-if="isSubmitting" />
+									</button>
+								</div>
+							</Form>
 						</div>
 					</div>
 				</div>
@@ -586,13 +587,13 @@
 		middle_name: userData.value.middle_name,
 		personal_email: userData.value.personal_email,
 	})
-	const tabsGestion = ref([
+	const tabsEmp = ref([
 		{ name: "Basic Information", current: true },
 		{ name: "Account and Settings", current: false },
 		{ name: "Employement status", current: false },
 	])
 
-	const currentTab = computed(() => tabsGestion.value.find((tab) => tab.current).name.toLowerCase())
+	const currentTab = computed(() => tabsEmp.value.find((tab) => tab.current).name.toLowerCase())
 	const basicInfoSchema = {
 		position(value) {
 			return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters"
@@ -908,9 +909,9 @@
 	async function changepicture() {}
 	async function updateBasic() {}
 	function changeTab(index) {
-		const currentTrue = tabsGestion.value.findIndex((tab) => tab.current == true)
-		tabsGestion.value[currentTrue].current = false
-		tabsGestion.value[index].current = true
+		const currentTrue = tabsEmp.value.findIndex((tab) => tab.current == true)
+		tabsEmp.value[currentTrue].current = false
+		tabsEmp.value[index].current = true
 	}
 </script>
 

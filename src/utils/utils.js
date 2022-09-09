@@ -55,11 +55,12 @@ export function onBeforeEnter(el, done) {
 	})
 }
 export async function goto(to = null, data = null) {
-	if (data != null) {
+	if (to) {
+console.log({to})
+		await router.push({ name: to })
+	} else if (data != null) {
 		await router.push({ name: to, params: { id: data } })
 	} else if (to == null) {
 		await router.back()
-	} else {
-		await router.push({ name: to })
-	}
+	} 
 }
