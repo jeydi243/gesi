@@ -35,7 +35,7 @@
 	import { mapActions } from "pinia"
 	import { useAuthentication } from "@/store/authentication"
 	import { ArrowLeftIcon } from "@heroicons/vue/solid"
-	import { ref, computed } from "vue"
+	import { ref } from "vue"
 	import { goto } from "@/utils/utils"
 	import Breadcrumbs from "./breadcrumbs.vue"
 

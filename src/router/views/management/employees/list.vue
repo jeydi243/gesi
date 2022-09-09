@@ -13,7 +13,7 @@
 				</button>
 			</div>
 		</div>
-		<transition>
+		<transition name="fadeSlideX" :css="false" mode="out-in">
 			<div v-if="employees.length > 0" class="grid lg:grid-cols-5 md:grid-cols-3 xs:grid-cols-1 gap-4 auto-cols-min w-full h-full transition-transform duration-500 ease-in-out">
 				<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
 					<span v-for="(emp, index) in employees" :key="index" class="card-emp select-none" :data-index="index">

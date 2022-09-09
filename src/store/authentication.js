@@ -2,7 +2,7 @@ import usersAPI from "@/api/user"
 import axios from "@/api/config"
 import { defineStore } from "pinia"
 
-export const useAuthentication = defineStore("authentication", {
+export const useAuth = defineStore("authentication", {
   state: () => ({ user: null, token: null, authResponse: null }),
 
   actions: {

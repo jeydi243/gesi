@@ -25,7 +25,7 @@
 
 				<div class="card w-1/2 col h-full">
 					<div class="row justify-between">
-						<div class="text-2xl font-bold row">Latest candidates <span class="bg-gray-100 text-sm rounded-lg px-2 items-center text-gray-500 align-middle">220</span></div>
+						<div class="text-2xl font-bold row items-center space-x-2">Latest candidates <span class="bg-gray-100 text-sm rounded-lg px-1 py-0 h-5 items-center row text-center text-gray-500 align-middle">220</span></div>
 						<button type="button" class="rounded-full h-10 w-10" data-mdb-ripple="true" data-mdb-ripple-color="success"><box-icon name="dots-vertical-rounded" color="green" class="bg-red cursor-pointer"></box-icon></button>
 					</div>
 					<template v-for="i in 8" :key="i">

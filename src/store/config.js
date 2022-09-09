@@ -44,6 +44,7 @@ export const useConfig = defineStore("config", {
 			}
 		},
 		changeLayout(data) {
+			console.log(data)
 			this.layout = data
 		},
 		changeActive(path) {
