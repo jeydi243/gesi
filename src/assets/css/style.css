@@ -4915,6 +4915,10 @@ textarea.form-control.is-invalid{
   width: 5rem;
 }
 
+.w-auto{
+  width: auto;
+}
+
 .w-\[80px\]{
   width: 80px;
 }
@@ -4953,8 +4957,16 @@ textarea.form-control.is-invalid{
   max-width: 28rem;
 }
 
+.flex-none{
+  flex: none;
+}
+
 .shrink-0{
   flex-shrink: 0;
+}
+
+.grow{
+  flex-grow: 1;
 }
 
 .table-auto{
@@ -5540,9 +5552,9 @@ textarea.form-control.is-invalid{
   padding-bottom: 1.25rem;
 }
 
-.px-2{
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+.py-0{
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .py-1{
@@ -5553,6 +5565,11 @@ textarea.form-control.is-invalid{
 .py-2\.5{
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .py-4{
