@@ -1,6 +1,6 @@
 import mgntAPI from "@/api/management"
 import coursesAPI from "@/api/courses"
-import axios from "@/api/config"
+import axios from "@/api/myaxios"
 import { toast } from "@/utils/utils"
 import { defineStore } from "pinia"
 import { useTeachers } from "./teachers"

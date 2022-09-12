@@ -1,4 +1,4 @@
-import axios from "@/api/config"
+import axios from "@/api/myaxios"
 import usersAPI from "@/api/users"
 import { defineStore } from "pinia"
 

@@ -222,7 +222,6 @@
 		hire_date: "2019-10-10",
 		cityzenship: "FR",
 	}
-	
 
 	function beforeCancel(values) {
 		if (values == this.employeeValues) {
@@ -250,6 +249,7 @@
 	async function submitEmployee(values) {
 		const employee = new FormData()
 		values["telephones"] = values["telephones"].split(",").map((tel) => tel.replaceAll(" ", ""))
+		values["position"] = values["position"].split(",")
 
 		const { resume_file, profile_img, ...other } = values
 		console.log(other)

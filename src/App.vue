@@ -33,14 +33,6 @@
 	const isMain = computed(() => store.layout != "auth")
 	let showBraedCrumbs = ref(false)
 	useIpcRendererOn("finish_load", async (event, ...args) => {
-		try {
-			await store.init()
-		} catch (er) {
-			console.log("Impossible d'initier le store", er)
-		}
-	})
-
-	onMounted(() => {
 		store
 			.init()
 			.then(() => {
@@ -50,6 +42,17 @@
 				console.log("Impossible d'initier le store", er)
 			})
 	})
+
+	// onMounted(() => {
+	// 	store
+	// 		.init()
+	// 		.then(() => {
+	// 			console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+	// 		})
+	// 		.catch((er) => {
+	// 			console.log("Impossible d'initier le store", er)
+	// 		})
+	// })
 </script>
 <style>
 	.fade-enter-active,

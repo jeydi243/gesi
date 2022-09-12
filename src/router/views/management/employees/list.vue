@@ -38,6 +38,7 @@
 									</li>
 								</ul>
 							</div>
+							{{ emp.id }}
 							<div class="rounded-full bg-green-50 h-16 w-16 cursor-pointer overflow-clip" @click="goto('employees-details', emp._id)">
 								<img :src="emp.profile_img" />
 							</div>

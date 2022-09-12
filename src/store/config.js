@@ -1,12 +1,7 @@
 import { defineStore } from "pinia"
-import room from "./room"
-import students from "./students"
-import teachers from "./teachers"
-import courses from "./courses"
-import authentication from "./authentication"
 import { useManagement } from "./management"
 import { useStudents } from "./students"
-
+import configAPI from "@/api/config"
 export const useConfig = defineStore("config", {
 	state: () => ({
 		count: 0,
@@ -43,11 +38,31 @@ export const useConfig = defineStore("config", {
 				console.log(error)
 			}
 		},
-		getOrgs() {
-
-},
+		async addOrg(payload) {
+			try {
+				const { data, status } = configAPI.add(payload)
+				console.log({ data }, { status })
+				if (status == 200 || status == 201) {
+					this.organizations.unshift(data)
+				}
+			} catch (error) {
+				console.log("Can't add organization: ", error)
+			}
+		},
+		async getOrgs() {
+			try {
+				const { data, status } = configAPI.getAll()
+				console.log({ data }, { status })
+				if (status == 200 || status == 201) {
+					data.forEach((element) => {
+						this.organizations.unshift(element)
+					})
+				}
+			} catch (error) {
+				console.log("Can't retrieve all organizations: ", error)
+			}
+		},
 		changeLayout(data) {
-			console.log(data)
 			this.layout = data
 		},
 		changeActive(path) {
