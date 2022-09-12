@@ -1,4 +1,4 @@
-import axios from "./config"
+import axios from "./myaxios"
 
 export default {
   getAll: async function () {

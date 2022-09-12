@@ -13,14 +13,14 @@ export const useAuth = defineStore("authentication", {
 			return await usersAPI.logout()
 		},
 		async login(payload) {
-			console.log(payload)
+			console.log({ payload })
 			try {
 				const { data, status } = await usersAPI.login(payload)
 				if (data.token && (status == 200 || status == 201)) {
 					console.log({ token: data.token })
 					this.token = data.token
 					this.user = data.user
-					return await this.setAxiosInterceptor()
+					return this.setAxiosInterceptor()
 				} else console.log("No token for this user")
 			} catch (error) {
 				this.authResponse = error.response
@@ -29,7 +29,7 @@ export const useAuth = defineStore("authentication", {
 		setAxiosInterceptor() {
 			axios.interceptors.request.use(
 				function (config) {
-					config.headers.Authorization = `Bearer ${state.token}`
+					config.headers.Authorization = `Bearer ${this.token}`
 					return config
 				},
 				null,

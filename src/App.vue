@@ -2,9 +2,9 @@
 	<div id="app" class="h-screen w-screen">
 		<div class="row h-full w-full relative" v-bind="$attrs">
 			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" v-if="isMain" />
-			
+
 			<main class="col h-full relative bg-gray-100 overflow-auto" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
-				<MyHeader />
+				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
 				<BreadCrumbs v-if="showBraedCrumbs && isMain" />
 				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
@@ -14,7 +14,7 @@
 						</Transition>
 					</router-view>
 				</div>
-				<Footer />
+				<Footer v-if="isMain" />
 			</main>
 		</div>
 	</div>
@@ -24,12 +24,10 @@
 	import MyHeader from "@/components/myheader"
 	import SideBar from "@/components/side"
 	import BreadCrumbs from "@/components/breadcrumbs"
-	import { watch, ref, onMounted } from "vue"
-	import { useIpcRendererOn } from "@vueuse/electron"
-	import { useRoute } from "vue-router"
 	import { useConfig } from "@/store/config"
+	import { ref, onMounted, computed } from "vue"
+	import { useIpcRendererOn } from "@vueuse/electron"
 
-	const route = useRoute()
 	const store = useConfig()
 	const layout = computed(() => store.layout)
 	const isMain = computed(() => store.layout != "auth")
@@ -42,12 +40,15 @@
 		}
 	})
 
-	onMounted(async () => {
-		try {
-			await store.init()
-		} catch (er) {
-			console.log("Impossible d'initier le store", er)
-		}
+	onMounted(() => {
+		store
+			.init()
+			.then(() => {
+				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+			})
+			.catch((er) => {
+				console.log("Impossible d'initier le store", er)
+			})
 	})
 </script>
 <style>

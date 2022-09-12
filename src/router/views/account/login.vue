@@ -26,8 +26,8 @@
 				</div>
 
 				<div class="row mt-6">
-					<CirclesToRhombusesSpinner :animation-duration="1000" :size="25" :color="'#FFF'" v-if="isSubmitting" class="flex" />
-					<button type="submit" class="btn-primary">
+					<button type="submit" class="btn-primary w-full">
+						<CirclesToRhombusesSpinner :animation-duration="1000" :size="25" :color="'#FFF'" v-if="isSubmitting" class="flex" />
 						<span class="text-base text-center flex">Connexion</span>
 					</button>
 				</div>

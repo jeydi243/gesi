@@ -251,7 +251,7 @@
 		const employee = new FormData()
 		values["telephones"] = values["telephones"].split(",").map((tel) => tel.replaceAll(" ", ""))
 
-		const { resume_file, school_diploma_file, profile_img, ...other } = values
+		const { resume_file, profile_img, ...other } = values
 		console.log(other)
 		for (const key in other) {
 			employee.append(key, other[key])

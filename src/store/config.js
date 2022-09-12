@@ -10,8 +10,8 @@ import { useStudents } from "./students"
 export const useConfig = defineStore("config", {
 	state: () => ({
 		count: 0,
+		organizations: [],
 		layout: "main",
-		rootName: "home",
 		config: {},
 		listSideMenus: [
 			{ text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
@@ -43,6 +43,9 @@ export const useConfig = defineStore("config", {
 				console.log(error)
 			}
 		},
+		getOrgs() {
+
+},
 		changeLayout(data) {
 			console.log(data)
 			this.layout = data
@@ -62,9 +65,9 @@ export const useConfig = defineStore("config", {
 		},
 	},
 	getters: {
+		rootOrg: (state) => state.organizations.find((org) => org.organization_parent_id == null),
 		getLayout: (state) => state.layout,
 		getConfig: (state) => state.config,
-		getRootName: (state) => state.rootName,
 		getListLevel: (state) => state.listLevel,
 		getListStatus: (state) => state.listStatus,
 		currentLevel(state) {

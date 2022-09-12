@@ -42,7 +42,7 @@
 								<img src="@/assets/img/bg-1.jpg" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
 							</div>
 						</div>
-						<div v-if="!edit_mode" class="flex-none ">
+						<div v-if="!edit_mode" class="flex-none">
 							<div class="col ml-5 space-y-2">
 								<span class="capitalize font-bold text-xl">{{ userData.last_name }}</span>
 								<span class="font-bold text-green-600">{{ userData.position[0] }}</span>
@@ -580,8 +580,9 @@
 	const showModalDeleteEmployee = ref(false)
 	const showModalUpdateEducation = ref(false)
 	const basicInfo = ref({
-		position: userData.value.position.join(", "),
+		position: userData.value.position,
 		last_name: userData.value.last_name,
+		middle_name: userData.value.middle_name,
 		first_name: userData.value.first_name,
 		telephones: userData.value.telephones,
 		middle_name: userData.value.middle_name,
