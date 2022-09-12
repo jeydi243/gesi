@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from "vue-router"
+import { useConfig } from "../store/config"
 
 const studentsRoutes = [
 	{
@@ -198,5 +199,12 @@ router.afterEach((to, from, failure) => {
 	} else {
 		// console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? JSON.stringify(to.params) : ""}`)
 	}
+})
+router.beforeEach((to, from, next) => {
+	// Must be used within the function!
+	const config = useConfig()
+	config.changeLayout(to.meta["layout"])
+
+	next()
 })
 export default router

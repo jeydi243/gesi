@@ -52,7 +52,6 @@
 <script setup>
 	import { useConfig } from "@/store/config"
 	import { gsap, Elastic } from "gsap"
-	import { useAuthentication } from "@/store/authentication"
 	import { mapActions } from "pinia"
 	import { Field, Form, ErrorMessage } from "vee-validate"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
@@ -61,6 +60,7 @@
 	import * as yup from "yup"
 	import { useAuth } from "@/store/authentication"
 	import anime from "animejs/lib/anime.es.js"
+	import { useToggle } from "@vueuse/core"
 	const auth = useAuth()
 	const config = useConfig()
 	const router = useRouter()
@@ -74,10 +74,10 @@
 	)
 
 	const user = ref({ username: "rootuser", password: "rootpass", stay_connected: "on" })
-	const isloading = ref(false)
-	const forAanime = ref({ atat: 0 })
-
 	const token = computed(() => auth.token)
+	const loading = ref(false)
+	const forAanime = ref({ atat: 0 })
+	const isLoading = useToggle(loading)
 	const authresponse = computed(() => auth.authresponse)
 	const placeholderSuggestion = ref(["17ki2022", "18gk2022", "55gk20", "18gk2024", "202218gk", "18gk2041", "18gk2022", "18gk1022", "18gk2022"])
 
@@ -99,11 +99,12 @@
 				// console.log("OKAY. Ca change")
 			},
 		})
-	}),
-		// mapActions(useAuth, ["login"]),
-		// mapActions(useConfig, ["changeLayout"])
+	})
+
+	const { login } = useAuth()
+	const { changeLayout } = useConfig()
 	async function loger() {
-		isloading.value = !isloading.value
+		isLoading()
 		setTimeout(() => {
 			login(user) // $swal('Hello Vue world!!!');
 			gsap.fromTo(
@@ -123,13 +124,10 @@
 		}, 2000)
 	}
 	async function submitForm(user) {
-		console.log("Submit form with vlues: ", user)
-		// Submit values to API...
-		// alert(JSON.stringify(user, null, 2));
 		try {
-			isloading.value = !isloading.value
+			isLoading()
 			await login(user)
-			isloading.value = !isloading.value
+			isLoading()
 		} catch (e) {
 			console.log(e)
 		}

@@ -1,11 +1,12 @@
 <template>
 	<div id="app" class="h-screen w-screen">
 		<div class="row h-full w-full relative" v-bind="$attrs">
-			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" />
-			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
+			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" v-if="isMain" />
+			
+			<main class="col h-full relative bg-gray-100 overflow-auto" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
 				<MyHeader />
 				<!-- {{ $route.path }} -->
-				<BreadCrumbs v-if="showBraedCrumbs" />
+				<BreadCrumbs v-if="showBraedCrumbs && isMain" />
 				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">
@@ -30,8 +31,9 @@
 
 	const route = useRoute()
 	const store = useConfig()
+	const layout = computed(() => store.layout)
+	const isMain = computed(() => store.layout != "auth")
 	let showBraedCrumbs = ref(false)
-
 	useIpcRendererOn("finish_load", async (event, ...args) => {
 		try {
 			await store.init()
@@ -39,6 +41,7 @@
 			console.log("Impossible d'initier le store", er)
 		}
 	})
+
 	onMounted(async () => {
 		try {
 			await store.init()
@@ -46,14 +49,6 @@
 			console.log("Impossible d'initier le store", er)
 		}
 	})
-	watch(
-		() => route,
-		function ({ meta, fullPath }) {
-			console.log("Hum")
-			changeLayout(meta.layout)
-			this.changeActive(fullPath.split("/")[1])
-		}
-	)
 </script>
 <style>
 	.fade-enter-active,

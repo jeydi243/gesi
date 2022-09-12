@@ -3,7 +3,6 @@
 		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="goto" />
 		<Breadcrumbs />
 
-		
 		<div class="relative row space-x-5">
 			<!-- Dropdown toggle button -->
 			<button id="toggle-dropdown" class="btn-header" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,16 +31,16 @@
 </template>
 
 <script setup>
-	import { mapActions } from "pinia"
-	import { useAuthentication } from "@/store/authentication"
-	import { ArrowLeftIcon } from "@heroicons/vue/solid"
 	import { ref } from "vue"
 	import { goto } from "@/utils/utils"
+	import { useAuth } from "@/store/authentication"
+	import { mapActions } from "pinia"
+	import { ArrowLeftIcon } from "@heroicons/vue/solid"
 	import Breadcrumbs from "./breadcrumbs.vue"
 
 	const dropdown = ref(null)
 
-	mapActions(useAuthentication, ["logout"])
+	mapActions(useAuth, ["logout"])
 </script>
 
 <style lang="scss" scoped></style>
