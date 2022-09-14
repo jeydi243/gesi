@@ -12,6 +12,8 @@ import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
 import "vue-cal/dist/vuecal.css"
+import "splitting/dist/splitting.css";
+import "splitting/dist/splitting-cells.css";
 // import "vue-cal/dist/i18n/fr.js"
 import "v-calendar/dist/style.css"
 import "vue-toastification/dist/index.css"

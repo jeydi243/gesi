@@ -8,14 +8,14 @@ export const useConfig = defineStore("config", {
 		organizations: [],
 		layout: "main",
 		config: {},
-		listSideMenus: [
-			{ text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
-			{ text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
-			{ text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
-			{ text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
-			{ text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
-			{ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
-			{ text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
+		sideMenus: [
+			// { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
+			// { text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
+			// { text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
+			// { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
+			// { text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
+			// { text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
+			// { text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
 		],
 		listLevel: [
 			{ id: "TmhGq7H", name: "Candidat", short: "Candidat", color: "#8B70D8", current: true },
@@ -31,12 +31,33 @@ export const useConfig = defineStore("config", {
 		async init() {
 			const students = useStudents()
 			const mngt = useManagement()
+			this.onReloadSide()
 			try {
 				await mngt.init()
 				await students.init()
 			} catch (error) {
 				console.log(error)
 			}
+		},
+		onReloadSide() {
+			console.log("Reload side menu")
+			this.sideMenus = []
+			const side = [
+				{ text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
+				{ text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
+				{ text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
+				{ text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
+				{ text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
+				{ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
+				{ text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
+			]
+			side.forEach((e) => this.sideMenus.push(e))
+		},
+		add() {
+			this.sideMenus.push({ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false })
+		},
+		rem() {
+			this.sideMenus.pop()
 		},
 		async addOrg(payload) {
 			try {
@@ -66,16 +87,16 @@ export const useConfig = defineStore("config", {
 			this.layout = data
 		},
 		changeActive(path) {
-			var currentIndex = this.listSideMenus.findIndex((item) => item.active == true)
-			var nextIndex = this.listSideMenus.findIndex((item) => item.to == path)
+			var currentIndex = this.sideMenus.findIndex((item) => item.active == true)
+			var nextIndex = this.sideMenus.findIndex((item) => item.to == path)
 			if (nextIndex != -1) {
 				// if we came from a page which is not in the list of side menus, we need to add it
 				if (currentIndex != -1) {
-					this.listSideMenus[currentIndex].active = false
+					this.sideMenus[currentIndex].active = false
 				}
-				this.listSideMenus[nextIndex].active = true
+				this.sideMenus[nextIndex].active = true
 			} else {
-				this.listSideMenus[currentIndex].active = false
+				this.sideMenus[currentIndex].active = false
 			}
 		},
 	},
@@ -89,7 +110,7 @@ export const useConfig = defineStore("config", {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).name
 		},
 		sideActive(state) {
-			return state.listSideMenus.find((side) => side.active == true)
+			return state.sideMenus.find((side) => side.active == true)
 		},
 		currentLevelShort(state) {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).short

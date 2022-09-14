@@ -191,11 +191,11 @@ input:valid + span:after {
 	@apply bg-blue-600;
 }
 .vuecal__title-bar {
-	background-color: #00eeffc4;
+	@apply bg-green-300;
 }
 .vuecal__cell--today,
 .vuecal__cell--current {
-	background-color: rgba(240, 240, 255, 0.4);
+	@apply bg-gray-300;
 }
 .vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
 	@apply bg-blue-600;

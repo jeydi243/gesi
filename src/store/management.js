@@ -108,8 +108,8 @@ export const useManagement = defineStore("management", {
 			try {
 				const { data, status } = await mgntAPI.getEmployees()
 				if (status == 200 || status == 201) {
-					console.log({ employees: JSON.parse(data) })
-					const datat = JSON.parse(data)
+					// console.log({ employees: JSON.parse(data) })
+					const datat = data /* JSON.parse(data)*/
 					if (datat.length > 0) {
 						// employees.forEach(this.employees.unshift)
 						datat.forEach((em) => this.employees.unshift(em))

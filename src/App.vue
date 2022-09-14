@@ -21,13 +21,15 @@
 </template>
 <script setup>
 	import Footer from "@/components/footer"
-	import MyHeader from "@/components/myheader"
 	import SideBar from "@/components/side"
+	import MyHeader from "@/components/myheader"
+	import Splitting from "splitting"
 	import BreadCrumbs from "@/components/breadcrumbs"
+	import { gsap } from "gsap"
 	import { useConfig } from "@/store/config"
-	import { ref, onMounted, computed } from "vue"
 	import { useIpcRendererOn } from "@vueuse/electron"
-
+	import { ref, onMounted, computed, onUpdated } from "vue"
+	const results = ref(null)
 	const store = useConfig()
 	const layout = computed(() => store.layout)
 	const isMain = computed(() => store.layout != "auth")
@@ -43,16 +45,27 @@
 			})
 	})
 
-	// onMounted(() => {
-	// 	store
-	// 		.init()
-	// 		.then(() => {
-	// 			console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-	// 		})
-	// 		.catch((er) => {
-	// 			console.log("Impossible d'initier le store", er)
-	// 		})
-	// })
+	onUpdated(() => {
+		// store.onReloadSide()
+		animeMe()
+	})
+	onMounted(() => {
+		results.value = Splitting({
+			target: "[data-splitting]",
+			by: "chars",
+			key: null,
+			matching: "span",
+		})
+		animeMe()
+	})
+	function animeMe() {
+		console.log(results.value[0].el)
+		results.value.forEach(({ el, chars }, i) => {
+			console.log({ el })
+			gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
+			chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
+		})
+	}
 </script>
 <style>
 	.fade-enter-active,
