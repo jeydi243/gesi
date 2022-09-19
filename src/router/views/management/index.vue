@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2 select-none">
-			<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" mode="out-in">
-				<a v-for="({ name, current }, indexTab) in tabsGestion" :key="indexTab" class="btn-tab" :class="{ 'btn-tab-active': current }" @click="changeTab(indexTab)">{{ filters.firstUpper(name) }}</a>
+			<TransitionGroup tag="div" :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" mode="out-in">
+				<a v-for="({ current, name }, indexTab) in tabsGestion" :key="indexTab" :data-index="indexTab" class="btn-tab" :class="{ 'btn-tab-active': current }" @click="changeTab(indexTab)">{{ name }}</a>
 			</TransitionGroup>
 		</div>
 		<div class="contentTab h-full w-full">

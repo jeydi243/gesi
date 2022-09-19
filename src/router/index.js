@@ -204,8 +204,8 @@ router.afterEach((to, from, failure) => {
 })
 router.beforeEach((to, from, next) => {
 	// Must be used within the function!
-	const config = useConfig()
-	config.changeLayout(to.meta["layout"])
+	// const config = useConfig()
+	// config.changeLayout(to.meta["layout"])
 	next()
 })
 

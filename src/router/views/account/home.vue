@@ -3,22 +3,12 @@
 		<!-- <HomeIcon size="sm" class="h-5 w-5" /> -->
 		<div class="flex flex-col select-none">
 			<div class="grid grid-cols-4 auto-cols-max mb-3 mt-5 gap-2">
-				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
-					<h1 class="font-bold text-2xl text-green-200">5000</h1>
-					<span class="text-2xl font-bold text-green-800">Students</span>
-				</div>
-				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
-					<h1 class="font-bold text-2xl text-green-200">50</h1>
-					<span class="text-2xl font-bold text-green-800">Professors</span>
-				</div>
-				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
-					<h1 class="font-bold text-2xl text-green-200">20</h1>
-					<span class="text-2xl font-bold text-green-800">Rooms</span>
-				</div>
-				<div class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
-					<h1 class="font-bold text-2xl text-green-200">2000</h1>
-					<span class="text-2xl font-bold text-green-800">Alumnis</span>
-				</div>
+				<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" appear>
+					<div v-for="(stat, index) in stats" :key="index" :data-index="index" class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
+						<h1 class="font-bold text-2xl text-green-200">{{ stat.value }}</h1>
+						<span class="text-2xl font-bold text-green-800">{{ stat.name }}</span>
+					</div>
+				</TransitionGroup>
 			</div>
 			<div class="row space-x-2">
 				<div class="card w-1/2"><apexchart class="w-full" height="450" :options="chartOptions" :series="series"></apexchart></div>
@@ -49,7 +39,7 @@
 <script setup>
 	import { chance } from "@/utils/utils"
 	import { ref } from "vue"
-
+	import { beforeEnterList, enterList, leaveList } from "@/utils/utils"
 	const chartOptions = ref({
 		title: {
 			text: "List of students by year",
@@ -92,6 +82,12 @@
 			name: "Nombre d'étudiants",
 			data: [3000, 3500, 4000, 4200, 4500, 4700, 4000, 3000],
 		},
+	])
+	const stats = ref([
+		{ name: "Students", value: "5000" },
+		{ name: "Teachers", value: "70" },
+		{ name: "Rooms", value: "70" },
+		{ name: "Alumni", value: "700" },
 	])
 </script>
 <style lang="css"></style>
