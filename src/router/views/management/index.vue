@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div class="flex border-b border-gray-200 mb-2 select-none">
-			<TransitionGroup tag="div" :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" mode="out-in">
-				<a v-for="({ current, name }, indexTab) in tabsGestion" :key="indexTab" :data-index="indexTab" class="btn-tab" :class="{ 'btn-tab-active': current }" @click="changeTab(indexTab)">{{ name }}</a>
+			<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" mode="out-in">
+				<a v-for="({ current, name }, indexTab) in tabsGestion" :key="indexTab" :data-index="indexTab" class="btn-tab first-letter:uppercase" :class="{ 'btn-tab-active': current }" @click="changeTab(indexTab)">{{ name }}</a>
 			</TransitionGroup>
 		</div>
 		<div class="contentTab h-full w-full">
@@ -23,21 +23,13 @@
 
 	const currentTab = computed(() => tabsGestion.value.find((tab) => tab.current).name.toLowerCase())
 	const tabsGestion = ref([
-		// { name: "academique", current: false },
-		// { name: "courses", current: false },
-		// { name: "filieres", current: false },
-		// { name: "documents", current: false },
-		// { name: "employees", current: true },
+		{ name: "academique", current: false },
+		{ name: "courses", current: false },
+		{ name: "filieres", current: false },
+		{ name: "documents", current: false },
+		{ name: "employees", current: true },
 	])
 	onMounted(() => {
-		const tabs = [
-			{ name: "academique", current: false },
-			{ name: "courses", current: false },
-			{ name: "filieres", current: false },
-			{ name: "documents", current: false },
-			{ name: "employees", current: true },
-		]
-		tabs.forEach((el) => tabsGestion.value.push(el))
 		if (currentTab.value == "employees") {
 			goto(`${currentTab.value}-list`)
 		} else {

@@ -125,8 +125,10 @@
 				</div>
 				<div class="row justify-center space-x-2 relative mt-4">
 					<div class="card min-h-[200px] w-1/2 col justify-between">
-						<span class="font-bold text-xl">Biography</span>
-						<span v-if="!edit_mode"> {{ userData.biography }} </span>
+						<div v-if="!edit_mode" class="col">
+							<span class="font-bold text-xl">Biography</span>
+							<span> {{ userData.biography }} </span>
+						</div>
 						<Form v-else class="col justify-between h-full" @submit="updateBiography" v-slot="{ isSubmitting }" :initial-values="{ biography: userData.biography }" @invalid-submit="invalidBio">
 							<div>
 								<Field name="biography" as="textarea" placeholder="Biography" class="form-input mb-2 w-full"></Field>

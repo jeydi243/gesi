@@ -23,6 +23,8 @@ module.exports = {
 			blue: colors.blue,
 			indigo: colors.indigo,
 			purple: colors.violet,
+			teal: colors.teal,
+			cyan: colors.cyan,
 			pink: colors.pink,
 		},
 		spacing: {

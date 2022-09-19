@@ -143,7 +143,7 @@ const managementRoutes = [
 ]
 const onboarding = [
 	{ name: "org", path: "/org", meta: { layout: "auth" }, component: () => import(/* webpackChunkName: "login" */ "./views/settings/onboarding/org.vue") },
-	{ name: "org", path: "/org", meta: { layout: "auth" }, component: () => import(/* webpackChunkName: "login" */ "./views/settings/onboarding/root_user.vue") },
+	{ name: "org-root", path: "/org-root", meta: { layout: "auth" }, component: () => import(/* webpackChunkName: "login" */ "./views/settings/onboarding/root_user.vue") },
 ]
 
 const routes = [
@@ -203,9 +203,8 @@ router.afterEach((to, from, failure) => {
 	}
 })
 router.beforeEach((to, from, next) => {
-	// Must be used within the function!
-	// const config = useConfig()
-	// config.changeLayout(to.meta["layout"])
+	const config = useConfig()
+	config.changeLayout(to.meta["layout"])
 	next()
 })
 

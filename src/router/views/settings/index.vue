@@ -1,15 +1,18 @@
 <template>
-    <div>Settings</div>
+	<div>
+		Settings
+
+		<router-link to="org" class="btn-unstate">Got to Org</router-link>
+	</div>
 </template>
 
 <script>
-export default {
-    name: "index-settings",
-    methods: {
-        //
-    }
-}
+	export default {
+		name: "index-settings",
+		methods: {
+			//
+		},
+	}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
