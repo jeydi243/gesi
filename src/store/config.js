@@ -1,26 +1,21 @@
 import { defineStore } from "pinia"
-import room from "./room"
-import students from "./students"
-import teachers from "./teachers"
-import courses from "./courses"
-import authentication from "./authentication"
 import { useManagement } from "./management"
 import { useStudents } from "./students"
-
+import configAPI from "@/api/config"
 export const useConfig = defineStore("config", {
 	state: () => ({
 		count: 0,
+		organizations: [],
 		layout: "main",
-		rootName: "home",
 		config: {},
-		listSideMenus: [
-			{ text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
-			{ text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
-			{ text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
-			{ text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
-			{ text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
-			{ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
-			{ text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
+		sideMenus: [
+			// { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
+			// { text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
+			// { text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
+			// { text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
+			// { text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
+			// { text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
+			// { text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
 		],
 		listLevel: [
 			{ id: "TmhGq7H", name: "Candidat", short: "Candidat", color: "#8B70D8", current: true },
@@ -36,6 +31,7 @@ export const useConfig = defineStore("config", {
 		async init() {
 			const students = useStudents()
 			const mngt = useManagement()
+			this.onReloadSide()
 			try {
 				await mngt.init()
 				await students.init()
@@ -43,34 +39,78 @@ export const useConfig = defineStore("config", {
 				console.log(error)
 			}
 		},
+		onReloadSide() {
+			console.log("Reload side menu")
+			this.sideMenus = []
+			const side = [
+				{ text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
+				{ text: "Settings", to: "/settings", icon: "cog", active: false, mouseHover: false },
+				{ text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
+				{ text: "Library", to: "/library", icon: "library", active: false, mouseHover: false },
+				{ text: "Teachers", to: "/teachers", icon: "adjust", active: false, mouseHover: false },
+				{ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false },
+				{ text: "Calendar", to: "/calendar", icon: "message-square", active: false, mouseHover: false },
+			]
+			side.forEach((e) => this.sideMenus.push(e))
+		},
+		add() {
+			this.sideMenus.push({ text: "Management", to: "/management", icon: "book", active: false, mouseHover: false })
+		},
+		rem() {
+			this.sideMenus.pop()
+		},
+		async setRootOrg(payload) {
+			try {
+				const { data, status } = configAPI.add(payload)
+				console.log({ data }, { status })
+				if (status == 200 || status == 201) {
+					this.organizations.unshift(data)
+				}
+			} catch (error) {
+				console.log("Can't add organization: ", error)
+			}
+		},
+		async getOrgs() {
+			try {
+				const { data, status } = configAPI.getAll()
+				console.log({ data }, { status })
+				if (status == 200 || status == 201) {
+					data.forEach((element) => {
+						this.organizations.unshift(element)
+					})
+				}
+			} catch (error) {
+				console.log("Can't retrieve all organizations: ", error)
+			}
+		},
 		changeLayout(data) {
 			this.layout = data
 		},
 		changeActive(path) {
-			var currentIndex = this.listSideMenus.findIndex((item) => item.active == true)
-			var nextIndex = this.listSideMenus.findIndex((item) => item.to == path)
+			var currentIndex = this.sideMenus.findIndex((item) => item.active == true)
+			var nextIndex = this.sideMenus.findIndex((item) => item.to == path)
 			if (nextIndex != -1) {
 				// if we came from a page which is not in the list of side menus, we need to add it
 				if (currentIndex != -1) {
-					this.listSideMenus[currentIndex].active = false
+					this.sideMenus[currentIndex].active = false
 				}
-				this.listSideMenus[nextIndex].active = true
+				this.sideMenus[nextIndex].active = true
 			} else {
-				this.listSideMenus[currentIndex].active = false
+				this.sideMenus[currentIndex].active = false
 			}
 		},
 	},
 	getters: {
+		rootOrg: (state) => state.organizations.find((org) => org.organization_parent_id == null),
 		getLayout: (state) => state.layout,
 		getConfig: (state) => state.config,
-		getRootName: (state) => state.rootName,
 		getListLevel: (state) => state.listLevel,
 		getListStatus: (state) => state.listStatus,
 		currentLevel(state) {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).name
 		},
 		sideActive(state) {
-			return state.listSideMenus.find((side) => side.active == true)
+			return state.sideMenus.find((side) => side.active == true)
 		},
 		currentLevelShort(state) {
 			return state.listLevel.find((tabLevel) => tabLevel.current == true).short

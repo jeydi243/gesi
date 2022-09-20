@@ -41,6 +41,7 @@
     "node-watch": "^0.7.3",
     "pinia": "^2.0.18",
     "postcss": "^8.4.12",
+    "splitting": "^1.0.6",
     "tw-elements": "^1.0.0-alpha12",
     "v-calendar": "^3.0.0-alpha.8",
     "validator": "^13.7.0",

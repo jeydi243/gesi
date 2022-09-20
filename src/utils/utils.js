@@ -54,12 +54,42 @@ export function onBeforeEnter(el, done) {
 		onComplete: done,
 	})
 }
+export function beforeEnterList(el, done) {
+	gsap.to(el, {
+		opacity: 0,
+		y: -40,
+		rotationZ: -10,
+		delay: el.dataset.index * 0.15,
+		onComplete: done,
+	})
+}
+export function leaveList(el, done) {
+	gsap.to(el, {
+		opacity: 0,
+		duration: 2,
+		rotationZ: -10,
+		y: -20,
+		delay: el.dataset.index * 0.15,
+		onComplete: done,
+	})
+}
+export function enterList(el, done) {
+	gsap.to(el, {
+		opacity: 1,
+		duration: 2,
+		rotationZ: 0,
+		y: 0,
+		delay: el.dataset.index * 0.15,
+		onComplete: done,
+	})
+}
 export async function goto(to = null, data = null) {
 	if (data != null) {
 		await router.push({ name: to, params: { id: data } })
 	} else if (to == null) {
 		await router.back()
 	} else {
+		console.log({ to })
 		await router.push({ name: to })
 	}
 }

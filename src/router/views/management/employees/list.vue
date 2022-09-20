@@ -13,11 +13,11 @@
 				</button>
 			</div>
 		</div>
-		<div class="grid lg:grid-cols-5 md:grid-cols-3 xs:grid-cols-1 gap-4 auto-cols-min w-full h-full transition-transform duration-500 ease-in-out">
-			<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
-				<span v-for="(emp, index) in employees" :key="index" class="card-emp select-none" :data-index="index">
-					<div class="rounded-lg bg-white max-w-md">
-						<div class="p-2 flex flex-col items-center">
+		<transition name="fadeSlideX" :css="false" mode="out-in">
+			<div v-if="employees.length > 0" class="grid lg:grid-cols-5 md:grid-cols-3 xs:grid-cols-1 gap-4 auto-cols-min w-full h-full transition-transform duration-500 ease-in-out">
+				<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList">
+					<span v-for="(emp, index) in employees" :key="index" class="card-emp select-none" :data-index="index">
+						<div class="p-1 flex flex-col items-center rounded-lg bg-white max-w-md">
 							<div class="text-green-800 flex flex-row justify-between w-full items-center text-center">
 								<div class="h-4 min-w-9 rounded-sm text-xs">
 									<span class="px-3 my-1 bg-green-50 border-[1px] rounded-sm border-green-400 text-green-600" v-if="chance.bool">Active</span>
@@ -38,10 +38,11 @@
 									</li>
 								</ul>
 							</div>
+							{{ emp.id }}
 							<div class="rounded-full bg-green-50 h-16 w-16 cursor-pointer overflow-clip" @click="goto('employees-details', emp._id)">
 								<img :src="emp.profile_img" />
 							</div>
-							<span class="text-lg font-bold">{{ emp.gender == "M" ? "M. " : "Ms. " }}{{ filters.firstUpper(emp.name) }}</span>
+							<span class="text-lg font-bold">{{ emp.gender == "M" ? "M. " : "Ms. " }}{{ filters.firstUpper(emp.last_name) }}</span>
 							<span class="text-lg">{{ filters.firstUpper(emp.position[0]) }} </span>
 							<div class="rounded-lg bg-blue-50 col p-2 w-full">
 								<div class="flex flex-col mb-4">
@@ -52,23 +53,27 @@
 								<span> <PhoneIcon class="h-5 w-5 inline" /> {{ emp.telephones[0] }} </span>
 							</div>
 						</div>
-					</div>
-				</span>
-			</TransitionGroup>
-		</div>
+					</span>
+				</TransitionGroup>
+			</div>
+			<div class="col align-center justify-center" v-else>
+				<img :src="require('@/assets/img/clip-2.png')" class="flex z-10 cursor-pointer self-center align-center object-cover rounded-full h-1/2 w-1/2" />
+				<span class="text-center text-2xl">Nothing to show here.</span>
+			</div>
+		</transition>
 	</div>
 </template>
 
 <script setup>
 	import { computed } from "vue"
 	import { useRouter, useRoute } from "vue-router"
-	import { onBeforeEnter, onEnter, onLeave, goto, chance } from "@/utils/utils"
+	import { beforeEnterList, enterList, leaveList, goto, chance } from "@/utils/utils"
 	import { useManagement } from "@/store/management"
 	import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
 
 	const store = useManagement()
 
-	const employees = computed(() => store.getEmployees)
+	const employees = computed(() => store.employees)
 </script>
 
 <style scoped></style>

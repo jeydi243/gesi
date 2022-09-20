@@ -1,7 +1,10 @@
-import axios from "axios"
+import axios from "./myaxios"
 
-axios.defaults.baseURL = process.env.VUE_APP_API_URL
-axios.defaults.validateStatus = (status) => {
-  return status < 300
+export default {
+	getAll: async function () {
+		return await axios.get("/organization")
+	},
+	add: async function (payload) {
+		return await axios.post("/organization", payload)
+	},
 }
-export default axios

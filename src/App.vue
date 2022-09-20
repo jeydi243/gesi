@@ -1,59 +1,81 @@
 <template>
 	<div id="app" class="h-screen w-screen">
 		<div class="row h-full w-full relative" v-bind="$attrs">
-			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" />
-			<main class="col w-[85%] h-full relative bg-gray-100 overflow-auto">
-				<MyHeader />
+			<SideBar class="flex w-[15%] h-full bg-gray-900 relative transition-all duration-700 ease-out" v-if="isMain" />
+
+			<main class="col h-full relative bg-gray-100 overflow-auto transition-all duration-700 ease-out" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
+				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
-				<BreadCrumbs v-if="showBraedCrumbs" />
-				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
+				<BreadCrumbs v-if="showBraedCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
+				<div class="w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">
 							<component :is="Component" />
 						</Transition>
 					</router-view>
 				</div>
-				<Footer />
+				<Footer v-if="isMain" />
 			</main>
 		</div>
 	</div>
 </template>
 <script setup>
 	import Footer from "@/components/footer"
-	import MyHeader from "@/components/myheader"
 	import SideBar from "@/components/side"
+	import MyHeader from "@/components/myheader"
+	import Splitting from "splitting"
 	import BreadCrumbs from "@/components/breadcrumbs"
-	import { watch, ref, onMounted } from "vue"
-	import { useIpcRendererOn } from "@vueuse/electron"
-	import { useRoute } from "vue-router"
+	import { gsap } from "gsap"
 	import { useConfig } from "@/store/config"
-
-	const route = useRoute()
+	import { useIpcRendererOn } from "@vueuse/electron"
+	import { ref, onMounted, computed, onUpdated } from "vue"
+	const results = ref(null)
 	const store = useConfig()
+	const layout = computed(() => store.layout)
+	const isMain = computed(() => store.layout != "auth")
+	const sideMenus = computed(() => store.sideMenus)
 	let showBraedCrumbs = ref(false)
-
 	useIpcRendererOn("finish_load", async (event, ...args) => {
-		try {
-			await store.init()
-		} catch (er) {
-			console.log("Impossible d'initier le store", er)
-		}
+		store
+			.init()
+			.then(() => {
+				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+			})
+			.catch((er) => {
+				console.log("Impossible d'initier le store", er)
+			})
 	})
-	onMounted(async () => {
-		try {
-			await store.init()
-		} catch (er) {
-			console.log("Impossible d'initier le store", er)
-		}
+
+	onUpdated(() => {
+		animeMe()
 	})
-	watch(
-		() => route,
-		function ({ meta, fullPath }) {
-			console.log("Hum")
-			changeLayout(meta.layout)
-			this.changeActive(fullPath.split("/")[1])
+	onMounted(() => {
+		results.value = Splitting({
+			target: "[data-splitting]",
+			by: "chars",
+			key: null,
+			matching: "span",
+		})
+		if (sideMenus.value.length == 0) {
+			store
+				.init()
+				.then(() => {
+					console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+				})
+				.catch((er) => {
+					console.log("Impossible d'initier le store", er)
+				})
 		}
-	)
+		animeMe()
+	})
+	function animeMe() {
+		console.log(results.value[0].el)
+		results.value.forEach(({ el, chars }, i) => {
+			console.log({ el })
+			gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
+			chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
+		})
+	}
 </script>
 <style>
 	.fade-enter-active,
@@ -103,7 +125,7 @@
 		to {
 			opacity: 0;
 			z-index: 0;
-			transform: translateX(-10px);
+			transform: translateX(10px);
 		}
 	}
 
@@ -128,7 +150,7 @@
 
 		to {
 			opacity: 0;
-			transform: translateY(-10px);
+			transform: translateY(10px);
 		}
 	}
 </style>

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from "vue-router"
+import { useConfig } from "@/store/config"
 
 const studentsRoutes = [
 	{
@@ -64,7 +65,6 @@ const settingsRoutes = [
 		component: () => import(/* webpackChunkName: "about" */ "./views/settings/index.vue"),
 	},
 ]
-
 const employeesRoutes = {
 	path: "employees",
 	meta: { layout: "main" },
@@ -93,7 +93,6 @@ const employeesRoutes = {
 		},
 	],
 }
-
 const coursesRoutes = {
 	path: "courses",
 	meta: { layout: "main" },
@@ -112,7 +111,6 @@ const coursesRoutes = {
 		},
 	],
 }
-
 const managementRoutes = [
 	{
 		path: "/management",
@@ -143,6 +141,10 @@ const managementRoutes = [
 		],
 	},
 ]
+const onboarding = [
+	{ name: "org", path: "/org", meta: { layout: "auth" }, component: () => import(/* webpackChunkName: "login" */ "./views/settings/onboarding/org.vue") },
+	{ name: "org-root", path: "/org-root", meta: { layout: "auth" }, component: () => import(/* webpackChunkName: "login" */ "./views/settings/onboarding/root_user.vue") },
+]
 
 const routes = [
 	{
@@ -171,6 +173,7 @@ const routes = [
 		name: "search",
 		component: () => import(/* webpackChunkName: "search" */ "./views/account/search.vue"),
 	},
+	...onboarding,
 	...studentsRoutes,
 	...teachersRoutes,
 	...calendarRoutes,
@@ -199,4 +202,10 @@ router.afterEach((to, from, failure) => {
 		// console.info(`From: ${from.name} to: ${to.name} ${to.params != null ? JSON.stringify(to.params) : ""}`)
 	}
 })
+router.beforeEach((to, from, next) => {
+	const config = useConfig()
+	config.changeLayout(to.meta["layout"])
+	next()
+})
+
 export default router
