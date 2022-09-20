@@ -59,7 +59,7 @@ export const useConfig = defineStore("config", {
 		rem() {
 			this.sideMenus.pop()
 		},
-		async addOrg(payload) {
+		async setRootOrg(payload) {
 			try {
 				const { data, status } = configAPI.add(payload)
 				console.log({ data }, { status })

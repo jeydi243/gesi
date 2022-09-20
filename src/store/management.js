@@ -107,7 +107,8 @@ export const useManagement = defineStore("management", {
 			this.employees = []
 			try {
 				const { data, status } = await mgntAPI.getEmployees()
-				if (status == 200 || status == 201) {
+				console.log({ status })
+				if (status == 200 || status == 201 || status == 304) {
 					// console.log({ employees: JSON.parse(data) })
 					const datat = data /* JSON.parse(data)*/
 					if (datat.length > 0) {

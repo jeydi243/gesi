@@ -1,13 +1,13 @@
 <template>
 	<div id="app" class="h-screen w-screen">
 		<div class="row h-full w-full relative" v-bind="$attrs">
-			<SideBar class="flex w-[15%] h-full bg-gray-900 relative" v-if="isMain" />
+			<SideBar class="flex w-[15%] h-full bg-gray-900 relative transition-all duration-700 ease-out" v-if="isMain" />
 
-			<main class="col h-full relative bg-gray-100 overflow-auto" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
+			<main class="col h-full relative bg-gray-100 overflow-auto transition-all duration-700 ease-out" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
 				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
-				<BreadCrumbs v-if="showBraedCrumbs && isMain" />
-				<div class="h-[90%] w-full bg-gray-100 px-6 py-6 overflow-auto">
+				<BreadCrumbs v-if="showBraedCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
+				<div class="w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">
 							<component :is="Component" />
@@ -47,7 +47,6 @@
 	})
 
 	onUpdated(() => {
-
 		animeMe()
 	})
 	onMounted(() => {

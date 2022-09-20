@@ -73,9 +73,9 @@
 			</Form>
 		</MyModal>
 
-		<Modal name="modaladd" v-model="showModalAdd" @click-outside="clickOutside" transition="fadeSlideY" classes="modal" content-class="modal-content">
-			<template #title>Add document </template>
-			<Form class="flex flex-col" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
+		<MyModal v-show="showModalAdd" @close="showModalAdd = false">
+			<template #header>Add document</template>
+			<Form class="col" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
 				<div class="flex sm:flex-col md:flex-row">
 					<Field name="code" placeholder="code" class="form-input"></Field>
 					<ErrorMessage name="code" v-slot="{ message }">
@@ -91,16 +91,16 @@
 					<p class="input-error">{{ message }}</p>
 				</ErrorMessage>
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
-					<button class="btn-unstate" @click.stop="clickOutside">Annuler</button>
+					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
 					<button type="submit" class="btn-primary">
-						<PlusIcon class="h-4 w-4 text-white" v-if="!isSubmitting" />
-						<span class="font-bold text-white">Ajouter</span>
-						<CirclesToRhombusesSpinner :size="5" class="text-white" v-if="isSubmitting" />
+						<box-icon type="solid" name="file-plus" color="white"></box-icon>
+						<span class="font-bold text-white">Add</span>
+						<CirclesToRhombusesSpinner :size="5" color="#FFF" class="text-white" v-if="isSubmitting" />
 					</button>
 				</div>
 			</Form>
 			<span class="text-red-700 text-base">{{ errorCall }}</span>
-		</Modal>
+		</MyModal>
 	</div>
 </template>
 
@@ -112,7 +112,7 @@
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import { mapState, mapActions } from "pinia"
 	import { Form, Field, ErrorMessage } from "vee-validate"
-	import { PlusIcon, SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon } from "@heroicons/vue/solid"
+	import { SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon } from "@heroicons/vue/solid"
 
 	export default {
 		name: "index-documents",
@@ -124,7 +124,7 @@
 			SearchIcon,
 			DocumentAddIcon,
 			TrashIcon,
-			PlusIcon,
+
 			Field,
 			MyModal,
 		},
@@ -199,6 +199,7 @@
 				this.showModalAdd = false
 			},
 			closeModal() {
+				this.showModalAdd = false
 				this.showModalUpdate = false
 			},
 			showModif(index, values) {

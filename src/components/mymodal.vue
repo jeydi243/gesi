@@ -1,37 +1,28 @@
 <template>
 	<Transition name="fadeSlideY" mode="out-in">
 		<div class="modal-backdrop w-full relative">
-			<div class="bg-white rounded-lg p-3 w-1/3" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
-				<header class="modal-header row justify-between w-full">
+			<div class="bg-white rounded-lg w-1/3" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+				<header class="modal-header text-3xl font-bold text-white rounded-t-lg row justify-between w-full bg-blue-800">
 					<slot name="header"> </slot>
-					<box-icon class="icons" color="red"></box-icon>
-					<XIcon @click="close" aria-label="Close modal" class="h-5 w-5 py-5 px-5 rounded-full hover:shadow-lg text-red-600 bg-red-500" data-mdb-ripple="true" data-mdb-ripple-color="light" />
+					<box-icon @click="close" class="icons" color="red" name="x"></box-icon>
+					<!-- <XIcon @click="close" aria-label="Close modal" class="h-5 w-5 py-5 px-5 rounded-full hover:shadow-lg text-red-600 bg-red-500" data-mdb-ripple="true" data-mdb-ripple-color="light" /> -->
 				</header>
 
-				<section class="w-full h-full" id="modalDescription">
+				<section class="w-full h-full p-3" id="modalDescription">
 					<slot> </slot>
 				</section>
 
-				<footer :class="{ 'modal-footer mt-2': $slots.footer }">
+				<footer :class="{ 'modal-footer mt-2 p-3': $slots.footer }">
 					<slot name="footer"> </slot>
 				</footer>
 			</div>
 		</div>
 	</Transition>
 </template>
-<script>
-	import { XIcon } from "@heroicons/vue/solid"
-	export default {
-		name: "Modal",
-		components: {
-			XIcon,
-		},
-		emits: ["close"],
-		methods: {
-			close() {
-				this.$emit("close")
-			},
-		},
+<script setup>
+	defineEmits(["close"])
+	function close() {
+		this.$emit("close")
 	}
 </script>
 
@@ -71,7 +62,6 @@
 	.modal-header {
 		position: relative;
 		border-bottom: 1px solid #eeeeee;
-		color: #4aae9b;
 		justify-content: space-between;
 	}
 

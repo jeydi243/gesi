@@ -1,7 +1,5 @@
 <template>
-	<div>
-		Settings
-
+	<div class="row">
 		<router-link to="org" class="btn-unstate">Got to Org</router-link>
 	</div>
 </template>

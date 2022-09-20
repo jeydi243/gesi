@@ -15,7 +15,7 @@
 		</div>
 		<transition name="fadeSlideX" :css="false" mode="out-in">
 			<div v-if="employees.length > 0" class="grid lg:grid-cols-5 md:grid-cols-3 xs:grid-cols-1 gap-4 auto-cols-min w-full h-full transition-transform duration-500 ease-in-out">
-				<TransitionGroup :css="false" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
+				<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList">
 					<span v-for="(emp, index) in employees" :key="index" class="card-emp select-none" :data-index="index">
 						<div class="p-1 flex flex-col items-center rounded-lg bg-white max-w-md">
 							<div class="text-green-800 flex flex-row justify-between w-full items-center text-center">
@@ -67,13 +67,13 @@
 <script setup>
 	import { computed } from "vue"
 	import { useRouter, useRoute } from "vue-router"
-	import { onBeforeEnter, onEnter, onLeave, goto, chance } from "@/utils/utils"
+	import { beforeEnterList, enterList, leaveList, goto, chance } from "@/utils/utils"
 	import { useManagement } from "@/store/management"
 	import { UserAddIcon, DotsHorizontalIcon, MailIcon, PhoneIcon, PencilIcon, UserIcon, RefreshIcon } from "@heroicons/vue/solid"
 
 	const store = useManagement()
 
-	const employees = computed(() => store.getEmployees)
+	const employees = computed(() => store.employees)
 </script>
 
 <style scoped></style>
