@@ -1,5 +1,5 @@
 <template>
-	<header class="sticky top-0 right-0 z-10 flex w-full h-[6%] bg-white text-black select-none items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
+	<header class="sticky top-0 right-0 z-0 flex w-full h-[6%] bg-white text-black select-none items-center justify-between pr-10 pl-5 border-t-2 border-t-gray-300">
 		<ArrowLeftIcon class="flex h-5 w-5 text-green-600 cursor-pointer" @click="goto" />
 		<Breadcrumbs />
 

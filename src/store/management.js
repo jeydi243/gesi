@@ -1,6 +1,6 @@
 import mgntAPI from "@/api/management"
 import coursesAPI from "@/api/courses"
-import axios from "@/api/myaxios"
+
 import { toast } from "@/utils/utils"
 import { defineStore } from "pinia"
 import { useTeachers } from "./teachers"
@@ -16,14 +16,13 @@ export const useManagement = defineStore("management", {
 		listDocuments: [],
 		employees: [],
 		token: "null",
-		error: null,
+		
 	}),
 
 	actions: {
 		async init() {
 			try {
 				const t = useTeachers()
-				// this.setAxios()
 				t.init()
 				await this.getAllDocuments()
 				await this.getAllEmployees()
@@ -31,64 +30,13 @@ export const useManagement = defineStore("management", {
 				console.log(error)
 			}
 		},
-		setAxios() {
-			axios.interceptors.request.use(
-				function (config) {
-					if (this.token) {
-						config.headers.Authorization = `Bearer ${this.token}`
-					}
-					return config
-				},
-				function onRejected(error) {
-					// Do something with request error
-					this.error = error
-					return Promise.reject(error)
-				},
-				{ synchronous: true }
-			)
-			axios.interceptors.response.use(
-				function (response) {
-					console.info(`[AXIOS] Response status ${response.status}`)
-					return response
-				},
-				function (error) {
-					console.error(`[AXIOS] Error ${JSON.stringify(error.response)}`)
-					if (error.code == "ECONNABORTED") {
-						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
-							type: "error",
-							duration: 50000,
-							singleton: true,
-							action: {
-								text: "Relancer la page",
-								onClick: (e, toastObject) => {
-									console.log("Relaod after error")
-									// router.go()
-								},
-							},
-						})
-						console.log({ error })
-					} else if (error.code === "ERR_CONNECTION_REFUSED") {
-						console.log("[ECONNABORTED] Impossible de contacter le serveur :", {
-							error,
-						})
-						router.push({ name: "error" })
-					} else if (error.code === "ERR_FAILED") {
-						console.log("[ERR_FAILED] Impossible de contacter le serveur :", {
-							error,
-						})
-						router.push({ name: "error" })
-					} else {
-						console.log("Error code:", JSON.stringify(error))
-						this.errorCall = error.response.data
-					}
-					return Promise.reject(error)
-				}
-			)
-		},
+
 		async getAllDocuments() {
+			this.listDocuments = []
 			try {
 				const { data, status } = await mgntAPI.getDocuments()
-				if (status == 200 || status == 201) {
+				// console.log({ data }, { status })
+				if (status == 200 || status == 201 || status == 304) {
 					data
 						.map((doc) => {
 							doc["show"] = false
@@ -387,10 +335,9 @@ export const useManagement = defineStore("management", {
 					this.listDocuments.unshift({ ...data, show: false })
 					return true
 				}
-				console.log(data)
 				return false
-			} catch (er) {
-				console.log(er)
+			} catch (error) {
+				return error["data"]["message"]
 			}
 		},
 		async removeDocument(idDocument) {
@@ -409,11 +356,11 @@ export const useManagement = defineStore("management", {
 		},
 		async deleteDocument(code) {
 			try {
-				const { data, status } = await mgntAPI.softDeleteDocument(code)
+				const { data, status } = await mgntAPI.deleteDocument(code)
+				console.log({ data }, { status })
 				if (status == 200 || status == 201) {
 					var index = this.listDocuments.findIndex((doc) => doc.code == code)
-					this.listDocuments.splice(index, 1)
-					console.log(data)
+					if (index != -1) this.listDocuments.splice(index, 1)
 					return true
 				}
 				return false
@@ -424,10 +371,10 @@ export const useManagement = defineStore("management", {
 		async updateDocument(newValues) {
 			try {
 				const { data, status } = await mgntAPI.updateDocument(newValues)
+				console.log({ data })
 				if (status < 300) {
 					var index = this.listDocuments.findIndex((doc) => doc.code == data.code)
-					this.listDocuments[index] = newDoc
-					console.log(data)
+					if (index != -1) this.listDocuments[index] = { ...data, show: true }
 					return true
 				}
 				return false

@@ -36,14 +36,14 @@
 	const sideMenus = computed(() => store.sideMenus)
 	let showBraedCrumbs = ref(false)
 	useIpcRendererOn("finish_load", async (event, ...args) => {
-		store
-			.init()
-			.then(() => {
-				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-			})
-			.catch((er) => {
-				console.log("Impossible d'initier le store", er)
-			})
+		// store
+		// 	.init()
+		// 	.then(() => {
+		// 		console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+		// 	})
+		// 	.catch((er) => {
+		// 		console.log("Impossible d'initier le store", er)
+		// 	})
 	})
 
 	onUpdated(() => {
@@ -56,16 +56,16 @@
 			key: null,
 			matching: "span",
 		})
-		if (sideMenus.value.length == 0) {
-			store
-				.init()
-				.then(() => {
-					console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-				})
-				.catch((er) => {
-					console.log("Impossible d'initier le store", er)
-				})
-		}
+
+		store
+			.init()
+			.then(() => {
+				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+			})
+			.catch((er) => {
+				console.log("Impossible d'initier le store", er)
+			})
+
 		animeMe()
 	})
 	function animeMe() {

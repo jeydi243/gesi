@@ -7,7 +7,6 @@
 					<box-icon @click="close" class="icons" color="red" name="x"></box-icon>
 					<!-- <XIcon @click="close" aria-label="Close modal" class="h-5 w-5 py-5 px-5 rounded-full hover:shadow-lg text-red-600 bg-red-500" data-mdb-ripple="true" data-mdb-ripple-color="light" /> -->
 				</header>
-
 				<section class="w-full h-full p-3" id="modalDescription">
 					<slot> </slot>
 				</section>
@@ -20,9 +19,9 @@
 	</Transition>
 </template>
 <script setup>
-	defineEmits(["close"])
+	const emit = defineEmits(["close"])
 	function close() {
-		this.$emit("close")
+		emit("close")
 	}
 </script>
 
@@ -35,13 +34,12 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		z-index: 800;
+		z-index: 900;
 		background-color: rgba(15, 2, 2, 0.3);
 		backdrop-filter: blur(5px);
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		animation: fadeIn;
 	}
 
 	.modal {
@@ -49,8 +47,9 @@
 		overflow-x: auto;
 		display: flex;
 		flex-direction: column;
-		z-index: 801;
+		z-index: 901;
 		animation: fadeIn;
+		transition: fadeIn;
 	}
 
 	.modal-header,

@@ -16,8 +16,8 @@ export default {
 	removeDocument: async function (code) {
 		return axios.delete(`${this.routeDocuments}/${code}`)
 	},
-	softDeleteDocument: async function (id, data) {
-		return axios.patch(`${this.routeDocuments}/${code}`)
+	deleteDocument: async function (code) {
+		return axios.delete(`${this.routeDocuments}`, { data: { code } })
 	},
 
 	getFilieres: async function () {
@@ -85,7 +85,7 @@ export default {
 	updateEmployeeConnexion: async function (employeeID, passwords) {
 		return axios.patch(`${this.routeEmployees}/${employeeID}/update_password`, { ...passwords })
 	},
-	updateDocument: async function (employeeID, updateDocument) {
+	updateDocumentEmployee: async function (employeeID, updateDocument) {
 		return axios.post(`${this.routeEmployees}/${employeeID}/update_document`, updateDocument, {
 			headers: {
 				"Content-Type": "multipart/form-data",
