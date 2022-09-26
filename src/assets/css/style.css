@@ -5213,6 +5213,11 @@ textarea.form-control.is-invalid{
   border-top-right-radius: 0.5rem;
 }
 
+.rounded-b-lg{
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
 .rounded-bl-lg{
   border-bottom-left-radius: 0.5rem;
 }

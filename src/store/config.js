@@ -64,9 +64,8 @@ export const useConfig = defineStore("config", {
 					return response
 				},
 				(error) => {
-					this.responseError = error.response
-					console.log("Il y a une erreur\n")
-					console.error(error.response)
+					this.responseError = error.response.data
+					// console.error(error.response)
 					if (error.code == "ECONNABORTED") {
 						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
 							type: "error",

@@ -58,7 +58,7 @@
 			<Form class="col justify-between" @submit="updateDoc" v-slot="{ isSubmitting }" :validation-schema="docSchema" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
 				<div class="row">
 					<Field name="name" placeholder="name" v-slot="{ errors, errorMessage, field }">
-						<input type="text" name="name" id="name" class="form-input mb-2" v-vind="field" />
+						<input type="text" name="name" id="name" class="form-input mb-2" v-bind="field" />
 						<p class="input-error">{{ errors }}</p>
 						<p class="input-error">{{ errorMessage }}</p>
 					</Field>
@@ -97,9 +97,7 @@
 					<input v-bind="field" type="textarea" class="peer form-textarea invalid:animate-shake" />
 					<p class="input-error peer-invalid:animate-shake">{{ errorMessage }}</p>
 				</Field>
-				<!-- <ErrorMessage name="description" v-slot="{ message }">
-					<p class="input-error peer-invalid:animate-shake">{{ message }}</p>
-				</ErrorMessage> -->
+
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
 					<button class="btn-unstate" @click.prevent.stop="closeModal(resetForm)">Cancel</button>
 					<button type="submit" class="btn-primary">
@@ -121,13 +119,13 @@
 	import { useManagement } from "@/store/management"
 	import { ref, computed, onMounted } from "vue"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
-	import { Form, Field, ErrorMessage } from "vee-validate"
+	import { Form, Field } from "vee-validate"
 	import { SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon, RefreshIcon } from "@heroicons/vue/solid"
 	const store = useManagement()
 	var docSchema = yup.object({
-		name: yup.string().required(),
-		code: yup.string().required(),
-		description: yup.string().required(),
+		name: yup.string().required().label("Name"),
+		code: yup.string().required().label("Code"),
+		description: yup.string().required().label("Description"),
 	})
 	const errorCall = ref(null)
 

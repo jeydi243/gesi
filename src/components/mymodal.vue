@@ -12,6 +12,12 @@
 				</section>
 
 				<footer :class="{ 'modal-footer mt-2 p-3': $slots.footer }">
+					<transition name="fadeSlideX" mode="out-in">
+						<div v-if="isNewError" class="bg-red-500 text-white text-xs h-8 w-full rounded-b-lg">
+							<!-- :class="{ '': isNewError }" -->
+							{{ responseError["message"] }}
+						</div>
+					</transition>
 					<slot name="footer"> </slot>
 				</footer>
 			</div>
@@ -19,7 +25,19 @@
 	</Transition>
 </template>
 <script setup>
+	import { useConfig } from "@/store/config"
+	import { ref, computed, watch } from "vue"
 	const emit = defineEmits(["close"])
+	const store = useConfig()
+	const isNewError = ref(false)
+
+	const responseError = computed(() => store.responseError)
+
+	watch(responseError, (newval, oldval) => {
+		if (newval) {
+			isNewError.value = true
+		}
+	})
 	function close() {
 		emit("close")
 	}
