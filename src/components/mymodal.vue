@@ -7,15 +7,14 @@
 					<box-icon @click="close" class="icons" color="red" name="x"></box-icon>
 					<!-- <XIcon @click="close" aria-label="Close modal" class="h-5 w-5 py-5 px-5 rounded-full hover:shadow-lg text-red-600 bg-red-500" data-mdb-ripple="true" data-mdb-ripple-color="light" /> -->
 				</header>
-				<section class="w-full h-full p-3" id="modalDescription">
+				<section class="w-full h-full p-3 mb-2" id="modalDescription">
 					<slot> </slot>
 				</section>
 
-				<footer :class="{ 'modal-footer mt-2 p-3': $slots.footer }">
+				<footer class="" :class="{ 'modal-footer mt-2': $slots.footer }">
 					<transition name="fadeSlideX" mode="out-in">
-						<div v-if="isNewError" class="bg-red-500 text-white text-xs h-8 w-full rounded-b-lg">
-							<!-- :class="{ '': isNewError }" -->
-							{{ responseError["message"] }}
+						<div v-if="isNewError" id="result" class="bg-red-500 text-white text-xs text-center h-8 w-full rounded-b-lg">
+							{{ !Array.isArray(responseError["message"]) ? responseError["message"] : responseError["message"][0] }}
 						</div>
 					</transition>
 					<slot name="footer"> </slot>
@@ -27,6 +26,7 @@
 <script setup>
 	import { useConfig } from "@/store/config"
 	import { ref, computed, watch } from "vue"
+	import { gsap, Quad } from "gsap"
 	const emit = defineEmits(["close"])
 	const store = useConfig()
 	const isNewError = ref(false)
@@ -37,9 +37,16 @@
 		if (newval) {
 			isNewError.value = true
 		}
+		var tl = gsap.timeline("#result", { width: "-=15" })
+		tl.to("#result", { yoyo: true, x: "-=5", repeat: 5, ease: Quad.easeInOut, duration: 0.1 })
+		tl.to("#result", { width: "+=15" })
+		tl.to("#result", { yoyo: true, x: "+=5" })
+		tl.resume()
+		tl.reverse()
 	})
 	function close() {
 		emit("close")
+		isNewError.value = false
 	}
 </script>
 

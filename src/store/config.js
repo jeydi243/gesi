@@ -61,11 +61,12 @@ export const useConfig = defineStore("config", {
 			axios.interceptors.response.use(
 				(response) => {
 					// console.info(`[AXIOS] Response ${JSON.stringify(response.data)}`)
+					this.responseError = null
 					return response
 				},
 				(error) => {
 					this.responseError = error.response.data
-					// console.error(error.response)
+					console.log("H: %s",error.response)
 					if (error.code == "ECONNABORTED") {
 						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
 							type: "error",

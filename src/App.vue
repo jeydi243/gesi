@@ -69,12 +69,12 @@
 		animeMe()
 	})
 	function animeMe() {
-		console.log(results.value[0].el)
-		results.value.forEach(({ el, chars }, i) => {
-			console.log({ el })
-			gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
-			chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
-		})
+		// console.log(results.value[0].el)
+		// results.value.forEach(({ el, chars }, i) => {
+		// 	console.log({ el })
+		// 	gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
+		// 	chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
+		// })
 	}
 </script>
 <style>

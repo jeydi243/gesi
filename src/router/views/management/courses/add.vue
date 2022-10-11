@@ -1,6 +1,6 @@
 <template>
 	<div class="card col">
-		<div class="row">spanpan</div>
+		<div class="row">r</div>
 		<Form>
 			<Field name="denomination"></Field>
 			<ErrorMessage name="denomination"></ErrorMessage>

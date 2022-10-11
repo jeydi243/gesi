@@ -23,28 +23,28 @@
 
 	const currentTab = computed(() => tabsGestion.value.find((tab) => tab.current).name.toLowerCase())
 	const tabsGestion = ref([
-		{ name: "academique", current: false },
 		{ name: "courses", current: false },
 		{ name: "filieres", current: false },
-		{ name: "documents", current: false },
-		{ name: "employees", current: true },
+		{ name: "documents", current: true },
+		{ name: "employees", current: false },
+		{ name: "academique", current: false },
 	])
 	onMounted(() => {
-		if (currentTab.value == "employees") {
-			goto(`${currentTab.value}-list`)
-		} else {
+		// if (currentTab.value == "employees" || currentTab.value == "courses") {
 			goto(`${currentTab.value}-index`)
-		}
+		// } else {
+		// 	goto(`${currentTab.value}-index`)
+		// }
 	})
 
 	watch(currentTab, function (newval, oldval) {
-		if (newval != oldval && newval != "employees") {
-			goto(`${newval}-index`)
-		} else if (newval == oldval && newval == "employees") {
-			goto(`${newval}-list`)
-		} else {
-			goto(`${newval}-list`)
-		}
+		// if (newval != oldval && newval != "employees") {
+		goto(`${newval}-index`)
+		// } else if (newval == oldval && ["employees", "courses"].includes(newval)) {
+		// 	goto(`${newval}-list`)
+		// } else {
+		// 	goto(`${newval}-list`)
+		// }
 	})
 
 	function changeTab(indexTab) {

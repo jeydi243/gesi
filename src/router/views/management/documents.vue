@@ -4,7 +4,7 @@
 			<div class="row justify-between mb-4">
 				<span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Documents</span>
 				<div class="row">
-					<button @click.prevent="store.getAllDocuments" class="btn-primary mr-1">
+					<button @click.prevent="getAllDocuments" class="btn-primary mr-1">
 						<RefreshIcon class="h-5 w-5 text-white" />
 					</button>
 					<button @click="showModalAdd = !showModalAdd" class="btn-primary"><DocumentAddIcon class="h-5 w-5 text-white" />Add document</button>
@@ -83,16 +83,16 @@
 		<MyModal v-show="showModalAdd" @close="showModalAdd = false">
 			<template #header>Add document</template>
 			<Form class="col" @submit="add" :validation-schema="docSchema" v-slot="{ isSubmitting, resetForm }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
-				<div class="row space-x-1">
-					<Field name="code" placeholder="code" v-slot="{ field, errorMessage }">
+				<!-- <div class="row w-full items-center space-x-1"> -->
+					<Field as="div" class="col" name="code" placeholder="code" v-slot="{ field, errorMessage }">
 						<input type="text" name="code" id="code" class="form-input mb-2" v-bind="field" />
 						<p class="input-error">{{ errorMessage }}</p>
 					</Field>
-					<Field name="name" placeholder="name" v-slot="{ field, errorMessage }">
+					<Field as="div" class="col" name="name" placeholder="name" v-slot="{ field, errorMessage }">
 						<input type="text" name="name" id="name" class="form-input mb-2" v-bind="field" />
 						<p class="input-error">{{ errorMessage }}</p>
 					</Field>
-				</div>
+				<!-- </div> -->
 				<Field name="description" placeholder="Describe the utility of this doc" v-slot="{ errorMessage, field }">
 					<input v-bind="field" type="textarea" class="peer form-textarea invalid:animate-shake" />
 					<p class="input-error peer-invalid:animate-shake">{{ errorMessage }}</p>
@@ -133,7 +133,7 @@
 	const dropdown = ref(false)
 	const showModalAdd = ref(false)
 	const showModalUpdate = ref(false)
-	const initialDocValue = ref({ name: "Bulletin 5eme secondaire", code: "AX-2022", description: "la description du document" })
+	const initialDocValue = ref({ name: "Bulletin 5eme secondaire", code: "2022", description: "la description du document" })
 	const listDocuments = computed(() => store.listDocuments)
 
 	onMounted(() => {
@@ -143,7 +143,7 @@
 			}
 		}
 	})
-	const { addDocument, deleteDocument, removeDocument, updateDocument } = useManagement()
+	const { addDocument, deleteDocument, removeDocument, updateDocument, getAllDocuments } = useManagement()
 
 	function onInvalidDocument({ values, result, errors }) {
 		console.log(errors)
@@ -182,8 +182,6 @@
 				timeout: 5000,
 			})
 			resetForm()
-		} else {
-			toast.error(response)
 		}
 	}
 	function closeModal(resetForm = null) {

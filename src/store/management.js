@@ -16,7 +16,6 @@ export const useManagement = defineStore("management", {
 		listDocuments: [],
 		employees: [],
 		token: "null",
-		
 	}),
 
 	actions: {
@@ -33,9 +32,10 @@ export const useManagement = defineStore("management", {
 
 		async getAllDocuments() {
 			this.listDocuments = []
+			console.log("getAllDocuments")
 			try {
 				const { data, status } = await mgntAPI.getDocuments()
-				// console.log({ data }, { status })
+				console.log({ data }, { status })
 				if (status == 200 || status == 201 || status == 304) {
 					data
 						.map((doc) => {
@@ -337,6 +337,7 @@ export const useManagement = defineStore("management", {
 				}
 				return false
 			} catch (error) {
+				console.log(error)
 				return error["data"]["message"]
 			}
 		},
@@ -366,6 +367,7 @@ export const useManagement = defineStore("management", {
 				return false
 			} catch (er) {
 				console.log(er)
+				return false
 			}
 		},
 		async updateDocument(newValues) {

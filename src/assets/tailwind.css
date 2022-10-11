@@ -161,7 +161,7 @@ input:valid + span:after {
 	@apply h-10 cursor-pointer px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-blue-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none;
 }
 .btn-tab-active {
-	@apply text-green-600 ease-in-out border-green-500 bg-green-50 rounded-tl rounded-tr;
+	@apply text-green-600 ease-in-out border-green-500 bg-green-50 rounded-tl rounded-tr font-bold;
 }
 .btn-tab-active2 {
 	@apply text-blue-600 ease-in-out border-blue-500 bg-blue-50 rounded-tl rounded-tr;
