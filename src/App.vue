@@ -7,7 +7,7 @@
 				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
 				<BreadCrumbs v-if="showBraedCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
-				<div class="w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
+				<div class="pima w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">
 							<component :is="Component" />
@@ -153,4 +153,32 @@
 			transform: translateY(10px);
 		}
 	}
+	.pima::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	.pima::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	.pima::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 5px;
+	}
+
+	/* Handle on hover */
+	.pima::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+
+	/* ::-webkit-scrollbar-corner
+	::-webkit-scrollbar-track-piece
+	::-webkit-scrollbar-track
+	::-webkit-scrollbar-thumb
+	::-webkit-scrollbar-button
+	::-webkit-scrollbar */
+
+
 </style>

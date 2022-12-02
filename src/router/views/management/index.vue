@@ -23,15 +23,15 @@
 
 	const currentTab = computed(() => tabsGestion.value.find((tab) => tab.current).name.toLowerCase())
 	const tabsGestion = ref([
-		{ name: "courses", current: false },
+		{ name: "courses", current: true },
 		{ name: "filieres", current: false },
-		{ name: "documents", current: true },
+		{ name: "documents", current: false },
 		{ name: "employees", current: false },
 		{ name: "academique", current: false },
 	])
 	onMounted(() => {
 		// if (currentTab.value == "employees" || currentTab.value == "courses") {
-			goto(`${currentTab.value}-index`)
+		goto(`${currentTab.value}-index`)
 		// } else {
 		// 	goto(`${currentTab.value}-index`)
 		// }

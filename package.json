@@ -60,6 +60,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "^4.5.15",

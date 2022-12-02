@@ -7,7 +7,7 @@
 			<!-- Dropdown toggle button -->
 			<button id="toggle-dropdown" class="btn-header" data-bs-toggle="dropdown" aria-expanded="false">
 				<div class="avatar rounded-lg overflow-hidden">
-					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/20.webp" class="object-fill" />
+					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/15.webp" class="object-fill" />
 				</div>
 				<span class="ml-2">McClawn</span>
 				<svg class="w-5 h-5 text-gray-800 text-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
