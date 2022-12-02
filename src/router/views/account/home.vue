@@ -4,7 +4,7 @@
 		<div class="flex flex-col select-none">
 			<div class="grid grid-cols-4 auto-cols-max mb-3 mt-5 gap-2">
 				<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" appear>
-					<div v-for="(stat, index) in stats" :key="index" :data-index="index" class="card2 h-1/5 flex flex-col bg-gradient-to-tr">
+					<div v-for="(stat, index) in stats" :key="index" :data-index="index" class="card h-1/5 flex flex-col bg-gradient-to-tr">
 						<h1 class="font-bold text-2xl text-green-200">{{ stat.value }}</h1>
 						<span class="text-2xl font-bold text-green-800">{{ stat.name }}</span>
 					</div>
@@ -15,7 +15,10 @@
 
 				<div class="card w-1/2 col h-full">
 					<div class="row justify-between">
-						<div class="text-2xl font-bold row items-center space-x-2">Latest candidates <span class="bg-gray-100 text-sm rounded-lg px-1 py-0 h-5 items-center row text-center text-gray-500 align-middle">220</span></div>
+						<div class="text-2xl font-bold row items-center space-x-2">
+							Latest candidates
+							<span class=" ml-2 px-2 py-1 rounded-md text-gray-500 bg-gray-200 font-semibold text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease"> 200 </span>
+						</div>
 						<button type="button" class="rounded-full h-10 w-10" data-mdb-ripple="true" data-mdb-ripple-color="success"><box-icon name="dots-vertical-rounded" color="green" class="bg-red cursor-pointer"></box-icon></button>
 					</div>
 					<template v-for="i in 8" :key="i">
@@ -24,10 +27,9 @@
 								<img :src="`https://mdbcdn.b-cdn.net/img/new/avatars/${i}.webp`" class="rounded-full w-10 h-10" alt="Avatar" />
 								<div class="col ml-2">
 									<span class="text-lg font-bold">{{ chance.last() }}</span>
-									<span class="text-sm">From: {{ "Cameron" }}</span>
+									<span class="text-xs">From {{ chance.country({ full: true }) }}</span>
 								</div>
 							</div>
-							<button type="button" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button>
 						</a>
 					</template>
 				</div>

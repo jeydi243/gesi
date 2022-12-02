@@ -7,7 +7,7 @@
 				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
 				<BreadCrumbs v-if="showBraedCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
-				<div class="w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
+				<div class="pima w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">
 							<component :is="Component" />
@@ -36,14 +36,14 @@
 	const sideMenus = computed(() => store.sideMenus)
 	let showBraedCrumbs = ref(false)
 	useIpcRendererOn("finish_load", async (event, ...args) => {
-		store
-			.init()
-			.then(() => {
-				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-			})
-			.catch((er) => {
-				console.log("Impossible d'initier le store", er)
-			})
+		// store
+		// 	.init()
+		// 	.then(() => {
+		// 		console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+		// 	})
+		// 	.catch((er) => {
+		// 		console.log("Impossible d'initier le store", er)
+		// 	})
 	})
 
 	onUpdated(() => {
@@ -56,25 +56,25 @@
 			key: null,
 			matching: "span",
 		})
-		if (sideMenus.value.length == 0) {
-			store
-				.init()
-				.then(() => {
-					console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-				})
-				.catch((er) => {
-					console.log("Impossible d'initier le store", er)
-				})
-		}
+
+		store
+			.init()
+			.then(() => {
+				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+			})
+			.catch((er) => {
+				console.log("Impossible d'initier le store", er)
+			})
+
 		animeMe()
 	})
 	function animeMe() {
-		console.log(results.value[0].el)
-		results.value.forEach(({ el, chars }, i) => {
-			console.log({ el })
-			gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
-			chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
-		})
+		// console.log(results.value[0].el)
+		// results.value.forEach(({ el, chars }, i) => {
+		// 	console.log({ el })
+		// 	gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 2, delay: i * 0.15 })
+		// 	chars.forEach((e, index) => gsap.fromTo(e, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 2, delay: index * 0.15 }))
+		// })
 	}
 </script>
 <style>
@@ -153,4 +153,32 @@
 			transform: translateY(10px);
 		}
 	}
+	.pima::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	.pima::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	.pima::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 5px;
+	}
+
+	/* Handle on hover */
+	.pima::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+
+	/* ::-webkit-scrollbar-corner
+	::-webkit-scrollbar-track-piece
+	::-webkit-scrollbar-track
+	::-webkit-scrollbar-thumb
+	::-webkit-scrollbar-button
+	::-webkit-scrollbar */
+
+
 </style>

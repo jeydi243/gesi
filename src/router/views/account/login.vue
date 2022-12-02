@@ -67,9 +67,9 @@
 
 	const loginSchema = ref(
 		yup.object({
-			username: yup.string().required(),
-			password: yup.string().required().min(8),
-			stay_connected: yup.string().default("off"),
+			username: yup.string().required().label("Username"),
+			password: yup.string().required().min(8).label("Password"),
+			stay_connected: yup.string().default("off").label("Stay connected"),
 		})
 	)
 

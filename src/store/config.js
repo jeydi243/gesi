@@ -1,6 +1,7 @@
+import axios from "@/api/myaxios"
 import { defineStore } from "pinia"
-import { useManagement } from "./management"
 import { useStudents } from "./students"
+import { useManagement } from "./management"
 import configAPI from "@/api/config"
 export const useConfig = defineStore("config", {
 	state: () => ({
@@ -25,10 +26,13 @@ export const useConfig = defineStore("config", {
 			{ id: "7imy5y7", name: "Graduat 3", short: "G3", color: "#E199F9", current: false },
 		],
 		listStatus: ["Etudiant", "Abandon", "Diplomé", "Candidat", "Renvoi"],
+		requestError: null,
+		responseError: null,
 	}),
 
 	actions: {
 		async init() {
+			this.setAxios()
 			const students = useStudents()
 			const mngt = useManagement()
 			this.onReloadSide()
@@ -38,6 +42,62 @@ export const useConfig = defineStore("config", {
 			} catch (error) {
 				console.log(error)
 			}
+		},
+		setAxios() {
+			axios.interceptors.request.use(
+				(config) => {
+					if (this.token) {
+						config.headers.Authorization = `Bearer ${this.token}`
+					}
+					return config
+				},
+				(error) => {
+					// Do something with request error
+					this.requestError = error
+					return Promise.reject(error)
+				},
+				{ synchronous: true }
+			)
+			axios.interceptors.response.use(
+				(response) => {
+					// console.info(`[AXIOS] Response ${JSON.stringify(response.data)}`)
+					this.responseError = null
+					return response
+				},
+				(error) => {
+					this.responseError = error.response.data
+					console.log("H: %s",error.response)
+					if (error.code == "ECONNABORTED") {
+						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
+							type: "error",
+							duration: 50000,
+							singleton: true,
+							action: {
+								text: "Relancer la page",
+								onClick: (e, toastObject) => {
+									console.log("Relaod after error")
+									// router.go()
+								},
+							},
+						})
+						console.log({ error })
+					} else if (error.code === "ERR_CONNECTION_REFUSED") {
+						console.log("[ECONNABORTED] Impossible de contacter le serveur :", {
+							error,
+						})
+						router.push({ name: "error" })
+					} else if (error.code === "ERR_FAILED") {
+						console.log("[ERR_FAILED] Impossible de contacter le serveur :", {
+							error,
+						})
+						router.push({ name: "error" })
+					} else {
+						// console.log("Error code:", JSON.stringify(error))
+						// this.errorCall = error.response.data
+					}
+					return Promise.reject(error.response)
+				}
+			)
 		},
 		onReloadSide() {
 			console.log("Reload side menu")

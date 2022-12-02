@@ -251,13 +251,13 @@
 		data() {
 			const step1Schema = markRaw(
 				yup.object({
-					name: yup.string().required(),
-					country: yup.string().required(),
-					telephone: yup.string().required(),
-					adresse: yup.string().required(),
-					email: yup.string().email().required(),
-					birthDate: yup.date().min(new Date("2000-02-02"), "L'age minimum est de 18 ans"),
-					gender: yup.string().default("off"),
+					name: yup.string().required().label("Name"),
+					country: yup.string().required().label("Country"),
+					telephone: yup.string().required().label("Telephones"),
+					adresse: yup.string().required().label("Address"),
+					email: yup.string().email().required().label("Email"),
+					birthDate: yup.date().min(new Date("2000-02-02"), "L'age minimum est de 18 ans").label("Birthday"),
+					gender: yup.string().default("off").label("Gebder"),
 				})
 			)
 			const step2Schema = {
@@ -269,14 +269,14 @@
 				},
 			}
 			const step3Schema = yup.object({
-				name: yup.string().required(),
-				telephone: yup.number().required(),
-				email: yup.string().required(),
+				name: yup.string().required().label("Name"),
+				telephone: yup.number().required().label("Telephone"),
+				email: yup.string().required().label("Email"),
 			})
 			const step4Schema = yup.object({
-				name: yup.string().required(),
-				telephone: yup.string().required(),
-				adresse: yup.string().required(),
+				name: yup.string().required().label("Name"),
+				telephone: yup.string().required().label("Telephone"),
+				adresse: yup.string().required().label("Adresse"),
 			})
 			return {
 				previewSRC: null,

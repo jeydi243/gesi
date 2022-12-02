@@ -34,12 +34,12 @@ const teachersRoutes = [
 	//     name: "teachers-add",
 	//     component: () => import(/* webpackChunkName: "add-teacher" */ "./views/teachers/add.vue"),
 	//   },
-	//   {
-	//     path: "/teachers/:id",
-	//     meta: { layout: "main" },
-	//     name: "teachers-details",
-	//     component: () => import(/* webpackChunkName: "details-teacher" */ "./views/teachers/details.vue"),
-	//   },
+	{
+		path: "/teachers/:id",
+		meta: { layout: "main" },
+		name: "teachers-details",
+		component: () => import(/* webpackChunkName: "details-teacher" */ "./views/teachers/details.vue"),
+	},
 ]
 const calendarRoutes = [
 	{
@@ -68,12 +68,12 @@ const settingsRoutes = [
 const employeesRoutes = {
 	path: "employees",
 	meta: { layout: "main" },
-	name: "employees-index",
 	component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/index.vue"),
 	children: [
 		{
-			path: "list",
-			name: "employees-list",
+			path: "",
+			name: "employees-index",
+			default: true,
 			component: () => import(/* webpackChunkName: "employees" */ "./views/management/employees/list.vue"),
 		},
 		{
@@ -96,8 +96,8 @@ const employeesRoutes = {
 const coursesRoutes = {
 	path: "courses",
 	meta: { layout: "main" },
-	name: "courses-index",
-	component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/list.vue"),
+	// redirect: "courses-list",
+	component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/index.vue"),
 	children: [
 		{
 			path: "add",
@@ -108,6 +108,12 @@ const coursesRoutes = {
 			path: "details/:id",
 			name: "courses-details",
 			component: () => import(/* webpackChunkName: "courses" */ "./views/management/courses/details.vue"),
+		},
+		{
+			path: "",
+			default: true,
+			name: "courses-index",
+			component: () => import(/* webpackChunkName: "employees" */ "./views/management/courses/list.vue"),
 		},
 	],
 }

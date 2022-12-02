@@ -3,7 +3,12 @@
 		<div class="card h-1/5">
 			<div class="row justify-between mb-4">
 				<span class="text-4xl font-bold border-0 border-l-4 border-l-yellow-400 pl-2">Documents</span>
-				<button @click="showModalAdd = !showModalAdd" class="btn-primary"><DocumentAddIcon class="h-5 w-5 text-white" />Add document</button>
+				<div class="row">
+					<button @click.prevent="getAllDocuments" class="btn-primary mr-1">
+						<RefreshIcon class="h-5 w-5 text-white" />
+					</button>
+					<button @click="showModalAdd = !showModalAdd" class="btn-primary"><DocumentAddIcon class="h-5 w-5 text-white" />Add document</button>
+				</div>
 			</div>
 
 			<p class="text-base pb-4">
@@ -30,7 +35,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(doc, indexDoc) in getListDocuments" :key="indexDoc" :id="`heading${indexDoc}`" class="mb-0 table-row">
+					<tr v-for="(doc, indexDoc) in listDocuments" :key="indexDoc" :id="`heading${indexDoc}`" class="mb-0 table-row">
 						<td class="table-cell">{{ indexDoc + 1 }}</td>
 						<td class="table-cell">{{ doc.code }}</td>
 						<td class="table-cell font-bold">{{ doc.name }}</td>
@@ -38,7 +43,7 @@
 						<td class="table-cell relative flex-row items-center">
 							<div class="flex flex-row">
 								<ClipboardIcon href="#" class="h-4 w-4 text-blue-500 m-4 bg-blue-50 cursor-pointer" @click="showModif(indexDoc, doc)" />
-								<TrashIcon href="#" class="h-4 w-4 text-red-500 m-4 bg-red-50 cursor-pointer" @click="removeDoc(doc._id)" />
+								<TrashIcon href="#" class="h-4 w-4 text-red-500 m-4 bg-red-50 cursor-pointer" @click="softdeleteDoc(doc.code)" />
 							</div>
 						</td>
 					</tr>
@@ -50,17 +55,19 @@
 			<template #header>
 				<h1 class="text-4xl">Modifier ce document</h1>
 			</template>
-			<Form class="flex flex-col justify-between" @submit="updateDoc" v-slot="{ isSubmitting }" :validation-schema="docSchema" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
-				<div class="flex sm:flex-col md:flex-row">
-					<Field name="name" placeholder="name" class="form-input mb-2"></Field>
-					<ErrorMessage name="name" v-slot="{ message }">
-						<p class="input-error">{{ message }}</p>
-					</ErrorMessage>
+			<Form class="col justify-between" @submit="updateDoc" v-slot="{ isSubmitting }" :validation-schema="docSchema" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
+				<div class="row">
+					<Field name="name" placeholder="name" v-slot="{ errors, errorMessage, field }">
+						<input type="text" name="name" id="name" class="form-input mb-2" v-bind="field" />
+						<p class="input-error">{{ errors }}</p>
+						<p class="input-error">{{ errorMessage }}</p>
+					</Field>
 				</div>
-				<Field name="description" as="textarea" placeholder="Describe the utility of this doc" class="form-textarea mb-4"></Field>
-				<ErrorMessage name="description" v-slot="{ message }">
-					<p class="input-error">{{ message }}</p>
-				</ErrorMessage>
+				<Field name="description" as="textarea" placeholder="Describe the utility of this doc" v-slot="{ field, errorMessage, errors }">
+					<input class="form-textarea mb-4" type="text" name="description" id="description" v-bind="field" />
+					<p class="input-error">{{ errorMessage }}</p>
+					<p class="input-error">{{ errors }}</p>
+				</Field>
 				<span class="text-red-700 text-base">{{ errorCall }}</span>
 
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
@@ -75,23 +82,24 @@
 
 		<MyModal v-show="showModalAdd" @close="showModalAdd = false">
 			<template #header>Add document</template>
-			<Form class="col" @submit="addDocument" :validation-schema="docSchema" v-slot="{ isSubmitting }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
-				<div class="flex sm:flex-col md:flex-row">
-					<Field name="code" placeholder="code" class="form-input"></Field>
-					<ErrorMessage name="code" v-slot="{ message }">
-						<p class="input-error">{{ message }}</p>
-					</ErrorMessage>
-					<Field name="name" placeholder="name" class="form-input"></Field>
-					<ErrorMessage name="name" v-slot="{ message }">
-						<p class="input-error">{{ message }}</p>
-					</ErrorMessage>
-				</div>
-				<Field name="description" as="textarea" placeholder="Describe the utility of this doc" class="form-textarea"></Field>
-				<ErrorMessage name="description" v-slot="{ message }">
-					<p class="input-error">{{ message }}</p>
-				</ErrorMessage>
+			<Form class="col" @submit="add" :validation-schema="docSchema" v-slot="{ isSubmitting, resetForm }" :initial-values="initialDocValue" @invalid-submit="onInvalidDocument">
+				<!-- <div class="row w-full items-center space-x-1"> -->
+					<Field as="div" class="col" name="code" placeholder="code" v-slot="{ field, errorMessage }">
+						<input type="text" name="code" id="code" class="form-input mb-2" v-bind="field" />
+						<p class="input-error">{{ errorMessage }}</p>
+					</Field>
+					<Field as="div" class="col" name="name" placeholder="name" v-slot="{ field, errorMessage }">
+						<input type="text" name="name" id="name" class="form-input mb-2" v-bind="field" />
+						<p class="input-error">{{ errorMessage }}</p>
+					</Field>
+				<!-- </div> -->
+				<Field name="description" placeholder="Describe the utility of this doc" v-slot="{ errorMessage, field }">
+					<input v-bind="field" type="textarea" class="peer form-textarea invalid:animate-shake" />
+					<p class="input-error peer-invalid:animate-shake">{{ errorMessage }}</p>
+				</Field>
+
 				<div class="flex flex-row h-1/2 w-full items-center justify-between">
-					<button class="btn-unstate" @click.prevent.stop="closeModal">Cancel</button>
+					<button class="btn-unstate" @click.prevent.stop="closeModal(resetForm)">Cancel</button>
 					<button type="submit" class="btn-primary">
 						<box-icon type="solid" name="file-plus" color="white"></box-icon>
 						<span class="font-bold text-white">Add</span>
@@ -104,128 +112,103 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 	import MyModal from "@/components/mymodal"
-	import { useManagement } from "@/store/management"
 	import * as yup from "yup"
 	import { toast } from "@/utils/utils"
+	import { useManagement } from "@/store/management"
+	import { ref, computed, onMounted } from "vue"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
-	import { mapState, mapActions } from "pinia"
-	import { Form, Field, ErrorMessage } from "vee-validate"
-	import { SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon } from "@heroicons/vue/solid"
+	import { Form, Field } from "vee-validate"
+	import { SearchIcon, TrashIcon, ClipboardIcon, DocumentAddIcon, RefreshIcon } from "@heroicons/vue/solid"
+	const store = useManagement()
+	var docSchema = yup.object({
+		name: yup.string().required().label("Name"),
+		code: yup.string().required().label("Code"),
+		description: yup.string().required().label("Description"),
+	})
+	const errorCall = ref(null)
 
-	export default {
-		name: "index-documents",
-		components: {
-			Form,
-			CirclesToRhombusesSpinner,
-			ErrorMessage,
-			ClipboardIcon,
-			SearchIcon,
-			DocumentAddIcon,
-			TrashIcon,
+	const search = ref("")
+	const dropdown = ref(false)
+	const showModalAdd = ref(false)
+	const showModalUpdate = ref(false)
+	const initialDocValue = ref({ name: "Bulletin 5eme secondaire", code: "2022", description: "la description du document" })
+	const listDocuments = computed(() => store.listDocuments)
 
-			Field,
-			MyModal,
-		},
-		data() {
-			var docSchema = yup.object({
-				name: yup.string().required(),
-				code: yup.string().required(),
-				description: yup.string().required(),
+	onMounted(() => {
+		window.onclick = (e) => {
+			if (e.target.id !== "toggle-dropdown" && dropdown.value) {
+				dropdown.value = false
+			}
+		}
+	})
+	const { addDocument, deleteDocument, removeDocument, updateDocument, getAllDocuments } = useManagement()
+
+	function onInvalidDocument({ values, result, errors }) {
+		console.log(errors)
+	}
+	async function updateDoc(values, { resetForm }) {
+		var res = await updateDocument(values)
+		if (res) {
+			toast.success("Document modifié avec succes")
+		} else {
+			resetForm()
+		}
+		closeModal()
+	}
+	async function softdeleteDoc(code) {
+		var res = await deleteDocument(code)
+		if (res) {
+			toast.success("Successfully softdelete document")
+		} else {
+			toast.error("Can't delete document")
+		}
+	}
+	async function removeDoc(id) {
+		var res = await removeDocument(id)
+		if (res) {
+			toast.success("Successfully remove document")
+		} else {
+			toast.error("Can't remove this document")
+		}
+	}
+	async function add(values, { resetForm }) {
+		var response = await addDocument(values)
+		console.log({ response })
+		if (response === true) {
+			closeModal()
+			toast.success("Document ajouté avec succès", {
+				timeout: 5000,
 			})
-			return {
-				showModalUpdate: false,
-				dropdown: false,
-				search: "",
-				showModalAdd: false,
-				docSchema,
-				initialDocValue: { name: "Bulletin 5eme secondaire", code: "AX-2022", description: "" },
+			resetForm()
+		}
+	}
+	function closeModal(resetForm = null) {
+		showModalAdd.value = false
+		showModalUpdate.value = false
+		if (resetForm) {
+			resetForm()
+		}
+	}
+	function showModif(index, values) {
+		showModalUpdate.value = !showModalUpdate.value
+		var currentTrue = listDocuments.value.findIndex((doc) => doc.show == true)
+		initialDocValue.value = values
+		if (currentTrue != -1) {
+			if (currentTrue != index) {
+				console.log(`SO ${currentTrue} is != 1 and ${index} is != ${currentTrue}`)
+				listDocuments.value[currentTrue].show = false
+				listDocuments.value[index].show = true
+			} else {
+				console.log("You click the same item")
+				listDocuments.value[index].show = false
 			}
-		},
-		computed: { ...mapState(useManagement, ["getListDocuments", "errorCall"]) },
-		created() {
-			window.onclick = (e) => {
-				if (e.target.id !== "toggle-dropdown" && this.dropdown) {
-					this.dropdown = false
-				}
-			}
-		},
-		methods: {
-			...mapActions("management", ["addDocument", "deleteDocument", "removeDocument", "updateDocument"]),
-			onInvalidDocument({ values, result, errors }) {
-				console.log(errors)
-			},
-			async updateDoc(values, { resetForm }) {
-				var res = await this.updateDocument(values)
-				if (res) {
-					toast.success("Document modifié avec succes")
-				} else {
-					this.closeModal()
-					resetForm()
-				}
-			},
-			async softdeleteDoc(code) {
-				var res = await this.deleteDocument(code)
-				if (res) {
-					toast.success("Successfully softdelete document")
-				} else {
-					toast.error("Error on soft delete")
-				}
-			},
-			async removeDoc(id) {
-				var res = await this.removeDocument(id)
-				if (res) {
-					toast.success("Successfully remove document")
-				} else {
-					toast.error("Can't remove this document")
-				}
-			},
-			async add(values, { resetForm }) {
-				var response = this.addDocument(values)
-				if (response) {
-					setTimeout(() => {
-						this.showModalAdd = !this.showModalAdd
-					}, 2000)
-					toast.success("Document ajouté avec succès", {
-						timeout: 5000,
-					})
-				} else {
-					toast.error("Erreur lors de l'ajout du document")
-				}
-				resetForm()
-			},
-			clickOutside() {
-				this.showModalAdd = false
-			},
-			closeModal() {
-				this.showModalAdd = false
-				this.showModalUpdate = false
-			},
-			showModif(index, values) {
-				this.showModalUpdate = !this.showModalUpdate
-				var currentTrue = this.getListDocuments.findIndex((tab) => tab.show == true)
-				this.initialDocValue = values
-				if (currentTrue != -1) {
-					if (currentTrue != index) {
-						console.log(`SO ${currentTrue} is != 1 and ${index} is != ${currentTrue}`)
-						this.getListDocuments[currentTrue].show = false
-						this.getListDocuments[index].show = true
-					} else {
-						console.log("You click the same item")
-						this.getListDocuments[index].show = false
-					}
-				} else {
-					console.log("Nothing was True ....")
-					this.getListDocuments[index].show = true
-				}
-			},
-		},
+		} else {
+			console.log("Nothing was True ....")
+			listDocuments[index].show = true
+		}
 	}
 </script>
 
-<style scoped>
-	.form-textarea {
-		overflow: hidden;
-	}
-</style>
+<style scoped></style>

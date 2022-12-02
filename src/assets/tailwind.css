@@ -100,6 +100,7 @@ input:valid + span:after {
 	content: "✓";
 	padding-left: 5px;
 }
+
 .row {
 	@apply flex flex-row;
 }
@@ -115,11 +116,17 @@ input:valid + span:after {
 }
 
 /* Input */
-.g-input-text {
-	@apply flex form-input h-8 py-1 text-sm ring-transparent rounded-none rounded-t-md ring-gray-200  focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-300 my-2 placeholder:text-gray-300;
+.input {
+	@apply  w-full px-4 bg-gray-100 outline-none flex my-0 h-8 py-1 p-0 text-sm ring-transparent rounded-none rounded-t-md rounded-b-none ring-gray-200  focus:outline-none focus:border-b-2 focus:border-b-green-500 focus:ring-0 focus:ring-green-300 placeholder:text-gray-300;
+}
+.input-textarea {
+	@apply  w-full px-4 bg-gray-100 outline-none flex my-0 max-h-24 py-1 p-0 text-sm ring-transparent rounded-none rounded-t-md rounded-b-none ring-gray-200  focus:outline-none focus:border-b-2 focus:border-b-green-500 focus:ring-0 focus:ring-green-300 placeholder:text-gray-300;
 }
 .g-input-checkbox {
 	@apply form-checkbox border-none focus:ring-green-500 bg-gray-400 h-4 w-4 py-1 rounded my-2 text-green-500;
+}
+.placeholder-label {
+	@apply transform group-focus-within:font-bold transition-all italic group-focus-within:not-italic  text-gray-300 group-focus-within:text-gray-900 absolute top-0 left-0 h-full flex items-center pl-2 text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0;
 }
 .input-group {
 	@apply py-1 flex flex-col relative mb-2;
@@ -161,7 +168,7 @@ input:valid + span:after {
 	@apply h-10 cursor-pointer px-4 py-2 -mb-px text-sm transition-border ease-in-out hover:border-blue-500 duration-700 text-center border-b-2 sm:text-base whitespace-nowrap focus:outline-none;
 }
 .btn-tab-active {
-	@apply text-green-600 ease-in-out border-green-500 bg-green-50 rounded-tl rounded-tr;
+	@apply text-green-600 ease-in-out border-green-500 bg-green-50 rounded-tl rounded-tr font-bold;
 }
 .btn-tab-active2 {
 	@apply text-blue-600 ease-in-out border-blue-500 bg-blue-50 rounded-tl rounded-tr;
@@ -177,10 +184,10 @@ input:valid + span:after {
 }
 
 .course-card {
-	@apply overflow-hidden bg-white rounded-lg transition-all delay-150 duration-300 hover:shadow-lg flex flex-col  w-3/4;
+	@apply overflow-hidden bg-white rounded-lg transition-all delay-150 duration-300 hover:shadow-lg col h-[250px] w-1/5 relative ;
 }
 .toggle {
-	@apply form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
+	@apply form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top  bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm;
 }
 
 /* Calendar */

@@ -1,9 +1,10 @@
-import devtools from "@vue/devtools"
 import App from "./App.vue"
+import Toast from "vue-toastification"
 import router from "./router"
+import devtools from "@vue/devtools"
 import VueApexCharts from "vue3-apexcharts"
 import VueSweetalert2 from "vue-sweetalert2"
-import Toast from "vue-toastification"
+import vue3StarRatings from "vue3-star-ratings";
 import { useToast } from "vue-toastification"
 import { vfmPlugin } from "vue-final-modal"
 import { createApp } from "vue"
@@ -12,8 +13,8 @@ import "tw-elements"
 import "./assets/css/style.css"
 import "boxicons/css/boxicons.min.css"
 import "vue-cal/dist/vuecal.css"
-import "splitting/dist/splitting.css";
-import "splitting/dist/splitting-cells.css";
+import "splitting/dist/splitting.css"
+import "splitting/dist/splitting-cells.css"
 // import "vue-cal/dist/i18n/fr.js"
 import "v-calendar/dist/style.css"
 import "vue-toastification/dist/index.css"
@@ -42,7 +43,9 @@ const app = createApp(App)
 	})
 	.use(VueApexCharts)
 	.use(VueSweetalert2, optionsSweetAlert)
+	.use("rating", vue3StarRatings)
 
+// app.component("vue3-star-ratings", vue3StarRatings);
 app.config.globalProperties.filters = {
 	firstUpper(value) {
 		return value.charAt(0).toUpperCase() + value.slice(1)
@@ -54,7 +57,7 @@ app.config.globalProperties.filters = {
 app.config.globalProperties.toast = useToast()
 
 app.config.errorHandler = (err, vm, info) => {
-	console.log({ err })
+	console.log(`${err.message}`, `${err.stack}`)
 }
 app.config.warnHandler = (msg, instance, trace) => {
 	console.log(msg, JSON.stringify(trace, null, 4))
