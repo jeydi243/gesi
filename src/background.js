@@ -1,6 +1,6 @@
 "use strict"
 
-import { app, protocol, BrowserWindow, ipcMain as main, dialog, Menu ,MenuItem} from "electron"
+import { app, protocol, BrowserWindow, ipcMain as main, dialog, Menu, MenuItem } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
@@ -119,17 +119,17 @@ menu.append(new MenuItem({ label: "MenuItem2", type: "checkbox", checked: true }
 // 		false
 // 	)
 // })
-app.on("activate", () => {
-	if (BrowserWindow.getAllWindows().length === 0) createWindow(600, 800)
+app.on("activate", async () => {
+	if (BrowserWindow.getAllWindows().length === 0) await createWindow(600, 800)
 })
 
 app.on("ready", async () => {
 	try {
 		await installDevTools()
+		await whichScreen()
 	} catch (error) {
 		console.log(error)
 	}
-	whichScreen()
 })
 async function installDevTools() {
 	if (isDevelopment && !process.env.IS_TEST) {
@@ -142,10 +142,10 @@ async function installDevTools() {
 	}
 }
 async function whichScreen() {
-	const { screen } = require("electron")
-	const primaryDisplay = screen.getPrimaryDisplay()
-	var { x, y } = primaryDisplay.bounds
-	var { width, height } = primaryDisplay.workAreaSize
+	let { screen } = require("electron")
+	let { bounds, workAreaSize } = screen.getPrimaryDisplay()
+	let { x, y } = bounds
+	let { width, height } = workAreaSize
 	const displays = screen.getAllDisplays()
 	const externalDisplay = displays.find((display) => {
 		return display.bounds.x !== 0 || display.bounds.y !== 0

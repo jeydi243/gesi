@@ -6,7 +6,7 @@
 			<main class="col h-full relative bg-gray-100 overflow-auto transition-all duration-700 ease-out" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
 				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
-				<BreadCrumbs v-if="showBraedCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
+				<BreadCrumbs v-if="showBreadCrumbs && isMain" class="transition-all duration-700 ease-out delay-500" />
 				<div class="pima w-full h-full bg-gray-100 overflow-auto transition-all duration-700 ease-out delay-200" :class="{ 'px-6 py-6 h-[90%]': isMain }">
 					<router-view v-slot="{ Component }">
 						<Transition name="fadeSlideX" mode="out-in">

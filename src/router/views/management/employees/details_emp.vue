@@ -39,7 +39,7 @@
 						<div class="flex-none relative h-[150px] w-[150px] mr-3 items-center align-middle">
 							<div class="row items-center my-auto h-full">
 								<div class="backdrop-blur-sm bg-red-white/30 absolute left-[25%] top-[35%] z-10 w-20 h-7 rounded-md text-white text-center cursor-pointer" v-if="edit_mode"><button type="button" @click="changepicture">Edit</button></div>
-								<img src="@/assets/img/bg-1.jpg" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
+								<img src="http://localhost:3000/resources/file/63bf2dda6afe67abeb28c994" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
 							</div>
 						</div>
 						<div v-if="!edit_mode" class="flex-none">
