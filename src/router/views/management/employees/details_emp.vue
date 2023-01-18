@@ -39,7 +39,8 @@
 						<div class="flex-none relative h-[150px] w-[150px] mr-3 items-center align-middle">
 							<div class="row items-center my-auto h-full">
 								<div class="backdrop-blur-sm bg-red-white/30 absolute left-[25%] top-[35%] z-10 w-20 h-7 rounded-md text-white text-center cursor-pointer" v-if="edit_mode"><button type="button" @click="changepicture">Edit</button></div>
-								<img src="http://localhost:3000/resources/file/63bf2dda6afe67abeb28c994" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
+								<!-- <img src="http://localhost:3000/resources/file/63bf2dda6afe67abeb28c994" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" /> -->
+								<img :src="api_resources.getById(userData?.profile_image)" class="rounded-lg h-[150px] w-[150px] select-none relative top-0 left-0 z-0" :class="{ 'border-2 border-dashed p-2': edit_mode }" />
 							</div>
 						</div>
 						<div v-if="!edit_mode" class="flex-none">
@@ -559,7 +560,7 @@
 <script setup>
 	import { useRoute } from "vue-router"
 	import { parseISO } from "date-fns"
-	import { ref, computed } from "vue"
+	import { ref, computed, onBeforeMount } from "vue"
 	import { useManagement } from "@/store/management"
 	import { toast, goto, chance } from "@/utils/utils"
 	import { onBeforeRouteUpdate } from "vue-router"
@@ -567,6 +568,7 @@
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
 	import { Form, Field, ErrorMessage } from "vee-validate"
 	import MyModal from "@/components/mymodal"
+	import api_resources from "@/api/resources.js"
 
 	const error = computed(() => store.error)
 	const store = useManagement()
@@ -617,7 +619,12 @@
 			return isLength(value, { min: 2, max: 20 }) ? true : "Middle name must be between 2 and 20 characters"
 		},
 	}
+	onBeforeMount(() => {
+		console.log("LEKA")
+		console.log(api_resources.getById(userData.value?.profile_image))
+	})
 	onBeforeRouteUpdate(async (to, from) => {
+		console.log(api_resources.getById(userData.value?.profile_image))
 		if (to.params.id !== from.params.id) {
 			const result = await store.employeeBy(to.params.id)
 			if (result) {
