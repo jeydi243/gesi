@@ -62,8 +62,8 @@
 		},
 
 		computed: {
-			...mapState(useStudents, { students: "mystudents" }),
-			...mapState(useStudents, { levels: "getListLevel", currentTabLevel: "currentLevel" }),
+			...mapState(useStudents, { students: "students" }),
+			...mapState(useConfig, { levels: "getListLevel", currentTabLevel: "currentLevel" }),
 		},
 		methods: {
 			...mapActions(useStudents, {

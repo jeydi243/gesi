@@ -159,6 +159,19 @@ export const useConfig = defineStore("config", {
 				this.sideMenus[currentIndex].active = false
 			}
 		},
+		changeLevel(id) {
+			var currentIndex = this.listLevel.findIndex((item) => item.current == true)
+			var nextIndex = this.listLevel.findIndex((item) => item.id == id)
+			if (nextIndex != -1) {
+				// if we came from a page which is not in the list of side menus, we need to add it
+				if (currentIndex != -1) {
+					this.listLevel[currentIndex].current = false
+				}
+				this.listLevel[nextIndex].current = true
+			} else {
+				this.listLevel[currentIndex].current = false
+			}
+		},
 	},
 	getters: {
 		rootOrg: (state) => state.organizations.find((org) => org.organization_parent_id == null),

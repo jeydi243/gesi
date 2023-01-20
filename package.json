@@ -45,7 +45,7 @@
     "tw-elements": "^1.0.0-alpha12",
     "v-calendar": "^3.0.0-alpha.8",
     "validator": "^13.7.0",
-    "vee-validate": "^4.5.8",
+    "vee-validate": "^4.7.3",
     "vue": "^3.2.36",
     "vue-3-socket.io": "^1.0.4",
     "vue-cal": "^4.2.0",
