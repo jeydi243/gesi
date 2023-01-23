@@ -1,8 +1,8 @@
 <template>
 	<div class="card h-full w-1/2 m-auto">
-		<Form class="col justify-between w-full space-y-4" @submit="addCourse" v-slot="{ isSubmitting }" :validation-schema="courseSchema" :initial-values="initialCourseValue" @invalid-submit="onInvalidCourse">
+		<Form class="col justify-between w-full space-y-4" @submit="submit" v-slot="{ isSubmitting }" :validation-schema="courseSchema" :initial-values="initialCourseValue" @invalid-submit="onInvalidCourse">
 			<div class="row w-full">Add new course</div>
-			<Field name="name" v-slot="{ field, errorMessage }">
+			<Field name="title" v-slot="{ field, errorMessage }">
 				<div class="relative group h-10">
 					<input v-bind="field" type="text" id="title" required class="input peer" />
 					<label for="title" class="placeholder-label">Title </label>
@@ -28,10 +28,10 @@
 					<p class="input-error">{{ errorMessage }}</p>
 				</div>
 			</Field>
-			<Field name="name" v-slot="{ field, errorMessage }">
+			<Field name="expiredate" v-slot="{ field, errorMessage }">
 				<div class="relative group h-10">
-					<input v-bind="field" type="text" id="username" required class="input peer" />
-					<label for="username" class="placeholder-label">Username </label>
+					<input v-bind="field" type="text" id="expiredate" required class="input peer" />
+					<label for="expiredate" class="placeholder-label">Expire date </label>
 					<p class="input-error">{{ errorMessage }}</p>
 				</div>
 			</Field>
@@ -51,10 +51,13 @@
 	import { Form, ErrorMessage, Field } from "vee-validate"
 	import { useFileDialog, get } from "@vueuse/core"
 	import * as yup from "yup"
+	import { toast, goto } from "@/utils/utils"
 	import { ref, watch, computed } from "vue"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
-
+	import { useCourses } from "@/store/courses"
 	const { files, open, reset } = useFileDialog()
+
+	const store = useCourses()
 	const img = computed({
 		get() {
 			return URL.createObjectURL(files.value[0])
@@ -67,11 +70,12 @@
 	const courseSchema = yup.object({
 		title: yup.string().required().label("Name"),
 		description: yup.string().required().label("Description"),
+		expiredate: yup.string().notRequired().label("Expire date"),
 	})
 	const initialCourseValue = ref({
-		title: "",
-		description:
-			"Mollit sunt irure aliqua proident. Proident sit irure anim aliquip consectetur aute enim aliquip labore aliqua anim enim nulla aliqua. Id adipisicing elit id nulla do id nulla tempor. Commodo reprehenderit veniam sint adipisicing proident et do ad do enim et non adipisicing quis. Voluptate mollit laboris consectetur Lorem id. Occaecat nulla deserunt labore dolor aliqua.",
+		title: "course title",
+		expiredate: "2024-10-10",
+		description: "Mollit consectetur aute enim aliquip labore aliqua anim enim nulla aliqua. Id adipisicing elit id nulla do id nulla tempor. Commodo reprehenderit veniam sint adipisicing proident et do ad do enim et non adipisicing quis. Voluptate mollit laboris consectetur Lorem id. Occaecat nulla deserunt labore dolor aliqua.",
 	})
 	watch(files, (newv, oldv) => {
 		console.log({ myfiles: get(newv) })
@@ -79,8 +83,21 @@
 	function onInvalidCourse({ values, result, errors }) {
 		console.log(errors)
 	}
-	function addCourse(values, resetForm) {
+	async function submit(values, { resetForm, setFieldError }) {
 		console.log({ values })
+		try {
+			var result = await store.addCourse(values)
+			if (!result) {
+				goto("courses-index")
+				toast.success("Course added successfully !")
+			} else {
+				setFieldError("expiredate", result["expiredate"][0])
+				toast.error(`Can't add new course ${JSON.stringify(result)}`)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+		resetForm()
 	}
 </script>
 

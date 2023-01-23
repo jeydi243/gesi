@@ -1,6 +1,7 @@
 import axios from "@/api/myaxios"
 import { defineStore } from "pinia"
 import { useStudents } from "./students"
+import { useCourses } from "./courses"
 import { useManagement } from "./management"
 import configAPI from "@/api/config"
 export const useConfig = defineStore("config", {
@@ -34,11 +35,13 @@ export const useConfig = defineStore("config", {
 		async init() {
 			this.setAxios()
 			const students = useStudents()
+			const courses = useCourses()
 			const mngt = useManagement()
 			this.onReloadSide()
 			try {
 				await mngt.init()
 				await students.init()
+				await courses.init()
 			} catch (error) {
 				console.log(error)
 			}
