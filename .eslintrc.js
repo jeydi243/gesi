@@ -79,7 +79,7 @@ module.exports = {
       "off",
       "tab",
       {
-        baseIndent: 1,
+        baseIndent: 2,
         switchCase: 0,
         ignores: [],
       },

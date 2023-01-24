@@ -1,13 +1,6 @@
 <template>
   <div class="card h-full w-1/2 m-auto">
-    <Form
-      class="col justify-between w-full space-y-4"
-      @submit="addCourse"
-      v-slot="{ isSubmitting }"
-      :validation-schema="courseSchema"
-      :initial-values="initialCourseValue"
-      @invalid-submit="onInvalidCourse"
-    >
+    <Form class="col justify-between w-full space-y-4" @submit="addCourse" v-slot="{ isSubmitting }" :validation-schema="courseSchema" :initial-values="initialCourseValue" @invalid-submit="onInvalidCourse">
       <div class="row w-full">Add new course</div>
       <Field name="name" v-slot="{ field, errorMessage }">
         <div class="relative group h-10">
