@@ -122,30 +122,7 @@ export const useConfig = defineStore("config", {
 		rem() {
 			this.sideMenus.pop()
 		},
-		async setRootOrg(payload) {
-			try {
-				const { data, status } = configAPI.add(payload)
-				console.log({ data }, { status })
-				if (status == 200 || status == 201) {
-					this.organizations.unshift(data)
-				}
-			} catch (error) {
-				console.log("Can't add organization: ", error)
-			}
-		},
-		async getOrgs() {
-			try {
-				const { data, status } = configAPI.getAll()
-				console.log({ data }, { status })
-				if (status == 200 || status == 201) {
-					data.forEach((element) => {
-						this.organizations.unshift(element)
-					})
-				}
-			} catch (error) {
-				console.log("Can't retrieve all organizations: ", error)
-			}
-		},
+		
 		changeLayout(data) {
 			this.layout = data
 		},
