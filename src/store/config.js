@@ -1,6 +1,7 @@
 import axios from "@/api/myaxios"
 import { defineStore } from "pinia"
 import { useStudents } from "./students"
+import { useCourses } from "./courses"
 import { useManagement } from "./management"
 import configAPI from "@/api/config"
 export const useConfig = defineStore("config", {
@@ -34,11 +35,13 @@ export const useConfig = defineStore("config", {
 		async init() {
 			this.setAxios()
 			const students = useStudents()
+			const courses = useCourses()
 			const mngt = useManagement()
 			this.onReloadSide()
 			try {
 				await mngt.init()
 				await students.init()
+				await courses.init()
 			} catch (error) {
 				console.log(error)
 			}
@@ -66,7 +69,7 @@ export const useConfig = defineStore("config", {
 				},
 				(error) => {
 					this.responseError = error.response.data
-					console.log("H: %s",error.response)
+					console.log("AXIOS INTERCEPTORS: %o",error.response)
 					if (error.code == "ECONNABORTED") {
 						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
 							type: "error",

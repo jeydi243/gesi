@@ -3,7 +3,7 @@ import usersAPI from "@/api/users"
 import { defineStore } from "pinia"
 
 export const useAuth = defineStore("authentication", {
-	state: () => ({ user: null, token: null, authResponse: null }),
+	state: () => ({ user: { id: "id_of_user" }, token: null, authResponse: null }),
 
 	actions: {
 		async init() {
