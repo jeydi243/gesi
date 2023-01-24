@@ -5,11 +5,11 @@
       <Field name="title" v-slot="{ field, errorMessage }">
         <div class="relative group h-10">
           <input v-bind="field" type="text" id="title" required class="input peer" />
-          <label for="title" class="placeholder-label ">Title </label>
+          <label for="title" class="placeholder-label">Title </label>
           <p class="input-error">{{ errorMessage }}</p>
         </div>
       </Field>
-      <Transition name="fadeSlideX" mode="out-in">
+      <!-- <Transition name="fadeSlideX" mode="out-in">
         <div v-if="!img" @click="open" class="col h-[70px] w-full cursor-pointer bg-gray-50 border-2 border-dashed rounded-md justify-center items-center">
           <box-icon name="upload" color="gray"></box-icon>
           <span>Choisissez une image</span>
@@ -20,7 +20,7 @@
             <box-icon name="x" color="white"></box-icon>
           </button>
         </div>
-      </Transition>
+      </Transition> -->
       <Field name="description" v-slot="{ field, errorMessage }">
         <div class="relative group">
           <textarea v-bind="field" id="description" required class="input-textarea peer" rows="4"></textarea>
@@ -48,13 +48,13 @@
 </template>
 
 <script setup>
-import { Form, ErrorMessage, Field } from "vee-validate"
-import { useFileDialog, get } from "@vueuse/core"
 import * as yup from "yup"
-import { toast, goto } from "@/utils/utils"
-import { ref, watch, computed } from "vue"
-import { CirclesToRhombusesSpinner } from "epic-spinners"
 import { useCourses } from "@/store/courses"
+import { toast, goto } from "@/utils/utils"
+import { useFileDialog, get } from "@vueuse/core"
+import { ref, watch, computed } from "vue"
+import { Form, ErrorMessage, Field } from "vee-validate"
+import { CirclesToRhombusesSpinner } from "epic-spinners"
 const { files, open, reset } = useFileDialog()
 
 const store = useCourses()

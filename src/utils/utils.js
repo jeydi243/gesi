@@ -1,7 +1,7 @@
-import { useToast } from "vue-toastification"
-import router from "@/router"
 import { ref } from "vue"
 import { gsap } from "gsap"
+import { useToast } from "vue-toastification"
+import router from "@/router"
 import Chance from "chance"
 
 export const src = ref(null)

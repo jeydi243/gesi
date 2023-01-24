@@ -34,7 +34,7 @@
 	const layout = computed(() => store.layout)
 	const isMain = computed(() => store.layout != "auth")
 	const sideMenus = computed(() => store.sideMenus)
-	let showBraedCrumbs = ref(false)
+	let showBreadCrumbs = ref(false)
 	useIpcRendererOn("finish_load", async (event, ...args) => {
 		// store
 		// 	.init()
