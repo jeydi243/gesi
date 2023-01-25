@@ -58,29 +58,17 @@ module.exports = {
     "vue/attributes-order": [
       "off",
       {
-        order: [
-          "DEFINITION",
-          "LIST_RENDERING",
-          "CONDITIONALS",
-          "RENDER_MODIFIERS",
-          "GLOBAL",
-          ["UNIQUE", "SLOT"],
-          "TWO_WAY_BINDING",
-          "OTHER_DIRECTIVES",
-          "OTHER_ATTR",
-          "EVENTS",
-          "CONTENT",
-        ],
+        order: ["DEFINITION", "LIST_RENDERING", "CONDITIONALS", "RENDER_MODIFIERS", "GLOBAL", ["UNIQUE", "SLOT"], "TWO_WAY_BINDING", "OTHER_DIRECTIVES", "OTHER_ATTR", "EVENTS", "CONTENT"],
         alphabetical: false,
       },
     ],
 
     "vue/script-indent": [
       "off",
-      "tab",
+      2,
       {
         baseIndent: 4,
-        switchCase: 0,
+        switchCase: 1,
         ignores: [],
       },
     ],

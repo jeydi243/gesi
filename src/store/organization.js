@@ -44,11 +44,9 @@ export const useOrganization = defineStore("organization", {
     },
     async addOrg() {
       const auth = useAuth()
-      // let dat
       try {
         const { status, data } = await orgsAPI.add({ createdBy: auth.user.id })
         console.log({ data })
-        // dat = data
         if (status == 200 || status == 201) {
           this.organizations.unshift(data)
           return true
@@ -56,7 +54,7 @@ export const useOrganization = defineStore("organization", {
         return false
       } catch (err) {
         // console.log({ err })
-        return err.data.dto_validation_error
+        return err.data?.dto_validation_error
       }
     },
   },
