@@ -1,25 +1,24 @@
 <template>
-  <div class="card bg-white flex-row justify-items-center items-center justify-between h-full">
+  <div class="card bg-white flex-row justify-items-center items-center justify-between h-full overflow-visible">
     <div class="flex flex-row mb-5">
-      <div v-for="i in 4" :key="i" class="flex flex-col justify-start items-start">
+      <div v-for="i in 5" :key="i" class="flex flex-col justify-start items-start">
         <span>
           <box-icon type="solid" name="circle" :color="i > step ? 'black' : 'green'" size="xs" class="mb-2"></box-icon>
-          <template v-if="i != 4">
+          <template v-if="i != 5">
             <span v-for="k in 10" :key="k">-</span>
           </template>
         </span>
 
         <span class="text-xs">{{ i }}</span>
       </div>
-      <div class="text-black">ee</div>
     </div>
     <Transition name="fadeSlideY" mode="out-in">
       <div class="step-content" v-if="step == 1" key="step1">
-        <Form class="flex flex-col w-full justify-between items-center" :validation-schema="step1Schema" :initial-values="step1Values" v-slot="{ isSubmitting, handleSubmit }" @invalid-submit="onInvalidStep1">
+        <Form class="form" @submit="submitBasicInfo" :validation-schema="basicInfoSchema" :initial-values="basicInfoValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidBasicInfo">
           <h1 class="text-4xl mb-4">Informations préliminaires</h1>
           <div class="grid grid-cols-2 gap-4 auto-cols-max">
             <div class="input-group-grid name">
-              <Field type="text" placeholder="Name" id="name" name="name" class="w-full form-input" />
+              <Field type="text" placeholder="Name" id="name" name="name" class="w-full input" />
               <ErrorMessage name="name" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
@@ -27,7 +26,7 @@
             <div class="input-group-grid country">
               <Field name="country" id="country" as="select" class="rounded form-select block w-full">
                 <option value="RDC (Congo)" selected>RDC (Congo)</option>
-                <option value="Congo">Congo</option>
+                <option value="Congo"><US />Congo</option>
                 <option value="Senegal">Senegal</option>
                 <option value="Cote d'ivoire">Cote d'ivoire</option>
               </Field>
@@ -36,7 +35,7 @@
               </ErrorMessage>
             </div>
             <div class="input-group-grid gender">
-              <Field name="gender" id="gender" as="select" class="rounded form-select block w-full" required>
+              <Field name="gender" id="gender" as="select" class="rounded input block w-full" required>
                 <option value selected>--Select gender--</option>
                 <option value="M">Male</option>
                 <option value="M">Female</option>
@@ -46,32 +45,26 @@
               </ErrorMessage>
             </div>
             <div class="input-group-grid email">
-              <Field name="email" type="email" id="email" placeholder="Email" class="flex form-input h-full w-full border" />
+              <Field name="email" type="email" id="email" placeholder="Email" class="flex input h-full w-full border" />
               <ErrorMessage name="email" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
             </div>
             <div class="input-group-grid birthDate">
-              <Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full form-input" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+              <Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full input" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
               <ErrorMessage name="birthDate" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
             </div>
             <div class="input-group-grid telephone">
-              <Field name="telephone" type="text" placeholder="Telephone" class="sm:text-base w-full form-input" />
+              <Field name="telephone" type="text" placeholder="Telephone" class="sm:text-base w-full input" />
               <ErrorMessage name="telephone" v-slot="{ message }">
-                <p class="input-error">{{ message }}</p>
-              </ErrorMessage>
-            </div>
-            <div class="input-group-grid adresse col-span-2">
-              <Field name="adresse" type="text" placeholder="XX, Q/quartier, C/commune, Av/avenue" class="w-full border form-input" />
-              <ErrorMessage name="adresse" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
             </div>
           </div>
           <div class="flex flex-row-reverse w-full h-1/2 text-black">
-            <button @click="handleSubmit($event, submitStep1)" class="btn-primary">
+            <button type="submit" class="btn-primary submitable">
               <span class="font-bold text-white">Next</span>
               <CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
               <ArrowRightIcon class="h-4 w-4 text-white" v-else />
@@ -80,7 +73,7 @@
         </Form>
       </div>
       <div class="step-content" v-else-if="step == 2" key="step2">
-        <Form class="flex flex-col w-full justify-between items-center" @submit="submitStepAdress" :validation-schema="stepAdressSchema" :initial-values="stepAdress" v-slot="{ isSubmitting }" @invalid-submit="onInvalidAdress">
+        <Form class="form" @submit="submitAddress" :validation-schema="adressSchema" :initial-values="addressValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidAddress">
           <h1 class="text-4xl mb-4">Address</h1>
           <div class="grid grid-cols-2 gap-4 auto-cols-max">
             <div class="input-group-grid name">
@@ -149,7 +142,7 @@
         </Form>
       </div>
       <div class="step-content" v-else-if="step == 3" key="step3">
-        <Form class="flex flex-col mb-4 justify-between" @submit="submitStep2" :validation-schema="step2Schema" v-slot="{ isSubmitting }" :initial-values="step2Values" @invalid-submit="onInvalidStep2">
+        <Form class="form" @submit="submitProfile" :validation-schema="profileSchema" v-slot="{ isSubmitting }" :initial-values="profileValues" @invalid-submit="onInvalidProfile">
           <div class="flex flex-col mb-4 h-1/2 items-center justify-center">
             <p class="text-4xl mb-4">Photo de profil</p>
             <div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ profile2: !previewSRC }">
@@ -171,58 +164,57 @@
               <ArrowRightIcon class="h-4 w-4 text-white" v-else />
             </button>
           </div>
-          <!-- {{ values }} -->
         </Form>
-        <!-- <ol class="items-center sm:flex">
-                <li class="relative mb-6 sm:mb-0">
-                    <div class="flex items-center">
-                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                    </div>
-                    <div class="mt-3 sm:pr-8">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.0.0</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 2, 2021</time>
-                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
-                    </div>
-                </li>
-                <li class="relative mb-6 sm:mb-0">
-                    <div class="flex items-center">
-                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                    </div>
-                    <div class="mt-3 sm:pr-8">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.2.0</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 23, 2021</time>
-                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
-                    </div>
-                </li>
-                <li class="relative mb-6 sm:mb-0">
-                    <div class="flex items-center">
-                        <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                            <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                    </div>
-                    <div class="mt-3 sm:pr-8">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.3.0</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on January 5, 2022</time>
-                        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
-                    </div>
-                </li>
-                </ol>-->
+        <ol class="items-center sm:flex">
+          <li class="relative mb-6 sm:mb-0">
+            <div class="flex items-center">
+              <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+            </div>
+            <div class="mt-3 sm:pr-8">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.0.0</h3>
+              <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 2, 2021</time>
+              <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+            </div>
+          </li>
+          <li class="relative mb-6 sm:mb-0">
+            <div class="flex items-center">
+              <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+            </div>
+            <div class="mt-3 sm:pr-8">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.2.0</h3>
+              <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 23, 2021</time>
+              <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+            </div>
+          </li>
+          <li class="relative mb-6 sm:mb-0">
+            <div class="flex items-center">
+              <div class="flex z-10 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                <svg class="w-3 h-3 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+            </div>
+            <div class="mt-3 sm:pr-8">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Flowbite Library v1.3.0</h3>
+              <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on January 5, 2022</time>
+              <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements.</p>
+            </div>
+          </li>
+        </ol>
       </div>
       <div class="step-content" v-else-if="step == 4" key="step4">
-        <Form class="flex flex-col mb-4 justify-between items-center w-full" @submit="submitStep3" :validation-schema="step3Schema" v-slot="{ isSubmitting }" :initial-values="step3Values" @invalid-submit="onInvalidStep3">
+        <Form class="form" @submit="submitContact" :validation-schema="contactSchema" :initial-values="contactValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidContact">
           <h1 class="text-4xl mb-4">Add contact</h1>
           <div class="flex flex-col">
             <div class="input-group-grid name">
@@ -238,7 +230,7 @@
               </ErrorMessage>
             </div>
             <div class="input-group-grid email">
-              <Field type="text" placeholder="Email" id="name" name="email" class="w-full form-input" />
+              <Field type="text" placeholder="Email" id="name" name="email" class="w-full input" />
               <ErrorMessage name="name" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
@@ -255,17 +247,17 @@
         </Form>
       </div>
       <div class="step-content" v-else-if="step == 5" key="step5">
-        <Form class="flex flex-col mb-4 justify-between items-center" @submit="submitStep4" :validation-schema="step4Schema" v-slot="{ isSubmitting }" :initial-values="step4Values" @invalid-submit="onInvalidStep4">
+        <Form class="form" @submit="submitSchool" :validation-schema="schoolSchema" :initial-values="schoolValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidSchool">
           <h1 class="text-4xl mb-4">Add High-School</h1>
           <div class="grid grid-cols-2 gap-2">
             <div class="input-group-grid name">
-              <Field type="text" placeholder="School Name" id="name" name="name" class="w-full form-input" />
+              <Field type="text" placeholder="School Name" id="name" name="name" class="w-full input" />
               <ErrorMessage name="name" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
             </div>
             <div class="input-group-grid telephone">
-              <Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full form-input" />
+              <Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full input" />
               <ErrorMessage name="telephone" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
@@ -287,8 +279,8 @@
               </ErrorMessage>
             </div>
             <div class="input-group-grid adresse">
-              <Field type="text" placeholder="Adresse" id="adresse" name="adresse" class="w-full form-input" />
-              <ErrorMessage name="adresse" v-slot="{ message }">
+              <Field type="text" placeholder="Adresse" id="email" name="adresse" class="w-full input" />
+              <ErrorMessage name="email" v-slot="{ message }">
                 <p class="input-error">{{ message }}</p>
               </ErrorMessage>
             </div>
@@ -306,10 +298,10 @@
     </Transition>
 
     <div class="bottom flex flex-row w-full items-center justify-between">
-      <button class="btn-unstate" @click="step = step - 1">Cancel</button>
-      <button type="submit" class="btn-primary">
-        <span class="font-bold text-white">Suivant</span>
-        <ArrowRightIcon class="h-5 w-5 text-white" v-if="!canSubmit" />
+      <button class="btn-unstate" @click="goBack">Cancel</button>
+      <button @click="goNext" class="btn-primary">
+        <span class="font-bold text-white"> {{ step == 5 ? "Save" : "Suivant" }}</span>
+        <SaveIcon class="h-5 w-5 text-white" v-if="!canSubmit" />
         <CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-else />
       </button>
     </div>
@@ -318,15 +310,17 @@
 
 <script setup>
 import { toast } from "@/utils/utils"
-import { markRaw, ref, computed } from "vue"
-import { UserIcon, ArrowRightIcon } from "@heroicons/vue/solid"
+import { markRaw, ref } from "vue"
+import { ArrowRightIcon, SaveIcon, UserIcon } from "@heroicons/vue/solid"
 import { Field, Form, ErrorMessage } from "vee-validate"
 import { CirclesToRhombusesSpinner } from "epic-spinners"
 import * as yup from "yup"
 import { useStudents } from "@/store/students"
+let step = ref(1)
 const store = useStudents()
-
-const step1Schema = markRaw(
+const canSubmit = ref(false)
+const previewSRC = ref(null)
+const basicInfoSchema = markRaw(
   yup.object({
     name: yup.string().required().label("Name"),
     country: yup.string().required().label("Country"),
@@ -336,7 +330,7 @@ const step1Schema = markRaw(
     gender: yup.string().default("off").label("Gebder"),
   })
 )
-const step2Schema = ref({
+const profileSchema = ref({
   profile(value) {
     if (value instanceof File || value instanceof Blob || value[0] instanceof File || value[0] instanceof Blob) {
       return true
@@ -344,8 +338,7 @@ const step2Schema = ref({
     return "Vous devez choisir une photo de profil"
   },
 })
-const canSubmit = ref(false)
-const stepAdressSchema = markRaw(
+const adressSchema = markRaw(
   yup.object({
     avenue: yup.string().required().label("Avenue"),
     commune: yup.string().required().label("commune"),
@@ -355,21 +348,19 @@ const stepAdressSchema = markRaw(
     numero: yup.number().required().label("Numero"),
   })
 )
-const step3Schema = yup.object({
+const contactSchema = yup.object({
   name: yup.string().required().label("Name"),
   telephone: yup.number().required().label("Telephone"),
   email: yup.string().required().label("Email"),
 })
-const step4Schema = yup.object({
+const schoolSchema = yup.object({
   name: yup.string().required().label("Name"),
   telephone: yup.string().required().label("Telephone"),
-  adresse: yup.string().required().label("Adresse"),
+  addresse: yup.string().required().label("Telephone"),
+  email: yup.string().required().label("Email"),
 })
 
-let step = ref(1)
-const previewSRC = ref(null)
-const stepper = ref([{ schema: "", values: "", active: false }])
-const step1Values = ref({
+const basicInfoValues = ref({
   name: "Kadiongo Ilunga",
   birthDate: "2000-02-02",
   gender: "M",
@@ -377,16 +368,16 @@ const step1Values = ref({
   telephone: "+245369854",
   country: "RDC (Congo)",
 })
-const stepAdress = ref({ avenue: "Kawama", commune: "Bondo", ville: "Kalemie", quartier: "Baudwin", zip: 75123, numero: 5 })
-const step2Values = ref({ profile: "" })
-const step3Values = ref({ name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" })
-const step4Values = ref({ name: "IT Salama", telephone: "+24381745021", adresse: "20, lubumbashi, Q/ Mamplaa" })
+const profileValues = ref({ profile: "" })
+const contactValues = ref({ name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" })
+const schoolValues = ref({ name: "IT Salama", telephone: "+24381745021", addresse: "20, lubumbashi, Q/ Mamplaa", email: "" })
+const addressValues = ref({ avenue: "Kawama", commune: "Bondo", ville: "Kalemie", quartier: "Baudwin", zip: 75123, numero: 5 })
 
 function pickPicture() {
   document.getElementById("bind-profile").click()
   const fi = document.getElementById("bind-profile")
   console.log(fi)
-  fi.addEventListener("change", this.onProfilePictureChange)
+  fi.addEventListener("change", onProfilePictureChange)
 }
 function onProfilePictureChange(event) {
   console.log("Profile picture change and is ", event.target.files[0])
@@ -397,16 +388,16 @@ function onProfilePictureChange(event) {
     this.previewSRC = null
   }
 }
-function submitStep1(values, { resetForm }) {
+function submitBasicInfo(values, { resetForm }) {
   goNext()
 }
-function submitStep2(values, { resetForm }) {
+function submitAddress(values, { resetForm }) {
   goNext()
 }
-function submitStep3(values, { resetForm }) {
+function submitContact(values, { resetForm }) {
   goNext()
 }
-async function submitStep4(values, { resetForm }) {
+async function submitSchool(values, { resetForm }) {
   console.log("just submit step 4")
   toast.success("Enregistrement terminé", {
     timeout: 5000,
@@ -432,19 +423,19 @@ function goNext() {
 function goBack() {
   step.value -= 1
 }
-function onInvalidStep1({ values, result, errors }) {
+function onInvalidBasicInfo({ values, result, errors }) {
   console.log("On invalid submit: ", { values, result, errors })
 }
-function onInvalidStep2({ values, result, errors }) {
+function onInvalidProfile({ values, result, errors }) {
   console.log("On invalid submit: ", { values, result, errors })
 }
-function onInvalidStep3({ values, result, errors }) {
+function onInvalidAddress({ values, result, errors }) {
   console.log("On invalid submit: ", { values, result, errors })
 }
-function onInvalidStep4({ values, result, errors }) {
+function onInvalidContact({ values, result, errors }) {
   console.log("On invalid submit: ", { values, result, errors })
 }
-function onInvalidAdress({ values, result, errors }) {
+function onInvalidSchool({ values, result, errors }) {
   console.log("On invalid submit: ", { values, result, errors })
 }
 </script>

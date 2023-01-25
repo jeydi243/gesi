@@ -74,6 +74,9 @@ td {
 .step-content {
   @apply flex flex-row w-1/2 justify-center h-1/2;
 }
+.form {
+  @apply flex flex-col w-full justify-between items-center;
+}
 
 /* For modal */
 

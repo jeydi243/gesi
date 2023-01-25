@@ -4822,6 +4822,10 @@ textarea.form-control.is-invalid{
   overflow: clip;
 }
 
+.overflow-visible{
+  overflow: visible;
+}
+
 .truncate{
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6061,6 +6065,14 @@ td::first-letter{
   width: 50%;
   flex-direction: row;
   justify-content: center;
+}
+
+.form{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* For modal */
