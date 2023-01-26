@@ -73,7 +73,7 @@
         </Form>
       </div>
       <div class="step-content" v-else-if="step == 2" key="step2">
-        <Form class="form" @submit="submitAddress" :validation-schema="adressSchema" :initial-values="addressValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidAddress">
+        <Form class="form" @submit="submitAddress" :validation-schema="addressSchema" :initial-values="addressValues" v-slot="{ isSubmitting }" @invalid-submit="onInvalidAddress">
           <h1 class="text-4xl mb-4">Address</h1>
           <div class="grid grid-cols-2 gap-4 auto-cols-max">
             <div class="input-group-grid name">
@@ -316,6 +316,8 @@ import { Field, Form, ErrorMessage } from "vee-validate"
 import { CirclesToRhombusesSpinner } from "epic-spinners"
 import * as yup from "yup"
 import { useStudents } from "@/store/students"
+
+
 let step = ref(1)
 const store = useStudents()
 const canSubmit = ref(false)
@@ -338,7 +340,7 @@ const profileSchema = ref({
     return "Vous devez choisir une photo de profil"
   },
 })
-const adressSchema = markRaw(
+const addressSchema = markRaw(
   yup.object({
     avenue: yup.string().required().label("Avenue"),
     commune: yup.string().required().label("commune"),
