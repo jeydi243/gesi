@@ -45,6 +45,7 @@
     "postcss": "^8.4.12",
     "splitting": "^1.0.6",
     "tw-elements": "^1.0.0-alpha12",
+    "typed.js": "^2.0.12",
     "v-calendar": "^3.0.0-alpha.8",
     "validator": "^13.7.0",
     "vee-validate": "^4.7.3",
