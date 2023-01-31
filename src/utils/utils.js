@@ -84,9 +84,10 @@ export function enterList(el, done) {
 	})
 }
 export async function goto(to = null, data = null) {
-	if (data != null) {
+	assert(to != null, data != null)
+	if (data != null && data != null) {
 		await router.push({ name: to, params: { id: data } })
-	} else if (to == null) {
+	} else if ((to == null, data == null)) {
 		await router.back()
 	} else {
 		console.log({ to })

@@ -10,6 +10,28 @@ export const useConfig = defineStore("config", {
 		organizations: [],
 		layout: "main",
 		config: {},
+		countries: [
+			{ name: "Afghanistan", code: "AF" },
+			{ name: "Albania", code: "AL" },
+			{ name: "Algeria", code: "DZ" },
+			{ name: "Andorra", code: "AD" },
+			{ name: "Angola", code: "AO" },
+			{ name: "Antigua and Barbuda", code: "AG" },
+			{ name: "Argentina", code: "AR" },
+			{ name: "Armenia", code: "AM" },
+			{ name: "Australia", code: "AU" },
+			{ name: "Austria", code: "AT" },
+			{ name: "Azerbaijan", code: "AZ" },
+			{ name: "Bahamas", code: "BS" },
+			{ name: "Bahrain", code: "BH" },
+			{ name: "Bangladesh", code: "BD" },
+			{ name: "Barbados", code: "BB" },
+			{ name: "Belarus", code: "BY" },
+			{ name: "Belgium", code: "BE" },
+			{ name: "Belize", code: "BZ" },
+			{ name: "Benin", code: "BJ" },
+			{ name: "Bhutan", code: "BT" },
+		],
 		sideMenus: [
 			// { text: "Home", to: "/home", icon: "home", active: true, mouseHover: false },
 			// { text: "Students", to: "/students", icon: "group", active: false, mouseHover: false },
@@ -69,7 +91,7 @@ export const useConfig = defineStore("config", {
 				},
 				(error) => {
 					this.responseError = error.response.data
-					console.log("AXIOS INTERCEPTORS: %o",error.response)
+					console.log("AXIOS INTERCEPTORS: %o", error.response)
 					if (error.code == "ECONNABORTED") {
 						toast.error("La requete a pris trop de temps. Verifier votre connexion et retenter dans quelques temps", {
 							type: "error",
@@ -122,7 +144,7 @@ export const useConfig = defineStore("config", {
 		rem() {
 			this.sideMenus.pop()
 		},
-		
+
 		changeLayout(data) {
 			this.layout = data
 		},
