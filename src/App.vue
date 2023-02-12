@@ -3,6 +3,7 @@
 		<div class="row h-full w-full relative" v-bind="$attrs">
 			<SideBar class="flex w-[15%] h-full bg-gray-900 relative transition-all duration-700 ease-out" v-if="isMain" />
 
+			<!-- <button @click="callSend">Send</button> -->
 			<main class="col h-full relative bg-gray-100 overflow-auto transition-all duration-700 ease-out" :class="{ 'w-full': !isMain, 'w-[85%]': isMain }">
 				<MyHeader v-if="isMain" />
 				<!-- {{ $route.path }} -->
@@ -27,25 +28,32 @@
 	import BreadCrumbs from "@/components/breadcrumbs"
 	import { gsap } from "gsap"
 	import { useConfig } from "@/store/config"
-	import { useIpcRendererOn } from "@vueuse/electron"
+	import { useIpcRendererOn, useIpcRenderer } from "@vueuse/electron"
 	import { ref, onMounted, computed, onUpdated } from "vue"
 	const results = ref(null)
 	const store = useConfig()
-	const layout = computed(() => store.layout)
 	const isMain = computed(() => store.layout != "auth")
-	const sideMenus = computed(() => store.sideMenus)
+	const ipc = useIpcRenderer()
 	let showBreadCrumbs = ref(false)
 	useIpcRendererOn("finish_load", async (event, ...args) => {
-		// store
-		// 	.init()
-		// 	.then(() => {
-		// 		console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-		// 	})
-		// 	.catch((er) => {
-		// 		console.log("Impossible d'initier le store", er)
-		// 	})
+		// store.init()
+		store
+			.init()
+			.then(() => {
+				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+			})
+			.catch((er) => {
+				console.log("Impossible d'initier le store", er)
+			})
+	})
+	useIpcRendererOn("dom_ready", (event, args) => {
+		store.setDOMready(args)
 	})
 
+	// const result = useIpcRenderer.invoke<string>("custom-channel", "some data")
+	function callSend() {
+		ipc.send("karma", "Epa")
+	}
 	onUpdated(() => {
 		animeMe()
 	})
@@ -57,14 +65,14 @@
 			matching: "span",
 		})
 
-		store
-			.init()
-			.then(() => {
-				console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
-			})
-			.catch((er) => {
-				console.log("Impossible d'initier le store", er)
-			})
+		// store
+		// 	.init()
+		// 	.then(() => {
+		// 		console.info("%c[STORE] Ok", "color: #0080ff; font-weight: bold;")
+		// 	})
+		// 	.catch((er) => {
+		// 		console.log("Impossible d'initier le store", er)
+		// 	})
 
 		animeMe()
 	})
@@ -179,6 +187,4 @@
 	::-webkit-scrollbar-thumb
 	::-webkit-scrollbar-button
 	::-webkit-scrollbar */
-
-
 </style>

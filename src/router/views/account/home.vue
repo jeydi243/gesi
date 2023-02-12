@@ -2,7 +2,7 @@
 	<div>
 		<!-- <HomeIcon size="sm" class="h-5 w-5" /> -->
 		<div class="flex flex-col select-none">
-			<div class="grid grid-cols-4 auto-cols-max mb-3 mt-5 gap-2">
+			<div class="grid grid-cols-4 auto-cols-max mb-3 mt-5 gap-2" v-if="electronFinishLoad">
 				<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" appear>
 					<div v-for="(stat, index) in stats" :key="index" :data-index="index" class="card h-1/5 flex flex-col bg-gradient-to-tr">
 						<h1 class="font-bold text-2xl text-green-200">{{ stat.value }}</h1>
@@ -17,7 +17,7 @@
 					<div class="row justify-between">
 						<div class="text-2xl font-bold row items-center space-x-2">
 							Latest candidates
-							<span class=" ml-2 px-2 py-1 rounded-md text-gray-500 bg-gray-200 font-semibold text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease"> 200 </span>
+							<span class="ml-2 px-2 py-1 rounded-md text-gray-500 bg-gray-200 font-semibold text-sm flex align-center w-max active:bg-gray-300 transition duration-300 ease"> 200 </span>
 						</div>
 						<button type="button" class="rounded-full h-10 w-10" data-mdb-ripple="true" data-mdb-ripple-color="success"><box-icon name="dots-vertical-rounded" color="green" class="bg-red cursor-pointer"></box-icon></button>
 					</div>
@@ -40,8 +40,12 @@
 
 <script setup>
 	import { chance } from "@/utils/utils"
-	import { ref } from "vue"
+	import { ref, computed } from "vue"
 	import { beforeEnterList, enterList, leaveList } from "@/utils/utils"
+	import { useConfig } from "@/store/config"
+
+	const configStore = useConfig()
+	const electronFinishLoad = computed(() => configStore.electronFinishLoad)
 	const chartOptions = ref({
 		title: {
 			text: "List of students by year",

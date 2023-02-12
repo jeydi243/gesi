@@ -17,9 +17,9 @@
 			</div>
 			<div>f</div>
 		</div>
-		<Form class="form grow justify-center" @submit="goNext" :validation-schema="currentSchema" :initial-values="currentValues" v-slot="{ isSubmitting, values }">
+		<Form class="form grow justify-center" @submit="goNext" :validation-schema="currentSchema" :initial-values="currentValues" v-slot="{ isSubmitting, values }" :on-invalid-submit="oninvalid">
 			<Transition name="fadeSlideY" mode="out-in">
-				<div class="step-conten" v-if="step === 0">
+				<div class="step-content" v-if="step === 0">
 					<h1 class="text-4xl mb-4">Informations préliminaires</h1>
 					<div class="grid grid-cols-2 gap-4 auto-cols-max">
 						<div class="input-group-grid name">
@@ -33,9 +33,9 @@
 						</div>
 						<div class="input-group-grid country">
 							<Field name="country" id="country" v-slot="{ field, errorMessage }">
-								<div class="relatie group">
-									<select name="" class="input peer w-full" id="country" v-bind="field">
-										<option value selected>Select Country</option>
+								<div class="relative group">
+									<select name="country" class="input-select peer w-full" id="country" v-bind="field">
+										<option value="" selected></option>
 										<option v-for="({ name, code }, i) in countries" :key="i" :value="code">{{ name }}</option>
 									</select>
 									<label for="country" class="placeholder-label">Country </label>
@@ -44,23 +44,26 @@
 							</Field>
 						</div>
 						<div class="input-group-grid gender">
-							<Field name="gender" id="gender" as="select" class="rounded input block w-full" required>
-								<option value selected>Select gender</option>
-								<option value="M">Male</option>
-								<option value="M">Female</option>
-							</Field>
-							<ErrorMessage name="gender" v-slot="{ message }">
-								<p class="input-error">{{ message }}</p>
-							</ErrorMessage>
-						</div>
-						<div class="input-group-grid email">
-							<Field name="email" v-slot="{ field, errorMessage }">
+							<Field name="gender" id="gender" required v-slot="{ field, errorMessage }">
 								<div class="relative group">
-									<input v-bind="field" id="email" required class="input peer" />
-									<label for="email" class="placeholder-label">Email </label>
+									<select name="gender" id="gender" class="input-select peer" v-bind="field">
+										<option value="" selected></option>
+										<option value="M">Male</option>
+										<option value="F">Female</option>
+									</select>
+									<label for="gender" class="placeholder-label">Gender </label>
 									<p class="input-error">{{ errorMessage }}</p>
 								</div>
 							</Field>
+						</div>
+						<div class="input-group-grid email">
+							<div class="relative group">
+								<Field name="email" v-slot="{ field, errorMessage }">
+									<input v-bind="field" id="email" required class="input peer" />
+									<label for="email" class="placeholder-label">Email </label>
+									<p class="input-error">{{ errorMessage }}</p>
+								</Field>
+							</div>
 						</div>
 						<div class="input-group-grid birthDate">
 							<Field name="birthdate" v-slot="{ field, errorMessage }" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
@@ -82,16 +85,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="step-conten" v-else-if="step === 1">
+				<div class="step-content" v-else-if="step === 1">
 					<h1 class="text-4xl mb-4">Address</h1>
 					<div class="grid grid-cols-2 gap-4 auto-cols-max">
-						<Field name="avenue" v-slot="{ field, errorMessage }">
-							<div class="relative group">
-								<input v-bind="field" id="avenue" required class="input peer" />
-								<label for="avenue" class="placeholder-label">Avenue </label>
-								<p class="input-error">{{ errorMessage }}</p>
-							</div>
-						</Field>
+						<div class="input-group-grid">
+							<Field name="avenue" v-slot="{ field, errorMessage }">
+								<div class="relative group">
+									<input v-bind="field" id="avenue" required class="input peer" />
+									<label for="avenue" class="placeholder-label">Avenue </label>
+									<p class="input-error">{{ errorMessage }}</p>
+								</div>
+							</Field>
+						</div>
 
 						<div class="input-group-grid country">
 							<Field name="numero" v-slot="{ field, errorMessage }">
@@ -124,7 +129,7 @@
 							<Field name="ville" v-slot="{ field, errorMessage }">
 								<div class="relative group">
 									<input v-bind="field" id="ville" required class="input peer" />
-									<label for="ville" class="placeholder-label">Code </label>
+									<label for="ville" class="placeholder-label">Ville </label>
 									<p class="input-error">{{ errorMessage }}</p>
 								</div>
 							</Field>
@@ -133,14 +138,14 @@
 							<Field name="zip" v-slot="{ field, errorMessage }">
 								<div class="relative group">
 									<input v-bind="field" id="zip" required class="input peer" />
-									<label for="zip" class="placeholder-label">Code </label>
+									<label for="zip" class="placeholder-label">Zip </label>
 									<p class="input-error">{{ errorMessage }}</p>
 								</div>
 							</Field>
 						</div>
 					</div>
 				</div>
-				<div class="step-conten" v-else-if="step === 2">
+				<div class="step-content" v-else-if="step === 2">
 					<p class="text-4xl mb-4">Photo de profil</p>
 					<div class="flex flex-col mb-4 h-1/2 items-center justify-center">
 						<div class="mb-4" id="preview" @click.stop="pickPicture" :class="{ profile2: !previewSRC }">
@@ -155,7 +160,7 @@
 						</ErrorMessage>
 					</div>
 				</div>
-				<div class="step-conten" v-else-if="step === 3">
+				<div class="step-content" v-else-if="step === 3">
 					<h1 class="text-4xl mb-4">Add contact</h1>
 					<div class="flex flex-col">
 						<div class="input-group-grid name">
@@ -187,7 +192,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="step-conten" v-else-if="step === 4">
+				<div class="step-content" v-else-if="step === 4">
 					<h1 class="text-4xl mb-4">Add High-School</h1>
 					<div class="grid grid-cols-2 gap-2">
 						<div class="input-group-grid name">
@@ -208,15 +213,7 @@
 								</div>
 							</Field>
 						</div>
-						<div class="input-group-grid diploma">
-							<Field placeholder="Diploma" v-slot="{ handleChange, handleBlur }" name="diploma">
-								<input type="file" name="diploma" accept=".pdf" id="diploma" @change="handleChange" @blur="handleBlur" class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100" />
-							</Field>
-							<ErrorMessage name="diploma" v-slot="{ message }">
-								<p class="input-error">{{ message }}</p>
-							</ErrorMessage>
-						</div>
-						<div class="input-group-grid adresse">
+						<div class="input-group-grid adresse col-span-2">
 							<Field name="email" v-slot="{ field, errorMessage }">
 								<div class="relative group h-10">
 									<input v-bind="field" type="text" id="email" required class="input peer" />
@@ -229,15 +226,20 @@
 				</div>
 			</Transition>
 			{{ values }}
-			<div class="bottom flex flex-row w-full items-center justify-between">
-				<button class="btn-unstate" @click="goBack">Cancel</button>
-				<div class="flex flex-row">
-					<button class="skip btn-unstate mr-2" @click="skip" v-if="step !== 4">Skip step</button>
+			<div class="bottom row w-full items-center justify-between">
+				<div class="c">
+					<button class="btn-unstate-red" @click.prevent="goto('students')">Cancel</button>
+					<button class="btn-unstate ml-2" v-if="step > 0" @click.prevent="goBack">Previous step</button>
+				</div>
+				<div class="row">
+					<button class="skip btn-unstate mr-2" @click.prevent="skip" v-if="step > 0">Skip</button>
 					<button type="submit" class="btn-primary">
-						<span class="font-bold text-white"> {{ step === 4 ? "Save" : "Suivant" }}</span>
-						<SaveIcon class="h-5 w-5 text-white" v-if="!isSubmitting && step === 4" />
-						<ArrowRightIcon class="h-5 w-5 text-white" v-if="!isSubmitting && step !== 4" />
-						<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
+						<span class="font-bold text-white">{{ step === 4 ? "Save" : "Save & Continue" }}</span>
+						<Transition name="fadeSlideY" mode="out-in">
+							<CirclesToRhombusesSpinner :size="25" :color="'#FFF'" v-if="isSubmitting" />
+							<SaveIcon class="h-5 w-5 text-white" v-else-if="step === stepper.length - 1" />
+							<ArrowRightIcon class="h-5 w-5 ml-2 text-white" v-else-if="step !== stepper.length - 1" />
+						</Transition>
 					</button>
 				</div>
 			</div>
@@ -247,8 +249,8 @@
 
 <script setup>
 	import * as yup from "yup"
-	import { toast, goto } from "@/utils/utils"
-	import { SaveIcon, UserIcon, ArrowLeftIcon } from "@heroicons/vue/solid"
+	import { goto } from "@/utils/utils"
+	import { SaveIcon, UserIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/solid"
 	import { markRaw, ref, computed } from "vue"
 	import { Field, Form, ErrorMessage } from "vee-validate"
 	import { CirclesToRhombusesSpinner } from "epic-spinners"
@@ -267,7 +269,7 @@
 			telephone: yup.string().required().label("Telephones"),
 			email: yup.string().email().required().label("Email"),
 			birthDate: yup.date().label("Birthday"),
-			gender: yup.string().default("off").label("Gebder"),
+			gender: yup.string().required().label("Gender"),
 		})
 	)
 	const profileSchema = {
@@ -305,14 +307,14 @@
 	const basicInfoValues = ref({
 		name: "Kadiongo Ilunga",
 		birthdate: "2000-02-02",
-		gender: "M",
+		gender: "",
 		email: "email@email.com",
 		telephone: "+245369854",
-		country: "RDC (Congo)",
+		country: "",
 	})
 	const profileValues = { profile: "" }
 	const contactValues = { name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" }
-	const schoolValues = { name: "IT Salama", telephone: "+24381745021", addresse: "20, lubumbashi, Q/ Mamplaa", email: "school@email.com" }
+	const schoolValues =  { name: "IT Salama", telephone: "+24381745021", email: "school@email.com" }
 	const addressValues = { avenue: "Kawama", commune: "Bondo", ville: "Kalemie", quartier: "Baudwin", zip: 75123, numero: 5 }
 	const studentValues = [basicInfoValues, addressValues, profileValues, contactValues, schoolValues]
 	const currentValues = computed(() => studentValues[step.value])
@@ -335,6 +337,7 @@
 		}
 	}
 	function goNext(values) {
+		console.log(values)
 		if (step.value === 5) {
 			console.log("Done: ", JSON.stringify(values, null, 2))
 			return
@@ -355,6 +358,9 @@
 		}
 
 		step.value--
+	}
+	function oninvalid({ values }) {
+		console.log(values)
 	}
 </script>
 

@@ -51,6 +51,8 @@ export const useConfig = defineStore("config", {
 		listStatus: ["Etudiant", "Abandon", "Diplomé", "Candidat", "Renvoi"],
 		requestError: null,
 		responseError: null,
+		electronFinishLoad: false,
+		domIsReady: false,
 	}),
 
 	actions: {
@@ -59,6 +61,7 @@ export const useConfig = defineStore("config", {
 			const students = useStudents()
 			const courses = useCourses()
 			const mngt = useManagement()
+			this.electronFinishLoad = true
 			this.onReloadSide()
 			try {
 				await mngt.init()
@@ -67,6 +70,10 @@ export const useConfig = defineStore("config", {
 			} catch (error) {
 				console.log(error)
 			}
+		},
+		setDOMready(args) {
+			console.log(args)
+			this.domIsReady = args
 		},
 		setAxios() {
 			axios.interceptors.request.use(

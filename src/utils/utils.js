@@ -57,6 +57,7 @@ export function onBeforeEnter(el, done) {
 export function beforeEnterList(el, done) {
 	gsap.to(el, {
 		opacity: 0,
+		duration: 1,
 		y: -40,
 		rotationZ: -10,
 		delay: el.dataset.index * 0.15,
@@ -84,7 +85,7 @@ export function enterList(el, done) {
 	})
 }
 export async function goto(to = null, data = null) {
-	assert(to != null, data != null)
+
 	if (data != null && data != null) {
 		await router.push({ name: to, params: { id: data } })
 	} else if ((to == null, data == null)) {

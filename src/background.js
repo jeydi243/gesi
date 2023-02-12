@@ -1,6 +1,6 @@
 "use strict"
 
-import { app, protocol, BrowserWindow, ipcMain as main, dialog, Menu, MenuItem } from "electron"
+import { app, protocol, BrowserWindow, ipcMain as main, dialog, Menu, MenuItem, Notification } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
@@ -37,7 +37,7 @@ async function createWindow(height, width, x, y) {
 
 	webContents.on("dom-ready", function (event) {
 		console.log("Dom is ready...")
-		win.webContents.send("dom_ready", "DOM is READY!")
+		win.webContents.send("dom_ready", true)
 	})
 	webContents.on("did-finish-load", function () {
 		console.log("Finish Load...")
@@ -53,10 +53,10 @@ async function createWindow(height, width, x, y) {
 	//     console.log("On console message  ...", { message })
 	//   })
 	webContents.on("ipc-message", (event, channel, ...args) => {
-		console.log("IPCRenderer send message  ...", args)
+		console.log("IPCRenderer send message  ... %s %a",channel, args)
 	})
 	webContents.on("context-menu", (event, { x, y, frame, mediaType }) => {
-		console.log({ x }, { y }, { frame }, { mediaType })
+		// console.log({ x }, { y }, { frame }, { mediaType })
 	})
 	webContents.on("will-prevent-unload", (event) => {
 		const choice = dialog.showMessageBoxSync(win, {
@@ -71,6 +71,13 @@ async function createWindow(height, width, x, y) {
 		if (leave) {
 			event.preventDefault()
 		}
+	})
+	const notfy = new Notification({ title: "Banduku", urgency: "critical", subtitle: "Subtitle" })
+
+	notfy.show()
+
+	notfy.on("show", (e) => {
+		console.log("Le monde")
 	})
 }
 
@@ -174,6 +181,9 @@ if (isDevelopment) {
 		})
 	}
 }
+main.on("karma", (e, data) => {
+	console.log(data)
+})
 main.handle("quit-app", () => {
 	const choice = dialog.showMessageBoxSync(win, {
 		type: "question",

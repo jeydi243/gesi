@@ -4,11 +4,13 @@
 			<!-- <button @click="add" class="btn-primary">add</button>
 			<button @click="rem" class="btn-unstate">remove</button> -->
 			<!-- <div id="jog" :class="`bg-red-500 rounded-md h-8 w-10 relative z-0 transition-all duration-500 ease-in-out`"></div> -->
-			<TransitionGroup name="fadeSlideY">
-				<router-link data-splitting :to="item.to" @click="config.changeActive(item.to)" @hover="item.mouseHover = !item.mouseHover" :id="item.text" :ref="item.text" v-for="(item, index) in sideMenus" :data-index="index" :key="index" class="router-link relative z-1" :class="{ 'router-link-active': item.active }">
-					<box-icon type="regular" :name="item.icon" color="white"></box-icon>
-					<span class="ml-2 text-sm font-medium">{{ item.text }}</span>
-				</router-link>
+			<TransitionGroup :css="false" @before-enter="beforeEnterList" @enter="enterList" @leave="leaveList" appear>
+				<div v-for="({ to, text, active, icon, mouseHover }, index) in sideMenus" :key="index" class="w-full ">
+					<router-link data-splitting :to="to" @click="config.changeActive(to)" @hover="mouseHover = !mouseHover" :id="text" :ref="text" :data-index="index" class="router-link relative z-1" :class="{ 'router-link-active': active }">
+						<box-icon type="regular" :name="icon" color="white"></box-icon>
+						<span class="ml-2 text-sm font-medium">{{ text }}</span>
+					</router-link>
+				</div>
 			</TransitionGroup>
 		</div>
 	</div>
@@ -17,7 +19,7 @@
 <script setup>
 	import { beforeEnterList, enterList, leaveList } from "@/utils/utils"
 	import { useElementBounding } from "@vueuse/core"
-	import { computed, ref, onMounted, watch } from "vue"
+	import { computed, ref, watch } from "vue"
 	import { useConfig } from "@/store/config"
 	import Splitting from "splitting"
 	import { gsap } from "gsap"
