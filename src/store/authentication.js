@@ -16,7 +16,7 @@ export const useAuth = defineStore("authentication", {
 			console.log({ payload })
 			try {
 				const { data, status } = await usersAPI.login(payload)
-				if (data.token && (status == 200 || status == 201)) {
+				if (/*data.token && */(status == 200 || status == 201)) {
 					console.log({ token: data.token })
 					this.token = data.token
 					this.user = data.user

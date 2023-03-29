@@ -1,6 +1,6 @@
 <template>
   <div class="card bg-white flex-row justify-items-center items-center justify-between h-full overflow-visible">
-    <div class="flex flex-row mb-5">
+    <div class="flex flex-row mb-5 grow-none">
       <div v-for="i in stepper.length" :key="i" class="flex flex-col justify-start items-start">
         <span>
           <box-icon type="solid" name="circle" :color="i > step + 1 ? 'black' : 'green'" size="xs" class="mb-2"></box-icon>
@@ -12,8 +12,10 @@
         <span class="text-xs">{{ i }}</span>
       </div>
     </div>
+    
+
     <!-- <Transition name="fadeSlideY" mode="out-in"> -->
-    <Form class="form" @submit="goNext" :validation-schema="currentSchema" :initial-values="currentValues" v-slot="{ isSubmitting }">
+    <Form class="form grow" @submit="goNext" :validation-schema="currentSchema" keep-values :initial-values="currentValues" v-slot="{ isSubmitting }">
       <template class="step-content" v-if="step === 0">
         <h1 class="text-4xl mb-4">Informations préliminaires</h1>
         <div class="grid grid-cols-2 gap-4 auto-cols-max">
@@ -57,14 +59,9 @@
             </Field>
           </div>
           <div class="input-group-grid birthDate">
-            <Field name="birthDate" type="date" placeholder="Date of Birth" class="w-full input" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
-            <ErrorMessage name="birthDate" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
-
             <Field name="birthdate" v-slot="{ field, errorMessage }">
               <div class="relative group">
-                <input v-bind="field" id="birthdate" required class="input peer" />
+                <input v-bind="field" id="birthdate" required class="input peer" type="date" placeholder="Date of Birth" />
                 <label for="birthdate" class="placeholder-label">Birthday </label>
                 <p class="input-error">{{ errorMessage }}</p>
               </div>
@@ -123,7 +120,7 @@
             <Field name="ville" v-slot="{ field, errorMessage }">
               <div class="relative group">
                 <input v-bind="field" id="ville" required class="input peer" />
-                <label for="ville" class="placeholder-label">Code </label>
+                <label for="ville" class="placeholder-label">Ville </label>
                 <p class="input-error">{{ errorMessage }}</p>
               </div>
             </Field>
@@ -132,7 +129,7 @@
             <Field name="zip" v-slot="{ field, errorMessage }">
               <div class="relative group">
                 <input v-bind="field" id="zip" required class="input peer" />
-                <label for="zip" class="placeholder-label">Code </label>
+                <label for="zip" class="placeholder-label">Zip Code </label>
                 <p class="input-error">{{ errorMessage }}</p>
               </div>
             </Field>
@@ -205,16 +202,22 @@
         <h1 class="text-4xl mb-4">Add contact</h1>
         <div class="flex flex-col">
           <div class="input-group-grid name">
-            <Field type="text" placeholder="Name" id="name" name="name" class="w-full form-field" />
-            <ErrorMessage name="name" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
+            <Field name="contact_name" v-slot="{ field, errorMessage }">
+              <div class="relative group">
+                <input v-bind="field" id="contact_name" required class="input peer w-full" />
+                <label for="contact_name" class="placeholder-label">Name </label>
+                <p class="input-error">{{ errorMessage }}</p>
+              </div>
+            </Field>
           </div>
           <div class="input-group-grid telephone">
-            <Field type="text" placeholder="Téléphone" id="name" name="telephone" class="w-full form-field" />
-            <ErrorMessage name="name" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
+            <Field name="contact_phone" v-slot="{ field, errorMessage }">
+              <div class="relative group">
+                <input v-bind="field" id="contact_phone" required class="input peer w-full" />
+                <label for="contact_phone" class="placeholder-label">Phone number </label>
+                <p class="input-error">{{ errorMessage }}</p>
+              </div>
+            </Field>
           </div>
           <div class="input-group-grid email">
             <Field type="text" placeholder="Email" id="name" name="email" class="w-full input" />
@@ -228,16 +231,22 @@
         <h1 class="text-4xl mb-4">Add High-School</h1>
         <div class="grid grid-cols-2 gap-2">
           <div class="input-group-grid name">
-            <Field type="text" placeholder="School Name" id="name" name="name" class="w-full input" />
-            <ErrorMessage name="name" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
+            <Field name="school_name" v-slot="{ field, errorMessage }">
+              <div class="relative group">
+                <input v-bind="field" id="school_name" required class="input peer w-full" />
+                <label for="school_name" class="placeholder-label">School Name </label>
+                <p class="input-error">{{ errorMessage }}</p>
+              </div>
+            </Field>
           </div>
           <div class="input-group-grid telephone">
-            <Field type="text" placeholder="Telephone" id="name" name="telephone" class="w-full input" />
-            <ErrorMessage name="telephone" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
+            <Field name="telephone" v-slot="{ field, errorMessage }">
+              <div class="relative group">
+                <input v-bind="field" id="telephone" required class="input peer w-full" />
+                <label for="telephone" class="placeholder-label">Telephone </label>
+                <p class="input-error">{{ errorMessage }}</p>
+              </div>
+            </Field>
           </div>
           <div class="input-group-grid diploma">
             <Field placeholder="Diploma" v-slot="{ handleChange, handleBlur }" name="diploma">
@@ -248,16 +257,10 @@
                 id="diploma"
                 @change="handleChange"
                 @blur="handleBlur"
-                class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                class="text-sm text-green-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 w-full"
               />
             </Field>
             <ErrorMessage name="diploma" v-slot="{ message }">
-              <p class="input-error">{{ message }}</p>
-            </ErrorMessage>
-          </div>
-          <div class="input-group-grid adresse">
-            <Field type="text" placeholder="Adresse" id="email" name="adresse" class="w-full input" />
-            <ErrorMessage name="email" v-slot="{ message }">
               <p class="input-error">{{ message }}</p>
             </ErrorMessage>
           </div>
@@ -280,12 +283,12 @@
 
 <script setup>
 import { toast } from "@/utils/utils"
-import { markRaw, ref, computed } from "vue"
+import { useStudents } from "@/store/students"
 import { SaveIcon, UserIcon } from "@heroicons/vue/solid"
+import { markRaw, ref, computed } from "vue"
 import { Field, Form, ErrorMessage } from "vee-validate"
 import { CirclesToRhombusesSpinner } from "epic-spinners"
 import * as yup from "yup"
-import { useStudents } from "@/store/students"
 
 let step = ref(0)
 const store = useStudents()
@@ -301,10 +304,10 @@ const basicInfoSchema = markRaw(
     gender: yup.string().default("off").label("Gebder"),
   })
 )
-const profileSchema = {
+const profileSchema = yup.object({
   profile: yup
     .mixed()
-    .test("fileSize", "File size must be less than 5MB", (value) => value && value.size <= 5242880)
+    .test("fileSize", "File size must be less than 5MB", (value) => value instanceof File || value instanceof Blob)
     .test("fileType", "Unsupported file type", (value) => value && ["image/png", "image/jpeg"].includes(value.type)),
   //   profile: function (value) {
   //     if (value instanceof File || value instanceof Blob || value[0] instanceof File || value[0] instanceof Blob) {
@@ -312,15 +315,15 @@ const profileSchema = {
   //     }
   //     return "Vous devez choisir une photo de profil"
   //   },
-}
+})
 const addressSchema = markRaw(
   yup.object({
     avenue: yup.string().required().label("Avenue"),
-    commune: yup.string().required().label("commune"),
-    ville: yup.string().required().label("ville"),
-    quartier: yup.string().required().label("quartier"),
-    zip: yup.string().required().label("Zip"),
-    numero: yup.number().required().label("Numero"),
+    commune: yup.string().required().label("Commune"),
+    ville: yup.string().required().label("Town"),
+    quartier: yup.string().required().label("Neighborhood"),
+    zip: yup.string().required().label("Zip code"),
+    numero: yup.number().required().label("Phone number"),
   })
 )
 const contactSchema = yup.object({
@@ -335,11 +338,11 @@ const schoolSchema = yup.object({
   email: yup.string().required().label("Email"),
 })
 const studentSchema = [basicInfoSchema, addressSchema, profileSchema, contactSchema, schoolSchema]
-const stepper = computed(() => studentSchema)
 const currentSchema = computed(() => studentSchema[step.value])
+const stepper = computed(() => studentSchema)
 
 const basicInfoValues = ref({
-  name: "Kadiongo Ilunga",
+  name: "Kadiongo Ilungasd",
   birthDate: "2000-02-02",
   gender: "M",
   email: "email@email.com",
@@ -347,13 +350,11 @@ const basicInfoValues = ref({
   country: "RDC (Congo)",
 })
 const profileValues = ref({ profile: "" })
-const contactValues = ref({ name: "Kabondo Ndianda", email: "kabondo@email.com", telephone: "+24387747021" })
-const schoolValues = ref({ name: "IT Salama", telephone: "+24381745021", addresse: "20, lubumbashi, Q/ Mamplaa", email: "school@email.com" })
-const addressValues = ref({ avenue: "Kawama", commune: "Bondo", ville: "Kalemie", quartier: "Baudwin", zip: 75123, numero: 5 })
+const contactValues = ref({ contact_name: "Kabondo Ndianda", contact_email: "kabondo@email.com", contact_phone: "+24387747021" })
+const schoolValues = ref({ school_name: "IT Salama", telephone: "+24381745021", email: "school@email.com" })
+const addressValues = ref({ avenue: "Kawama", commune: "Bondo", ville: "Kalemie", quartier: "Baudwin", zip: "75123", numero: 5 })
 const studentValues = [basicInfoValues, addressValues, profileValues, contactValues, schoolValues]
 const currentValues = computed(() => studentValues[step.value])
-
-const oh = { title: "Address", schema: schoolSchema, values: schoolValues, 0: "fd" }
 
 function pickPicture() {
   document.getElementById("bind-profile").click()
@@ -371,19 +372,20 @@ function onFileChange(event) {
   }
 }
 function goNext(values) {
-  if (step.value === 5) {
-    console.log("Done: ", JSON.stringify(values, null, 2))
-    return
-  }
+  try {
+    if (step.value === 5) {
+      console.log("Done: ", JSON.stringify(values, null, 2))
+      const re = store.addStudent(values)
+      console.log(re)
+    }
+  } catch (error) {}
 
   step.value++
 }
 function goBack() {
-  if (step.value <= 0) {
-    return
-  }
-
+  if (step.value == 0) return
   step.value--
+  console.log("You clicked")
 }
 </script>
 

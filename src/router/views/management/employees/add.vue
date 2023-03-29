@@ -38,8 +38,8 @@
             <ErrorMessage name="birthday" v-slot="{ message }">
               <p class="input-error">{{ message }}</p>
             </ErrorMessage>
-            <Field type="email" placeholder="Personal Email" id="personal_email" name="personal_email" class="w-full form-input" />
-            <ErrorMessage name="personal_email" v-slot="{ message }">
+            <Field type="email" placeholder="Email" id="email" name="email" class="w-full form-input" />
+            <ErrorMessage name="email" v-slot="{ message }">
               <p class="input-error">{{ message }}</p>
             </ErrorMessage>
             <Field as="select" placeholder="Gender" id="gender" name="gender" class="block w-full form-select">
@@ -168,7 +168,7 @@ const employeeSchema = {
   gender(value) {
     return value == "M" || value == "F" ? true : "Must be F or M"
   },
-  personal_email(value) {
+  email(value) {
     return isEmail(value) ? true : "Must be valid Email"
   },
   address(value) {
@@ -213,7 +213,7 @@ const employeeValues = {
   telephones: chance.phone({ country: "fr", mobile: true }),
   middle_name: chance.last().split(" ")[0],
   cover_letter: chance.sentence({ words: 50 }),
-  personal_email: chance.email(),
+  email: chance.email(),
   gender: "M",
   domain: "Math",
   skills: "Code, Design",
