@@ -47,7 +47,7 @@
               <div class="col ml-5 space-y-2">
                 <span class="capitalize font-bold text-xl">{{ userData.last_name }}</span>
                 <span class="font-bold text-green-600">{{ userData.position[0] }}</span>
-                <span class="italic text-sm">{{ userData.personal_email }}</span>
+                <span class="italic text-sm">{{ userData.email }}</span>
                 <span class="italic text-sm">{{ userData.telephones[0] }}</span>
                 <span class="bg-green-100 pl-1 pt-1 pb-1 pr-3 rounded-md font-bold" data-bs-toggle="tooltip" data-bs-placement="right" :title="userData.hire_date">7 years of experience</span>
               </div>
@@ -75,8 +75,8 @@
                   </div>
                 </div>
                 <div>
-                  <Field name="personal_email" class="w-full g-input-text"></Field>
-                  <ErrorMessage name="personal_email" v-slot="{ message }">
+                  <Field name="email" class="w-full g-input-text"></Field>
+                  <ErrorMessage name="email" v-slot="{ message }">
                     <p class="input-error">{{ message }}</p>
                   </ErrorMessage>
                 </div>
@@ -590,7 +590,7 @@ const basicInfo = ref({
   first_name: userData.value.first_name,
   telephones: userData.value.telephones,
   middle_name: userData.value.middle_name,
-  personal_email: userData.value.personal_email,
+  email: userData.value.email,
 })
 const tabsEmp = ref([
   { name: "Basic Information", current: true },
@@ -603,7 +603,7 @@ const basicInfoSchema = {
   position(value) {
     return isLength(value, { min: 2, max: 50 }) ? true : "Position must be between 2 and 50 characters"
   },
-  personal_email(value) {
+  email(value) {
     return isEmail(value) ? true : "Must be valid Email"
   },
   first_name(value) {

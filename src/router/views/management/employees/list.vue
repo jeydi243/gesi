@@ -49,7 +49,7 @@
 									<span class="text-gray-500">Departement</span>
 									<span class="text-gray-800 font-bold">Soudure </span>
 								</div>
-								<span> <MailIcon class="h-5 w-5 inline" /> {{ emp.personal_email }} </span>
+								<span> <MailIcon class="h-5 w-5 inline" /> {{ emp.email }} </span>
 								<span> <PhoneIcon class="h-5 w-5 inline" /> {{ emp.telephones[0] }} </span>
 							</div>
 						</div>
