@@ -16,23 +16,5 @@ module.exports = {
     electronBuilder: {
       nodeIntegration: true,
     },
-  },
-  chainWebpack: (config) => {
-    config.module
-      .rule("vue")
-      .use("vue-loader")
-      .tap((options) => {
-        options.compilerOptions = {
-          ...options.compilerOptions,
-          isCustomElement: (tag) => tag.startsWith("box-"),
-        }
-        return options
-      })
-    config.module
-      .rule("mjs")
-      .test(/\.mjs$/)
-      .type("javascript/auto")
-      .include.add(/node_modules/)
-      .end()
-  },
+  }
 }
