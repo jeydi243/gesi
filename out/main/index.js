@@ -6,6 +6,7 @@ const require$$5 = require("assert");
 const require$$3 = require("events");
 require("util");
 const require$$3$1 = require("https");
+const utils$1 = require("@electron-toolkit/utils");
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var dist$1 = {};
 var re$3 = { exports: {} };
@@ -4494,7 +4495,7 @@ function requireGlob() {
   return glob_1;
 }
 const assert = require$$5;
-const path$4 = require$$1;
+const path$5 = require$$1;
 const fs$4 = require$$0;
 let glob = void 0;
 try {
@@ -4676,7 +4677,7 @@ const rmkids = (p, options, cb) => {
       return options.rmdir(p, cb);
     let errState;
     files.forEach((f) => {
-      rimraf$1(path$4.join(p, f), options, (er2) => {
+      rimraf$1(path$5.join(p, f), options, (er2) => {
         if (errState)
           return;
         if (er2)
@@ -4751,7 +4752,7 @@ const rmdirSync = (p, options, originalEr) => {
 const rmkidsSync = (p, options) => {
   assert(p);
   assert(options);
-  options.readdirSync(p).forEach((f) => rimrafSync(path$4.join(p, f), options));
+  options.readdirSync(p).forEach((f) => rimrafSync(path$5.join(p, f), options));
   const retries = isWindows ? 100 : 1;
   let i = 0;
   do {
@@ -7457,7 +7458,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   });
 })(jszip_min);
 var jszip_minExports = jszip_min.exports;
-var path$3 = require$$1;
+var path$4 = require$$1;
 var fs$3 = require$$0;
 var _0777 = parseInt("0777", 8);
 var mkdirp$1 = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
@@ -7478,7 +7479,7 @@ function mkdirP(p, opts2, f, made) {
   var cb = f || /* istanbul ignore next */
   function() {
   };
-  p = path$3.resolve(p);
+  p = path$4.resolve(p);
   xfs.mkdir(p, mode, function(er) {
     if (!er) {
       made = made || p;
@@ -7486,9 +7487,9 @@ function mkdirP(p, opts2, f, made) {
     }
     switch (er.code) {
       case "ENOENT":
-        if (path$3.dirname(p) === p)
+        if (path$4.dirname(p) === p)
           return cb(er);
-        mkdirP(path$3.dirname(p), opts2, function(er2, made2) {
+        mkdirP(path$4.dirname(p), opts2, function(er2, made2) {
           if (er2)
             cb(er2, made2);
           else
@@ -7517,14 +7518,14 @@ mkdirP.sync = function sync2(p, opts2, made) {
   }
   if (!made)
     made = null;
-  p = path$3.resolve(p);
+  p = path$4.resolve(p);
   try {
     xfs.mkdirSync(p, mode);
     made = made || p;
   } catch (err0) {
     switch (err0.code) {
       case "ENOENT":
-        made = sync2(path$3.dirname(p), opts2, made);
+        made = sync2(path$4.dirname(p), opts2, made);
         sync2(p, opts2, made);
         break;
       default:
@@ -7999,7 +8000,7 @@ var promisify$1 = function(fn, self2) {
   };
 };
 var fs$2 = require$$0;
-var path$2 = require$$1;
+var path$3 = require$$1;
 var jszip = jszip_minExports;
 var mkdirp = mkdirp$1;
 var promisify = promisify$1;
@@ -8037,19 +8038,19 @@ function crxToZip(buf) {
   return buf.slice(zipStartOffset, buf.length);
 }
 function unzip$1(crxFilePath, destination) {
-  var filePath = path$2.resolve(crxFilePath);
-  var extname = path$2.extname(crxFilePath);
-  var basename = path$2.basename(crxFilePath, extname);
-  var dirname = path$2.dirname(crxFilePath);
-  destination = destination || path$2.resolve(dirname, basename);
+  var filePath = path$3.resolve(crxFilePath);
+  var extname = path$3.extname(crxFilePath);
+  var basename = path$3.basename(crxFilePath, extname);
+  var dirname = path$3.dirname(crxFilePath);
+  destination = destination || path$3.resolve(dirname, basename);
   return readFile(filePath).then(function(buf) {
     return jszip.loadAsync(crxToZip(buf));
   }).then(function(zip) {
     var zipFileKeys = Object.keys(zip.files);
     return Promise.all(zipFileKeys.map(function(filename) {
       var isFile = !zip.files[filename].dir;
-      var fullPath = path$2.join(destination, filename);
-      var directory = isFile && path$2.dirname(fullPath) || fullPath;
+      var fullPath = path$3.join(destination, filename);
+      var directory = isFile && path$3.dirname(fullPath) || fullPath;
       var content = zip.files[filename].async("nodebuffer");
       return mkdir(directory).then(function() {
         return isFile ? content : false;
@@ -8062,7 +8063,7 @@ function unzip$1(crxFilePath, destination) {
 var dist = unzip$1;
 Object.defineProperty(downloadChromeExtension$1, "__esModule", { value: true });
 const fs$1 = require$$0;
-const path$1 = require$$1;
+const path$2 = require$$1;
 const rimraf = rimraf_1;
 const utils_1$1 = utils;
 const unzip = dist;
@@ -8071,20 +8072,20 @@ const downloadChromeExtension = (chromeStoreID, forceDownload, attempts = 5) => 
   if (!fs$1.existsSync(extensionsStore)) {
     fs$1.mkdirSync(extensionsStore, { recursive: true });
   }
-  const extensionFolder = path$1.resolve(`${extensionsStore}/${chromeStoreID}`);
+  const extensionFolder = path$2.resolve(`${extensionsStore}/${chromeStoreID}`);
   return new Promise((resolve, reject) => {
     if (!fs$1.existsSync(extensionFolder) || forceDownload) {
       if (fs$1.existsSync(extensionFolder)) {
         rimraf.sync(extensionFolder);
       }
       const fileURL = `https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&x=id%3D${chromeStoreID}%26uc&prodversion=32`;
-      const filePath = path$1.resolve(`${extensionFolder}.crx`);
+      const filePath = path$2.resolve(`${extensionFolder}.crx`);
       utils_1$1.downloadFile(fileURL, filePath).then(() => {
         unzip(filePath, extensionFolder).then(() => {
           utils_1$1.changePermissions(extensionFolder, 755);
           resolve(extensionFolder);
         }).catch((err) => {
-          if (!fs$1.existsSync(path$1.resolve(extensionFolder, "manifest.json"))) {
+          if (!fs$1.existsSync(path$2.resolve(extensionFolder, "manifest.json"))) {
             return reject(err);
           }
         });
@@ -8107,12 +8108,12 @@ Object.defineProperty(dist$1, "__esModule", { value: true });
 dist$1.MOBX_DEVTOOLS = dist$1.APOLLO_DEVELOPER_TOOLS = dist$1.CYCLEJS_DEVTOOL = dist$1.REDUX_DEVTOOLS = dist$1.VUEJS3_DEVTOOLS = VUEJS_DEVTOOLS = dist$1.VUEJS_DEVTOOLS = dist$1.ANGULARJS_BATARANG = dist$1.JQUERY_DEBUGGER = dist$1.BACKBONE_DEBUGGER = dist$1.REACT_DEVELOPER_TOOLS = dist$1.EMBER_INSPECTOR = void 0;
 const electron_1 = require$$0$1;
 const fs = require$$0;
-const path = require$$1;
+const path$1 = require$$1;
 const semver = semver$1;
 const downloadChromeExtension_1 = downloadChromeExtension$1;
 const utils_1 = utils;
 let IDMap = {};
-const getIDMapPath = () => path.resolve(utils_1.getPath(), "IDMap.json");
+const getIDMapPath = () => path$1.resolve(utils_1.getPath(), "IDMap.json");
 if (fs.existsSync(getIDMapPath())) {
   try {
     IDMap = JSON.parse(fs.readFileSync(getIDMapPath(), "utf8"));
@@ -8219,7 +8220,7 @@ dist$1.MOBX_DEVTOOLS = {
   id: "pfgnfdagidkfgccljigdamigbcnndkod",
   electron: ">=1.2.1"
 };
-require("path");
+const path = require("path");
 require("node-watch");
 let win = null;
 require$$0$1.protocol.registerSchemesAsPrivileged([{ scheme: "app", privileges: { secure: true, standard: true } }]);
@@ -8237,10 +8238,10 @@ async function createWindow(height, width, x, y) {
       //   preload: path.join(__dirname, "preload.js"),
     }
   });
-  if ({}.WEBPACK_DEV_SERVER_URL) {
-    await win.loadURL({}.WEBPACK_DEV_SERVER_URL);
+  if (utils$1.is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+    await win.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
-    await win.loadURL("app://./index.html");
+    await win.loadFile(path.join(__dirname, "../public/index.html"));
   }
   win.show();
   const { webContents } = win;
