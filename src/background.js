@@ -1,7 +1,5 @@
-"use strict"
-
 import { app, protocol, BrowserWindow, ipcMain as main, dialog, Menu, MenuItem } from "electron"
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
+// import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 const isDevelopment = process.env.NODE_ENV !== "production"
 const path = require("path")
@@ -29,7 +27,7 @@ async function createWindow(height, width, x, y) {
 		await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
 		// if (!process.env.IS_TEST) win.webContents.openDevTools()
 	} else {
-		createProtocol("app")
+		// createProtocol("app")
 		await win.loadURL("app://./index.html")
 	}
 	win.show()
@@ -49,9 +47,6 @@ async function createWindow(height, width, x, y) {
 	webContents.on("plugin-crashed", (event, name, version) => {
 		console.log("Plugin crashed  ...", { version }, { name })
 	})
-	//   webContents.on("console-message", (level, line, message) => {
-	//     console.log("On console message  ...", { message })
-	//   })
 	webContents.on("ipc-message", (event, channel, ...args) => {
 		console.log("IPCRenderer send message  ...", args)
 	})
@@ -106,19 +101,7 @@ menu.append(
 )
 menu.append(new MenuItem({ type: "separator" }))
 menu.append(new MenuItem({ label: "MenuItem2", type: "checkbox", checked: true }))
-// app.on("web-contents-created", (...[, /* event */ webContents]) => {
-// 	//Webview is being shown here as a window type
-// 	console.log(webContents.getType())
-// 	webContents.on(
-// 		"context-menu",
-// 		(event, click) => {
-// 			event.preventDefault()
-// 			console.log(webContents.getType())
-// 			menu.popup(webContents)
-// 		},
-// 		false
-// 	)
-// })
+
 app.on("activate", async () => {
 	if (BrowserWindow.getAllWindows().length === 0) await createWindow(600, 800)
 })
